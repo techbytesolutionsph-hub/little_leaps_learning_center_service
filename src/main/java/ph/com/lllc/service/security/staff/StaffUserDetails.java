@@ -3,11 +3,16 @@ package ph.com.lllc.service.security.staff;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ph.com.lllc.entity.user.common.AppPermission;
+import ph.com.lllc.entity.user.common.AppRolePermission;
 import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.entity.user.common.AppUserRole;
 import ph.com.lllc.entity.user.staff.AppStaffProfile;
 import ph.com.lllc.enums.Gender;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class StaffUserDetails implements UserDetails {
     private final AppUser user;
@@ -53,12 +58,24 @@ public class StaffUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getUserRole()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(
-                        "ROLE_" + role.getUserRole().name()
-                ))
-                .toList();
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        for (AppUserRole role : user.getUserRole()) {
+
+            /* Add Role */
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getUserRole().name()));
+
+            /* Add Permissions */
+            if (role.getRolePermissions() != null) {
+                role.getRolePermissions().stream()
+                        .map(AppRolePermission::getPermission)
+                        .map(AppPermission::getPermissionCode)
+                        .map(SimpleGrantedAuthority::new)
+                        .forEach(authorities::add);
+            }
+        }
+
+        return authorities;
     }
 
     @Override

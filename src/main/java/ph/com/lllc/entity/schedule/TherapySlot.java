@@ -10,14 +10,14 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_schedule_slot")
+@Table(name = "lllc_app_therapy_slot")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleSlot {
+public class TherapySlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sched_slot_id")
+    @Column(name = "therapy_slot_id")
     private Long id;
 
     /**
@@ -45,5 +45,5 @@ public class ScheduleSlot {
     @JsonBackReference("session-slot")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kid_session_schedule_id", nullable = false)
-    private KidSessionSchedule kidSessionSchedule;
+    private ClientTherapySchedule kidSessionSchedule;
 }

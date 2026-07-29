@@ -5,31 +5,49 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import ph.com.lllc.entity.user.client.AppClientProfile;
+import ph.com.lllc.entity.user.staff.AppStaffProfile;
+import ph.com.lllc.enums.ScheduleStatus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_kid_assessment_schedule")
+@Table(name = "lllc_app_client_initial_assessment_schedule")
 @NoArgsConstructor
 @AllArgsConstructor
-public class KidAssessmentSchedule {
+public class ClientInitialAssessmentSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "assessment_id")
     private Long id;
 
-    @Column(name = "student_fullname")
-    private String studentFullName;
-
-    @Column(name = "branch")
-    private String branch;
-
+    /**
+     * Assessment Date
+     */
     @Column(name = "assessment_date")
-    private String assessmentDate;
+    private LocalDate assessmentDate;
+
+    /**
+     * Branch / Venue
+     */
+    @Column(name = "venue")
+    private String venue;
+
+    /**
+     * Schedule status - ACTIVE, COMPLETED, CANCELLED, ON HOLD
+     */
+    @Enumerated(EnumType.STRING)
+    private ScheduleStatus status;
+
+    /**
+     * Remarks for client/kid
+     */
+    @Column(name = "remarks", length = 1000)
+    private String remarks;
 
     @JsonManagedReference("assessment-slot")
     @OneToMany(mappedBy = "assessmentSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,4 +57,9 @@ public class KidAssessmentSchedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id")
     private AppClientProfile appClientProfile;
+
+    @JsonBackReference("user-staff")
+    @ManyToOne
+    @JoinColumn(name = "therapist_id")
+    private AppStaffProfile therapist;
 }

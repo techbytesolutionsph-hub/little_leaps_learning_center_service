@@ -16,16 +16,23 @@ public class AssessmentSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "assessment_slot_id")
     private Long id;
 
-    private String teacherName;
-
+    /**
+     * 8:00 AM
+     */
+    @Column(name = "start_time")
     private LocalTime startTime;
 
+    /**
+     * 10:00 AM
+     */
+    @Column(name = "end_time")
     private LocalTime endTime;
 
     @JsonBackReference("assessment-slot")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assessment_schedule_id", nullable = false)
-    private KidAssessmentSchedule assessmentSchedule;
+    private ClientInitialAssessmentSchedule assessmentSchedule;
 }

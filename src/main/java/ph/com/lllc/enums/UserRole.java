@@ -9,8 +9,10 @@ public enum UserRole {
     CASE_MANAGER("CSM"),
     THERAPIST("THR"),
     ACCOUNTING("ACC"),
+    SECRETARY("SEC"),
     EMPLOYEE("EMP"),
-    ADMIN("ADM");
+    HR("HR"),
+    SUPER_ADMIN("ADM");
 
     private final String code;
 

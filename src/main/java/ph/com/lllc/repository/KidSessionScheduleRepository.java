@@ -2,8 +2,8 @@ package ph.com.lllc.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ph.com.lllc.entity.schedule.KidSessionSchedule;
+import ph.com.lllc.entity.schedule.ClientTherapySchedule;
 
 @Repository
-public interface KidSessionScheduleRepository extends JpaRepository<KidSessionSchedule, Long> {
+public interface KidSessionScheduleRepository extends JpaRepository<ClientTherapySchedule, Long> {
 }

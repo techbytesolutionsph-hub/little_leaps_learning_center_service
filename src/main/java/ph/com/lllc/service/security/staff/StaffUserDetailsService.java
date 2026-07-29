@@ -29,10 +29,12 @@ public class StaffUserDetailsService implements UserDetailsService {
         boolean isStaff = user.getUserRole()
                 .stream()
                 .anyMatch(r ->
-                        r.getUserRole().name().equals(UserRole.ADMIN.name())
+                        r.getUserRole().name().equals(UserRole.SUPER_ADMIN.name())
                                 || r.getUserRole().name().equals(UserRole.CASE_MANAGER.name())
                                 || r.getUserRole().name().equals(UserRole.THERAPIST.name())
                                 || r.getUserRole().name().equals(UserRole.ACCOUNTING.name())
+                                || r.getUserRole().name().equals(UserRole.SECRETARY.name())
+                                || r.getUserRole().name().equals(UserRole.HR.name())
                                 || r.getUserRole().name().equals(UserRole.EMPLOYEE.name())
                 );
 

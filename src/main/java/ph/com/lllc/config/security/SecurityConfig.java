@@ -145,7 +145,7 @@ public class SecurityConfig {
                         .requestMatchers(securityPropertiesConfig.getStaffLogin())
                         .permitAll()
                         .requestMatchers(securityPropertiesConfig.getStaffPath())
-                        .hasAnyRole(UserRole.ADMIN.name(), UserRole.CASE_MANAGER.name(),
+                        .hasAnyRole(UserRole.SUPER_ADMIN.name(), UserRole.CASE_MANAGER.name(),
                                 UserRole.THERAPIST.name(), UserRole.ACCOUNTING.name(),
                                 UserRole.EMPLOYEE.name())
                         .anyRequest()

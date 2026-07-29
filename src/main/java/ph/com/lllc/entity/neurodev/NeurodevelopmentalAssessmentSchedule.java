@@ -1,4 +1,4 @@
-package ph.com.lllc.entity.assessment;
+package ph.com.lllc.entity.neurodev;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -17,10 +17,10 @@ import java.time.LocalTime;
 @Setter
 @Entity
 @Builder
-@Table(name = "lllc_app_neurodevelopmental_assessment")
+@Table(name = "lllc_app_neurodevelopmental_assessment_schedule")
 @NoArgsConstructor
 @AllArgsConstructor
-public class NeurodevelopmentalAssessment {
+public class NeurodevelopmentalAssessmentSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

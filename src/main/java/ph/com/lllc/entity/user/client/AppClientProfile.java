@@ -7,10 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ph.com.lllc.entity.assessment.KidAssessmentSchedule;
-import ph.com.lllc.entity.assessment.NeurodevelopmentalAssessment;
-import ph.com.lllc.entity.schedule.KidSessionSchedule;
+import ph.com.lllc.entity.assessment.ClientInitialAssessmentSchedule;
+import ph.com.lllc.entity.neurodev.NeurodevelopmentalAssessmentSchedule;
+import ph.com.lllc.entity.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
 import ph.com.lllc.util.LocalDateUtils;
 
@@ -35,6 +36,9 @@ public class AppClientProfile implements Serializable {
     @Column(name = "app_client_id")
     private Long id;
 
+    @Column(name = "client_student_id", unique = true)
+    private String clientStudentId;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -43,12 +47,6 @@ public class AppClientProfile implements Serializable {
 
     @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "client_student_id", unique = true)
-    private String clientStudentId;
-
-    @Column(name = "date_enrolled")
-    private LocalDate dateEnrolled;
 
     @Column(name = "age")
     private Integer age;
@@ -59,6 +57,9 @@ public class AppClientProfile implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
+
+    @Column(name = "date_enrolled")
+    private LocalDate dateEnrolled;
 
     @Column(name = "diagnosis_concern")
     private String diagnosisConcern;
@@ -75,16 +76,9 @@ public class AppClientProfile implements Serializable {
     @Column(name = "therapist")
     private String therapist;
 
-    @ElementCollection
-    @CollectionTable(
-            name = "lllc_app_client_schedule",
-            joinColumns = @JoinColumn(name = "app_client_id")
-    )
-    @Column(name = "schedule")
-    private List<String> schedules;
-
-    @Column(length = 1000)
-    private String notesRemarks;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private EnrollmentStatus enrollmentStatus;
 
     @Column(name = "is_active")
     private boolean isActive = true;
@@ -110,15 +104,15 @@ public class AppClientProfile implements Serializable {
 
     @JsonManagedReference("client-session")
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<KidSessionSchedule> sessionSchedules;
+    private List<ClientTherapySchedule> sessionSchedules;
 
     @JsonManagedReference("client-assessment")
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NeurodevelopmentalAssessment> assessments;
+    private List<NeurodevelopmentalAssessmentSchedule> assessments;
 
     @JsonManagedReference("client-assessment-schedule")
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<KidAssessmentSchedule> assessmentSchedules;
+    private List<ClientInitialAssessmentSchedule> assessmentSchedules;
 
     @JsonBackReference("user-client")
     @OneToOne(fetch = FetchType.LAZY)
