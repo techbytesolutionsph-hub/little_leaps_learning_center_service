@@ -16,14 +16,14 @@ public class IdGeneratorUtils {
      * =========================================================
      * USER ID FORMAT
      * =========================================================
-     * LLLC-ADM-0001
-     * LLLC-THR-0001
-     * LLLC-CSM-0001
+     * LLLC-ADM-000001
+     * LLLC-THR-000001
+     * LLLC-CSM-000001
      */
     public String generateEmployeeId(String roleCode, long runningCode) {
 
         return String.format(
-                "%s-%s-%04d",
+                "%s-%s-%06d",
                 COMPANY_PREFIX,
                 roleCode.toUpperCase(),
                 runningCode
@@ -41,7 +41,7 @@ public class IdGeneratorUtils {
         int year = Year.now().getValue();
 
         return String.format(
-                "%s-%d-%04d",
+                "%s-%d-%06d",
                 COMPANY_PREFIX,
                 year,
                 runningCode

@@ -1,4 +1,4 @@
-package ph.com.lllc.dto;
+package ph.com.lllc.dto.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -11,13 +11,13 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientLoginRequest {
+public class StaffLoginRequest {
 
-    @Schema(example = "client")
+    @Schema(example = "superadmin")
     @NotBlank(message = "Username is required")
     private String username;
 
-    @Schema(example = "P@ssw0rd!")
+    @Schema(example = "Password@1234")
     @NotBlank(message = "Password is required")
     private String password;
 }

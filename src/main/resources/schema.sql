@@ -18,6 +18,13 @@ INSERT INTO lllc_app_role_mapping(role, permission_code, description)
 VALUES
 
 -- =====================================================
+-- SUPER_ADMIN
+-- Full system access with permission to manage all modules, users, roles, clients, staff, and configurations
+-- =====================================================
+
+    ('SUPER_ADMIN', 'FULL_ACCESS', 'Full system access with permission to manage all modules'),
+
+-- =====================================================
 -- CASE_MANAGER
 -- All except ADMINISTRATION
 -- =====================================================

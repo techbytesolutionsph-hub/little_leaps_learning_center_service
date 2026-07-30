@@ -59,9 +59,6 @@ public class AppStaffProfile implements Serializable {
     @Column(name = "gender")
     private Gender gender;
 
-    @Column(name = "birth_date")
-    private LocalDate birthDate;
-
     /**
      * Example:
      *
@@ -109,9 +106,6 @@ public class AppStaffProfile implements Serializable {
 
     @Column(name = "specialization")
     private String specialization;
-
-    @Column(name = "notes_remarks", length = 1000)
-    private String notesRemarks;
 
     @Column(name = "creation_date")
     private LocalDate creationDate;

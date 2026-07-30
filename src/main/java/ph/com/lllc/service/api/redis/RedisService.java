@@ -1,4 +1,4 @@
-package ph.com.lllc.service.redis;
+package ph.com.lllc.service.api.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
