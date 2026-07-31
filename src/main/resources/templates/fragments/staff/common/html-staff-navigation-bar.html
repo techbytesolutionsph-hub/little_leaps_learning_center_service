@@ -1,0 +1,130 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <div th:fragment="navigation-bar">
+        <!-- Navigation Bar - START -->
+        <nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" id="fixedNavbar">
+            <div class="container position-relative d-flex justify-content-center align-items-center">
+
+                <!-- Burger Button: absolute top-left -->
+                <button class="navbar-toggler position-absolute start-0 top-0 mt-2 ms-2" type="button" id="burgerToggle">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Centered Brand -->
+                <a class="navbar-brand mx-auto text-center"
+                   th:href="${#authorization.expression('isAuthenticated()')}
+                     ? @{/lllc/staff/dashboard} : @{/telatak/shop/home}">
+
+                    <img src="https://res.cloudinary.com/dx8es7rbm/image/upload/v1785479530/uw3va3ixrtfyry1fxohi.png" alt="lllc" style="width: 100px;">
+                </a>
+
+                <!-- Desktop Nav (aligned right in container) -->
+                <div class="collapse navbar-collapse justify-content-end">
+
+                    <!-- Left-side nav links -->
+                    <ul class="custom-navbar-nav navbar-nav me-auto mb-2 mb-md-0">
+                        <!-- Common pages -->
+                        <th:block th:if="${page} == 'seller'">
+                            <li th:class="'nav-item' + (${nav} == 'dashboard' ? ' active' : '')" >
+                                <a class="nav-link" th:href="@{/telatak/seller/dashboard}">Dashboard</a>
+                            </li>
+                            <li th:class="'nav-item' + (${nav} == 'orders' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/orders}">Orders</a>
+                            </li>
+                            <li th:class="'nav-item' + (${nav} == 'products' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/products}">Products</a>
+                            </li>
+                            <li th:class="'nav-item' + (${nav} == 'reports' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/reports}">Reports</a>
+                            </li>
+                            <li th:class="'nav-item' + (${nav} == 'finance' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/finance}">Finance</a>
+                            </li>
+
+                            <li th:class="'nav-item' + (${nav} == 'shop' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/reviews}">Reviews</a>
+                            </li>
+                            <li th:class="'nav-item' + (${nav} == 'customize' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/customize-shop}">Customize Shop</a>
+                            </li>
+
+                        </th:block>
+                    </ul>
+
+                    <!-- Right-side icons / dropdown -->
+                    <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0">
+                        <!-- Login page -->
+                        <th:block th:if="${page} == 'login'">
+                            <li th:class="'nav-item' + (${nav} == 'login' ? ' active' : '')">
+                                <a class="nav-link" th:href="@{/telatak/seller/login}">
+                                    <img class="lordicon-shake-once" src="/img/lordicon/login-icon.svg" width="38" height="38" alt="Login">
+                                </a>
+                            </li>
+                            <li th:class="'nav-item' + (${nav} == 'home' ? ' active' : '')">
+<!--                                <a class="nav-link" th:href="@{/telatak/shop/home}">-->
+                                <a class="nav-link" href="https://littleleapslearningcenter.netlify.app">
+                                    <img class="lordicon-shake-once" src="/img/lordicon/homepage-icon.svg" width="38" height="38" alt="Homepage">
+                                </a>
+                            </li>
+                        </th:block>
+
+                        <!-- Customer dropdown -->
+                        <th:block th:if="${page} == 'seller'">
+                            <li class="nav-item dropdown text-end position-relative">
+                                <a href="#" class="nav-link d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                   id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi-bell fa-2x"></i>
+                                    <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle rounded-pill bg-danger"
+                                          style="width: 14px; height: 14px; font-size: 0.6rem; line-height: 14px; margin-left: 10px;
+                                            margin-top: -10px; display: flex; align-items: center; justify-content: center;"> 0
+                                    </span>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-end text-xsmall" id="notifList"
+                                    style="margin-top: 15px; width: 235px; font-size: 0.45rem;">
+                                    <!-- Notifications will be inserted here dynamically -->
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown text-end position-relative">
+                                <a href="#" class="nav-link d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                                   id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="ri-user-line fa-2x"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end text-xsmall" aria-labelledby="userDropdown" style="margin-top: 15px;">
+                                    <!-- User first name inside UL -->
+                                    <li class="px-3 py-2 d-flex align-items-center">
+                                        <!-- User Icon -->
+                                        <div style="width: 20px; height: 20px; background-color: #000000; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 10px;">
+                                            <i class="bi-person-fill"></i>
+                                        </div>
+                                        <!-- User Name -->
+                                        <div sec:authorize="isAuthenticated()">
+                                            <span sec:authentication="principal.username" class="fw-semibold" style="font-size: 11px;"></span>
+                                        </div>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-color-gray" id="sign-out-page">Logout</a></li>
+                                </ul>
+                            </li>
+                        </th:block>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Navigation Bar - END -->
+    </div>
+</html>

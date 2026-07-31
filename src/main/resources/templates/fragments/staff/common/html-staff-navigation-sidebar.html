@@ -1,0 +1,74 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="mobile-sidebar">
+        <!-- Mobile Sidebar - START -->
+        <div id="mobile-sidenav" class="mobile-sidenav">
+            <ul class="sidenav-links">
+                <!-- If login page is active -->
+                <th:block th:if="${page} == 'login'">
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'home' ? ' active' : '')" th:href="@{/telatak/shop/home}">
+                            <i class="bi bi-house-door mr-2"></i>Home
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'login' ? ' active' : '')" th:href="@{/telatak/seller/login}">
+                            <i class="bi bi-box-arrow-in-right mr-2"></i>Login
+                        </a>
+                    </li>
+                </th:block>
+
+                <!-- Otherwise, show normal links -->
+                <th:block th:if="${page} == 'seller'">
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'dashboard' ? ' active' : '')" th:href="@{/telatak/seller/dashboard}">
+                            <i class="bi bi-speedometer2 mr-2"></i>Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'products' ? ' active' : '')" th:href="@{/telatak/seller/products}">
+                            <i class="bi bi-box-seam mr-2"></i>Products
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'promo' ? ' active' : '')" th:href="@{/telatak/seller/orders}">
+                            <i class="bi bi-bag-check mr-2"></i>Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'marketplace' ? ' active' : '')" th:href="@{/telatak/seller/reports}">
+                            <i class="bi bi-bar-chart-line mr-2"></i>Reports
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'finance' ? ' active' : '')" th:href="@{/telatak/seller/finance}">
+                            <i class="bi bi-wallet2 mr-2"></i>Finance
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'shop' ? ' active' : '')" th:href="@{/telatak/seller/reviews}">
+                            <i class="bi bi-star-fill mr-2"></i>Reviews
+                        </a>
+                    </li>
+                    <li>
+                        <a th:class="'nav-link' + (${page} == 'customize' ? ' active' : '')" th:href="@{/telatak/seller/customize-shop}">
+                            <i class="bi bi-palette mr-2"></i>Customize Shop
+                        </a>
+                    </li>
+                    <li>
+                        <a id="sign-out-page" th:class="'nav-link' + (${page} == 'logout' ? ' active' : '')" href="#">
+                            <i class="bi bi-box-arrow-right mr-2"></i>Logout
+                        </a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+        <!-- Mobile Sidebar - END -->
+    </div>
+</html>

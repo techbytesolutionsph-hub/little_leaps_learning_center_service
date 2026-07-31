@@ -52,9 +52,20 @@ public class AuthenticationService {
             }else{
                 if(encoder.passwordMatches(request.getPassword(), appUser.getPassword())){
 
+                    appUser.setAttempts(0);
+                    appUserRepository.save(appUser);
+
                     staffAuthSuccessHandler.createStaffSession(httpRequest, appUser, request);
 
                     List<String> roles = this.findAllRoles(appUser);
+                    List<String> permissions = this.findAllPermissions(appUser);
+
+                    HttpSession session = httpRequest.getSession();
+
+                    session.setAttribute("USER_ID", appUser.getAppUserId());
+                    session.setAttribute("USERNAME", appUser.getUsername());
+                    session.setAttribute("ROLES", roles);
+                    session.setAttribute("PERMISSIONS", permissions);
 
                     this.saveLoginHistory(uuid, request.getUsername(), httpRequest);
 
@@ -93,6 +104,14 @@ public class AuthenticationService {
                     clientAuthSuccessHandler.createClientSession(httpRequest, appUser, request);
 
                     List<String> roles = this.findAllRoles(appUser);
+                    List<String> permissions = this.findAllPermissions(appUser);
+
+                    HttpSession session = httpRequest.getSession();
+
+                    session.setAttribute("USER_ID", appUser.getAppUserId());
+                    session.setAttribute("USERNAME", appUser.getUsername());
+                    session.setAttribute("ROLES", roles);
+                    session.setAttribute("PERMISSIONS", permissions);
 
                     this.saveLoginHistory(uuid, request.getUsername(), httpRequest);
 
