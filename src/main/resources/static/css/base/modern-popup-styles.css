@@ -73,36 +73,46 @@ lord-icon{
 }
 
 .popup-btn-cancel{
-    background: #f87171;
+    background: linear-gradient(to bottom, #8A96A8 0%, #6E7F95 55%, #5E6F84 100%);
+    border-color: #4F5E73;
     color: #fff;
 }
 
 .popup-btn-cancel:hover{
-    background: #fca5a5;
-    color: #7a1113;
+    background: linear-gradient(to bottom, #8A96A8 0%, #6E7F95 55%, #5E6F84 100%);
+    transform: translateY(-2px);
+    border-color: #4F5E73;
+    color: #fff;
 }
 
 .popup-btn-confirm{
-    background:linear-gradient(135deg,#f9bf29,#f59e0b);
-    color:#fff;
-    box-shadow:0 10px 24px rgba(249,191,41,.28);
+    background: linear-gradient(135deg, #00A8AE, #007E83);
+    border-color: #007E83;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba(0, 151, 157, .28);
+    transition: all .2s ease;
 }
 
 .popup-btn-confirm:hover{
-    transform:translateY(-2px);
-    box-shadow:0 14px 28px rgba(249,191,41,.38);
-    color: #000000;
+    background: linear-gradient(135deg, #00B5BC, #00979D);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0, 151, 157, .38);
+    color: #fff;
 }
 
 .popup-btn-ok{
-    background: #7a1113;
-    color: #ffffff;
-    box-shadow: 0 8px 20px rgba(122, 17, 19, 0.25);
+    background: linear-gradient(135deg, #00A8AE, #007E83);
+    border-color: #007E83;
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 151, 157, 0.28);
+    transition: all .2s ease;
 }
 
 .popup-btn-ok:hover{
-    background: linear-gradient(135deg,#f9bf29,#f59e0b);
-    color: #000000;
+    background: linear-gradient(135deg, #00B5BC, #00979D);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 151, 157, 0.38);
 }
 
 @keyframes fadeIn{

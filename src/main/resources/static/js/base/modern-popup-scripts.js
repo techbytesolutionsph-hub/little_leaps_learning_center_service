@@ -206,7 +206,7 @@ function showConfirmPopup(title, message, onConfirm = null, ...params) {
 
     const icon = {
         src: "https://cdn.lordicon.com/kthelypq.json",
-        colors: "primary:#7a1113,secondary:#f9bf29"
+        colors: "primary:#00979D,secondary:#B0DCDE"
     };
 
     let popup = $(".modern-popup-overlay");

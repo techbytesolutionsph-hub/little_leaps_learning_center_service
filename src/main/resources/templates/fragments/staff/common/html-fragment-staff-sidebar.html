@@ -33,7 +33,7 @@
                 </a>
             </li>
 
-            <li class="nav-item"  th:classappend="${nav == 'client'} ? ' active'">
+            <li class="nav-item"  th:classappend="${nav == 'clients'} ? ' active'">
                 <a class="nav-link" th:href="@{/app/portal/client-management}">
                     <i class="fas fa-users"></i>
                     <span>Client Management</span>
@@ -44,7 +44,7 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarScheduling"
                    aria-expanded="true" aria-controls="calendarScheduling">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>Calendar & Scheduling</span>
+                    <span>Client Calendar</span>
                 </a>
                 <div id="calendarScheduling" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
@@ -104,11 +104,20 @@
                 </div>
             </li>
 
-            <li class="nav-item"  th:classappend="${nav == 'management'} ? ' active'">
-                <a class="nav-link" th:href="@{/app/portal/client-management}">
+            <li class="nav-item" th:classappend="${nav == 'management'} ? ' active'">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaffManagement"
+                   aria-expanded="true" aria-controls="collapseStaffManagement">
                     <i class="fas fa-user-tie"></i>
                     <span>Staff Management</span>
                 </a>
+                <div id="collapseStaffManagement" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Staff Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/billing}">Add Staff/Employee</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/outstanding-balance}">Staff Attendance</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/financial-report}">Staff Schedule</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->

@@ -42,6 +42,20 @@ public class PortalViewController {
         return "staff/dashboard/index";
     }
 
+    @GetMapping(value = "/client-management")
+    public String clientManagementPage(Model model) {
+        this.setupPage(model, "clients", "Client Management");
+
+        return "staff/clients/index";
+    }
+
+    @GetMapping(value = "/client-management/add-client")
+    public String addClientPage(Model model) {
+        this.setupPage(model, "clients", "Add Client");
+
+        return "staff/clients/add/index";
+    }
+
 
     private void setupPage(Model model, String nav, String pageTitle) {
         model.addAttribute("page", "seller");

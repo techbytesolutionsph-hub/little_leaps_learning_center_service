@@ -1,0 +1,46 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-client-management-main">
+        <!-- Client Management - START -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <img src="/img/lordicon/little-leap-kids-icon.svg" width="24" height="24" class="mr-2" alt="Homepage"> Client Records
+                </h6>
+                <a th:href="@{/app/portal/client-management/add-client}"
+                   class="btn-glossy-teal d-flex justify-content-center align-items-center"
+                   id="add-client-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add Client
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="clientTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client Name</th>
+                            <th>Date Enrolled</th>
+                            <th>Guardian/Parent Name</th>
+                            <th>Diagnosis</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Client Management - END -->
+    </div>
+</html>
