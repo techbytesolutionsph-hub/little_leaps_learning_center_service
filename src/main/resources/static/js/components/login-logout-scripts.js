@@ -27,14 +27,14 @@ $(document).ready(function () {
         }
     }
 
-    $(document).on("click", "#seller-sign-out-page", function (e) {
+    $(document).on("click", "#staff-sign-out-page", function (e) {
         e.preventDefault();
-        handleSignOut(sellerLogoutAndRedirect);
+        handleSignOut(staffLogoutAndRedirect);
     });
 
-    $(document).on("click", "#customer-sign-out-page", function (e) {
+    $(document).on("click", "#client-sign-out-page", function (e) {
         e.preventDefault();
-        handleSignOut(customerLogoutAndRedirect);
+        handleSignOut(clientLogoutAndRedirect);
     });
 
 });
@@ -57,14 +57,14 @@ function showLogoutLoader() {
 }
 
 /* =========================
-   Seller Logout
+   Staff Logout
 ========================= */
-function sellerLogoutAndRedirect() {
+function staffLogoutAndRedirect() {
 
     showLogoutLoader();
 
     setTimeout(function () {
-        fetch("/api/v1/auth/seller/logout", {
+        fetch("/api/v1/auth/staff/logout", {
             method: "POST",
             credentials: "include"
         })
@@ -74,20 +74,20 @@ function sellerLogoutAndRedirect() {
             })
             .catch(err => console.error("Error during logout:", err))
             .finally(() => {
-                window.location.replace("/telatak/seller/login");
+                window.location.replace("/app/portal/login");
             });
     }, 2000);
 }
 
 /* =========================
-   Customer Logout
+   Client Logout
 ========================= */
-function customerLogoutAndRedirect() {
+function clientLogoutAndRedirect() {
 
     showLogoutLoader();
 
     setTimeout(function () {
-        fetch("/api/v1/auth/customer/logout", {
+        fetch("/api/v1/auth/client/logout", {
             method: "POST",
             credentials: "include"
         })
@@ -97,7 +97,7 @@ function customerLogoutAndRedirect() {
             })
             .catch(err => console.error("Error during logout:", err))
             .finally(() => {
-                window.location.replace("/telatak/customer/login");
+                window.location.replace("/lllc/client/login");
             });
     }, 2000);
 }

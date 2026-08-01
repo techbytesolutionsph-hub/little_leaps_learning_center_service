@@ -40,7 +40,7 @@ public class AuthenticationService {
     private final LoggingService loggingService;
     private final BCryptUtils encoder;
 
-    public LoginResponse staffLogin(String uuid, StaffLoginRequest request,
+    public LoginResponse portalLogin(String uuid, PortalLoginRequest request,
                                      HttpServletRequest httpRequest) throws ServiceException {
 
         AppUser appUser = appUserRepository.findByUsername(request.getUsername());
@@ -69,7 +69,7 @@ public class AuthenticationService {
 
                     this.saveLoginHistory(uuid, request.getUsername(), httpRequest);
 
-                    return StaffLoginResponse.builder()
+                    return PortalLoginResponse.builder()
                             .success(Boolean.TRUE)
                             .message("Login successfully!")
                             .timestamp(LocalDateUtils.getLocalDateTime())

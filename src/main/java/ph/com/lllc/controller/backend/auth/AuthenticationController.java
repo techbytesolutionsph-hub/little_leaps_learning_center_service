@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ph.com.lllc.dto.auth.ClientLoginRequest;
 import ph.com.lllc.dto.auth.LoginResponse;
-import ph.com.lllc.dto.auth.StaffLoginRequest;
+import ph.com.lllc.dto.auth.PortalLoginRequest;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.auth.AuthenticationService;
@@ -48,19 +48,19 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.logout(uuid, false, httpRequest));
     }
 
-    @Operation(summary = "Staff Login")
-    @PostMapping("/staff/login")
-    public ResponseEntity<LoginResponse> staffLogin(
-            @Valid @RequestBody StaffLoginRequest request,
+    @Operation(summary = "Portal Login")
+    @PostMapping("/portal/login")
+    public ResponseEntity<LoginResponse> portalLogin(
+            @Valid @RequestBody PortalLoginRequest request,
             HttpServletRequest httpRequest) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "StaffLoginRequest : " + request.toString());
-        return ResponseEntity.ok(authenticationService.staffLogin(uuid, request, httpRequest));
+        return ResponseEntity.ok(authenticationService.portalLogin(uuid, request, httpRequest));
     }
 
-    @Operation(summary = "Staff Logout")
-    @PostMapping("/staff/logout")
-    public ResponseEntity<CommonResponse> sellerLogout(
+    @Operation(summary = "Portal Logout")
+    @PostMapping("/portal/logout")
+    public ResponseEntity<CommonResponse> portalLogout(
             HttpServletRequest httpRequest) {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "Logout staff!");

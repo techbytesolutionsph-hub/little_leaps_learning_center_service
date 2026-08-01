@@ -29,26 +29,49 @@ $(document).ready(function () {
     function submitSellerLogin(loginRequest, errorDiv) {
         errorDiv.text("").hide();
 
-        fetch("/api/v1/auth/staff/login", {
+        setLoginLoading(true);
+
+        fetch("/api/v1/auth/portal/login", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type":"application/json"
+            },
             body: JSON.stringify(loginRequest),
-            credentials: "include"
+            credentials:"include"
         })
-        .then(response => {
-            console.log(response);
-            if (!response.ok) {
-                return response.json().then(data => {
-                    return Promise.reject(data?.message || "Login failed");
-                });
-            }
-            return response.json();
-        })
-        .then(data => {
-            redirectPage("/lllc/staff/dashboard");
-        })
-        .catch(error => {
-            showToast("error", "Error", error);
-        });
+            .then(response => {
+                if(!response.ok){
+                    return response.json().then(data=>{
+                        return Promise.reject(data?.message || "Login failed");
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.location.href = "/app/portal/dashboard";
+            })
+            .catch(error => {
+                setLoginLoading(false);
+                showToast("error","Error",error);
+            });
     }
 });
+
+function setLoginLoading(isLoading){
+
+    const btn = $("#login-btn");
+    const spinner = $("#login-spinner");
+    const text = $("#login-btn-text");
+
+    if(isLoading){
+        btn.prop("disabled", true);
+
+        spinner.show();
+        text.text("Signing in...");
+    }else{
+        btn.prop("disabled", false);
+
+        spinner.hide();
+        text.text("Login");
+    }
+}

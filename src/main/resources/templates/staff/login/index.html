@@ -8,7 +8,7 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <head>
         <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
-        <title>Little Leaps Learning Center | Staff Login</title>
+        <title>Staff Login - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/common/html-fragment-common-css :: commoncss}"></th:block>
         <link rel="stylesheet" th:href="@{/css/staff/login/lllc-staff-login-styles.css}"/>
     </head>
@@ -17,11 +17,11 @@
             <div class="top-fixed-container">
 
                 <!-- Navigation Bar - Start -->
-                <th:block th:insert="~{fragments/staff/common/html-staff-navigation-bar :: navigation-bar}"></th:block>
+                <th:block th:insert="~{fragments/staff/common/html-navigation-staff-bar :: navigation-bar}"></th:block>
                 <!-- Navigation Bar - End -->
 
                 <!-- Mobile Sidebar - Start -->
-                <th:block th:insert="~{fragments/staff/common/html-staff-navigation-sidebar :: mobile-sidebar}"></th:block>
+                <th:block th:insert="~{fragments/staff/common/html-navigation-staff-sidebar :: mobile-sidebar}"></th:block>
                 <!-- Mobile Sidebar - End -->
             </div>
         </div>
@@ -42,7 +42,7 @@
 
                                 <div class="card-body">
                                     <form>
-                                        <h5 class="login-header mb-3 custom-header-color-black">Sign in to LLLC Staff Portal</h5>
+                                        <h5 class="login-header mb-3 custom-header-color-black">Sign in to LLLC Portal</h5>
                                         <h5 class="login-sub-header mb-3 custom-header-color-black">Enter your username and password to access your account</h5>
 
                                         <!-- ERROR MESSAGE -->
@@ -64,7 +64,19 @@
                                         </div>
 
                                         <div class="pt-1 mb-4 d-flex justify-content-center align-items-center">
-                                            <button type="submit" class="btn btn-secondary d-flex justify-content-center align-items-center" id="login-btn">Login</button>
+                                            <button type="submit"
+                                                    class="btn btn-secondary d-flex justify-content-center align-items-center"
+                                                    id="login-btn">
+
+                                                <span id="login-spinner"
+                                                      class="spinner-border spinner-border-sm mr-2"
+                                                      style="display:none;"
+                                                      role="status"
+                                                      aria-hidden="true"></span>
+
+                                                <span id="login-btn-text">Login</span>
+
+                                            </button>
                                         </div>
 
                                         <div class="text-center custom-text-black text-xsmall">
@@ -88,7 +100,7 @@
         </div>
         <!-- End Login Section -->
 
-        <th:block th:insert="~{fragments/staff/common/html-staff-fragment-common-js :: commonjs}"></th:block>
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
         <script th:src="@{/js/staff/login/lllc-staff-login-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

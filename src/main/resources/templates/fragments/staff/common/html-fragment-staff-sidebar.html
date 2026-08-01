@@ -1,0 +1,200 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-common-sidebar(nav)">
+        <!-- Sidebar - Start -->
+        <ul class="navbar-nav bg-gradient-mint-green sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Centered Sidebar Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+               th:href="${#authorization.expression('isAuthenticated()')}
+                     ? @{/app/portal/dashboard}
+                     : @{/}">
+
+                <div class="sidebar-brand-icon">
+                    <img src="/img/lordicon/little-leap-kids-icon.svg" width="40" height="40" alt="Homepage">
+                </div>
+                <div class="sidebar-brand-text mx-3">Little Leaps</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item"  th:classappend="${nav == 'dashboard'} ? ' active'">
+                <a class="nav-link" th:href="@{/app/portal/dashboard}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item"  th:classappend="${nav == 'client'} ? ' active'">
+                <a class="nav-link" th:href="@{/app/portal/client-management}">
+                    <i class="fas fa-users"></i>
+                    <span>Client Management</span>
+                </a>
+            </li>
+
+            <li class="nav-item"  th:classappend="${nav == 'calendar'} ? ' active'">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarScheduling"
+                   aria-expanded="true" aria-controls="calendarScheduling">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendar & Scheduling</span>
+                </a>
+                <div id="calendarScheduling" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Calendar Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/calendar/assessment-calendar}">Assessment Calendar</a>
+                        <a class="collapse-item" th:href="@{/app/portal/calendar/session-schedule}">Session Schedule</a>
+                        <a class="collapse-item" th:href="@{/app/portal/calendar/client-attendance}">Client Attendance</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item"  th:classappend="${nav == 'reports'} ? ' active'">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#caseManagement"
+                   aria-expanded="true" aria-controls="caseManagement">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Case Management</span>
+                </a>
+                <div id="caseManagement" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Case Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/case-management/assign-client}">Assigned Clients</a>
+                        <a class="collapse-item" th:href="@{/app/portal/case-management/progress-report}">Progress Report</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item"  th:classappend="${nav == 'therapist'} ? ' active'">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#behavioralTherapy"
+                   aria-expanded="true" aria-controls="behavioralTherapy">
+                    <i class="fas fa-user-md"></i>
+                    <span>Behavioral Therapy</span>
+                </a>
+                <div id="behavioralTherapy" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Therapy Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/schedule}">My Schedule</a>
+                        <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/assign-client}">Assigned Clients</a>
+                        <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/attendance}">My Attendance</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item" th:classappend="${nav == 'finance'} ? ' active'">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinance"
+                   aria-expanded="true" aria-controls="collapseFinance">
+                    <i class="bi bi-wallet2"></i>
+                    <span>Finance & Billing</span>
+                </a>
+                <div id="collapseFinance" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Financial Operations:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/billing}">Billing</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/payments}">Payments</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/outstanding-balance}">Outstanding Balances</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/financial-report}">Financial Reports</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item"  th:classappend="${nav == 'management'} ? ' active'">
+                <a class="nav-link" th:href="@{/app/portal/client-management}">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Staff Management</span>
+                </a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                   aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Utilities</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                     data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Portal Utilities:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/portal-utilities}">Portal Utilities</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Information
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>Profile</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" th:href="@{/app/portal/profile/account-profile}">Account Profile</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Security
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                   aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Administration</span>
+                </a>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">User Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/settings/change-password}">Change Password</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            <div class="sidebar-card d-none d-lg-flex">
+                <p class="text-center text-xs mb-0">
+                    <strong>&copy; <script>document.write(new Date().getFullYear());</script> Little Leaps Learning Center. Powered by TechByte Solutions.</strong>
+                </p>
+            </div>
+        </ul>
+        <!-- Sidebar - End -->
+    </div>
+</html>

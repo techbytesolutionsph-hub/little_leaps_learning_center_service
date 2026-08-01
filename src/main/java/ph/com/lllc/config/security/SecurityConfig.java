@@ -25,7 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import ph.com.lllc.config.properties.SecurityPropertiesConfig;
 import ph.com.lllc.enums.UserRole;
 import ph.com.lllc.service.security.client.ClientUserDetailsService;
-import ph.com.lllc.service.security.staff.StaffUserDetailsService;
+import ph.com.lllc.service.security.staff.PortalUserDetailsService;
 
 import java.io.IOException;
 import java.util.stream.Stream;
@@ -34,7 +34,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final StaffUserDetailsService staffUserDetailsService;
+    private final PortalUserDetailsService portalUserDetailsService;
     private final ClientUserDetailsService clientUserDetailsService;
     private final SecurityPropertiesConfig securityPropertiesConfig;
 
@@ -48,7 +48,7 @@ public class SecurityConfig {
     @Bean
     @Primary
     public AuthenticationManager staffAuthenticationManager(PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(staffUserDetailsService);
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(portalUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return new ProviderManager(authProvider);
     }
@@ -67,8 +67,8 @@ public class SecurityConfig {
         String[] publicPaths = Stream.of(
                 securityPropertiesConfig.getSwaggerPath(),
                 securityPropertiesConfig.getStaticPath(),
-                securityPropertiesConfig.getInternalPath(),
-                securityPropertiesConfig.getDefaultPath()
+                securityPropertiesConfig.getInternalPath()
+//                securityPropertiesConfig.getDefaultPath(),
         ).flatMap(Stream::of).toArray(String[]::new);
 
         http

@@ -1,0 +1,35 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <div th:fragment="staff-common-main-navbar">
+        <!-- Main NavBar - Start -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" aria-label="Main navigation">
+
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Nav Item - Alerts -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-navbar-alerts :: staff-common-navbar-alerts}"></th:block>
+
+                <!-- Nav Item - Messages -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-navbar-messages :: staff-common-navbar-messages}"></th:block>
+
+                <div class="topbar-divider d-none d-sm-block"></div>
+
+                <!-- Nav Item - User Information -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-navbar-user-info :: staff-common-navbar-user-info}"></th:block>
+            </ul>
+        </nav>
+        <!-- Main NavBar - End -->
+    </div>
+</html>

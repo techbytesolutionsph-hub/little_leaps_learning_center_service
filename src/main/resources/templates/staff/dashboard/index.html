@@ -1,0 +1,50 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
+        <title>Staff Dashboard - Little Leaps Learning Center</title>
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
+        <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+    </head>
+    <body class="container-fluid p-0" id="page-top">
+        <div id="wrapper">
+            <!-- Sidebar - Start -->
+            <th:block th:insert="~{fragments/staff/common/html-fragment-staff-sidebar :: staff-common-sidebar(${nav})}"></th:block>
+            <!-- Sidebar - End -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+
+                    <!-- Main Navigation Bar - Start -->
+                    <th:block th:insert="~{fragments/staff/common/html-fragment-staff-main-navbar :: staff-common-main-navbar}"></th:block>
+                    <!-- Main Navigation Bar - End -->
+
+                    <div class="container-fluid">
+
+                        <!-- Page Heading and Breadcrumbs - Start -->
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <!-- Page Heading and Breadcrumbs - End -->
+
+                        <!-- Dashboard Main - Start -->
+<!--                        <th:block th:insert="~{fragments/seller/dashboard/html-fragment-dashboard-main :: fragment-dashboard-main(${metrics}, ${incomingOrders})}"></th:block>-->
+                        <!-- Dashboard Main - End -->
+                    </div>
+                </div>
+
+                <!-- Footer - Start -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-footer :: staff-common-footer}"></th:block>
+                <!-- Footer - End -->
+
+            </div>
+        </div>
+
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
+<!--        <script th:src="@{/js/staff/dashboard/lllc-staff-dashboard-scripts.js}" type="text/javascript"></script>-->
+    </body>
+</html>

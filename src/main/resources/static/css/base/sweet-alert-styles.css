@@ -1,0 +1,219 @@
+.custom-swal-popup {
+	width: 350px;
+	height: 250px;
+	padding: 2rem !important;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.custom-swal-popup .swal2-html-container {
+	width: 100% !important;
+	padding: 0;
+	box-sizing: border-box;
+	margin-top: -20px;
+}
+
+.swal2-html-container {
+	width: 100%;
+	text-align: center;
+	white-space: normal;
+	word-wrap: break-word;
+}
+
+.custom-swal-popup-confirm {
+	width: 330px;
+	height: 210px;
+	padding: 2rem !important;
+	border-radius: 12px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+/* ✅ FIX: Correct way to resize warning icon */
+.swal2-icon.swal2-warning {
+	width: 60px !important;
+	height: 60px !important;
+}
+
+/* Extra safety: Prevent double exclamation (!!) */
+.swal2-icon.swal2-warning::before,
+.swal2-icon.swal2-warning::after {
+	content: "" !important;
+}
+
+.swal2-title {
+	font-size: 1.4rem;
+	margin-top: -30px;
+	margin-bottom: 0.75rem;
+}
+
+.swal2-actions {
+	margin-top: -10px;
+	padding-top: 1rem;
+	justify-content: center;
+}
+
+.swal2-icon,
+.swal2-success {
+	margin-top: -15px;
+}
+
+.swal2-cancel, .swal2-confirm {
+	margin-top: 15px;
+}
+
+.swal2-html-container {
+	font-size: 0.9rem;
+	margin-top: -30px;
+}
+
+#swal2-html-container {
+	font-size: 0.9rem;
+}
+
+#swal2-title {
+	font-size: 1.4rem;
+	margin-top: -20px;
+	margin-bottom: 0.75rem;
+}
+
+.swal2-cancel swal2-styled {
+	width: 80px;
+	height: 40px;
+}
+
+.swal2-confirm, #custom-cancel-button {
+	background: linear-gradient(135deg, #f9bf29, #f5a623);
+	color: #fff;
+	font-size: 14px;
+	width: 80px;
+	height: 40px;
+	margin-top: -80px;
+	margin-bottom: -80px;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.custom-ok-button {
+	background: linear-gradient(135deg, #f9bf29, #f5a623);
+	color: #fff;
+	font-size: 14px;
+	width: 80px;
+	height: 40px;
+	margin-top: -80px;
+	margin-bottom: -90px;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.custom-ok-button:hover {
+	background: linear-gradient(135deg, #f5a623, #f9bf29);
+	transform: scale(1.05);
+}
+
+.custom-confirm-yes-button {
+	background: linear-gradient(135deg, rgb(240, 110, 110), #d33);
+	color: #fff;
+	font-size: 14px;
+	width: 80px;
+	height: 40px;
+	margin-top: -80px;
+	margin-bottom: -90px;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.custom-confirm-yes-button:hover {
+	background: linear-gradient(135deg, rgb(240, 110, 110), #d33);
+	transform: scale(1.05);
+}
+
+.custom-info-ok-button {
+	background: linear-gradient(135deg, #5fa5e7, #3085d6);
+	color: #fff;
+	font-size: 14px;
+	width: 80px;
+	height: 40px;
+	margin-top: -80px;
+	margin-bottom: -90px;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.custom-info-ok-button:hover {
+	background: linear-gradient(135deg, #5fa5e7, #3085d6);
+	transform: scale(1.05);
+}
+
+.custom-confirm-cancel-button {
+	background: linear-gradient(135deg, #5fa5e7, #3085d6);
+	color: #fff;
+	font-size: 14px;
+	width: 80px;
+	height: 40px;
+	margin-top: -90px;
+	margin-bottom: -100px;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.custom-confirm-cancel-button:hover {
+	background: linear-gradient(135deg, #5fa5e7, #3085d6);
+	transform: scale(1.05);
+}
+
+.custom-error-ok-button {
+	background: linear-gradient(135deg, rgb(240, 110, 110), #d33);
+	color: #fff;
+	font-size: 14px;
+	width: 80px;
+	height: 40px;
+	margin-top: -80px;
+	margin-bottom: -90px;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s ease;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.custom-error-ok-button:hover {
+	background: linear-gradient(135deg, rgb(240, 110, 110), #d33);
+	transform: scale(1.05);
+}

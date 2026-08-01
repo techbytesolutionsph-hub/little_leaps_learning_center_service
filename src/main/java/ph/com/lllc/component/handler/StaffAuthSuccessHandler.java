@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Component;
-import ph.com.lllc.dto.auth.StaffLoginRequest;
+import ph.com.lllc.dto.auth.PortalLoginRequest;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.service.util.logging.LoggingService;
 
@@ -26,7 +26,7 @@ public class StaffAuthSuccessHandler {
     private final LoggingService loggingService;
 
     public void createStaffSession(HttpServletRequest httpRequest,
-                                    AppUser appUser, StaffLoginRequest request) {
+                                    AppUser appUser, PortalLoginRequest request) {
 
         HttpSession session = httpRequest.getSession();
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.enums.UserRole;
 import ph.com.lllc.repository.AppUserRepository;
-import ph.com.lllc.service.security.staff.StaffUserDetails;
 
 @Slf4j
 @Service
