@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Request payload for registering a staff account")
-public class RegisterStaffRequest {
+public class CreateEmployeeRequest {
 
     @Schema(
             description = "Unique username for login",
@@ -105,10 +105,9 @@ public class RegisterStaffRequest {
             example = "ADMINISTRATOR",
             allowableValues = {
                     "ADMINISTRATOR",
-                    "BUSINESS_OWNER",
-                    "CASE_MANAGER",
-                    "SECRETARY",
-                    "BEHAVIORAL_THERAPIST"
+                    "PARTNERS",
+                    "EMPLOYEE",
+                    "EMPLOYEE"
             }
     )
     private StaffType staffType;

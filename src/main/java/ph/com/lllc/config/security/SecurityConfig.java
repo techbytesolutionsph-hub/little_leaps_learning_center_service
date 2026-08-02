@@ -67,8 +67,8 @@ public class SecurityConfig {
         String[] publicPaths = Stream.of(
                 securityPropertiesConfig.getSwaggerPath(),
                 securityPropertiesConfig.getStaticPath(),
-                securityPropertiesConfig.getInternalPath()
-//                securityPropertiesConfig.getDefaultPath(),
+                securityPropertiesConfig.getInternalPath(),
+                securityPropertiesConfig.getErrorPath()
         ).flatMap(Stream::of).toArray(String[]::new);
 
         http
@@ -146,8 +146,8 @@ public class SecurityConfig {
                         .permitAll()
                         .requestMatchers(securityPropertiesConfig.getStaffPath())
                         .hasAnyRole(UserRole.SUPER_ADMIN.name(), UserRole.CASE_MANAGER.name(),
-                                UserRole.THERAPIST.name(), UserRole.ACCOUNTING.name(),
-                                UserRole.EMPLOYEE.name())
+                                UserRole.THERAPIST.name(), UserRole.SECRETARY.name(),
+                                UserRole.ACCOUNTING.name(), UserRole.EMPLOYEE.name())
                         .anyRequest()
                         .authenticated()
                 )

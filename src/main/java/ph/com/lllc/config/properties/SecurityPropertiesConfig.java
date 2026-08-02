@@ -12,6 +12,7 @@ public class SecurityPropertiesConfig {
     private String[] swaggerPath;
     private String[] staticPath;
     private String[] internalPath;
+    private String[] errorPath;
     private String[] defaultPath;
 
     private String[] clientPath;

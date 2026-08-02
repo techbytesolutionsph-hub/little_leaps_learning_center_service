@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title th:text="${title}">Error Page - Little Leaps Learning Center</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: "Inter", Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                background: white;
+            }
+
+            .container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                max-width: 900px;
+                width: 100%;
+            }
+
+            .message {
+                max-width: 450px;
+                text-align: left;
+            }
+
+            h1 {
+                font-size: 4rem;
+                margin: 0;
+                color: #555555;
+                font-weight: 900;
+            }
+
+            h4 {
+                font-size: 2rem;
+                margin: 10px 0 0 0;
+                color: #666666;
+                font-weight: 900;
+            }
+
+            p {
+                font-size: 1.2rem;
+                margin-top: 10px;
+                opacity: 0.8;
+                color: #777777;
+            }
+
+            .btn {
+                margin-top: 25px;
+                display: inline-block;
+                padding: 12px 22px;
+                background: #f9bf29;
+                color: #000;
+                text-decoration: none;
+                border-radius: 8px;
+                font-weight: 600;
+                transition: 0.2s ease;
+            }
+
+            .btn:hover {
+                background: #e0a622;
+            }
+
+            svg {
+                width: 70%;
+                max-width: 300px;
+                height: auto;
+                pointer-events: none; /* allow clicks through */
+            }
+
+            /* Tail waggle animation */
+            .tail {
+                transform-origin: 170px 250px; /* pivot at tail base */
+                animation: waggle 1.2s ease-in-out infinite alternate;
+            }
+
+            @keyframes waggle {
+                0% { transform: rotate(0deg); }
+                50% { transform: rotate(15deg); }
+                100% { transform: rotate(-15deg); }
+            }
+
+            /* MOBILE RESPONSIVE */
+            @media (max-width: 480px) {
+                .container {
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                }
+
+                .message {
+                    max-width: 90%;
+                    margin-top: 20px;
+                    order: 2;
+                    text-align: center;
+                }
+
+                svg {
+                    width: 80%;
+                    max-width: 220px;
+                    order: 1;
+                }
+
+                h1 { font-size: 3.2rem; }
+                h4 { font-size: 1.5rem; }
+                p { font-size: 1rem; }
+                .btn { padding: 10px 18px; font-size: 0.95rem; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="message">
+                <h1 id="error-code" th:text="${errorCode}">403</h1>
+                <h4 id="error-message" th:text="${errorMessage}">Access Forbidden</h4>
+                <p id="error-description" th:text="${errorDescription}">
+                    Sorry, you do not have permission to access this requested page.
+                </p>
+                <a class="btn btn-sm btn-primary mt-2" id="back-to-home-btn">Back to home</a>
+            </div>
+
+            <!-- Gray Chibi Cat SVG with Both Raised Paws and Wagging Tail -->
+            <svg viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+                <rect width="260" height="300" fill="none"/>
+
+                <!-- Tail -->
+                <path class="tail" d="M180 210 C230 210, 230 260, 170 250"
+                      fill="#a0a0a0" stroke="#222" stroke-width="4" stroke-linecap="round"/>
+
+                <!-- Body -->
+                <ellipse cx="130" cy="200" rx="70" ry="60"
+                         fill="#b0b0b0" stroke="#222" stroke-width="4"/>
+
+                <!-- Belly -->
+                <ellipse cx="130" cy="215" rx="40" ry="35"
+                         fill="#d0d0d0" stroke="#222" stroke-width="3"/>
+
+                <!-- Head -->
+                <circle cx="130" cy="110" r="80"
+                        fill="#b0b0b0" stroke="#222" stroke-width="4"/>
+
+                <!-- Ears -->
+                <path d="M70 60 L95 20 L120 65 Z"
+                      fill="#b0b0b0" stroke="#222" stroke-width="4"/>
+                <path d="M140 65 L165 20 L190 60 Z"
+                      fill="#b0b0b0" stroke="#222" stroke-width="4"/>
+
+                <!-- Inner ears -->
+                <path d="M80 60 L95 32 L110 60 Z"
+                      fill="#d0d0d0" stroke="#222" stroke-width="2"/>
+                <path d="M150 60 L165 32 L180 60 Z"
+                      fill="#d0d0d0" stroke="#222" stroke-width="2"/>
+
+                <!-- Eyes -->
+                <circle cx="100" cy="110" r="12" fill="#222"/>
+                <circle cx="160" cy="110" r="12" fill="#222"/>
+
+                <!-- Blush -->
+                <ellipse cx="85" cy="135" rx="12" ry="7" fill="#f2a3a3" opacity="0.7"/>
+                <ellipse cx="175" cy="135" rx="12" ry="7" fill="#f2a3a3" opacity="0.7"/>
+
+                <!-- Nose -->
+                <path d="M120 140 L140 140 L130 150 Z" fill="#222"/>
+
+                <!-- Mouth -->
+                <path d="M130 150 Q130 160 120 165" stroke="#222" stroke-width="3" fill="none"/>
+                <path d="M130 150 Q130 160 140 165" stroke="#222" stroke-width="3" fill="none"/>
+
+                <!-- Whiskers -->
+                <line x1="55" y1="135" x2="95" y2="133" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+                <line x1="55" y1="145" x2="95" y2="147" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+                <line x1="205" y1="135" x2="165" y2="133" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+                <line x1="205" y1="145" x2="165" y2="147" stroke="#222" stroke-width="3" stroke-linecap="round"/>
+
+                <!-- Left paw (raised chibi paw) -->
+                <ellipse cx="95" cy="190" rx="12" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
+                <circle cx="88" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
+                <circle cx="95" cy="178" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
+                <circle cx="102" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
+
+                <!-- Right paw (raised chibi paw) -->
+                <ellipse cx="165" cy="190" rx="12" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
+                <circle cx="158" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
+                <circle cx="165" cy="178" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
+                <circle cx="172" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
+
+                <!-- Back feet -->
+                <ellipse cx="105" cy="265" rx="18" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
+                <ellipse cx="155" cy="265" rx="18" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
+            </svg>
+        </div>
+    </body>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#back-to-home-btn").on("click", function(e) {
+                e.preventDefault(); // prevent default <a> behavior
+
+                // Get the token from localStorage (or replace with f_getStoreValue if defined)
+                const accessToken = localStorage.getItem("accessToken");
+
+                // Call logout API
+                $.ajax({
+                    url: "/api/v1/auth/portal/logout",
+                    type: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + accessToken,
+                        "Content-Type": "application/json"
+                    },
+                    success: function() {
+                        console.log("Logged out successfully");
+                    },
+                    error: function() {
+                        console.error("Logout failed");
+                    },
+                    complete: function() {
+                        // Clear stored values
+                        localStorage.removeItem("accessToken");
+                        localStorage.removeItem("refreshToken");
+
+                        // Redirect to home
+                        window.location.href = "/app/portal/login";
+                    }
+                });
+            });
+        });
+    </script>
+</html>

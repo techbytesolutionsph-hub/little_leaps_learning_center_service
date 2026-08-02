@@ -64,7 +64,7 @@ function staffLogoutAndRedirect() {
     showLogoutLoader();
 
     setTimeout(function () {
-        fetch("/api/v1/auth/staff/logout", {
+        fetch("/api/v1/auth/portal/logout", {
             method: "POST",
             credentials: "include"
         })

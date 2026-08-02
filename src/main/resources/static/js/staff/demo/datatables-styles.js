@@ -12,6 +12,30 @@ $(document).ready(function() {
     }
   });
 
+  $('#userTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: "No user registration records found"
+    }
+  });
+
+  $('#employeeTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: "No employee registration records found"
+    }
+  });
+
   // $('#sendFundsTable').DataTable({
   //   pageLength: 5,
   //   lengthMenu: [

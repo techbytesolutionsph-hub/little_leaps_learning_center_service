@@ -108,14 +108,14 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaffManagement"
                    aria-expanded="true" aria-controls="collapseStaffManagement">
                     <i class="fas fa-user-tie"></i>
-                    <span>Staff Management</span>
+                    <span>Employee Management</span>
                 </a>
                 <div id="collapseStaffManagement" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Staff Management:</h6>
-                        <a class="collapse-item" th:href="@{/app/portal/finance/billing}">Add Staff/Employee</a>
-                        <a class="collapse-item" th:href="@{/app/portal/finance/outstanding-balance}">Staff Attendance</a>
-                        <a class="collapse-item" th:href="@{/app/portal/finance/financial-report}">Staff Schedule</a>
+                        <h6 class="collapse-header">Employee Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/staff-management/add-employee}">Add Employee</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/outstanding-balance}">Employee Attendance</a>
+                        <a class="collapse-item" th:href="@{/app/portal/finance/financial-report}">Employee Schedule</a>
                     </div>
                 </div>
             </li>
@@ -129,7 +129,7 @@
             </div>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item" th:classappend="${nav == 'utilities'} ? ' active'">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                    aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -175,7 +175,7 @@
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <li class="nav-item" th:classappend="${nav == 'admin'} ? ' active'">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
@@ -183,8 +183,8 @@
                 </a>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">User Management:</h6>
-                        <a class="collapse-item" th:href="@{/app/portal/settings/change-password}">Change Password</a>
+                        <h6 class="collapse-header">Admin Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/admin/user-account}">User Account</a>
                     </div>
                 </div>
             </li>

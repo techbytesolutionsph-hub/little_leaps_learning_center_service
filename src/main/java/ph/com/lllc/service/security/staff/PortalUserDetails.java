@@ -7,8 +7,9 @@ import ph.com.lllc.entity.user.common.AppPermission;
 import ph.com.lllc.entity.user.common.AppRolePermission;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.common.AppUserRole;
-import ph.com.lllc.entity.user.staff.AppStaffProfile;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.Gender;
+import ph.com.lllc.enums.UserRole;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -22,37 +23,51 @@ public class PortalUserDetails implements UserDetails {
     public PortalUserDetails(AppUser user) {
         this.user = user;
 
-        AppStaffProfile staff = (user.getAppStaffProfile() != null
-                && user.getAppStaffProfile().isActive())
-                ? user.getAppStaffProfile()
+        AppEmployeeProfile staff = (user.getAppEmployeeProfile() != null
+                && user.getAppEmployeeProfile().isActive())
+                ? user.getAppEmployeeProfile()
                 : null;
 
         this.staffFirstName = (staff != null)
                 ? staff.getFirstName()
-                : "Staff";
+                : user.getUserRole().stream().anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN)
+                ? "Super Admin" : "Staff";
 
         this.profileImageUrl = this.resolveProfileImage(staff);
     }
 
-    private String resolveProfileImage(AppStaffProfile seller) {
+    private String resolveProfileImage(AppEmployeeProfile staff) {
 
-        if (seller != null
-                && seller.getProfileImageUrl() != null
-                && !seller.getProfileImageUrl().isBlank()) {
-            return seller.getProfileImageUrl();
+        /* Super Admin profile image */
+        if (user.getUserRole().stream()
+                .anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN)
+                && user.getProfileImageUrl() != null
+                && !user.getProfileImageUrl().isBlank()) {
+
+            return user.getProfileImageUrl();
         }
 
-        if (seller != null && seller.getGender() != null) {
+        /* Employee profile image */
+        if (staff != null
+                && staff.getProfileImageUrl() != null
+                && !staff.getProfileImageUrl().isBlank()) {
 
-            if (seller.getGender() == Gender.MALE) {
+            return staff.getProfileImageUrl();
+        }
+
+        /* Default avatar based on employee gender */
+        if (staff != null && staff.getGender() != null) {
+
+            if (staff.getGender() == Gender.MALE) {
                 return "/img/user/default_male_user.svg";
             }
 
-            if (seller.getGender() == Gender.FEMALE) {
+            if (staff.getGender() == Gender.FEMALE) {
                 return "/img/user/default_female_user.svg";
             }
         }
 
+        /* Generic default */
         return "/img/default.png";
     }
 

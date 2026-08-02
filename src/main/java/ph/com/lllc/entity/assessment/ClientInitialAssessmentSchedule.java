@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import ph.com.lllc.entity.user.client.AppClientProfile;
-import ph.com.lllc.entity.user.staff.AppStaffProfile;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.ScheduleStatus;
 
 import java.time.LocalDate;
@@ -61,5 +61,5 @@ public class ClientInitialAssessmentSchedule {
     @JsonBackReference("user-staff")
     @ManyToOne
     @JoinColumn(name = "therapist_id")
-    private AppStaffProfile therapist;
+    private AppEmployeeProfile therapist;
 }

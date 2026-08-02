@@ -7,20 +7,19 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import ph.com.lllc.dto.admin.AppUserResponse;
+import ph.com.lllc.service.api.front.PortalFrontService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(path = "/app/portal")
 public class PortalViewController {
 
-    @GetMapping("/test")
-    @ResponseBody
-    public String test() {
-        return "OK";
-    }
-
+    private final PortalFrontService portalFrontService;
 
     @GetMapping(value = "/login")
     public String loginPage(HttpSession session, Model model){
@@ -54,6 +53,40 @@ public class PortalViewController {
         this.setupPage(model, "clients", "Add Client");
 
         return "staff/clients/add/index";
+    }
+
+    @GetMapping(value = "/staff-management/add-employee")
+    public String addStaffPage(Model model) {
+        this.setupPage(model, "clients", "Add Staff");
+
+        return "staff/management/add-employee/index";
+    }
+
+    @GetMapping(value = "/admin/user-account")
+    public String administrationPage(Model model) {
+        this.setupPage(model, "admin", "User Account");
+
+        List<AppUserResponse> users = portalFrontService.getAllUsers();
+        model.addAttribute("users", users);
+
+        return "staff/admin/index";
+    }
+
+    @GetMapping(value = "/admin/user-account/add-user")
+    public String adminAddUserPage(Model model) {
+        this.setupPage(model, "admin", "Add User");
+
+        return "staff/admin/add-user/index";
+    }
+
+    @GetMapping(value = "/admin/user-account/view-user/{username}")
+    public String adminViewUserPage(Model model, @PathVariable("username") String username) {
+        this.setupPage(model, "admin", "View User");
+
+        AppUserResponse user = portalFrontService.findByUsername(username);
+        model.addAttribute("user", user);
+
+        return "staff/admin/view-user/index";
     }
 
 

@@ -3,10 +3,7 @@ package ph.com.lllc.entity.user.common;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ph.com.lllc.enums.UserRole;
 
 import java.io.Serial;
@@ -15,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "lllc_app_user_role")
 @NoArgsConstructor

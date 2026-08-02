@@ -1,0 +1,67 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-user-account(users)">
+        <!-- Add User - START -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-users mr-2"></i> User Records
+                </h6>
+                <a th:href="@{/app/portal/admin/user-account/add-user}"
+                   class="btn-glossy-teal d-flex justify-content-center align-items-center"
+                   id="add-user-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add User
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="userTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td data-label="ID" th:text="${user.appUserId}">1</td>
+                            <td data-label="Username" th:text="${user.username}">1</td>
+                            <td data-label="Email" th:text="${user.email}">1</td>
+                            <td data-label="Status" th:text="${user.status.name()}">1</td>
+                            <td data-label="Actions" >
+                                <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                    <a th:href="@{|/app/portal/admin/user-account/view-user/${user.username}|}"
+                                       class="btn-glossy-teal action-btn d-flex align-items-center">
+                                        <i class="bi bi-eye mr-1"></i> View
+                                    </a>
+                                    <a th:href="@{|/app/portal/admin/user-account/edit-user/${user.username}|}"
+                                       class="btn-glossy-teal action-btn d-flex align-items-center">
+                                        <i class="bi bi-pen mr-1"></i> Edit
+                                    </a>
+                                    <button type="button"
+                                            class="btn-glossy-teal delete-product-btn action-btn d-flex align-items-center"
+                                            th:data-id="${user.username}"
+                                            th:id="delete-product-btn">
+                                        <i class="bi bi-trash mr-1"></i> Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Add User - END -->
+    </div>
+</html>

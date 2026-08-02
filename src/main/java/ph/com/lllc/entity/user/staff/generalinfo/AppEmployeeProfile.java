@@ -1,4 +1,4 @@
-package ph.com.lllc.entity.user.staff;
+package ph.com.lllc.entity.user.staff.generalinfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -7,26 +7,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.entity.user.staff.address.AppEmployeeAddress;
+import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
+import ph.com.lllc.entity.user.staff.employmentinfo.AppEmploymentInformation;
+import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
+import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
 import ph.com.lllc.enums.Gender;
 import ph.com.lllc.enums.StaffType;
-import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.util.LocalDateUtils;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_staff_profile")
+@Table(name = "lllc_app_employee_profile")
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppStaffProfile implements Serializable {
+public class AppEmployeeProfile implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "staff_id")
-    private Long staffId;
+    @Column(name = "employee_profile_id")
+    private Long id;
 
     @Column(name = "employee_id", unique = true)
     private String employeeId;
@@ -40,57 +46,33 @@ public class AppStaffProfile implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "date_of_birth")
+    private LocalDate dateOfBirth;
+
+    @Column(name = "age")
+    private BigInteger age;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    private Gender gender;
+
     @Column(name = "email")
     private String email;
 
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
-
-    @Column(name = "profile_image_url")
-    private String profileImageUrl;
-
-    @Column(name = "complete_address")
-    private String completeAddress;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    private Gender gender;
-
     /**
      * Example:
-     *
-     * BUSINESS_OWNER
-     * CASE_MANAGER
-     * SECRETARY
-     * BEHAVIORAL_THERAPIST
+     * EMPLOYEE
+     * TRAINEE
      */
     @Enumerated(EnumType.STRING)
     @Column(name = "staff_type")
     private StaffType staffType;
 
-    @Column(name = "date_hired")
-    private LocalDate dateHired;
-
-    @Column(name = "license_number")
-    private String licenseNumber;
-
-    @Column(name = "professional_title")
-    private String professionalTitle;
-
-    /**
-     * Example:
-     * Main Branch
-     * San Jose Branch
-     */
-    @Column(name = "branch_assign")
-    private String branchAssign;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private UserStatus status;
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     @Column(name = "is_active")
     private boolean isActive = true;
@@ -103,9 +85,6 @@ public class AppStaffProfile implements Serializable {
 
     @Column(name = "phone_verified")
     private boolean phoneVerified = false;
-
-    @Column(name = "specialization")
-    private String specialization;
 
     @Column(name = "creation_date")
     private LocalDate creationDate;
@@ -123,6 +102,21 @@ public class AppStaffProfile implements Serializable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", unique = true, nullable = false)
     private AppUser appUser;
+
+    @OneToMany(mappedBy = "appEmployeeProfile")
+    private List<AppWeeklyTimesheet> timesheets;
+
+    @OneToMany(mappedBy = "appEmployeeProfile")
+    private List<AppEmployeeAddress> address;
+
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppEmploymentInformation employmentInformation;
+
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppPayrollInformation payrollInformation;
+
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppEmployeeBenefits employeeBenefits;
 
     @PrePersist
     private void prePersist() {

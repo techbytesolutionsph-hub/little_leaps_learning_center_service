@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ph.com.lllc.entity.user.client.AppClientProfile;
-import ph.com.lllc.entity.user.staff.AppStaffProfile;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.SessionFrequency;
 
@@ -61,5 +61,5 @@ public class ClientTherapySchedule {
     @JsonBackReference("user-staff")
     @ManyToOne
     @JoinColumn(name = "therapist_id")
-    private AppStaffProfile therapist;
+    private AppEmployeeProfile therapist;
 }

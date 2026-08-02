@@ -2,7 +2,7 @@ function showSuccessPopup(title, message) {
 
     const icon = {
         src: "https://cdn.lordicon.com/lupuorrc.json",
-        colors: "primary:#7a1113,secondary:#f9bf29"
+        colors: "primary:#00979D,secondary:#0F3460"
     };
 
     let popup = $(".modern-popup-overlay");
@@ -42,7 +42,7 @@ function showSuccessThenRedirectPopup(title, message, callback) {
 
     const icon = {
         src: "https://cdn.lordicon.com/lupuorrc.json",
-        colors: "primary:#7a1113,secondary:#f9bf29"
+        colors: "primary:#00979D,secondary:#0F3460"
     };
 
     let popup = $(".modern-popup-overlay");
@@ -86,7 +86,7 @@ function showInfoPopup(title, message) {
 
     const icon = {
         src: "https://cdn.lordicon.com/hursldrn.json",
-        colors: "primary:#7a1113,secondary:#f9bf29"
+        colors: "primary:#00979D,secondary:#1E3A5F"
     };
 
     let popup = $(".modern-popup-overlay");
@@ -126,7 +126,7 @@ function showWarningPopup(title, message) {
 
     const icon = {
         src: "https://cdn.lordicon.com/tdrtiskw.json",
-        colors: "primary:#f9bf29,secondary:#7a1113"
+        colors: "primary:#00979D,secondary:#1E3A5F"
     };
 
     let popup = $(".modern-popup-overlay");
@@ -166,7 +166,7 @@ function showErrorPopup(title, message) {
 
     const icon = {
         src: "https://cdn.lordicon.com/nhfyhmlt.json",
-        colors: "primary:#f97316,secondary:#e74c3c"
+        colors: "primary:#00979D,secondary:#B0DCDE"
     };
 
     let popup = $(".modern-popup-overlay");
@@ -256,23 +256,23 @@ function showPopup(title, message, type, onConfirm = null, ...params) {
     const iconMap = {
         success: {
             src: "https://cdn.lordicon.com/lupuorrc.json",
-            colors: "primary:#7a1113,secondary:#f9bf29"
+            colors: "primary:#00979D,secondary:#0F3460"
         },
         info: {
             src: "https://cdn.lordicon.com/hursldrn.json",
-            colors: "primary:#7a1113,secondary:#f9bf29"
+            colors: "primary:#00979D,secondary:#B0DCDE"
         },
         confirm: {
             src: "https://cdn.lordicon.com/kthelypq.json",
-            colors: "primary:#7a1113,secondary:#f9bf29"
+            colors: "primary:#00979D,secondary:#B0DCDE"
         },
         warning: {
             src: "https://cdn.lordicon.com/tdrtiskw.json",
-            colors: "primary:#f9bf29,secondary:#7a1113"
+            colors: "primary:#00979D,secondary:#B0DCDE"
         },
         error: {
             src: "https://cdn.lordicon.com/nhfyhmlt.json",
-            colors: "primary:#f97316,secondary:#e74c3c"
+            colors: "primary:#00979D,secondary:#B0DCDE"
         }
     };
 

@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ph.com.lllc.dto.account.RegisterStaffRequest;
+import ph.com.lllc.dto.account.CreateEmployeeRequest;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.entity.user.common.*;
-import ph.com.lllc.entity.user.staff.AppStaffProfile;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppPermissionRepository;
@@ -25,7 +25,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
-public class PortalAccountService {
+public class EmployeeService {
 
     private final AppUserRepository appUserRepository;
     private final AppRoleMappingRepository appRoleMappingRepository;
@@ -36,7 +36,7 @@ public class PortalAccountService {
     private final BCryptUtils encoder;
 
     @Transactional
-    public CommonResponse registerStaffAccount(String uuid, RegisterStaffRequest request) throws ServiceException {
+    public CommonResponse createEmployeeAccount(String uuid, CreateEmployeeRequest request) throws ServiceException {
 
         /* Check existing email */
         if (appUserRepository.existsByEmail(request.getEmail())) {
@@ -62,8 +62,8 @@ public class PortalAccountService {
         String employeeId = idGeneratorUtils.generateEmployeeId(request.getRole().getCode(), nextUserSeq);
 
         /* Create Staff Profile */
-        AppStaffProfile staffProfile = this.getAppStaffProfile(request, employeeId, appUser);
-        appUser.setAppStaffProfile(staffProfile);
+        AppEmployeeProfile staffProfile = this.getAppStaffProfile(request, employeeId, appUser);
+        appUser.setAppEmployeeProfile(staffProfile);
 
         /* Create User Role */
         AppUserRole userRole = new AppUserRole();
@@ -103,14 +103,14 @@ public class PortalAccountService {
         responseBody.put("appStaffProfile", staffProfile);
 
         return CommonResponse.builder()
-                .returnCode(HttpStatus.OK.value())
-                .returnMessage("Staff account registered successfully!")
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Employee account created successfully!")
                 .responseBody(responseBody)
                 .build();
     }
 
-    private AppStaffProfile getAppStaffProfile(RegisterStaffRequest request, String employeeId, AppUser appUser) {
-        AppStaffProfile staffProfile = new AppStaffProfile();
+    private AppEmployeeProfile getAppStaffProfile(CreateEmployeeRequest request, String employeeId, AppUser appUser) {
+        AppEmployeeProfile staffProfile = new AppEmployeeProfile();
         staffProfile.setEmployeeId(employeeId);
         staffProfile.setFirstName(request.getFirstName());
         staffProfile.setMiddleName(request.getMiddleName());
@@ -119,15 +119,7 @@ public class PortalAccountService {
         staffProfile.setDateOfBirth(request.getDateOfBirth());
         staffProfile.setGender(request.getGender());
         staffProfile.setPhoneNumber(request.getPhoneNumber());
-        staffProfile.setCompleteAddress(request.getCompleteAddress());
         staffProfile.setStaffType(request.getStaffType());
-        staffProfile.setProfessionalTitle(request.getProfessionalTitle());
-        staffProfile.setLicenseNumber(request.getLicenseNumber());
-        staffProfile.setSpecialization(request.getSpecialization());
-        staffProfile.setDateHired(request.getDateHired());
-        staffProfile.setBranchAssign(request.getBranchAssign());
-        staffProfile.setStatus(UserStatus.ACTIVE);
-        staffProfile.setActive(true);
         staffProfile.setProfileImageUrl(request.getProfileImageUrl());
         staffProfile.setAppUser(appUser);
         return staffProfile;

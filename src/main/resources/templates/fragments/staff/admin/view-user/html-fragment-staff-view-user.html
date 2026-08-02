@@ -1,0 +1,127 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-admin-view-user(user)">
+        <!-- Add Client - START -->
+        <form id="add-client-form" autocomplete="off" class="needs-validation">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="fa-solid fa-user mr-2"></i> View User
+                    </h6>
+                    <button type="button"
+                            class="btn-glossy-teal d-flex justify-content-center align-items-center"
+                            onclick="history.back()">
+                        <i class="bi bi-arrow-return-left mr-2"></i>
+                        Back
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card shadow mt-lg-1 mb-lg-1">
+                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
+                                        User Credential Information
+                                    </h5>
+                                </div>
+                                <div class="card-body-white mt-lg-1 mb-lg-1">
+                                    <div class="row px-2">
+                                        <div class="col-12 col-md-6 mt-2 mb-2">
+                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                                Username
+                                            </label>
+                                            <input type="text"
+                                                   class="form-control text-sm"
+                                                   id="user-username"
+                                                   th:value="${user.username}"
+                                                   readonly>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 mt-2 mb-2">
+                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                                Password
+                                            </label>
+
+                                            <input type="password"
+                                                   class="form-control text-sm"
+                                                   value="********"
+                                                   readonly>
+
+                                            <small class="text-muted d-block mt-2">
+                                                Password is encrypted and cannot be viewed.
+                                            </small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-2">
+                                        <div class="col-12 col-md-6 mt-2 mb-2">
+                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                                Email
+                                            </label>
+                                            <input type="email"
+                                                   class="form-control text-sm"
+                                                   id="user-email"
+                                                   th:value="${user.email}"
+                                                   readonly>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 mt-2 mb-2">
+                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                                User Role
+                                            </label>
+
+                                            <select class="form-control text-sm" disabled>
+                                                <option
+                                                        th:text="${#strings.capitalizeWords(#strings.replace(#strings.toLowerCase(user.role), '_', ' '))}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card shadow mt-lg-1 mb-lg-1">
+                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
+                                        User Photo
+                                    </h5>
+                                </div>
+                                <div class="card-body-white">
+                                    <div class="row px-2">
+                                        <div class="col-12 text-center">
+
+                                            <img class="image-preview"
+                                                 th:src="${user.profileImageUrl != null && !#strings.isEmpty(user.profileImageUrl)
+                                                ? user.profileImageUrl
+                                                : '/img/default.png'}"
+                                                 alt="User Profile"
+                                                 style="width:135px;height:135px;object-fit:cover;border-radius:50%;">
+
+                                            <h6 class="mt-3 mb-1 fw-bold text-sm"
+                                                th:text="${user.username}">
+                                                Username
+                                            </h6>
+
+                                            <small class="text-muted text-sm">
+                                                User Profile Photo
+                                            </small>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Add Client - END -->
+    </div>
+</html>

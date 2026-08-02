@@ -9469,7 +9469,7 @@ body.sidebar-toggled footer.sticky-footer{
 }
 
 .breadcrumb {
-    font-size: clamp(10px, 1.2vw, 13px);
+    font-size: clamp(11px, 1.2vw, 13px);
     margin: 0;
 }
 
@@ -9572,6 +9572,10 @@ body.sidebar-toggled footer.sticky-footer{
     }
 }
 
+#userTable td,
+#userTable th,
+#employeeTable td,
+#employeeTable th,
 #clientTable td,
 #clientTable th {
     color: #858796;

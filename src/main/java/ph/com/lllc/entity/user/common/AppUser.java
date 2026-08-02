@@ -7,13 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ph.com.lllc.entity.user.client.AppClientProfile;
-import ph.com.lllc.entity.user.staff.AppStaffProfile;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.util.LocalDateUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,8 +32,20 @@ public class AppUser implements Serializable {
     @Column(name = "app_user_id")
     private Long appUserId;
 
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "last_password")
+    private String lastPassword;
+
     @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     @Enumerated(EnumType.STRING)
     private UserStatus status;
@@ -48,20 +59,14 @@ public class AppUser implements Serializable {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
-    @Column(name = "username")
-    private String username;
-
-    @Column(name = "password")
-    private String password;
-
     @Column(name = "creation_date")
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "created_by")
     private String createdBy;
 
     @Column(name = "last_modification_date")
-    private LocalDate lastModificationDate;
+    private LocalDateTime lastModificationDate;
 
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
@@ -76,17 +81,17 @@ public class AppUser implements Serializable {
 
     @JsonManagedReference("user-staff")
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AppStaffProfile appStaffProfile;
+    private AppEmployeeProfile appEmployeeProfile;
 
     @PrePersist
     private void prePersist() {
-        creationDate = LocalDateUtils.getLocalDate();
+        creationDate = LocalDateUtils.getLocalDateTime();
         createdBy = "SYSTEM";
     }
 
     @PreUpdate
     private void preUpdate() {
-        lastModificationDate = LocalDateUtils.getLocalDate();
+        lastModificationDate = LocalDateUtils.getLocalDateTime();
         lastModifiedBy = "SYSTEM";
     }
 
