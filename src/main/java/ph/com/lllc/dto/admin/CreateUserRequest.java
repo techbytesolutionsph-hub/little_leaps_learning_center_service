@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import ph.com.lllc.enums.UserRole;
+import ph.com.lllc.enums.UserStatus;
 
 @Data
 @ToString
@@ -57,4 +58,16 @@ public class CreateUserRequest {
             }
     )
     private UserRole role;
+
+    @Schema(
+            description = "Account status",
+            example = "ACTIVE",
+            allowableValues = {
+                    "ACTIVE",
+                    "INACTIVE",
+                    "SUSPENDED",
+                    "DISABLED"
+            }
+    )
+    private UserStatus status;
 }

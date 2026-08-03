@@ -79,42 +79,42 @@ VALUES
     ('THERAPIST', 'MANAGE_ATTENDANCE', 'Manage Attendance'),
 
 -- =====================================================
--- ACCOUNTING
+-- SECRETARY
 -- All except STAFF and ADMINISTRATION
 -- =====================================================
 
     -- Client Management
-    ('ACCOUNTING', 'DISPLAY_CLIENT_MANAGEMENT', 'View client management sidebar'),
-    ('ACCOUNTING', 'VIEW_CLIENT_PROFILE', 'View client profiles'),
-    ('ACCOUNTING', 'CREATE_CLIENT', 'Create client records'),
-    ('ACCOUNTING', 'UPDATE_CLIENT', 'Update client information'),
+    ('SECRETARY', 'DISPLAY_CLIENT_MANAGEMENT', 'View client management sidebar'),
+    ('SECRETARY', 'VIEW_CLIENT_PROFILE', 'View client profiles'),
+    ('SECRETARY', 'CREATE_CLIENT', 'Create client records'),
+    ('SECRETARY', 'UPDATE_CLIENT', 'Update client information'),
 
     -- Scheduling
-    ('ACCOUNTING', 'DISPLAY_SCHEDULING', 'Display scheduling sidebar'),
-    ('ACCOUNTING', 'VIEW_CALENDAR', 'View calendar'),
-    ('ACCOUNTING', 'CREATE_CLIENT_ASSESSMENT_SCHEDULE', 'Create Client Assessment Schedule'),
-    ('ACCOUNTING', 'CREATE_CLIENT_SESSION_SCHEDULE', 'Create Client Session Schedule'),
-    ('ACCOUNTING', 'CREATE_NEURODEV_ASSESSMENT_SCHEDULE', 'Create Neurodevelopmental Assessment Schedule'),
+    ('SECRETARY', 'DISPLAY_SCHEDULING', 'Display scheduling sidebar'),
+    ('SECRETARY', 'VIEW_CALENDAR', 'View calendar'),
+    ('SECRETARY', 'CREATE_CLIENT_ASSESSMENT_SCHEDULE', 'Create Client Assessment Schedule'),
+    ('SECRETARY', 'CREATE_CLIENT_SESSION_SCHEDULE', 'Create Client Session Schedule'),
+    ('SECRETARY', 'CREATE_NEURODEV_ASSESSMENT_SCHEDULE', 'Create Neurodevelopmental Assessment Schedule'),
 
     -- Reports
-    ('ACCOUNTING', 'DISPLAY_REPORTS', 'Display report sidebar'),
-    ('ACCOUNTING', 'VIEW_FINANCIAL_REPORT', 'View financial report'),
+    ('SECRETARY', 'DISPLAY_REPORTS', 'Display report sidebar'),
+    ('SECRETARY', 'VIEW_FINANCIAL_REPORT', 'View financial report'),
 
-    -- Billing / Accounting
-    ('ACCOUNTING', 'DISPLAY_BILLING', 'Display billing sidebar'),
-    ('ACCOUNTING', 'MANAGE_PAYMENT', 'Manage payments'),
-    ('ACCOUNTING', 'MANAGE_EXPENSE', 'Manage expenses'),
+    -- Billing / SECRETARY
+    ('SECRETARY', 'DISPLAY_BILLING', 'Display billing sidebar'),
+    ('SECRETARY', 'MANAGE_PAYMENT', 'Manage payments'),
+    ('SECRETARY', 'MANAGE_EXPENSE', 'Manage expenses'),
 
     -- Finance
-    ('ACCOUNTING', 'DISPLAY_FINANCE', 'Display finance sidebar'),
-    ('ACCOUNTING', 'ACCESS_FINANCE_MODULE', 'Access finance module'),
-    ('ACCOUNTING', 'VIEW_FINANCE_DASHBOARD', 'View finance dashboard'),
-    ('ACCOUNTING', 'VIEW_REVENUE', 'View revenue'),
-    ('ACCOUNTING', 'MANAGE_BUDGET', 'Manage budget'),
-    ('ACCOUNTING', 'VIEW_CASH_FLOW', 'View cash flow'),
-    ('ACCOUNTING', 'MANAGE_PAYROLL', 'Manage payroll'),
-    ('ACCOUNTING', 'VIEW_FINANCIAL_STATEMENT', 'View financial statements'),
-    ('ACCOUNTING', 'VIEW_AUDIT_HISTORY', 'View audit history'),
+    ('SECRETARY', 'DISPLAY_FINANCE', 'Display finance sidebar'),
+    ('SECRETARY', 'ACCESS_FINANCE_MODULE', 'Access finance module'),
+    ('SECRETARY', 'VIEW_FINANCE_DASHBOARD', 'View finance dashboard'),
+    ('SECRETARY', 'VIEW_REVENUE', 'View revenue'),
+    ('SECRETARY', 'MANAGE_BUDGET', 'Manage budget'),
+    ('SECRETARY', 'VIEW_CASH_FLOW', 'View cash flow'),
+    ('SECRETARY', 'MANAGE_PAYROLL', 'Manage payroll'),
+    ('SECRETARY', 'VIEW_FINANCIAL_STATEMENT', 'View financial statements'),
+    ('SECRETARY', 'VIEW_AUDIT_HISTORY', 'View audit history'),
 
 -- =====================================================
 -- HR

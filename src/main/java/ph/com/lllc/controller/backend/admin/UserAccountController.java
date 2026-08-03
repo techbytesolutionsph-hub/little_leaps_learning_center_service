@@ -56,4 +56,22 @@ public class UserAccountController {
     public ResponseEntity<AppUserResponse> getUserByUsername(@PathVariable String username) {
         return ResponseEntity.ok(userAccountService.findByUsername(username));
     }
+
+    @Operation(summary = "Update User Account")
+    @PutMapping("/update")
+    public ResponseEntity<CommonResponse> updateUserAccount(
+            @Valid @RequestBody CreateUserRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "CreateUserRequest : " + request.toString());
+        return ResponseEntity.ok(userAccountService.updateUserAccount(uuid, request));
+    }
+
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<CommonResponse> softDeleteUserAccount(
+            @RequestHeader(value = "X-Request-ID", required = false) String uuid,
+            @PathVariable String username) throws ServiceException {
+
+        CommonResponse response = userAccountService.softDeleteUserAccount(uuid, username);
+        return ResponseEntity.status(response.getReturnCode()).body(response);
+    }
 }

@@ -20,7 +20,7 @@ public class AppPermission implements Serializable {
     @Column(name = "permission_id")
     private Long permissionId;
 
-    @Column(name = "permission_code", nullable = false, unique = true)
+    @Column(name = "permission_code", nullable = false)
     private String permissionCode;
 
     @Column(name = "description")

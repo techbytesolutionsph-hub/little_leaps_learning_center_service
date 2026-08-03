@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <div th:fragment="staff-admin-view-user(user)">
-        <!-- Add Client - START -->
+        <!-- View Client - START -->
         <form id="add-client-form" autocomplete="off" class="needs-validation">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -33,27 +33,19 @@
                                 <div class="card-body-white mt-lg-1 mb-lg-1">
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                            <label for="user-username" class="form-label text-sm fw-bold text-gray-700">
                                                 Username
                                             </label>
-                                            <input type="text"
-                                                   class="form-control text-sm"
-                                                   id="user-username"
-                                                   th:value="${user.username}"
-                                                   readonly>
+                                            <input type="text" class="form-control text-sm" id="user-username" th:value="${user.username}" readonly>
                                         </div>
 
                                         <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                            <label for="user-password" class="form-label text-sm fw-bold text-gray-700">
                                                 Password
                                             </label>
+                                            <input type="password" class="form-control text-sm" id="user-password" value="********" readonly>
 
-                                            <input type="password"
-                                                   class="form-control text-sm"
-                                                   value="********"
-                                                   readonly>
-
-                                            <small class="text-muted d-block mt-2">
+                                            <small class="text-muted d-block text-xs mt-2">
                                                 Password is encrypted and cannot be viewed.
                                             </small>
                                         </div>
@@ -61,14 +53,10 @@
 
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label class="form-label text-sm fw-bold text-gray-700">
+                                            <label for="user-email" class="form-label text-sm fw-bold text-gray-700">
                                                 Email
                                             </label>
-                                            <input type="email"
-                                                   class="form-control text-sm"
-                                                   id="user-email"
-                                                   th:value="${user.email}"
-                                                   readonly>
+                                            <input type="email" class="form-control text-sm" id="user-email" th:value="${user.email}" readonly>
                                         </div>
 
                                         <div class="col-12 col-md-6 mt-2 mb-2">
@@ -77,10 +65,16 @@
                                             </label>
 
                                             <select class="form-control text-sm" disabled>
-                                                <option
-                                                        th:text="${#strings.capitalizeWords(#strings.replace(#strings.toLowerCase(user.role), '_', ' '))}">
-                                                </option>
+                                                <option th:text="${#strings.capitalizeWords(#strings.replace(#strings.toLowerCase(user.role), '_', ' '))}"></option>
                                             </select>
+                                        </div>
+
+                                        <div class="col-12 col-md-6 mt-2 mb-2">
+                                            <label for="user-status" class="form-label text-sm fw-bold text-gray-700">
+                                                Status
+                                            </label>
+                                            <input type="text" class="form-control text-sm" id="user-status"
+                                                   th:value="${#strings.capitalize(#strings.toLowerCase(user.status.name()))}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -122,6 +116,6 @@
                 </div>
             </div>
         </form>
-        <!-- Add Client - END -->
+        <!-- View Client - END -->
     </div>
 </html>

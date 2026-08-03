@@ -6,13 +6,13 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-admin-add-user">
+    <div th:fragment="staff-admin-update-user(user)">
         <!-- Add Client - START -->
         <form id="add-client-form" autocomplete="off" class="needs-validation">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold">
-                        <i class="fa-solid fa-user mr-2"></i> New User
+                        <i class="fa-solid fa-user mr-2"></i> Update User
                     </h6>
                     <button type="button"
                             class="btn-glossy-teal d-flex justify-content-center align-items-center"
@@ -34,7 +34,12 @@
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="user-username" class="form-label text-sm fw-bold text-gray-700">Username</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="user-username" placeholder="Enter username" required>
+                                            <input type="text"
+                                                   class="form-control text-sm variation-sku"
+                                                   id="user-username"
+                                                   placeholder="Enter username"
+                                                   th:value="${user.username}"
+                                                   disabled required>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="user-password" class="form-label text-sm fw-bold text-gray-700">
@@ -42,7 +47,7 @@
                                             </label>
 
                                             <div class="input-group">
-                                                <input type="text" class="form-control text-sm" id="user-password" placeholder="Click Generate" readonly required>
+                                                <input type="text" class="form-control text-sm" id="user-password" placeholder="Click Generate" th:value="${user.lastPassword}" readonly required>
 
                                                 <button class="btn btn-outline-primary"
                                                         type="button"
@@ -55,33 +60,91 @@
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="user-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="user-email" placeholder="Enter user email" required>
+                                            <input type="email"
+                                                   class="form-control text-sm variation-sku"
+                                                   id="user-email"
+                                                   placeholder="Enter user email"
+                                                   th:value="${user.email}"
+                                                   required>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="user-role" class="form-label text-sm fw-bold text-gray-800">User Role</label>
-                                            <select class="form-control text-sm variation-discount-type" id="user-role" required>
+                                            <select class="form-control text-sm" id="user-role" required>
                                                 <option value="">Select a role</option>
-                                                <option value="SUPER_ADMIN">Super Admin</option>
-                                                <option value="HR">HR Admin</option>
-                                                <option value="EMPLOYEE">Employee</option>
-                                                <option value="SECRETARY">Secretary</option>
-                                                <option value="ACCOUNTING">Accounting</option>
-                                                <option value="THERAPIST">Therapist</option>
-                                                <option value="CASE_MANAGER">Case Manager</option>
-                                                <option value="PARENT">Parent</option>
-                                                <option value="KID">Kid</option>
+
+                                                <option value="SUPER_ADMIN"
+                                                        th:selected="${user.role.name() == 'SUPER_ADMIN'}">
+                                                    Super Admin
+                                                </option>
+
+                                                <option value="HR"
+                                                        th:selected="${user.role.name() == 'HR'}">
+                                                    HR Admin
+                                                </option>
+
+                                                <option value="EMPLOYEE"
+                                                        th:selected="${user.role.name() == 'EMPLOYEE'}">
+                                                    Employee
+                                                </option>
+
+                                                <option value="SECRETARY"
+                                                        th:selected="${user.role.name() == 'SECRETARY'}">
+                                                    Secretary
+                                                </option>
+
+                                                <option value="ACCOUNTING"
+                                                        th:selected="${user.role.name() == 'ACCOUNTING'}">
+                                                    Accounting
+                                                </option>
+
+                                                <option value="THERAPIST"
+                                                        th:selected="${user.role.name() == 'THERAPIST'}">
+                                                    Therapist
+                                                </option>
+
+                                                <option value="CASE_MANAGER"
+                                                        th:selected="${user.role.name() == 'CASE_MANAGER'}">
+                                                    Case Manager
+                                                </option>
+
+                                                <option value="PARENT"
+                                                        th:selected="${user.role.name() == 'PARENT'}">
+                                                    Parent
+                                                </option>
+
+                                                <option value="KID"
+                                                        th:selected="${user.role.name() == 'KID'}">
+                                                    Kid
+                                                </option>
+
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="user-status" class="form-label text-sm fw-bold text-gray-800">Status</label>
-                                            <select class="form-control text-sm variation-discount-type" id="user-status" required>
-                                                <option value="">Select a status</option>
-                                                <option value="ACTIVE">Active</option>
-                                                <option value="INACTIVE">Inactive</option>
-                                                <option value="SUSPENDED">Suspended</option>
-                                                <option value="DISABLED">Disabled</option>
+                                            <select class="form-control text-sm" id="user-status" required>
+                                                <option value="">Select a role</option>
+
+                                                <option value="ACTIVE"
+                                                        th:selected="${user.status.name() == 'ACTIVE'}">
+                                                    Active
+                                                </option>
+
+                                                <option value="INACTIVE"
+                                                        th:selected="${user.status.name() == 'INACTIVE'}">
+                                                    Inactive
+                                                </option>
+
+                                                <option value="SUSPENDED"
+                                                        th:selected="${user.status.name() == 'SUSPENDED'}">
+                                                    Suspended
+                                                </option>
+
+                                                <option value="DISABLED"
+                                                        th:selected="${user.status.name() == 'DISABLED'}">
+                                                    Disabled
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -107,7 +170,10 @@
 
                                             <div class="mt-2 color-upload-wrapper">
                                                 <div class="image-preview-container">
-                                                    <img class="image-preview" src="" alt="Preview">
+                                                    <img class="image-preview"
+                                                         th:src="${user.profileImageUrl}"
+                                                         src="/images/no-image.png"
+                                                         alt="Preview">
                                                 </div>
 
                                                 <small class="text-muted text-xs d-block mt-2">
@@ -123,9 +189,9 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary fw-semibold" id="add-user-btn">
-                            <i class="fa-solid fa-user-plus mr-2"></i>
-                            Add User
+                        <button type="button" class="btn btn-secondary fw-semibold" id="update-user-btn">
+                            <i class="fa-solid fa-user-pen mr-2"></i>
+                            Update User
                         </button>
                     </div>
                 </div>

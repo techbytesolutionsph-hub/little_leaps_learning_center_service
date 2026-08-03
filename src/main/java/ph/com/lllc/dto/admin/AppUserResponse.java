@@ -19,6 +19,8 @@ public class AppUserResponse {
 
     private Long appUserId;
     private String username;
+    private String password;
+    private String lastPassword;
     private String email;
     private String profileImageUrl;
     private UserRole role;

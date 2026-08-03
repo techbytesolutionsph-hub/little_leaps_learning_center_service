@@ -45,7 +45,11 @@ public class AuthenticationService {
 
         AppUser appUser = appUserRepository.findByUsername(request.getUsername());
         if(!Objects.isNull(appUser)){
-            if(!appUser.getStatus().equals(UserStatus.ACTIVE)){
+            if(appUser.getStatus().equals(UserStatus.DISABLED)){
+                loggingService.error(uuid, getClass().getName(),
+                        CommonStringUtils.ERR_CODE_LOGIN_USERNAME_NOT_CONNECTED, HttpStatus.NOT_FOUND.value());
+                throw new ServiceException(HttpStatus.NOT_FOUND.value(), CommonStringUtils.ERR_CODE_LOGIN_USERNAME_NOT_CONNECTED);
+            } else if (appUser.getStatus().equals(UserStatus.INACTIVE) || appUser.getStatus().equals(UserStatus.SUSPENDED)){
                 loggingService.error(uuid, getClass().getName(),
                         CommonStringUtils.ERR_CODE_INACTIVE_SUSPENDED, HttpStatus.UNAUTHORIZED.value());
                 throw new ServiceException(HttpStatus.UNAUTHORIZED.value(), CommonStringUtils.ERR_CODE_INACTIVE_SUSPENDED);
@@ -94,7 +98,11 @@ public class AuthenticationService {
 
         AppUser appUser = appUserRepository.findByUsername(request.getUsername());
         if(!Objects.isNull(appUser)){
-            if(!appUser.getStatus().equals(UserStatus.ACTIVE)){
+            if(appUser.getStatus().equals(UserStatus.DISABLED)){
+                loggingService.error(uuid, getClass().getName(),
+                        CommonStringUtils.ERR_CODE_LOGIN_USERNAME_NOT_CONNECTED, HttpStatus.NOT_FOUND.value());
+                throw new ServiceException(HttpStatus.NOT_FOUND.value(), CommonStringUtils.ERR_CODE_LOGIN_USERNAME_NOT_CONNECTED);
+            } else if (appUser.getStatus().equals(UserStatus.INACTIVE) || appUser.getStatus().equals(UserStatus.SUSPENDED)){
                 loggingService.error(uuid, getClass().getName(),
                         CommonStringUtils.ERR_CODE_INACTIVE_SUSPENDED, HttpStatus.UNAUTHORIZED.value());
                 throw new ServiceException(HttpStatus.UNAUTHORIZED.value(), CommonStringUtils.ERR_CODE_INACTIVE_SUSPENDED);

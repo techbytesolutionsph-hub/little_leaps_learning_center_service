@@ -9,27 +9,25 @@ import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.admin.CreateUserRequest;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.entity.user.common.*;
+import ph.com.lllc.enums.UserRole;
 import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.exception.ServiceException;
-import ph.com.lllc.repository.AppPermissionRepository;
-import ph.com.lllc.repository.AppRoleMappingRepository;
-import ph.com.lllc.repository.AppUserRepository;
+import ph.com.lllc.repository.*;
 import ph.com.lllc.service.util.PasswordGeneratorService;
 import ph.com.lllc.service.util.logging.LoggingService;
 import ph.com.lllc.util.BCryptUtils;
 import ph.com.lllc.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class UserAccountService {
 
     private final AppUserRepository appUserRepository;
+    private final AppUserRoleRepository appUserRoleRepository;
     private final AppRoleMappingRepository appRoleMappingRepository;
+    private final AppRolePermissionRepository appRolePermissionRepository;
     private final AppPermissionRepository appPermissionRepository;
     private final PasswordGeneratorService passwordGeneratorService;
     private final LoggingService loggingService;
@@ -56,42 +54,47 @@ public class UserAccountService {
         appUser.setEmail(request.getEmail());
         appUser.setPassword(encoder.encodePassword(request.getPassword()));
         appUser.setLastPassword(request.getPassword());
-        appUser.setStatus(UserStatus.ACTIVE);
+        appUser.setStatus(request.getStatus());
         appUser.setProfileImageUrl(request.getProfileImageUrl());
         appUser.setActive(true);
 
+        /* Create User Role */
         AppUserRole appUserRole = AppUserRole.builder()
                 .userRole(request.getRole())
                 .appUser(appUser)
                 .build();
 
-        appUser.setUserRole(List.of(appUserRole));
-
-        /*
-         * Get permissions by role
-         */
-        List<AppRoleMapping> roleMappings = appRoleMappingRepository.findByRole(request.getRole().name());
-
         List<AppRolePermission> rolePermissions = new ArrayList<>();
+
+        /* Load role mappings */
+        List<AppRoleMapping> roleMappings =
+                appRoleMappingRepository.findByRole(request.getRole().name());
 
         for (AppRoleMapping mapping : roleMappings) {
 
-            AppPermission permission = appPermissionRepository
-                    .findByPermissionCode(mapping.getPermissionCode())
-                    .orElseGet(() -> {
-                        AppPermission newPermission = new AppPermission();
-                        newPermission.setPermissionCode(mapping.getPermissionCode());
-                        newPermission.setDescription(mapping.getDescription());
-                        return appPermissionRepository.save(newPermission);
-                    });
+            /*
+             * ALWAYS CREATE A NEW PERMISSION
+             */
+            AppPermission permission = new AppPermission();
+            permission.setPermissionCode(mapping.getPermissionCode());
+            permission.setDescription(mapping.getDescription());
 
+            permission = appPermissionRepository.save(permission);
+
+            /*
+             * CREATE ROLE PERMISSION
+             */
             AppRolePermission rolePermission = new AppRolePermission();
             rolePermission.setUserRole(appUserRole);
             rolePermission.setPermission(permission);
+
             rolePermissions.add(rolePermission);
         }
 
         appUserRole.setRolePermissions(rolePermissions);
+
+        appUser.setUserRole(new ArrayList<>());
+        appUser.getUserRole().add(appUserRole);
 
         appUserRepository.save(appUser);
 
@@ -127,4 +130,158 @@ public class UserAccountService {
         return response;
     }
 
+    @Transactional
+    public CommonResponse updateUserAccount(String uuid, CreateUserRequest request) throws ServiceException {
+
+        /* Find existing user */
+        AppUser appUser = appUserRepository.findUserByUsername(request.getUsername())
+                .orElseThrow(() -> new ServiceException(
+                        HttpStatus.NOT_FOUND.value(),
+                        "User not found: " + request.getUsername()));
+
+        /* Check duplicate email */
+        if (!Objects.equals(appUser.getEmail(), request.getEmail())) {
+
+            Optional<AppUser> existingEmail =
+                    appUserRepository.findUserByEmail(request.getEmail());
+
+            if (existingEmail.isPresent()
+                    && !existingEmail.get().getAppUserId().equals(appUser.getAppUserId())) {
+
+                loggingService.error(
+                        uuid,
+                        getClass().getName(),
+                        "Email already exists.",
+                        HttpStatus.CONFLICT.value());
+
+                throw new ServiceException(
+                        HttpStatus.CONFLICT.value(),
+                        "Email already exists.");
+            }
+        }
+
+        /* Update basic information */
+        appUser.setUsername(request.getUsername());
+        appUser.setEmail(request.getEmail());
+        appUser.setPassword(encoder.encodePassword(request.getPassword()));
+        appUser.setLastPassword(request.getPassword());
+        appUser.setStatus(request.getStatus());
+
+        /* Get current role */
+        AppUserRole appUserRole = appUser.getUserRole()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new ServiceException(
+                        HttpStatus.NOT_FOUND.value(),
+                        "User role not found."));
+
+        /* Role changed */
+        if (!appUserRole.getUserRole().equals(request.getRole())) {
+
+            /*
+             * STEP 1
+             * Save all permission IDs
+             */
+            List<Long> permissionIds = appUserRole.getRolePermissions()
+                    .stream()
+                    .map(rp -> rp.getPermission().getPermissionId())
+                    .toList();
+
+            /*
+             * STEP 2
+             * Delete all role permissions
+             */
+            appRolePermissionRepository.deleteAll(appUserRole.getRolePermissions());
+            appRolePermissionRepository.flush();
+
+            appUserRole.getRolePermissions().clear();
+
+            /*
+             * STEP 3
+             * Delete all permissions
+             */
+            if (!permissionIds.isEmpty()) {
+                appPermissionRepository.deleteAllById(permissionIds);
+                appPermissionRepository.flush();
+            }
+
+            /*
+             * STEP 4
+             * Update role
+             */
+            appUserRole.setUserRole(request.getRole());
+
+            /*
+             * STEP 5
+             * Insert new permissions
+             */
+            List<AppRoleMapping> mappings =
+                    appRoleMappingRepository.findByRole(request.getRole().name());
+
+            for (AppRoleMapping mapping : mappings) {
+
+                AppPermission permission = new AppPermission();
+                permission.setPermissionCode(mapping.getPermissionCode());
+                permission.setDescription(mapping.getDescription());
+
+                permission = appPermissionRepository.save(permission);
+
+                AppRolePermission rolePermission = new AppRolePermission();
+                rolePermission.setUserRole(appUserRole);
+                rolePermission.setPermission(permission);
+
+                appUserRole.getRolePermissions().add(rolePermission);
+            }
+        }
+
+        appUserRepository.save(appUser);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("appUser", appUser);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.OK.value())
+                .returnMessage("User account updated successfully!")
+                .responseBody(responseBody)
+                .build();
+    }
+
+    @Transactional
+    public CommonResponse softDeleteUserAccount(String uuid, String username) throws ServiceException {
+
+        /* Find user */
+        AppUser appUser = appUserRepository.findUserByUsername(username)
+                .orElseThrow(() -> new ServiceException(
+                        HttpStatus.NOT_FOUND.value(),
+                        "User not found: " + username));
+
+        /* Prevent deleting Super Admin */
+        boolean isSuperAdmin = appUser.getUserRole()
+                .stream()
+                .anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN);
+
+        if (isSuperAdmin) {
+            loggingService.error(uuid, getClass().getName(),"Super Admin account cannot be disabled.", HttpStatus.FORBIDDEN.value());
+            throw new ServiceException(HttpStatus.FORBIDDEN.value(), "Super Admin account cannot be disabled.");
+        }
+
+        /* Already disabled */
+        if (appUser.getStatus() == UserStatus.DISABLED) {
+            return CommonResponse.builder()
+                    .returnCode(HttpStatus.OK.value())
+                    .returnMessage("User account [" + username + "] is already disabled.")
+                    .build();
+        }
+
+        /* Soft delete */
+        appUser.setStatus(UserStatus.DISABLED);
+        appUser.setActive(false);
+
+        appUserRepository.save(appUser);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.OK.value())
+                .returnMessage("User account " + username + " has been disabled.")
+                .build();
+    }
 }

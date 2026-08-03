@@ -89,6 +89,16 @@ public class PortalViewController {
         return "staff/admin/view-user/index";
     }
 
+    @GetMapping(value = "/admin/user-account/edit-user/{username}")
+    public String adminUpdateUserPage(Model model, @PathVariable("username") String username) {
+        this.setupPage(model, "admin", "Update User");
+
+        AppUserResponse user = portalFrontService.findByUsername(username);
+        model.addAttribute("user", user);
+
+        return "staff/admin/update-user/index";
+    }
+
 
     private void setupPage(Model model, String nav, String pageTitle) {
         model.addAttribute("page", "seller");

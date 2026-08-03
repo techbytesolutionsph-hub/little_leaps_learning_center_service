@@ -9753,6 +9753,77 @@ body.sidebar-toggled footer.sticky-footer{
     padding-top: 10px;
 }
 
+.actions-buttons a {
+    text-decoration: none;
+}
+
+/* ===========================
+   Status Badge (Glossy)
+   =========================== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: auto;
+    height: 18px;
+    padding: 0 12px;
+
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,.25);
+
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: capitalize;
+
+    color: #fff;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.35),
+            0 2px 5px rgba(0,0,0,.18);
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* Glossy Shine */
+.status-badge::before {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    right: 2px;
+    height: 48%;
+    border-radius: 30px;
+    background: linear-gradient(
+            to bottom,
+            rgba(255,255,255,.45),
+            rgba(255,255,255,.08)
+    );
+}
+
+/* ACTIVE */
+.badge-active {
+    background: linear-gradient(to bottom, #00b9c0, rgb(0,151,157));
+}
+
+/* INACTIVE */
+.badge-inactive {
+    background: linear-gradient(to bottom, #a7afb7, #7d8791);
+}
+
+/* SUSPENDED */
+.badge-suspended {
+    background: linear-gradient(to bottom, #ffd760, #f0ad00);
+    color: #2d2d2d;
+}
+
+/* DISABLED */
+.badge-disabled {
+    background: linear-gradient(to bottom, #ff7070, #d63b3b);
+}
+
 /* Send Funds button */
 .send-wallet-btn {
     border-radius: 20px;

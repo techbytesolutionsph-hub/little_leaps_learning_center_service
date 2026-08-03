@@ -73,7 +73,7 @@ $(document).ready(function () {
         });
     });
 
-    $("#add-user-btn").on("click", function () {
+    $("#update-user-btn").on("click", function () {
 
         let request = {
             username: $("#user-username").val(),
@@ -87,12 +87,12 @@ $(document).ready(function () {
         console.log(request);
 
         $.ajax({
-            url: "/api/v1/account/admin/create",
-            type: "POST",
+            url: "/api/v1/account/admin/update",
+            type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(request),
             beforeSend: function () {
-                $("#add-user-btn")
+                $("#update-user-btn")
                     .prop("disabled", true)
                     .html('<span class="spinner-border spinner-border-sm me-2"></span> Creating...');
             },
@@ -120,7 +120,7 @@ $(document).ready(function () {
             },
 
             complete: function () {
-                $("#add-user-btn")
+                $("#update-user-btn")
                     .prop("disabled", false)
                     .html('<i class="fa-solid fa-user-plus mr-2"></i> Add User');
             }
