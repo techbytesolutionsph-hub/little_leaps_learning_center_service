@@ -23,6 +23,9 @@ public class AppEmployeeAddress {
     @Column(name = "street")
     private String street;
 
+    @Column(name = "barangay")
+    private String barangay;
+
     @Column(name = "city")
     private String city;
 

@@ -11,41 +11,7 @@
         <title>Add Staff - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <style>
-            /* Show entries label */
-            .dataTables_wrapper .dataTables_length,
-            .dataTables_wrapper .dataTables_length label {
-                font-family: 'Nunito', sans-serif !important;
-                font-size: 12px !important;
-                font-weight: 700 !important;
-                color: #858796 !important;
-            }
-
-            /* Show entries dropdown */
-            .dataTables_wrapper .dataTables_length select {
-                font-family: 'Nunito', sans-serif !important;
-                font-size: 12px !important;
-                font-weight: 700 !important;
-                color: #858796 !important;
-            }
-
-            /* Search label */
-            .dataTables_wrapper .dataTables_filter,
-            .dataTables_wrapper .dataTables_filter label {
-                font-family: 'Nunito', sans-serif !important;
-                font-size: 12px !important;
-                font-weight: 700 !important;
-                color: #858796 !important;
-            }
-
-            /* Search input */
-            .dataTables_wrapper .dataTables_filter input {
-                font-family: 'Nunito', sans-serif !important;
-                font-size: 12px !important;
-                font-weight: 500 !important;
-                color: #858796 !important;
-            }
-        </style>
+        <link th:href="@{/css/staff/management/directory/add-employee/lllc-staff-admin-add-employee-styles.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -63,11 +29,11 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading and Breadcrumbs - Start -->
-                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
                         <!-- Client Management Main - Start -->
-                        <th:block th:insert="~{fragments/staff/management/employee-management/html-fragment-staff-employee-management :: staff-add-employee}"></th:block>
+                        <th:block th:insert="~{fragments/staff/management/directory/add-attendance/html-fragment-staff-add-employee :: staff-add-employee}"></th:block>
                         <!-- Client Management Main - End -->
                     </div>
                 </div>
@@ -79,6 +45,6 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-<!--        <script th:src="@{/js/staff/dashboard/lllc-staff-dashboard-scripts.js}" type="text/javascript"></script>-->
+        <script th:src="@{/js/staff/management/directory/add-employee/lllc-staff-admin-add-employee-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

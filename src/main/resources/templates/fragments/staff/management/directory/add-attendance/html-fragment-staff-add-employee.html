@@ -1,0 +1,555 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-add-employee">
+        <!-- Add Client - START -->
+        <form id="add-client-form" autocomplete="off" class="needs-validation">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold">
+                        <i class="fa-solid fa-user mr-2"></i> New Employee
+                    </h6>
+                    <button type="button"
+                            class="btn-glossy-teal d-flex justify-content-center align-items-center"
+                            id="back-btn"
+                            data-url="/app/portal/hr-management/employee-directory">
+                        <i class="bi bi-arrow-return-left mr-2"></i> Back
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Left Side (Image Upload) -->
+                        <div class="col-lg-4 mb-3">
+                            <div class="card shadow mt-lg-1 mb-lg-1">
+                                <div class="card-body-white">
+                                    <div class="row px-2">
+                                        <div class="col-12 col-md-12 mt-2 mb-2">
+                                            <div class="color-upload-wrapper mt-2 mb-2">
+                                                <div class="image-preview-container">
+                                                    <img class="image-preview" src="/img/lordicon/user-circle-avatar.svg" width="60" height="60" alt="Preview">
+                                                </div>
+                                            </div>
+
+                                            <label class="custom-file-upload">
+                                                <i class="bi bi-upload mr-2"></i>Upload Image
+                                                <input type="file" class="image-upload hidden-upload" accept="image/*">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Side (Information) -->
+                        <div class="col-lg-8 mb-3">
+                            <ul class="nav nav-tabs employee-tabs" id="employeeTabs" role="tablist">
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#personal-information" type="button">
+                                        <i class="bi bi-person-vcard me-2"></i>
+                                        Personal Info
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#employee-address" type="button">
+                                        <i class="bi bi-geo-alt me-2"></i>
+                                        Address
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contact-information" type="button">
+                                        <i class="bi-person-lines-fill me-2"></i>
+                                        Contact Info
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#emergency-contact" type="button">
+                                        <i class="bi bi-heart-pulse-fill me-2"></i>
+                                        Emergency Contact
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#employment-information" type="button">
+                                        <i class="bi bi-briefcase-fill me-2"></i>
+                                        Employment Info
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#employment-benefits" type="button">
+                                        <i class="bi bi-shield-check me-2"></i>
+                                        Benefits
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#payroll-information" type="button">
+                                        <i class="bi bi-cash-coin me-2"></i>
+                                        Payroll Info
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#account-access" type="button">
+                                        <i class="bi bi-person-lock me-2"></i>
+                                        Account Access
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="personal-information">
+                                    <!-- Personal Information Card -->
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-firstname" class="form-label text-sm fw-bold text-gray-700">First name</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-firstname" placeholder="Enter first name" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-middlename" class="form-label text-sm fw-bold text-gray-700">Middle name</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-middlename" placeholder="Enter middle name" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-lastname" class="form-label text-sm fw-bold text-gray-700">Last name</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-lastname" placeholder="Enter last name" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-age" class="form-label text-sm fw-bold text-gray-700">Age</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-age" placeholder="Enter age" min="0" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-birth-date" class="text-sm fw-bold text-gray-700">Birthdate</label>
+                                                    <div class="date-input-wrapper">
+                                                        <input type="text" id="employee-birth-date" class="form-control" placeholder="Select birthdate" required>
+                                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
+                                                    <select class="form-control text-sm variation-discount-type" id="employee-gender" required>
+                                                        <option value="" selected disabled>Select a gender</option>
+                                                        <option value="MALE">Male</option>
+                                                        <option value="FEMALE">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-email" placeholder="Enter email" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-phone-no" class="form-label text-sm fw-bold text-gray-700">Phone No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-phone-no" placeholder="Enter phone number" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-type" class="form-label text-sm fw-bold text-gray-800">Employee Type</label>
+                                                    <select class="form-control text-sm variation-discount-type" id="employee-type" required>
+                                                        <option value="" selected disabled>Select an employee type</option>
+                                                        <option value="MALE">Employee</option>
+                                                        <option value="FEMALE">Trainee</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="employee-address">
+                                    <!-- Address Card -->
+                                    <div class="card shadow mb-3">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                                    <label for="employee-street" class="form-label text-sm fw-bold text-gray-700">Street</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-street" placeholder="Enter street" required>
+                                                </div>
+                                            </div>
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-brgy" class="form-label text-sm fw-bold text-gray-700">Barangay</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-brgy" placeholder="Enter barangay" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-city" class="form-label text-sm fw-bold text-gray-700">City</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-city" placeholder="Enter city" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-province" class="form-label text-sm fw-bold text-gray-700">Province</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-province" placeholder="Enter province" required>
+                                                </div>
+                                            </div>
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-country" class="form-label text-sm fw-bold text-gray-700">Country</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-country" placeholder="Enter country" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-postal-code" class="form-label text-sm fw-bold text-gray-700">Postal code</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-postal-code" placeholder="Enter postal code" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="contact-information">
+                                    <!-- Contact Information -->
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-contact-no-home" class="form-label text-sm fw-bold text-gray-700">Contact No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-contact-no-home" placeholder="Enter contact number" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-email-work" class="form-label text-sm fw-bold text-gray-700">Email - Work</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-email-work" placeholder="Enter email" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-email-home" class="form-label text-sm fw-bold text-gray-700">Email - Primary (Home)</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-email-home" placeholder="Enter email" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="emergency-contact">
+                                    <!-- Emergency Contact -->
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-emergency-contact-name" class="form-label text-sm fw-bold text-gray-700">Emergency Contact Name</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-name" placeholder="Enter full name" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-emergency-contact-no" class="form-label text-sm fw-bold text-gray-700">Contact No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-no" placeholder="Enter contact number" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-emergency-contact-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship</label>
+                                                    <select class="form-control text-sm variation-discount-type" id="employee-emergency-contact-relationship" required>
+                                                        <option value="" selected disabled>Select relationship</option>
+                                                        <option value="SPOUSE">Spouse</option>
+                                                        <option value="FATHER">Father</option>
+                                                        <option value="MOTHER">Mother</option>
+                                                        <option value="SON">Son</option>
+                                                        <option value="DAUGHTER">Daughter</option>
+                                                        <option value="BROTHER">Brother</option>
+                                                        <option value="SISTER">Sister</option>
+                                                        <option value="GRANDFATHER">Grandfather</option>
+                                                        <option value="GRANDMOTHER">Grandmother</option>
+                                                        <option value="UNCLE">Uncle</option>
+                                                        <option value="AUNT">Aunt</option>
+                                                        <option value="COUSIN">Cousin</option>
+                                                        <option value="LEGAL_GUARDIAN">Legal Guardian</option>
+                                                        <option value="PARTNER">Partner</option>
+                                                        <option value="FRIEND">Friend</option>
+                                                        <option value="NEIGHBOR">Neighbor</option>
+                                                        <option value="OTHER">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="employment-information">
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-position" class="form-label text-sm fw-bold text-gray-800">Position</label>
+                                                    <select class="form-control text-sm variation-discount-type" id="employee-position" required>
+                                                        <option value="">Select a position</option>
+                                                        <option value="HR Admin">HR Admin</option>
+                                                        <option value="Secretary">Secretary</option>
+                                                        <option value="Accounting">Accounting</option>
+                                                        <option value="Behavioral Therapist">Behavioral Therapist</option>
+                                                        <option value="Case Manager">Case Manager</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-id-number" class="form-label text-sm fw-bold text-gray-700">
+                                                        ID Number <small class="text-muted fw-normal">(Generated after Date Hired is selected)</small>
+                                                    </label>
+
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control text-sm" id="employee-id-number" placeholder="Click Generate" readonly required>
+                                                        <button class="btn btn-outline-primary" type="button" id="generate-password-btn">
+                                                            <i class="bi bi-arrow-repeat"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-date-hired" class="text-sm fw-bold text-gray-700">Date Hired</label>
+                                                    <div class="date-input-wrapper">
+                                                        <input type="text" id="employee-date-hired" class="form-control" placeholder="Select date hired" required>
+                                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-regular-date-start" class="text-sm fw-bold text-gray-700">Regular Date Start</label>
+                                                    <div class="date-input-wrapper">
+                                                        <input type="text" id="employee-regular-date-start" class="form-control" placeholder="Select regular date start" required>
+                                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                                    <label for="employee-company-address" class="form-label text-sm fw-bold text-gray-700">Company Address</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-company-address" placeholder="Enter company address" required>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-employment-status" class="form-label text-sm fw-bold text-gray-800"> Employment Status </label>
+                                                    <select class="form-control text-sm" id="employee-employment-status" required>
+                                                        <option value="" selected disabled>Select employment status</option>
+                                                        <option value="ACTIVE">Active</option>
+                                                        <option value="ON_LEAVE">On Leave</option>
+                                                        <option value="SUSPENDED">Suspended</option>
+                                                        <option value="RESIGNED">Resigned</option>
+                                                        <option value="TERMINATED">Terminated</option>
+                                                        <option value="RETIRED">Retired</option>
+                                                        <option value="DECEASED">Deceased</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-employment-type" class="form-label text-sm fw-bold text-gray-800"> Employment Type </label>
+                                                    <select class="form-control text-sm" id="employee-employment-type" required>
+                                                        <option value="" selected disabled> Select employment type</option>
+                                                        <option value="REGULAR">Regular</option>
+                                                        <option value="PROBATIONARY">Probationary</option>
+                                                        <option value="CONTRACTUAL">Contractual</option>
+                                                        <option value="CASUAL">Casual</option>
+                                                        <option value="PART_TIME">Part-Time</option>
+                                                        <option value="PROJECT_BASED">Project-Based</option>
+                                                        <option value="APPRENTICE">Apprentice</option>
+                                                        <option value="INTERN">Intern</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-assign-branch" class="form-label text-sm fw-bold text-gray-800"> Assign Branch </label>
+                                                    <select class="form-control text-sm" id="employee-assign-branch" required>
+                                                        <option value="" selected disabled>Select assign branch</option>
+                                                        <option value="SAN_JUAN">San Juan, Batangas</option>
+                                                        <option value="CATANAUAN">Catanauan, Quezon</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-immediate-supervisor" class="form-label text-sm fw-bold text-gray-700">Immediate Supervisor</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-immediate-supervisor" placeholder="Enter immediate supervisor" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="employment-benefits">
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <!-- Mandatory Benefits -->
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-sss-number" class="form-label text-sm fw-bold text-gray-700">SSS No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-sss-number" placeholder="Enter SSS Number" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-pagibig-no" class="form-label text-sm fw-bold text-gray-700">Pagibig No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-pagibig-no" placeholder="Enter Pagibig number" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-philhealth-no" class="form-label text-sm fw-bold text-gray-700">Philhealth No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-philhealth-no" placeholder="Enter Philhealth Number" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-tin-no" class="form-label text-sm fw-bold text-gray-700">TIN No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-tin-no" placeholder="Enter TIN number" required>
+                                                </div>
+
+                                                <!-- Leaves -->
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-sick-leave" class="form-label text-sm fw-bold text-gray-700">Sick Leave</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-sick-leave" min="0" placeholder="Enter sick leave" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-vacation-leave" class="form-label text-sm fw-bold text-gray-700">Vacation Leave</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-vacation-leave" min="0" placeholder="Enter vacation leave" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-paternity-leave" class="form-label text-sm fw-bold text-gray-700">Paternity Leave</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-paternity-leave" min="0" placeholder="Enter paternity leave" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-maternity-leave" class="form-label text-sm fw-bold text-gray-700">Maternity Leave</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-maternity-leave" min="0" placeholder="Enter maternity leave" required>
+                                                </div>
+
+                                                <!-- HMO-->
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-hmo-provider" class="form-label text-sm fw-bold text-gray-700">HMO Provider</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-hmo-provider" placeholder="Enter HMO Provider" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-hmo-no" class="form-label text-sm fw-bold text-gray-700">HMO No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-hmo-no" placeholder="Enter HMO number" required>
+                                                </div>
+
+                                                <!-- Allowances-->
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-allowance" class="form-label text-sm fw-bold text-gray-700">Allowance</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-allowance" placeholder="Enter allowance" min="0" value="0" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-rice-allowance" class="form-label text-sm fw-bold text-gray-700">Rice Allowance</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-rice-allowance" placeholder="Enter rice allowance" min="0" value="0" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-transportation-allowance" class="form-label text-sm fw-bold text-gray-700">Transportation Allowance</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-transportation-allowance" placeholder="Enter transportation allowance" min="0" value="0" required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-communication-allowance" class="form-label text-sm fw-bold text-gray-700">Communication Allowance</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-communication-allowance" placeholder="Enter communication allowance" min="0" value="0" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="payroll-information">
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-basic-salary" class="form-label text-sm fw-bold text-gray-700">Basic Salary</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-basic-salary" placeholder="Enter basic salary" min="0" value="0" required>
+                                                </div>
+
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-daily-rate" class="form-label text-sm fw-bold text-gray-700">Daily Rate</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-daily-rate" placeholder="Enter daily rate" value="0" min="0" required>
+                                                </div>
+
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-hourly-rate" class="form-label text-sm fw-bold text-gray-700">Hourly Rate</label>
+                                                    <input type="number" class="form-control text-sm" id="employee-hourly-rate" placeholder="Enter hourly rate" value="0" min="0" required>
+                                                </div>
+                                            </div>
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-salary-type" class="form-label text-sm fw-bold text-gray-700">Salary Type</label>
+                                                    <select class="form-select text-sm" id="employee-salary-type" required>
+                                                        <option value="" selected disabled>Select salary type</option>
+                                                        <option value="MONTHLY">Monthly</option>
+                                                        <option value="DAILY">Daily</option>
+                                                        <option value="HOURLY">Hourly</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-payroll-cycle" class="form-label text-sm fw-bold text-gray-700">Payroll Cycle</label>
+                                                    <select class="form-select text-sm" id="employee-payroll-cycle" required>
+                                                        <option value="" selected disabled>Select payroll cycle</option>
+                                                        <option value="WEEKLY">Weekly</option>
+                                                        <option value="BI_WEEKLY">Bi-Weekly</option>
+                                                        <option value="SEMI_MONTHLY">Semi-Monthly</option>
+                                                        <option value="MONTHLY">Monthly</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-salary-effective-date" class="text-sm fw-bold text-gray-700">Salary Effective Date</label>
+                                                    <div class="date-input-wrapper">
+                                                        <input type="text" id="employee-salary-effective-date" class="form-control" placeholder="Select salary effective date" required>
+                                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-bank-name" class="form-label text-sm fw-bold text-gray-700">Bank name</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-bank-name" placeholder="Enter bank name" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-bank-account-no" class="form-label text-sm fw-bold text-gray-700">Bank Account No.</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-bank-account-no" placeholder="Enter bank account number" required>
+                                                </div>
+                                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                                    <label for="employee-bank-branch-no" class="form-label text-sm fw-bold text-gray-700">Bank Branch</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-bank-branch-no" placeholder="Enter bank branch" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="account-access">
+                                    <div class="card shadow mb-lg-1">
+                                        <div class="card-body-white mt-lg-1 mb-lg-1">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-cred-username" class="form-label text-sm fw-bold text-gray-700">
+                                                        Username <small class="text-muted fw-normal">(Retrieved after employee account search)</small>
+                                                    </label>
+
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control text-sm" id="employee-cred-username" placeholder="Enter username then click search" required>
+                                                        <button class="btn btn-outline-primary" type="button" id="search-credentials-btn">
+                                                            <i class="bi bi-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-cred-password" class="form-label text-sm fw-bold text-gray-700">Password</label>
+                                                    <input type="password" class="form-control text-sm" id="employee-cred-password" placeholder="Retrieved password" disabled required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-cred-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-cred-email" placeholder="Retrieved email" disabled required>
+                                                </div>
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="employee-cred-status" class="form-label text-sm fw-bold text-gray-700">Status</label>
+                                                    <input type="text" class="form-control text-sm" id="employee-cred-status" placeholder="Retrieved status" disabled required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary fw-semibold" id="add-employee-btn">
+                            <i class="fa-solid fa-user-plus mr-2"></i>
+                            Add Employee
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- Add Client - END -->
+    </div>
+</html>

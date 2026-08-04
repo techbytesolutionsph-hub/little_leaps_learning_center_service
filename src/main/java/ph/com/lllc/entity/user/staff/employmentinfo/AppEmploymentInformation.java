@@ -58,6 +58,9 @@ public class AppEmploymentInformation {
     @Column(name = "employment_status")
     private EmploymentStatus employmentStatus;
 
+    @Column(name = "immediate_supervisor")
+    private String immediateSupervisor;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", unique = true, nullable = false)
     private AppEmployeeProfile appEmployeeProfile;

@@ -39,10 +39,6 @@ public class AppPayrollInformation {
     @Column(name = "salary_type")
     private SalaryType salaryType;
 
-    /* Payroll Schedule */
-    @Column(name = "payroll_group")
-    private String payrollGroup;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "payroll_cycle")
     private PayrollCycle payrollCycle;
@@ -51,8 +47,8 @@ public class AppPayrollInformation {
     @Column(name = "bank_name")
     private String bankName;
 
-    @Column(name = "bank_account_name")
-    private String bankAccountName;
+    @Column(name = "bank_branch")
+    private String bankBranch;
 
     @Column(name = "bank_account_number")
     private String bankAccountNumber;

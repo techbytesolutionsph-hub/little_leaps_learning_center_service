@@ -19,6 +19,7 @@ import ph.com.lllc.util.LocalDateUtils;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -87,13 +88,13 @@ public class AppEmployeeProfile implements Serializable {
     private boolean phoneVerified = false;
 
     @Column(name = "creation_date")
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "created_by")
     private String createdBy;
 
     @Column(name = "last_modification_date")
-    private LocalDate lastModificationDate;
+    private LocalDateTime lastModificationDate;
 
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
@@ -120,13 +121,13 @@ public class AppEmployeeProfile implements Serializable {
 
     @PrePersist
     private void prePersist() {
-        creationDate = LocalDateUtils.getLocalDate();
+        creationDate = LocalDateUtils.getLocalDateTime();
         createdBy = "SYSTEM";
     }
 
     @PreUpdate
     private void preUpdate() {
-        lastModificationDate = LocalDateUtils.getLocalDate();
+        lastModificationDate = LocalDateUtils.getLocalDateTime();
         lastModifiedBy = "SYSTEM";
     }
 

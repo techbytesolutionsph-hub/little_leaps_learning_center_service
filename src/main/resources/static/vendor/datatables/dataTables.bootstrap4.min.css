@@ -24,33 +24,33 @@ table.dataTable.nowrap td {
 	white-space: nowrap
 }
 
-div.dataTables_wrapper div.dataTables_length label {
+.dataTables_wrapper div.dataTables_length label {
 	font-weight: normal;
 	text-align: left;
 	white-space: nowrap
 }
 
-div.dataTables_wrapper div.dataTables_length select {
+.dataTables_wrapper div.dataTables_length select {
 	width: auto;
 	display: inline-block
 }
 
-div.dataTables_wrapper div.dataTables_length label,
+.dataTables_wrapper div.dataTables_length label,
 .dataTables_length select {
     font-size: 13px;
 }
 
-div.dataTables_wrapper div.dataTables_filter {
+.dataTables_wrapper div.dataTables_filter {
 	text-align: right
 }
 
-div.dataTables_wrapper div.dataTables_filter label {
+.dataTables_wrapper div.dataTables_filter label {
 	font-weight: normal;
 	white-space: nowrap;
 	text-align: left
 }
 
-div.dataTables_wrapper div.dataTables_filter input {
+.dataTables_wrapper div.dataTables_filter input {
 	margin-left: .5em;
 	display: inline-block;
 	width: auto
@@ -61,25 +61,25 @@ div.dataTables_wrapper div.dataTables_filter input {
     font-size: 12px;
 }
 
-div.dataTables_wrapper div.dataTables_info {
+.dataTables_wrapper div.dataTables_info {
 	padding-top: .85em;
     font-size: 12px;
     font-weight: 700;
 }
 
-div.dataTables_wrapper div.dataTables_paginate {
+.dataTables_wrapper div.dataTables_paginate {
 	margin: 0;
 	white-space: nowrap;
 	text-align: right
 }
 
-div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+.dataTables_wrapper div.dataTables_paginate ul.pagination {
 	margin: 2px 0;
 	white-space: nowrap;
 	justify-content: flex-end
 }
 
-div.dataTables_wrapper div.dataTables_processing {
+.dataTables_wrapper div.dataTables_processing {
 	position: absolute;
 	top: 50%;
 	left: 50%;
@@ -157,23 +157,23 @@ div.dataTables_scrollHead table.dataTable {
 	margin-bottom: 0 !important
 }
 
-div.dataTables_scrollBody table {
+.dataTables_scrollBody table {
 	border-top: none;
 	margin-top: 0 !important;
 	margin-bottom: 0 !important
 }
 
-div.dataTables_scrollBody table thead .sorting:before,
-div.dataTables_scrollBody table thead .sorting_asc:before,
-div.dataTables_scrollBody table thead .sorting_desc:before,
-div.dataTables_scrollBody table thead .sorting:after,
-div.dataTables_scrollBody table thead .sorting_asc:after,
-div.dataTables_scrollBody table thead .sorting_desc:after {
+.dataTables_scrollBody table thead .sorting:before,
+.dataTables_scrollBody table thead .sorting_asc:before,
+.dataTables_scrollBody table thead .sorting_desc:before,
+.dataTables_scrollBody table thead .sorting:after,
+.dataTables_scrollBody table thead .sorting_asc:after,
+.dataTables_scrollBody table thead .sorting_desc:after {
 	display: none
 }
 
-div.dataTables_scrollBody table tbody tr:first-child th,
-div.dataTables_scrollBody table tbody tr:first-child td {
+.dataTables_scrollBody table tbody tr:first-child th,
+.dataTables_scrollBody table tbody tr:first-child td {
 	border-top: none;
 }
 
@@ -188,14 +188,14 @@ div.dataTables_scrollFoot>.dataTables_scrollFootInner>table {
 
 @media screen and (max-width: 767px) {
 
-	div.dataTables_wrapper div.dataTables_length,
-	div.dataTables_wrapper div.dataTables_filter,
-	div.dataTables_wrapper div.dataTables_info,
-	div.dataTables_wrapper div.dataTables_paginate {
+	.dataTables_wrapper div.dataTables_length,
+	.dataTables_wrapper div.dataTables_filter,
+	.dataTables_wrapper div.dataTables_info,
+	.dataTables_wrapper div.dataTables_paginate {
 		text-align: center
 	}
 
-	div.dataTables_wrapper div.dataTables_paginate ul.pagination {
+	.dataTables_wrapper div.dataTables_paginate ul.pagination {
 		justify-content: center !important
 	}
 }
@@ -242,14 +242,48 @@ div.dataTables_scrollHead table.table-bordered {
 	border-bottom-width: 0
 }
 
-div.table-responsive>div.dataTables_wrapper>div.row {
+.table-responsive>.dataTables_wrapper>div.row {
 	margin: 0
 }
 
-div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child {
+.table-responsive>.dataTables_wrapper>div.row>div[class^=col-]:first-child {
 	padding-left: 0
 }
 
-div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:last-child {
+.table-responsive>.dataTables_wrapper>div.row>div[class^=col-]:last-child {
 	padding-right: 0
+}
+
+/* Show entries label */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_length label {
+	font-family: 'Nunito', sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	color: #858796 !important;
+}
+
+/* Show entries dropdown */
+.dataTables_wrapper .dataTables_length select {
+	font-family: 'Nunito', sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	color: #858796 !important;
+}
+
+/* Search label */
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_filter label {
+	font-family: 'Nunito', sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 700 !important;
+	color: #858796 !important;
+}
+
+/* Search input */
+.dataTables_wrapper .dataTables_filter input {
+	font-family: 'Nunito', sans-serif !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	color: #858796 !important;
 }

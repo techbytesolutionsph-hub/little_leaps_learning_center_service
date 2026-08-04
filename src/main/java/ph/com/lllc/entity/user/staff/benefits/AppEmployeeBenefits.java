@@ -54,6 +54,21 @@ public class AppEmployeeBenefits {
     private BigDecimal communicationAllowance;
 
     /* ==========================
+       LEAVES
+       ========================== */
+    @Column(name = "sick_leave")
+    private BigDecimal sickLeave;
+
+    @Column(name = "vacation_leave")
+    private BigDecimal vacationLeave;
+
+    @Column(name = "paternity_leave")
+    private BigDecimal paternityLeave;
+
+    @Column(name = "maternity_leave")
+    private BigDecimal maternityLeave;
+
+    /* ==========================
        TAX
        ========================== */
 
