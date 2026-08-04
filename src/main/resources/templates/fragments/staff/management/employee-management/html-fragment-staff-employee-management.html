@@ -1,0 +1,199 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-add-employee">
+        <!-- Add Staff - START -->
+        <div class="row">
+            <!-- Total PayMongo Payout count and amount -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/total-employees-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder  mb-2">
+                                    Total Employees
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    24
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Active Employees
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total PayMongo Pending Payout count and amount -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/employed-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Active
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    20
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Currently Active
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total PayMongo Paid Payout count and amount -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/on-leave-icon.svg" width="45" height="45" alt="On Leave">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    On Leave
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    2
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        On Leave
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total PayMongo Paid Payout count and amount -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/resigned-employee-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Resigned
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    2
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Resigned Employees
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
+
+                <h6 class="m-0 font-weight-bold mb-3 mb-md-0">
+                    <img src="/img/lordicon/little-leap-kids-icon.svg"
+                         width="24"
+                         height="24"
+                         class="mr-2"
+                         alt="Homepage">
+                    Employee Records
+                </h6>
+
+                <div class="d-flex flex-wrap align-items-center ml-md-auto">
+                    <a th:href="@{/app/portal/employee-management/export}"
+                       class="btn-glossy-teal mr-2 mb-2 mb-md-0"
+                       id="export-btn"
+                       style="text-decoration: none">
+                        <i class="fa-solid fa-file-export mr-2"></i> Export
+                    </a>
+
+                    <a th:href="@{/app/portal/employee-management/filter}"
+                       class="btn-glossy-teal mr-2 mb-2 mb-md-0"
+                       id="filter-btn"
+                       style="text-decoration: none">
+                        <i class="fa-solid fa-filter mr-2"></i> Filter
+                    </a>
+
+                    <a th:href="@{/app/portal/hr-management/employee-directory/add-employee}"
+                       class="btn-glossy-teal mb-2 mb-md-0"
+                       id="add-employee-btn"
+                       style="text-decoration: none">
+                        <i class="fa-solid fa-user-plus mr-2"></i> Add Employee
+                    </a>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="clientTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Employee Info</th>
+                            <th>Position</th>
+                            <th>Date Hired</th>
+                            <th>Employment Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Add Staff - END -->
+    </div>
+</html>

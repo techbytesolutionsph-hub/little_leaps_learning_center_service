@@ -9599,6 +9599,14 @@ a.text-warning:hover, a.text-warning:focus {
     color: #ffab09 !important;
 }
 
+.text-teal {
+    color: rgb(0, 151, 157) !important;
+}
+
+a.text-teal:hover, a.text-teal:focus {
+    color: rgb(106, 176, 178) !important;
+}
+
 .text-danger {
     color: #FF5666 !important;
 }

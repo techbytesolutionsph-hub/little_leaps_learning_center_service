@@ -3828,7 +3828,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 }
 
 .card-border-left-item {
-    border-left: .45rem solid #f96f29 !important;
+    border-left: .45rem solid rgb(0, 151, 157) !important;
 }
 
 /* Dashboard Cards -  End */
@@ -9597,13 +9597,27 @@ body.sidebar-toggled footer.sticky-footer{
     background-color: #f8f9fc;
 }
 
-.order-circle-badge {
+.kpi-circle-badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #fd7e14;
+    color: rgb(0, 151, 157);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.kpi-count {
+    font-weight: 800;
+}
+
+.kpi-header {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgb(0, 151, 157);
+    font-size: 13px;
+    font-weight: 800;
     line-height: 1;
 }
 
@@ -9684,8 +9698,14 @@ body.sidebar-toggled footer.sticky-footer{
 }
 
 .bg-orange-soft {
-    background-color: #fff4e6;
+    background-color: #fff4e6 !important;
 }
+
+.bg-teal-soft {
+    background-color: #ECF9F9;
+    color: #00979D;
+}
+
 
 .bg-amber-soft {
     background-color: #fff6e8;
