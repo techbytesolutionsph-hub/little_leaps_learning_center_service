@@ -1,7 +1,6 @@
 package ph.com.lllc.entity.user.staff.emergencycontact;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +32,5 @@ public class AppEmployeeEmergencyContact {
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", nullable = false, unique = true)
-//    @JsonIgnoreProperties("emergencyContact")
     private AppEmployeeProfile appEmployeeProfile;
 }

@@ -1,7 +1,6 @@
 package ph.com.lllc.entity.user.staff.payrollinfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -75,6 +74,5 @@ public class AppPayrollInformation {
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", unique = true, nullable = false)
-//    @JsonIgnoreProperties("payrollInformation")
     private AppEmployeeProfile appEmployeeProfile;
 }

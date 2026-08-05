@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.EmployeeRequest;
+import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.address.AppEmployeeAddress;
 import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
@@ -15,10 +16,12 @@ import ph.com.lllc.entity.user.staff.emergencycontact.AppEmployeeEmergencyContac
 import ph.com.lllc.entity.user.staff.employmentinfo.AppEmploymentInformation;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
+import ph.com.lllc.enums.EmploymentStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppUserRepository;
 import ph.com.lllc.repository.management.AppEmployeeProfileRepository;
 import ph.com.lllc.service.util.logging.LoggingService;
+import ph.com.lllc.util.ObjectUtils;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -216,7 +219,21 @@ public class EmploymentRegistryService {
                 .build();
     }
 
-    public List<AppEmployeeProfile> getEmployees() {
-        return appEmployeeProfileRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    public List<EmployeeResponse> getEmployees() {
+        return ObjectUtils.copyListAs(
+                appEmployeeProfileRepository.findAll(Sort.by(Sort.Direction.DESC, "id")),
+                EmployeeResponse.class);
+    }
+
+    public long getEmployeesCount() {
+        return employeeProfileRepository.count();
+    }
+
+    public long getActiveEmployeeCount() {
+        return employeeProfileRepository.countByEmploymentInformation_EmploymentStatus(EmploymentStatus.ACTIVE);
+    }
+
+    public long getResignedEmployeeCount() {
+        return employeeProfileRepository.countByEmploymentInformation_EmploymentStatus(EmploymentStatus.RESIGNED);
     }
 }

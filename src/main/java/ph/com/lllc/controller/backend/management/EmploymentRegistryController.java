@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.EmployeeRequest;
-import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -39,7 +39,7 @@ public class EmploymentRegistryController {
 
     @PostMapping("/get-employees")
     @Operation(summary = "Get Employees")
-    public ResponseEntity<List<AppEmployeeProfile>> getEmployees(){
+    public ResponseEntity<List<EmployeeResponse>> getEmployees(){
         return new ResponseEntity<>(employmentRegistryService.getEmployees(), HttpStatus.OK);
     }
 }

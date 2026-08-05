@@ -6,10 +6,10 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-employee-registry">
-        <!-- Add Staff - START -->
+    <div th:fragment="staff-employee-registry(kpi, employees)">
+        <!-- Employment Registry - START -->
         <div class="row">
-            <!-- Total PayMongo Payout count and amount -->
+            <!-- Total Employees count -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100 py-1">
                     <div class="card-body-white" style="background-color: white !important;">
@@ -26,12 +26,12 @@
                                 <div class="kpi-header text-xs font-weight-bolder  mb-2">
                                     Total Employees
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalEmployees.value}">
                                     24
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
-                                        Active Employees
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalEmployees.message}">
+                                        All Employees
                                     </span>
                                 </div>
                             </div>
@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            <!-- Total PayMongo Pending Payout count and amount -->
+            <!-- Total Currently Active Employees count -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100 py-1">
                     <div class="card-body-white" style="background-color: white !important;">
@@ -57,11 +57,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
                                     Active
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalActiveEmployees.value}">
                                     20
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalActiveEmployees.message}">
                                         Currently Active
                                     </span>
                                 </div>
@@ -71,7 +71,7 @@
                 </div>
             </div>
 
-            <!-- Total PayMongo Paid Payout count and amount -->
+            <!-- Total On Leave Employees count -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100 py-1">
                     <div class="card-body-white" style="background-color: white !important;">
@@ -88,11 +88,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
                                     On Leave
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalOnLeaveEmployees.value}">
                                     2
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalOnLeaveEmployees.message}">
                                         On Leave
                                     </span>
                                 </div>
@@ -102,7 +102,7 @@
                 </div>
             </div>
 
-            <!-- Total PayMongo Paid Payout count and amount -->
+            <!-- Total Resigned Employees count -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card shadow h-100 py-1">
                     <div class="card-body-white" style="background-color: white !important;">
@@ -119,11 +119,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
                                     Resigned
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalResignedEmployees.value}">
                                     2
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalResignedEmployees.message}">
                                         Resigned Employees
                                     </span>
                                 </div>
@@ -133,9 +133,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
@@ -177,23 +174,114 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="clientTable">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Employee Info</th>
-                            <th>Position</th>
-                            <th>Date Hired</th>
-                            <th>Employment Type</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Employee Info</th>
+                                <th>Position</th>
+                                <th>Date Hired</th>
+                                <th>Employment Type</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
+                            <tr th:each="employee : ${employees}">
+                                <td data-label="ID" th:text="${employee.employeeId}">1</td>
+                                <td data-label="Employee Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${employee.profileImageUrl != null ? employee.profileImageUrl : '/images/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
 
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${employee.firstName + ' ' + employee.lastName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${employee.email}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${employee.phoneNumber}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Position" th:text="${employee.employmentInformation.position}">1</td>
+                                <td data-label="Date Hired" th:text="${employee.employmentInformation.dateHired}">1</td>
+                                <td data-label="Employment Type">
+                                    <!-- Regular -->
+                                    <span class="status-badge badge-active"
+                                          th:if="${employee.employmentInformation.employmentType.name() == 'REGULAR'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Regular
+                                    </span>
+
+                                    <!-- Probationary -->
+                                    <span class="status-badge badge-warning"
+                                      th:if="${employee.employmentInformation.employmentType.name() == 'PROBATIONARY'}">
+                                        <i class="bi bi-hourglass-split mr-1"></i> Probationary
+                                    </span>
+
+                                    <!-- Contractual -->
+                                    <span class="status-badge badge-info"
+                                      th:if="${employee.employmentInformation.employmentType.name() == 'CONTRACTUAL'}">
+                                        <i class="bi bi-file-earmark-text-fill mr-1"></i> Contractual
+                                    </span>
+
+                                    <!-- Casual -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${employee.employmentInformation.employmentType.name() == 'CASUAL'}">
+                                        <i class="bi bi-person-fill mr-1"></i> Casual
+                                    </span>
+
+                                    <!-- Part Time -->
+                                    <span class="status-badge badge-primary"
+                                      th:if="${employee.employmentInformation.employmentType.name() == 'PART_TIME'}">
+                                           <i class="bi bi-clock-fill mr-1"></i> Part Time
+                                    </span>
+
+                                    <!-- Project-Based -->
+                                    <span class="status-badge badge-purple"
+                                          th:if="${employee.employmentInformation.employmentType.name() == 'PROJECT_BASED'}">
+                                        <i class="bi bi-kanban-fill mr-1"></i> Project-Based
+                                    </span>
+
+                                    <!-- Apprentice -->
+                                    <span class="status-badge badge-cyan"
+                                          th:if="${employee.employmentInformation.employmentType.name() == 'APPRENTICE'}">
+                                        <i class="bi bi-mortarboard-fill mr-1"></i> Apprentice
+                                    </span>
+
+                                    <!-- Intern -->
+                                    <span class="status-badge badge-teal"
+                                      th:if="${employee.employmentInformation.employmentType.name() == 'INTERN'}">
+                                          <i class="bi bi-person-workspace mr-1"></i> Intern
+                                    </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/admin/user-account/view-user/${employee.id}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-eye mr-1"></i> View
+                                        </a>
+                                        <a th:href="@{|/app/portal/admin/user-account/edit-user/${employee.id}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-pen mr-1"></i> Edit
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- Add Staff - END -->
+        <!-- Employment Registry - END -->
     </div>
 </html>

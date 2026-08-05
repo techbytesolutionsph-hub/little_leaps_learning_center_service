@@ -14,6 +14,7 @@ import org.springframework.lang.Nullable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -37,42 +38,64 @@ public class ObjectUtils {
     public static <T> T copyAs(Object source, Class<T> targetClass) {
         if (source == null) return null;
 
-        T target = null;
         try {
-            target = targetClass.getDeclaredConstructor().newInstance();
+            T target = targetClass.getDeclaredConstructor().newInstance();
 
-            // First, copy standard properties
-            BeanUtils.copyProperties(source, target);
-
-            // Then, copy all fields including inherited ones
             List<Field> sourceFields = getAllFields(source.getClass());
             List<Field> targetFields = getAllFields(targetClass);
 
             for (Field sourceField : sourceFields) {
                 sourceField.setAccessible(true);
+
                 Object value = sourceField.get(source);
 
-                // Find matching field in target
-                T finalTarget = target;
+                if (value == null) {
+                    continue;
+                }
+
                 targetFields.stream()
                         .filter(f -> f.getName().equals(sourceField.getName()))
                         .findFirst()
-                        .ifPresent(f -> {
-                            f.setAccessible(true);
+                        .ifPresent(targetField -> {
                             try {
-                                f.set(finalTarget, value);
-                            } catch (IllegalAccessException e) {
-                                log.error("Failed to copy field {}", f.getName(), e);
+                                targetField.setAccessible(true);
+
+                                Object convertedValue = value;
+
+                                // Same type
+                                if (!targetField.getType().isAssignableFrom(value.getClass())) {
+
+                                    // Handle List
+                                    if (value instanceof List<?> list) {
+                                        convertedValue = list.stream()
+                                                .map(item -> copyAs(item, getListGenericType(targetField)))
+                                                .toList();
+
+                                        // Handle nested object
+                                    } else {
+                                        convertedValue = copyAs(value, targetField.getType());
+                                    }
+                                }
+
+                                targetField.set(target, convertedValue);
+
+                            } catch (Exception e) {
+                                log.error("Failed to copy field {}", targetField.getName(), e);
                             }
                         });
             }
 
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                 NoSuchMethodException e) {
-            log.error("Failed to copy object", e);
-        }
+            return target;
 
-        return target;
+        } catch (Exception e) {
+            log.error("Failed to copy object", e);
+            return null;
+        }
+    }
+
+    private static Class<?> getListGenericType(Field field) {
+        ParameterizedType type = (ParameterizedType) field.getGenericType();
+        return (Class<?>) type.getActualTypeArguments()[0];
     }
 
     public static <T> List<T> copyListAs(List<?> sourceList, Class<T> targetClass) {

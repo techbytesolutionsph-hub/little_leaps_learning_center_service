@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ph.com.lllc.dto.admin.AppUserResponse;
+import ph.com.lllc.dto.response.DashboardMetricsResponse;
+import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.service.api.front.PortalFrontService;
 
 import java.util.List;
@@ -58,6 +60,12 @@ public class PortalViewController {
     @GetMapping(value = "/hr-management/employee-registry")
     public String employeeManagementPage(Model model) {
         this.setupPage(model, "staff", "Employee Registry");
+
+        List<EmployeeResponse> employees = portalFrontService.getEmployees();
+        model.addAttribute("employees", employees);
+
+        DashboardMetricsResponse kpi = portalFrontService.employeeRegistryKPIs();
+        model.addAttribute("kpi", kpi);
 
         return "staff/management/registry/index";
     }

@@ -1,6 +1,7 @@
 package ph.com.lllc.dto.staff;
 
 import lombok.*;
+import ph.com.lllc.enums.*;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -21,10 +22,10 @@ public class EmployeeResponse {
     private String lastName;
     private LocalDate dateOfBirth;
     private BigInteger age;
-    private String gender;
+    private Gender gender;
     private String email;
     private String phoneNumber;
-    private String staffType;
+    private StaffType staffType;
     private String profileImageUrl;
     private Boolean profileCompleted;
     private Boolean emailVerified;
@@ -91,8 +92,8 @@ public class EmployeeResponse {
         private LocalDate dateHired;
         private LocalDate regularStartDate;
         private String address;
-        private String employmentType;
-        private String employmentStatus;
+        private EmploymentType employmentType;
+        private EmploymentStatus employmentStatus;
         private String branchAssign;
         private String immediateSupervisor;
     }
@@ -111,10 +112,10 @@ public class EmployeeResponse {
         private BigDecimal riceAllowance;
         private BigDecimal transportationAllowance;
         private BigDecimal communicationAllowance;
-        private Integer sickLeave;
-        private Integer vacationLeave;
-        private Integer paternityLeave;
-        private Integer maternityLeave;
+        private BigDecimal sickLeave;
+        private BigDecimal vacationLeave;
+        private BigDecimal paternityLeave;
+        private BigDecimal maternityLeave;
         private Boolean sssActive;
         private Boolean philHealthActive;
         private Boolean pagIbigActive;
@@ -133,8 +134,8 @@ public class EmployeeResponse {
         private BigDecimal basicSalary;
         private BigDecimal dailyRate;
         private BigDecimal hourlyRate;
-        private String salaryType;
-        private String payrollCycle;
+        private SalaryType salaryType;
+        private PayrollCycle payrollCycle;
         private LocalDate effectiveDate;
         private String bankName;
         private String bankBranch;
@@ -153,7 +154,7 @@ public class EmployeeResponse {
     public static class TimesheetResponse {
         private Long id;
         private LocalDate weekEnding;
-        private String status;
+        private TimesheetStatus status;
         private List<TimesheetEntryResponse> entries;
     }
 
