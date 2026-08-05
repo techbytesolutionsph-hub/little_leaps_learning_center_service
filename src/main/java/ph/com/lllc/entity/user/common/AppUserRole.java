@@ -34,14 +34,14 @@ public class AppUserRole implements Serializable {
     /*
      * USER ROLE -> PERMISSIONS
      */
-    @JsonManagedReference("role-permission")
+    @JsonManagedReference
     @OneToMany(mappedBy = "userRole", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppRolePermission> rolePermissions;
 
     /*
      * ROLE -> USER
      */
-    @JsonBackReference("user-role")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", nullable = false)
     private AppUser appUser;

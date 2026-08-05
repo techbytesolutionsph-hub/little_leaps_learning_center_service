@@ -52,7 +52,7 @@ public class AppParentGuardian implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @JsonBackReference("client-parent")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id", nullable = false)
     private AppClientProfile appClientProfile;

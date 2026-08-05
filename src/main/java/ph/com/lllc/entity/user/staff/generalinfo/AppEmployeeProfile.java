@@ -1,6 +1,7 @@
 package ph.com.lllc.entity.user.staff.generalinfo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,8 @@ import lombok.Setter;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.address.AppEmployeeAddress;
 import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
+import ph.com.lllc.entity.user.staff.contactinfo.AppEmployeeContactInformation;
+import ph.com.lllc.entity.user.staff.emergencycontact.AppEmployeeEmergencyContact;
 import ph.com.lllc.entity.user.staff.employmentinfo.AppEmploymentInformation;
 import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
 import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
@@ -76,16 +79,16 @@ public class AppEmployeeProfile implements Serializable {
     private String profileImageUrl;
 
     @Column(name = "is_active")
-    private boolean isActive = true;
+    private boolean isActive;
 
     @Column(name = "profile_completed")
-    private boolean profileCompleted = false;
+    private boolean profileCompleted;
 
     @Column(name = "email_verified")
-    private boolean emailVerified = false;
+    private boolean emailVerified;
 
     @Column(name = "phone_verified")
-    private boolean phoneVerified = false;
+    private boolean phoneVerified;
 
     @Column(name = "creation_date")
     private LocalDateTime creationDate;
@@ -99,25 +102,38 @@ public class AppEmployeeProfile implements Serializable {
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppEmployeeAddress> address;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppEmployeeContactInformation contactInformation;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppEmployeeEmergencyContact emergencyContact;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppEmploymentInformation employmentInformation;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppEmployeeBenefits employeeBenefits;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private AppPayrollInformation payrollInformation;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppWeeklyTimesheet> timesheets;
+
     @JsonBackReference("user-staff")
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", unique = true, nullable = false)
     private AppUser appUser;
-
-    @OneToMany(mappedBy = "appEmployeeProfile")
-    private List<AppWeeklyTimesheet> timesheets;
-
-    @OneToMany(mappedBy = "appEmployeeProfile")
-    private List<AppEmployeeAddress> address;
-
-    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AppEmploymentInformation employmentInformation;
-
-    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AppPayrollInformation payrollInformation;
-
-    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AppEmployeeBenefits employeeBenefits;
 
     @PrePersist
     private void prePersist() {

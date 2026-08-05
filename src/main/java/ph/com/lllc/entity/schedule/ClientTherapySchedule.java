@@ -49,16 +49,16 @@ public class ClientTherapySchedule {
      * WEDNESDAY 1-3
      * FRIDAY 3-5
      */
-    @JsonManagedReference("session-slot")
+    @JsonManagedReference
     @OneToMany(mappedBy = "kidSessionSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TherapySlot> scheduleSlots;
 
-    @JsonBackReference("client-session")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id", nullable = false)
     private AppClientProfile appClientProfile;
 
-    @JsonBackReference("user-staff")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "therapist_id")
     private AppEmployeeProfile therapist;

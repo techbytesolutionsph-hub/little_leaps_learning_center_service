@@ -1,0 +1,222 @@
+package ph.com.lllc.service.api.management;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ph.com.lllc.dto.response.CommonResponse;
+import ph.com.lllc.dto.staff.EmployeeRequest;
+import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.entity.user.staff.address.AppEmployeeAddress;
+import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
+import ph.com.lllc.entity.user.staff.contactinfo.AppEmployeeContactInformation;
+import ph.com.lllc.entity.user.staff.emergencycontact.AppEmployeeEmergencyContact;
+import ph.com.lllc.entity.user.staff.employmentinfo.AppEmploymentInformation;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
+import ph.com.lllc.exception.ServiceException;
+import ph.com.lllc.repository.AppUserRepository;
+import ph.com.lllc.repository.management.AppEmployeeProfileRepository;
+import ph.com.lllc.service.util.logging.LoggingService;
+
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Service
+@RequiredArgsConstructor
+public class EmploymentRegistryService {
+
+    private final AppEmployeeProfileRepository employeeProfileRepository;
+    private final AppUserRepository appUserRepository;
+    private final LoggingService loggingService;
+    private final AppEmployeeProfileRepository appEmployeeProfileRepository;
+
+    @Transactional
+    public CommonResponse createEmployee(String uuid, EmployeeRequest request) throws ServiceException {
+
+        /*
+         * Retrieve App User
+         */
+        String username = request.getAccountAccess().getUsername();
+
+        /* Find existing user */
+        AppUser appUser = appUserRepository.findUserByUsername(username)
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND.value(), "User not found: " + username));
+
+        /*
+         * Validate Existing Employee Profile
+         */
+        if (employeeProfileRepository.existsByAppUser(appUser)) {
+            loggingService.error(uuid, getClass().getName(), "Employee profile already exists for username: " + username, HttpStatus.CONFLICT.value());
+            throw new ServiceException(HttpStatus.CONFLICT.value(), "Employee profile already exists for username: " + username);
+        }
+
+        /*
+         * Employee Profile
+         */
+        AppEmployeeProfile employee = new AppEmployeeProfile();
+
+        EmployeeRequest.PersonalInformationDTO personal = request.getPersonalInformation();
+        String employeeId = request.getEmploymentInformation().getEmployeeIdNumber();
+
+        employee.setEmployeeId(employeeId);
+        employee.setFirstName(personal.getFirstName());
+        employee.setMiddleName(personal.getMiddleName());
+        employee.setLastName(personal.getLastName());
+        employee.setDateOfBirth(LocalDate.parse(personal.getBirthDate()));
+        employee.setAge(BigInteger.valueOf(personal.getAge()));
+        employee.setGender(personal.getGender());
+        employee.setEmail(personal.getEmail());
+        employee.setPhoneNumber(personal.getPhoneNumber());
+        employee.setStaffType(personal.getEmployeeType());
+        employee.setProfileImageUrl(request.getProfileImageUrl());
+
+        employee.setActive(Boolean.TRUE);
+        employee.setPhoneVerified(Boolean.TRUE);
+        employee.setEmailVerified(Boolean.TRUE);
+        employee.setProfileCompleted(Boolean.TRUE);
+
+        /*
+         * Contact Information
+         */
+        EmployeeRequest.ContactInformationDTO contact = request.getContactInformation();
+        AppEmployeeContactInformation contactInfo = new AppEmployeeContactInformation();
+
+        contactInfo.setContactNumber(contact.getContactNumber());
+        contactInfo.setWorkEmail(contact.getWorkEmail());
+        contactInfo.setHomeEmail(contact.getHomeEmail());
+
+        contactInfo.setAppEmployeeProfile(employee);
+        employee.setContactInformation(contactInfo);
+
+        /*
+         * Emergency Contact
+         */
+        EmployeeRequest.EmergencyContactDTO emergency = request.getEmergencyContact();
+        AppEmployeeEmergencyContact emergencyContact = new AppEmployeeEmergencyContact();
+
+        emergencyContact.setName(emergency.getName());
+        emergencyContact.setContactNumber(emergency.getContactNumber());
+        emergencyContact.setRelationship(emergency.getRelationship());
+
+        emergencyContact.setAppEmployeeProfile(employee);
+        employee.setEmergencyContact(emergencyContact);
+
+        /*
+         * Address
+         */
+        EmployeeRequest.AddressDTO addressDTO = request.getAddress();
+        AppEmployeeAddress address = new AppEmployeeAddress();
+
+        address.setStreet(addressDTO.getStreet());
+        address.setBarangay(addressDTO.getBarangay());
+        address.setCity(addressDTO.getCity());
+        address.setProvince(addressDTO.getProvince());
+        address.setCountry(addressDTO.getCountry());
+        address.setZipNumber(addressDTO.getPostalCode());
+        address.setPermanentResidence(true);//for checking
+
+        address.setAppEmployeeProfile(employee);
+        employee.setAddress(List.of(address));
+
+        /*
+         * Employment Information
+         */
+        EmployeeRequest.EmploymentInformationDTO employmentDTO = request.getEmploymentInformation();
+        AppEmploymentInformation employment = new AppEmploymentInformation();
+
+        employment.setPosition(employmentDTO.getPosition());
+        employment.setDateHired(employmentDTO.getDateHired());
+        employment.setRegularStartDate(employmentDTO.getRegularDateStart());
+        employment.setEmployeeId(employmentDTO.getEmployeeIdNumber());
+        employment.setAddress(employmentDTO.getCompanyAddress());
+        employment.setBranchAssign(employmentDTO.getBranch());
+        employment.setEmploymentType(employmentDTO.getEmploymentType());
+        employment.setEmploymentStatus(employmentDTO.getEmploymentStatus());
+        employment.setImmediateSupervisor(employmentDTO.getImmediateSupervisor());
+
+        employment.setAppEmployeeProfile(employee);
+        employee.setEmploymentInformation(employment);
+
+        /*
+         * Benefits
+         */
+        EmployeeRequest.BenefitsDTO benefitsDTO = request.getBenefits();
+        AppEmployeeBenefits benefits = new AppEmployeeBenefits();
+
+        benefits.setTinNumber(benefitsDTO.getTinNumber());
+        benefits.setSssNumber(benefitsDTO.getSssNumber());
+        benefits.setPhilHealthNumber(benefitsDTO.getPhilhealthNumber());
+        benefits.setPagIbigNumber(benefitsDTO.getPagibigNumber());
+        benefits.setAllowance(benefitsDTO.getAllowance());
+        benefits.setRiceAllowance(benefitsDTO.getRiceAllowance());
+        benefits.setTransportationAllowance(benefitsDTO.getTransportationAllowance());
+        benefits.setCommunicationAllowance(benefitsDTO.getCommunicationAllowance());
+        benefits.setSickLeave(benefitsDTO.getSickLeave());
+        benefits.setVacationLeave(benefitsDTO.getVacationLeave());
+        benefits.setPaternityLeave(benefitsDTO.getPaternityLeave());
+        benefits.setMaternityLeave(benefitsDTO.getMaternityLeave());
+        benefits.setHmoProvider(benefitsDTO.getHmoProvider());
+        benefits.setHmoCardNumber(benefits.getHmoCardNumber());
+
+        benefits.setHasHmo(
+                benefitsDTO.getHmoProvider() != null && !benefitsDTO.getHmoProvider().isBlank()
+                && benefits.getHmoCardNumber() != null && !benefits.getHmoCardNumber().isBlank()
+        );
+        benefits.setSssActive(Boolean.TRUE);
+        benefits.setPagIbigActive(Boolean.TRUE);
+        benefits.setPhilHealthActive(Boolean.TRUE);
+
+        benefits.setAppEmployeeProfile(employee);
+        employee.setEmployeeBenefits(benefits);
+
+        /*
+         * Payroll
+         */
+        EmployeeRequest.PayrollInformationDTO payrollDTO = request.getPayrollInformation();
+        AppPayrollInformation payroll = new AppPayrollInformation();
+
+        payroll.setBasicSalary(payrollDTO.getBasicSalary());
+        payroll.setDailyRate(payrollDTO.getDailyRate());
+        payroll.setHourlyRate(payrollDTO.getHourlyRate());
+        payroll.setBankName(payrollDTO.getBankName());
+        payroll.setBankAccountNumber(payrollDTO.getBankAccountNumber());
+        payroll.setBankBranch(payrollDTO.getBankBranch());
+        payroll.setSalaryType(payrollDTO.getSalaryType());
+        payroll.setPayrollCycle(payrollDTO.getPayrollCycle());
+        payroll.setEffectiveDate(payrollDTO.getEffectiveDate());
+
+        payroll.setIsTaxable(Boolean.TRUE);
+        payroll.setHolidayPayEligible(Boolean.TRUE);
+        payroll.setOvertimeEligible(Boolean.TRUE);
+        payroll.setThirteenthMonthEligible(Boolean.TRUE);
+
+        payroll.setAppEmployeeProfile(employee);
+        employee.setPayrollInformation(payroll);
+
+        /*
+         * Link AppUser <-> Employee Profile
+         */
+        employee.setAppUser(appUser);
+        appUser.setAppEmployeeProfile(employee);
+
+        AppUser saved = appUserRepository.save(appUser);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("appUser", saved);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Employee created successfully!")
+                .responseBody(responseBody)
+                .build();
+    }
+
+    public List<AppEmployeeProfile> getEmployees() {
+        return appEmployeeProfileRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+    }
+}

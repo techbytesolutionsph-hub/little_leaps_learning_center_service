@@ -55,18 +55,18 @@ public class PortalViewController {
         return "staff/clients/add/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-directory")
+    @GetMapping(value = "/hr-management/employee-registry")
     public String employeeManagementPage(Model model) {
-        this.setupPage(model, "staff", "Employee Directory");
+        this.setupPage(model, "staff", "Employee Registry");
 
-        return "staff/management/directory/index";
+        return "staff/management/registry/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-directory/add-employee")
+    @GetMapping(value = "/hr-management/employee-registry/add-employee")
     public String addEmployeePage(Model model) {
         this.setupPage(model, "staff", "Add Employee");
 
-        return "staff/management/directory/add-employee/index";
+        return "staff/management/registry/add-employee/index";
     }
 
     @GetMapping(value = "/admin/user-account")

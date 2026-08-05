@@ -71,15 +71,15 @@ public class AppUser implements Serializable {
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
-    @JsonManagedReference("user-role")
+    @JsonManagedReference
     @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppUserRole> userRole;
 
-    @JsonManagedReference("user-client")
+    @JsonManagedReference
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private AppClientProfile appClientProfile;
 
-    @JsonManagedReference("user-staff")
+    @JsonManagedReference
     @OneToOne(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private AppEmployeeProfile appEmployeeProfile;
 

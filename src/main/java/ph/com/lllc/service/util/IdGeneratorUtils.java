@@ -7,7 +7,7 @@ import java.time.Year;
 @Component
 public class IdGeneratorUtils {
 
-    private static final String COMPANY_PREFIX = "LLLC";
+    private static final String COMPANY_PREFIX = "3LC";
 
     private IdGeneratorUtils() {
     }
@@ -16,16 +16,16 @@ public class IdGeneratorUtils {
      * =========================================================
      * USER ID FORMAT
      * =========================================================
-     * LLLC-ADM-000001
-     * LLLC-THR-000001
-     * LLLC-CSM-000001
+     * 3LC-0326-0001
+     * 3LC-0326-0002
+     * 3LC-0326-0003
      */
-    public String generateEmployeeId(String roleCode, long runningCode) {
+    public String generateEmployeeId(String dateHired, long runningCode) {
 
         return String.format(
-                "%s-%s-%06d",
+                "%s-%s-%04d",
                 COMPANY_PREFIX,
-                roleCode.toUpperCase(),
+                dateHired,
                 runningCode
         );
     }

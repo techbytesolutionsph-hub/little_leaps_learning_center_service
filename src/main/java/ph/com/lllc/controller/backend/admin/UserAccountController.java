@@ -39,6 +39,12 @@ public class UserAccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userAccountService.createUserAccount(uuid, request));
     }
 
+    @Operation(summary = "Get ID Running Sequence")
+    @GetMapping("/get-running-sequence/{dateHired}")
+    public ResponseEntity<String> getIdRunningSequence(@PathVariable String dateHired) throws ServiceException {
+        return ResponseEntity.ok(userAccountService.getIdRunningSequence(dateHired));
+    }
+
     @Operation(summary = "Generate Temporary User Password")
     @GetMapping("/generate-temp-password")
     public ResponseEntity<String> generateTemporaryPassword() {

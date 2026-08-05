@@ -17,7 +17,7 @@
                     <button type="button"
                             class="btn-glossy-teal d-flex justify-content-center align-items-center"
                             id="back-btn"
-                            data-url="/app/portal/hr-management/employee-directory">
+                            data-url="/app/portal/hr-management/employee-registry">
                         <i class="bi bi-arrow-return-left mr-2"></i> Back
                     </button>
                 </div>
@@ -159,8 +159,8 @@
                                                     <label for="employee-type" class="form-label text-sm fw-bold text-gray-800">Employee Type</label>
                                                     <select class="form-control text-sm variation-discount-type" id="employee-type" required>
                                                         <option value="" selected disabled>Select an employee type</option>
-                                                        <option value="MALE">Employee</option>
-                                                        <option value="FEMALE">Trainee</option>
+                                                        <option value="EMPLOYEE">Employee</option>
+                                                        <option value="TRAINEE">Trainee</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -292,7 +292,7 @@
 
                                                     <div class="input-group">
                                                         <input type="text" class="form-control text-sm" id="employee-id-number" placeholder="Click Generate" readonly required>
-                                                        <button class="btn btn-outline-primary" type="button" id="generate-password-btn">
+                                                        <button class="btn btn-outline-primary" type="button" id="generate-id-number-btn">
                                                             <i class="bi bi-arrow-repeat"></i>
                                                         </button>
                                                     </div>
@@ -499,6 +499,16 @@
                                                     <label for="employee-bank-branch-no" class="form-label text-sm fw-bold text-gray-700">Bank Branch</label>
                                                     <input type="text" class="form-control text-sm" id="employee-bank-branch-no" placeholder="Enter bank branch" required>
                                                 </div>
+                                                <!-- Tax Exempt -->
+<!--                                                <div class="col-12 col-md-6 mt-2 mb-2">-->
+<!--                                                    <label class="form-label text-sm fw-bold text-gray-700 d-block">Is Taxable</label>-->
+<!--                                                    <div class="form-check mt-2">-->
+<!--                                                        <input class="form-check-input custom-checkbox" type="checkbox"  style="margin-left: -20px" id="employee-is-taxable">-->
+<!--                                                        <label class="form-check-label text-sm" for="employee-is-taxable">-->
+<!--                                                            Yes-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
                                             </div>
                                         </div>
                                     </div>

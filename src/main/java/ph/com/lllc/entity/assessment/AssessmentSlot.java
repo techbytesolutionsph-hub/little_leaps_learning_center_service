@@ -31,7 +31,7 @@ public class AssessmentSlot {
     @Column(name = "end_time")
     private LocalTime endTime;
 
-    @JsonBackReference("assessment-slot")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "assessment_schedule_id", nullable = false)
     private ClientInitialAssessmentSchedule assessmentSchedule;

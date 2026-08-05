@@ -1,5 +1,7 @@
 package ph.com.lllc.entity.user.staff.timesheet;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +32,12 @@ public class AppWeeklyTimesheet {
     @Enumerated(EnumType.STRING)
     private TimesheetStatus status;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "timesheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppTimesheetEntry> entries;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", nullable = false)
     private AppEmployeeProfile appEmployeeProfile;
 }

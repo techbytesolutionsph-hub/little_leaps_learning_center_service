@@ -1,5 +1,6 @@
 package ph.com.lllc.entity.user.staff.timesheet;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,10 +22,6 @@ public class AppTimesheetEntry {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "timesheet_id")
-    private AppWeeklyTimesheet timesheet;
-
     private BigDecimal monday;
     private BigDecimal tuesday;
     private BigDecimal wednesday;
@@ -32,6 +29,10 @@ public class AppTimesheetEntry {
     private BigDecimal friday;
     private BigDecimal saturday;
     private BigDecimal sunday;
-
     private BigDecimal totalHours;
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "timesheet_id")
+    private AppWeeklyTimesheet timesheet;
 }

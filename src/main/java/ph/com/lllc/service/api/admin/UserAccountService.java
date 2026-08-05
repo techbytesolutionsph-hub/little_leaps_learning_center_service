@@ -13,6 +13,8 @@ import ph.com.lllc.enums.UserRole;
 import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.*;
+import ph.com.lllc.service.db.SequenceGeneratorService;
+import ph.com.lllc.service.util.IdGeneratorUtils;
 import ph.com.lllc.service.util.PasswordGeneratorService;
 import ph.com.lllc.service.util.logging.LoggingService;
 import ph.com.lllc.util.BCryptUtils;
@@ -29,9 +31,16 @@ public class UserAccountService {
     private final AppRoleMappingRepository appRoleMappingRepository;
     private final AppRolePermissionRepository appRolePermissionRepository;
     private final AppPermissionRepository appPermissionRepository;
+    private final SequenceGeneratorService sequenceGeneratorService;
     private final PasswordGeneratorService passwordGeneratorService;
+    private final IdGeneratorUtils idGeneratorUtils;
     private final LoggingService loggingService;
     private final BCryptUtils encoder;
+
+    public String getIdRunningSequence(String dateHired) throws ServiceException {
+        long nextUserSeq = sequenceGeneratorService.getStaffIdNextSequence();
+        return idGeneratorUtils.generateEmployeeId(dateHired, nextUserSeq);
+    }
 
     @Transactional
     public CommonResponse createUserAccount(String uuid, CreateUserRequest request) throws ServiceException {

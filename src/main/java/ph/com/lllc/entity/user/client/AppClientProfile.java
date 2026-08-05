@@ -98,23 +98,23 @@ public class AppClientProfile implements Serializable {
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
-    @JsonManagedReference("client-parent")
+    @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppParentGuardian> appParentGuardian;
 
-    @JsonManagedReference("client-session")
+    @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientTherapySchedule> sessionSchedules;
 
-    @JsonManagedReference("client-assessment")
+    @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NeurodevelopmentalAssessmentSchedule> assessments;
 
-    @JsonManagedReference("client-assessment-schedule")
+    @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientInitialAssessmentSchedule> assessmentSchedules;
 
-    @JsonBackReference("user-client")
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", unique = true, nullable = false)
     private AppUser appUser;

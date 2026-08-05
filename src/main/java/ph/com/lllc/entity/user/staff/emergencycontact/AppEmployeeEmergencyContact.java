@@ -1,0 +1,38 @@
+package ph.com.lllc.entity.user.staff.emergencycontact;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "lllc_app_employee_emergency_contact")
+@NoArgsConstructor
+@AllArgsConstructor
+public class AppEmployeeEmergencyContact {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "contact_name")
+    private String name;
+
+    @Column(name = "contact_number")
+    private String contactNumber;
+
+    @Column(name = "relationship")
+    private String relationship;
+
+    @JsonBackReference
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_profile_id", nullable = false, unique = true)
+//    @JsonIgnoreProperties("emergencyContact")
+    private AppEmployeeProfile appEmployeeProfile;
+}

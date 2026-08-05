@@ -1,5 +1,7 @@
 package ph.com.lllc.entity.user.staff.address;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,7 +43,9 @@ public class AppEmployeeAddress {
     @Column(name = "is_permanent_residence")
     private boolean isPermanentResidence;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", nullable = false)
+//    @JsonIgnoreProperties("address")
     private AppEmployeeProfile appEmployeeProfile;
 }

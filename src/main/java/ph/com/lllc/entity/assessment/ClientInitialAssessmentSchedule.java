@@ -49,16 +49,16 @@ public class ClientInitialAssessmentSchedule {
     @Column(name = "remarks", length = 1000)
     private String remarks;
 
-    @JsonManagedReference("assessment-slot")
+    @JsonManagedReference
     @OneToMany(mappedBy = "assessmentSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AssessmentSlot> slots = new ArrayList<>();
 
-    @JsonBackReference("client-assessment-schedule")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id")
     private AppClientProfile appClientProfile;
 
-    @JsonBackReference("user-staff")
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "therapist_id")
     private AppEmployeeProfile therapist;

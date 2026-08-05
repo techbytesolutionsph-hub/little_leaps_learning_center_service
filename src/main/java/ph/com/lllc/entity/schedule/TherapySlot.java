@@ -42,7 +42,7 @@ public class TherapySlot {
     /**
      * Parent schedule
      */
-    @JsonBackReference("session-slot")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "kid_session_schedule_id", nullable = false)
     private ClientTherapySchedule kidSessionSchedule;

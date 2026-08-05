@@ -1,5 +1,7 @@
 package ph.com.lllc.entity.user.staff.employmentinfo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +26,9 @@ public class AppEmploymentInformation {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "employee_id")
+    private String employeeId;
+
     @Column(name = "position")
     private String position;
 
@@ -33,22 +38,8 @@ public class AppEmploymentInformation {
     @Column(name = "regular_start_date")
     private LocalDate regularStartDate;
 
-    @Column(name = "employee_id")
-    private String employeeId;
-
-    @Column(name = "job_title")
-    private String jobTitle;
-
     @Column(name = "address")
     private String address;
-
-    /**
-     * Example:
-     * Main Branch
-     * San Jose Branch
-     */
-    @Column(name = "branch_assign")
-    private String branchAssign;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "employment_type")
@@ -58,10 +49,20 @@ public class AppEmploymentInformation {
     @Column(name = "employment_status")
     private EmploymentStatus employmentStatus;
 
+    /**
+     * Example:
+     * Main Branch
+     * San Jose Branch
+     */
+    @Column(name = "branch_assign")
+    private String branchAssign;
+
     @Column(name = "immediate_supervisor")
     private String immediateSupervisor;
 
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", unique = true, nullable = false)
+//    @JsonIgnoreProperties("employmentInformation")
     private AppEmployeeProfile appEmployeeProfile;
 }

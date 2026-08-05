@@ -26,7 +26,7 @@ public class AppPermission implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @JsonManagedReference("permission-role")
+    @JsonManagedReference
     @OneToMany(mappedBy="permission", cascade=CascadeType.ALL)
     private List<AppRolePermission> rolePermissions;
 

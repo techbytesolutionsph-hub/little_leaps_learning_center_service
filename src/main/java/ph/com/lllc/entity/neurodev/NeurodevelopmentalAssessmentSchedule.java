@@ -105,7 +105,7 @@ public class NeurodevelopmentalAssessmentSchedule {
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
 
-    @JsonBackReference("client-assessment")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id")
     private AppClientProfile appClientProfile;

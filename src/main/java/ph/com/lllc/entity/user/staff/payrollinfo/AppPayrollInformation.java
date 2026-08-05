@@ -1,5 +1,7 @@
 package ph.com.lllc.entity.user.staff.payrollinfo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,6 +37,7 @@ public class AppPayrollInformation {
     @Column(name = "hourly_rate", precision = 12, scale = 2)
     private BigDecimal hourlyRate;
 
+    /* Payroll Configuration */
     @Enumerated(EnumType.STRING)
     @Column(name = "salary_type")
     private SalaryType salaryType;
@@ -42,6 +45,9 @@ public class AppPayrollInformation {
     @Enumerated(EnumType.STRING)
     @Column(name = "payroll_cycle")
     private PayrollCycle payrollCycle;
+
+    @Column(name = "effective_date")
+    private LocalDate effectiveDate;
 
     /* Bank Information */
     @Column(name = "bank_name")
@@ -55,21 +61,20 @@ public class AppPayrollInformation {
 
     /* Payroll Settings */
     @Column(name = "is_taxable")
-    private Boolean taxable = true;
+    private Boolean isTaxable;
 
     @Column(name = "overtime_eligible")
-    private Boolean overtimeEligible = true;
+    private Boolean overtimeEligible;
 
     @Column(name = "holiday_pay_eligible")
-    private Boolean holidayPayEligible = true;
+    private Boolean holidayPayEligible;
 
     @Column(name = "thirteenth_month_eligible")
-    private Boolean thirteenthMonthEligible = true;
+    private Boolean thirteenthMonthEligible;
 
-    @Column(name = "effective_date")
-    private LocalDate effectiveDate;
-
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", unique = true, nullable = false)
+//    @JsonIgnoreProperties("payrollInformation")
     private AppEmployeeProfile appEmployeeProfile;
 }

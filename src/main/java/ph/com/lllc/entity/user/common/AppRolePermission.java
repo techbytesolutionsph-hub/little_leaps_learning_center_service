@@ -22,7 +22,7 @@ public class AppRolePermission implements Serializable {
     /*
      * PERMISSION
      */
-    @JsonBackReference("permission-role")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name="permission_id", nullable=false)
     private AppPermission permission;
@@ -30,7 +30,7 @@ public class AppRolePermission implements Serializable {
     /*
      * ROLE
      */
-    @JsonBackReference("role-permission")
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="role_id", nullable=false)
     private AppUserRole userRole;

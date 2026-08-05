@@ -1,5 +1,7 @@
 package ph.com.lllc.entity.user.staff.benefits;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,6 +43,7 @@ public class AppEmployeeBenefits {
     /* ==========================
        ALLOWANCES
        ========================== */
+
     @Column(name = "allowance")
     private BigDecimal allowance;
 
@@ -56,6 +59,7 @@ public class AppEmployeeBenefits {
     /* ==========================
        LEAVES
        ========================== */
+
     @Column(name = "sick_leave")
     private BigDecimal sickLeave;
 
@@ -69,34 +73,23 @@ public class AppEmployeeBenefits {
     private BigDecimal maternityLeave;
 
     /* ==========================
-       TAX
-       ========================== */
-
-    @Column(name = "tax_exempt")
-    private Boolean taxExempt = false;
-
-    @Column(name = "withholding_tax")
-    private BigDecimal withholdingTax;
-
-    /* ==========================
        CONTRIBUTION FLAGS
        ========================== */
-
     @Column(name = "sss_active")
-    private Boolean sssActive = true;
+    private Boolean sssActive;
 
     @Column(name = "philhealth_active")
-    private Boolean philHealthActive = true;
+    private Boolean philHealthActive;
 
     @Column(name = "pagibig_active")
-    private Boolean pagIbigActive = true;
-
-    /* ==========================
-       COMPANY BENEFITS
-       ========================== */
+    private Boolean pagIbigActive;
 
     @Column(name = "has_hmo")
-    private Boolean hasHmo = false;
+    private Boolean hasHmo;
+
+    /* ==========================
+       COMPANY HMO
+       ========================== */
 
     @Column(name = "hmo_provider")
     private String hmoProvider;
@@ -104,13 +97,9 @@ public class AppEmployeeBenefits {
     @Column(name = "hmo_card_number")
     private String hmoCardNumber;
 
-    @Column(name = "life_insurance")
-    private Boolean lifeInsurance = false;
-
-    @Column(name = "retirement_plan")
-    private Boolean retirementPlan = false;
-
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_profile_id", unique = true, nullable = false)
+//    @JsonIgnoreProperties("employeeBenefits")
     private AppEmployeeProfile appEmployeeProfile;
 }
