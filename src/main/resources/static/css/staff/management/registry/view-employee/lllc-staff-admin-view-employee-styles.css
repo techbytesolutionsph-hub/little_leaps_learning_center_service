@@ -1,0 +1,139 @@
+.profile-cover{
+    height: 90px;
+    background: linear-gradient(135deg, rgb(0, 151, 157), rgb(0, 199, 190));
+    border-radius:.5rem .5rem 0 0;
+}
+
+.profile-image{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:50%;
+    border:5px solid #fff;
+    margin-top:-60px;
+}
+
+.basic-info-header{
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.basic-info{
+    font-size: 12px;
+}
+
+.badge-glossy {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    padding: 0.55em 0.8em;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.4),
+    0 2px 4px rgba(0,0,0,0.15);
+}
+
+.badge-glossy::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.35),
+            rgba(255,255,255,0)
+    );
+    pointer-events: none;
+}
+
+.info-row{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 6px;
+}
+
+.info-row span{
+    color:#6c757d;
+}
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.accordion-item {
+    border: none !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all .3s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Accordion Header */
+.accordion-header .accordion-button {
+    height: 50px !important;
+    background: linear-gradient(135deg, rgb(0, 151, 157), rgb(0, 199, 190)) !important;
+    border-radius: .5rem !important;
+    font-size: 14px !important;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: none !important;
+}
+
+/* Remove Bootstrap default arrow */
+.accordion-button::after {
+    display: none;
+}
+
+/* Custom arrow */
+.accordion-icon {
+    font-size: 1rem;
+    transition: transform .3s ease;
+    color: #fff;
+}
+
+/* Rotate arrow when opened */
+.accordion-button:not(.collapsed) .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* Hover effect */
+.accordion-button:hover .accordion-icon {
+    transform: scale(1.15);
+}
+
+/* Keep rotation while opened + hover */
+.accordion-button:not(.collapsed):hover .accordion-icon {
+    transform: rotate(180deg) scale(1.15);
+}
+
+.accordion-body {
+    background: #ffffff;
+    padding: 0.85rem !important;
+    border-radius: 0 0 .5rem .5rem;
+}
+
+
+.info-row strong {
+    max-width: 65%;
+    text-align: right;
+    word-break: break-word;
+}
+
+#back-btn{
+    width: 100px;
+    height: 35px;
+    font-size: 13px;
+}

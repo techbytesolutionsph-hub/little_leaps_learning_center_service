@@ -6,9 +6,12 @@ import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.EmploymentStatus;
 
+import java.util.Optional;
+
 @Repository
 public interface AppEmployeeProfileRepository extends JpaRepository<AppEmployeeProfile, Long> {
 
     boolean existsByAppUser(AppUser appUser);
+    Optional<AppEmployeeProfile> findByEmployeeId(String employeeId);
     long countByEmploymentInformation_EmploymentStatus(EmploymentStatus employmentStatus);
 }

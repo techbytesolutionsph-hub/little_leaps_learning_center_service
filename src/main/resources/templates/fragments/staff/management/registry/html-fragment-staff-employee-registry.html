@@ -138,12 +138,7 @@
             <div class="card-header py-3 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
 
                 <h6 class="m-0 font-weight-bold mb-3 mb-md-0">
-                    <img src="/img/lordicon/little-leap-kids-icon.svg"
-                         width="24"
-                         height="24"
-                         class="mr-2"
-                         alt="Homepage">
-                    Employee Records
+                    <i class="fa-solid fa-id-card mr-2"></i> Employee Records
                 </h6>
 
                 <div class="d-flex flex-wrap align-items-center ml-md-auto">
@@ -266,11 +261,11 @@
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
-                                        <a th:href="@{|/app/portal/admin/user-account/view-user/${employee.id}|}"
+                                        <a th:href="@{|/app/portal/hr-management/employee-registry/view-employee/${employee.employeeId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
-                                        <a th:href="@{|/app/portal/admin/user-account/edit-user/${employee.id}|}"
+                                        <a th:href="@{|/app/portal/hr-management/employee-registry/edit-employee/${employee.employeeId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-pen mr-1"></i> Edit
                                         </a>

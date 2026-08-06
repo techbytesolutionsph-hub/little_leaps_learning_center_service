@@ -7,7 +7,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <div th:fragment="staff-add-employee">
-        <!-- Add Client - START -->
+        <!-- Add Employee - START -->
         <form id="add-client-form" autocomplete="off" class="needs-validation">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -244,24 +244,23 @@
                                                 <div class="col-12 col-md-4 mt-2 mb-2">
                                                     <label for="employee-emergency-contact-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship</label>
                                                     <select class="form-control text-sm variation-discount-type" id="employee-emergency-contact-relationship" required>
-                                                        <option value="" selected disabled>Select relationship</option>
-                                                        <option value="SPOUSE">Spouse</option>
-                                                        <option value="FATHER">Father</option>
-                                                        <option value="MOTHER">Mother</option>
-                                                        <option value="SON">Son</option>
-                                                        <option value="DAUGHTER">Daughter</option>
-                                                        <option value="BROTHER">Brother</option>
-                                                        <option value="SISTER">Sister</option>
-                                                        <option value="GRANDFATHER">Grandfather</option>
-                                                        <option value="GRANDMOTHER">Grandmother</option>
-                                                        <option value="UNCLE">Uncle</option>
-                                                        <option value="AUNT">Aunt</option>
-                                                        <option value="COUSIN">Cousin</option>
-                                                        <option value="LEGAL_GUARDIAN">Legal Guardian</option>
-                                                        <option value="PARTNER">Partner</option>
-                                                        <option value="FRIEND">Friend</option>
-                                                        <option value="NEIGHBOR">Neighbor</option>
-                                                        <option value="OTHER">Other</option>
+                                                        <option value="Spouse">Spouse</option>
+                                                        <option value="Father">Father</option>
+                                                        <option value="Mother">Mother</option>
+                                                        <option value="Son">Son</option>
+                                                        <option value="Daughter">Daughter</option>
+                                                        <option value="Brother">Brother</option>
+                                                        <option value="Sister">Sister</option>
+                                                        <option value="Grandfather">Grandfather</option>
+                                                        <option value="Grandmother">Grandmother</option>
+                                                        <option value="Uncle">Uncle</option>
+                                                        <option value="Aunt">Aunt</option>
+                                                        <option value="Cousin">Cousin</option>
+                                                        <option value="Legal Guardian">Legal Guardian</option>
+                                                        <option value="Partner">Partner</option>
+                                                        <option value="Friend">Friend</option>
+                                                        <option value="Neighbor">Neighbor</option>
+                                                        <option value="Other">Other</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -353,8 +352,8 @@
                                                     <label for="employee-assign-branch" class="form-label text-sm fw-bold text-gray-800"> Assign Branch </label>
                                                     <select class="form-control text-sm" id="employee-assign-branch" required>
                                                         <option value="" selected disabled>Select assign branch</option>
-                                                        <option value="SAN_JUAN">San Juan, Batangas</option>
-                                                        <option value="CATANAUAN">Catanauan, Quezon</option>
+                                                        <option value="San Juan Batangas">San Juan Batangas</option>
+                                                        <option value="Catanauan Quezon">Catanauan Quezon</option>
                                                     </select>
                                                 </div>
 
@@ -561,6 +560,6 @@
                 </div>
             </div>
         </form>
-        <!-- Add Client - END -->
+        <!-- Add Employee - END -->
     </div>
 </html>

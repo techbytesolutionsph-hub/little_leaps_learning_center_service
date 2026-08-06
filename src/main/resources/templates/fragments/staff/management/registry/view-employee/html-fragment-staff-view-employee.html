@@ -1,0 +1,333 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-view-employee(employee)">
+        <!-- View Employee - START -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-5 mb-3">
+                        <div class="card shadow mt-lg-1 mb-lg-1">
+                            <div class="card-body-white">
+                                <div class="profile-cover"></div>
+                                <div class="text-center mt-lg-2 mb-lg-2 px-2">
+                                    <img class="profile-image"
+                                         th:src="${employee.profileImageUrl != null ? employee.profileImageUrl : '/images/default-profile.png'}"
+                                         th:alt="${employee.firstName + ' ' + employee.lastName}">
+
+                                    <h5 class="basic-info-header mt-3 mb-1"
+                                        th:text="${employee.firstName + ' ' + employee.middleName + ' ' + employee.lastName}">
+                                        John Doe
+                                    </h5>
+                                    <span class="badge badge-glossy bg-secondary"
+                                          th:text="${employee.employmentInformation.position}">
+                                        Software Developer
+                                    </span>
+
+                                    <span class="badge badge-glossy bg-info"
+                                          th:text="${#strings.capitalize(employee.employmentInformation.employmentType.toString().toLowerCase())}">
+                                        Regular Employee
+                                    </span>
+                                </div>
+
+                                <div class="basic-info p-3">
+                                    <div class="info-row">
+                                        <span>Employee ID</span>
+                                        <strong th:text="${employee.employeeId}"></strong>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span>Date Hired</span>
+                                        <strong th:text="${#temporals.format(employee.employmentInformation.dateHired, 'MMMM d, yyyy')}">
+                                            January 1, 2026
+                                        </strong>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span>Supervisor</span>
+                                        <strong th:text="${employee.employmentInformation.immediateSupervisor}">Jane Smith</strong>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span>Branch Assign</span>
+                                        <strong th:text="${employee.employmentInformation.branchAssign}"></strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mb-3">
+                        <div class="card shadow mt-lg-1 mb-lg-1">
+                            <div class="card-body-white">
+                                <div class="accordion" id="employeeAccordion">
+                                    <div class="accordion-item mb-lg-4">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#basicInfo">
+                                                <span>Basic Information</span>
+                                                <i class="accordion-icon bi bi-chevron-down"></i>
+                                            </button>
+                                        </h2>
+
+                                        <div id="basicInfo" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="basic-info p-1">
+                                                    <div class="info-row">
+                                                        <span>Phone</span>
+                                                        <strong th:text="${employee.phoneNumber}">09106121529</strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Email</span>
+                                                        <strong th:text="${employee.email}">
+                                                            glenmark.anduiza@littleleapslearningcenter.com
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Gender</span>
+                                                        <strong th:text="${@enumUtil.formatEnum(employee.gender)}">
+                                                            Male
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Birthday</span>
+                                                        <strong th:text="${#temporals.format(employee.dateOfBirth, 'MMMM d, yyyy')}">
+                                                            October 18, 1988
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Address</span>
+                                                        <strong th:text="${employee.address != null and !employee.address.isEmpty()
+                                                            ? employee.address[0].street + ', '
+                                                            + employee.address[0].barangay + ', '
+                                                            + employee.address[0].city + ', '
+                                                            + employee.address[0].province + ', '
+                                                            + employee.address[0].country + ' '
+                                                            + employee.address[0].zipNumber
+                                                            : 'N/A'}">
+                                                            Address
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Emergency Contact</span>
+                                                        <strong th:text="${employee.emergencyContact.name}">
+                                                            Emma Anduiza
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Emergency Number</span>
+                                                        <strong th:text="${employee.emergencyContact.contactNumber}">
+                                                            09506482723
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Relationship</span>
+                                                        <strong th:text="${#strings.capitalize(employee.emergencyContact.relationship.toLowerCase())}">
+                                                            Mother
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item mb-lg-4">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#benefits">
+                                                <span>Benefits</span>
+                                                <i class="accordion-icon bi bi-chevron-down"></i>
+                                            </button>
+                                        </h2>
+
+                                        <div id="benefits" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="basic-info p-1">
+
+                                                    <div class="info-row">
+                                                        <span>SSS Number</span>
+                                                        <strong th:text="${employee.employeeBenefits.sssNumber}">
+                                                            3404437137
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>PhilHealth Number</span>
+                                                        <strong th:text="${employee.employeeBenefits.philHealthNumber}">
+                                                            21-025242611-0
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Pag-IBIG Number</span>
+                                                        <strong th:text="${employee.employeeBenefits.pagIbigNumber}">
+                                                            12-345678901-2
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>TIN Number</span>
+                                                        <strong th:text="${employee.employeeBenefits.tinNumber}">
+                                                            450-532-501
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>HMO</span>
+                                                        <strong th:text="${employee.employeeBenefits.hasHmo ? employee.employeeBenefits.hmoProvider : 'No HMO'}">
+                                                            No HMO
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Vacation Leave</span>
+                                                        <strong th:text="${#numbers.formatDecimal(employee.employeeBenefits.vacationLeave, 0, 0) + ' days'}">
+                                                            5 days
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Sick Leave</span>
+                                                        <strong th:text="${#numbers.formatDecimal(employee.employeeBenefits.sickLeave, 0, 0) + ' days'}">
+                                                            5 days
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row" th:if="${employee.gender.name() == 'MALE'}">
+                                                        <span>Paternity Leave</span>
+                                                        <strong th:text="${#numbers.formatDecimal(employee.employeeBenefits.paternityLeave, 0, 0) + ' days'}">
+                                                            5 days
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row" th:if="${employee.gender.name() == 'FEMALE'}">
+                                                        <span>Maternity Leave</span>
+                                                        <strong th:text="${#numbers.formatDecimal(employee.employeeBenefits.maternityLeave, 0, 0) + ' days'}">
+                                                            0 days
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item mb-lg-4">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#payrollInfo">
+                                                <span>Payroll Information</span>
+                                                <i class="accordion-icon bi bi-chevron-down"></i>
+                                            </button>
+                                        </h2>
+
+                                        <div id="payrollInfo" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="basic-info p-1">
+
+                                                    <div class="info-row">
+                                                        <span>Basic Salary</span>
+                                                        <strong th:text="${'₱' + #numbers.formatDecimal(employee.payrollInformation.basicSalary, 1, 'COMMA', 2, 'POINT')}">
+                                                            ₱92,000.00
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Daily Rate</span>
+                                                        <strong th:text="${'₱' + #numbers.formatDecimal(employee.payrollInformation.dailyRate, 1, 'COMMA', 2, 'POINT')}">
+                                                            ₱4,181.81
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Hourly Rate</span>
+                                                        <strong th:text="${'₱' + #numbers.formatDecimal(employee.payrollInformation.hourlyRate, 1, 'COMMA', 2, 'POINT')}">
+                                                            ₱522.73
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Salary Type</span>
+                                                        <strong th:text="${#strings.capitalize(employee.payrollInformation.salaryType.toString().toLowerCase())}">
+                                                            Monthly
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Payroll Cycle</span>
+                                                        <strong th:text="${@enumUtil.formatEnum(employee.payrollInformation.payrollCycle)}">
+                                                            Semi Monthly
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Bank</span>
+                                                        <strong th:text="${employee.payrollInformation.bankName}">
+                                                            Bank of the Philippine Islands
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Bank Branch</span>
+                                                        <strong th:text="${employee.payrollInformation.bankBranch}">
+                                                            Lucena City
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Bank Account</span>
+                                                        <strong th:text="${@maskUtil.maskBankAccount(employee.payrollInformation.bankAccountNumber)}">
+                                                            ******6759
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Overtime Eligible</span>
+                                                        <strong th:text="${employee.payrollInformation.overtimeEligible ? 'Yes' : 'No'}">
+                                                            Yes
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Holiday Pay Eligible</span>
+                                                        <strong th:text="${employee.payrollInformation.holidayPayEligible ? 'Yes' : 'No'}">
+                                                            Yes
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>13th Month Eligible</span>
+                                                        <strong th:text="${employee.payrollInformation.thirteenthMonthEligible ? 'Yes' : 'No'}">
+                                                            Yes
+                                                        </strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    <button type="button" id="back-btn"
+                            class="btn-glossy-teal d-flex justify-content-center align-items-center"
+                            onclick="history.back()">
+                        <i class="bi bi-arrow-return-left me-2"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- View Employee - END -->
+    </div>
+</html>

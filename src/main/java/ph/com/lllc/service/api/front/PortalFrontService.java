@@ -6,6 +6,8 @@ import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardCardResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
 
@@ -28,6 +30,10 @@ public class PortalFrontService {
 
     public List<EmployeeResponse> getEmployees() {
         return employmentRegistryService.getEmployees();
+    }
+
+    public AppEmployeeProfile getAppEmployeeProfile(String uuid, String employeeId) throws ServiceException {
+        return employmentRegistryService.getAppEmployeeProfile(uuid, employeeId);
     }
 
     public DashboardMetricsResponse employeeRegistryKPIs(){

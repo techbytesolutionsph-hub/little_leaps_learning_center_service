@@ -225,6 +225,15 @@ public class EmploymentRegistryService {
                 EmployeeResponse.class);
     }
 
+    public AppEmployeeProfile getAppEmployeeProfile(String uuid, String employeeId) throws ServiceException {
+        return appEmployeeProfileRepository
+                .findByEmployeeId(employeeId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Employee not found with ID: " + employeeId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found with ID: " + employeeId);
+                });
+    }
+
     public long getEmployeesCount() {
         return employeeProfileRepository.count();
     }

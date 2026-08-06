@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
+import ph.com.lllc.service.util.uuid.GenerateUUIDService;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ import java.util.List;
 public class PortalViewController {
 
     private final PortalFrontService portalFrontService;
+    private final GenerateUUIDService generateUUIDService;
 
     @GetMapping(value = "/login")
     public String loginPage(HttpSession session, Model model){
@@ -75,6 +79,28 @@ public class PortalViewController {
         this.setupPage(model, "staff", "Add Employee");
 
         return "staff/management/registry/add-employee/index";
+    }
+
+    @GetMapping(value = "/hr-management/employee-registry/view-employee/{employeeId}")
+    public String viewEmployeePage(Model model, @PathVariable("employeeId") String employeeId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "staff", "Employee Details");
+
+        AppEmployeeProfile employee = portalFrontService.getAppEmployeeProfile(uuid, employeeId);
+        model.addAttribute("employee", employee);
+
+        return "staff/management/registry/view-employee/index";
+    }
+
+    @GetMapping(value = "/hr-management/employee-registry/edit-employee/{employeeId}")
+    public String editEmployeePage(Model model, @PathVariable("employeeId") String employeeId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "staff", "Edit Employee");
+
+        AppEmployeeProfile employee = portalFrontService.getAppEmployeeProfile(uuid, employeeId);
+        model.addAttribute("employee", employee);
+
+        return "staff/management/registry/edit-employee/index";
     }
 
     @GetMapping(value = "/admin/user-account")
