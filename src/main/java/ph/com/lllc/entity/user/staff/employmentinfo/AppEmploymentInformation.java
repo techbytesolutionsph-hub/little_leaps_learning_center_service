@@ -9,6 +9,7 @@ import lombok.Setter;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.EmploymentStatus;
 import ph.com.lllc.enums.EmploymentType;
+import ph.com.lllc.enums.StaffType;
 
 import java.time.LocalDate;
 
@@ -39,6 +40,15 @@ public class AppEmploymentInformation {
 
     @Column(name = "address")
     private String address;
+
+    /**
+     * Example:
+     * EMPLOYEE
+     * TRAINEE
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "staff_type")
+    private StaffType staffType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "employment_type")

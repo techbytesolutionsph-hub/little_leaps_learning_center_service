@@ -37,7 +37,7 @@ public class EmployeeRequest {
         private Gender gender;
         private String email;
         private String phoneNumber;
-        private StaffType employeeType;
+        private MaritalStatus maritalStatus;
     }
 
 
@@ -77,6 +77,7 @@ public class EmployeeRequest {
         private String companyAddress;
         private EmploymentStatus employmentStatus;
         private EmploymentType employmentType;
+        private StaffType employeeType;
         private String branch;
         private String immediateSupervisor;
     }

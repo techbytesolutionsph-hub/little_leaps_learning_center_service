@@ -127,13 +127,18 @@ public class UserAccountService {
         ), AppUserResponse.class);
     }
 
-    public AppUserResponse findByUsername(String username){
-        AppUser user = appUserRepository.findByUsername(username);
+    public AppUserResponse findByUsername(String username) throws ServiceException {
 
-        AppUserResponse response = ObjectUtils.copyAs(user, AppUserResponse.class);
+        /* Find user */
+        AppUser appUser = appUserRepository.findUserByUsername(username)
+                .orElseThrow(() -> new ServiceException(
+                        HttpStatus.NOT_FOUND.value(),
+                        "User not found: " + username));
 
-        if (user.getUserRole() != null && !user.getUserRole().isEmpty()) {
-            response.setRole(user.getUserRole().get(0).getUserRole());
+        AppUserResponse response = ObjectUtils.copyAs(appUser, AppUserResponse.class);
+
+        if (appUser.getUserRole() != null && !appUser.getUserRole().isEmpty()) {
+            response.setRole(appUser.getUserRole().get(0).getUserRole());
         }
 
         return response;

@@ -16,6 +16,7 @@ import ph.com.lllc.entity.user.staff.employmentinfo.AppEmploymentInformation;
 import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
 import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
 import ph.com.lllc.enums.Gender;
+import ph.com.lllc.enums.MaritalStatus;
 import ph.com.lllc.enums.StaffType;
 import ph.com.lllc.util.LocalDateUtils;
 
@@ -57,6 +58,10 @@ public class AppEmployeeProfile implements Serializable {
     private BigInteger age;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "marital_status")
+    private MaritalStatus maritalStatus;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     private Gender gender;
 
@@ -65,15 +70,6 @@ public class AppEmployeeProfile implements Serializable {
 
     @Column(name = "phone_number")
     private String phoneNumber;
-
-    /**
-     * Example:
-     * EMPLOYEE
-     * TRAINEE
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "staff_type")
-    private StaffType staffType;
 
     @Column(name = "profile_image_url")
     private String profileImageUrl;

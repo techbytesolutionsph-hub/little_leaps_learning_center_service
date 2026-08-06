@@ -11,6 +11,38 @@
         <title>Edit Employee - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/management/registry/edit-employee/lllc-staff-admin-edit-employee-styles.css}" rel="stylesheet" type="text/css">
+        <style>
+            /*input.form-control,*/
+            /*select.form-control {*/
+            /*    border-radius: 8px;*/
+            /*    border: 1px solid #d1d5db;*/
+            /*    padding: 0.55rem 0.75rem;*/
+            /*    font-size: 0.875rem;*/
+            /*    transition: all 0.2s ease-in-out;*/
+            /*}*/
+
+            /*input.form-control:focus,*/
+            /*select.form-control:focus {*/
+            /*    border-color: rgb(0, 151, 157);*/
+            /*    box-shadow: 0 0 0 0.1rem rgba(0, 151, 157, 0.15);*/
+            /*    outline: none;*/
+            /*}*/
+
+            /*input.form-control:disabled,*/
+            /*select.form-control:disabled {*/
+            /*    background: linear-gradient(135deg, #f8fafc, #eef2f7);*/
+            /*    cursor: not-allowed;*/
+            /*    opacity: 0.85;*/
+            /*}*/
+
+            /*input.form-control::placeholder {*/
+            /*    color: #9ca3af;*/
+            /*    font-style: italic;*/
+            /*}*/
+
+
+        </style>
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -32,7 +64,7 @@
                         <!-- Page Heading and Breadcrumbs - End -->
 
                         <!-- Client Management Main - Start -->
-<!--                        <th:block th:insert="~{fragments/staff/management/registry/html-fragment-staff-employee-registry :: staff-employee-registry(${kpi}, ${employees})}"></th:block>-->
+                        <th:block th:insert="~{fragments/staff/management/registry/edit-employee/html-fragment-staff-edit-employee :: staff-edit-employee(${employee})}"></th:block>
                         <!-- Client Management Main - End -->
 
                     </div>
@@ -45,6 +77,6 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-<!--        <script th:src="@{/js/staff/dashboard/lllc-staff-dashboard-scripts.js}" type="text/javascript"></script>-->
+        <script th:src="@{/js/staff/management/registry/edit-employee/lllc-staff-admin-edit-employee-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

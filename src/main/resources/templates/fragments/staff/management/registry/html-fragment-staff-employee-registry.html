@@ -174,7 +174,8 @@
                                 <th>Employee Info</th>
                                 <th>Position</th>
                                 <th>Date Hired</th>
-                                <th>Employment Type</th>
+<!--                                <th>Employment Type</th>-->
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -210,54 +211,98 @@
                                 </td>
                                 <td data-label="Position" th:text="${employee.employmentInformation.position}">1</td>
                                 <td data-label="Date Hired" th:text="${employee.employmentInformation.dateHired}">1</td>
-                                <td data-label="Employment Type">
-                                    <!-- Regular -->
+<!--                                <td data-label="Employment Type">-->
+<!--                                    &lt;!&ndash; Regular &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-active"-->
+<!--                                          th:if="${employee.employmentInformation.employmentType.name() == 'REGULAR'}">-->
+<!--                                        <i class="bi bi-check-circle-fill mr-1"></i> Regular-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Probationary &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-warning"-->
+<!--                                      th:if="${employee.employmentInformation.employmentType.name() == 'PROBATIONARY'}">-->
+<!--                                        <i class="bi bi-hourglass-split mr-1"></i> Probationary-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Contractual &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-info"-->
+<!--                                      th:if="${employee.employmentInformation.employmentType.name() == 'CONTRACTUAL'}">-->
+<!--                                        <i class="bi bi-file-earmark-text-fill mr-1"></i> Contractual-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Casual &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-secondary"-->
+<!--                                          th:if="${employee.employmentInformation.employmentType.name() == 'CASUAL'}">-->
+<!--                                        <i class="bi bi-person-fill mr-1"></i> Casual-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Part Time &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-primary"-->
+<!--                                      th:if="${employee.employmentInformation.employmentType.name() == 'PART_TIME'}">-->
+<!--                                           <i class="bi bi-clock-fill mr-1"></i> Part Time-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Project-Based &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-purple"-->
+<!--                                          th:if="${employee.employmentInformation.employmentType.name() == 'PROJECT_BASED'}">-->
+<!--                                        <i class="bi bi-kanban-fill mr-1"></i> Project-Based-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Apprentice &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-cyan"-->
+<!--                                          th:if="${employee.employmentInformation.employmentType.name() == 'APPRENTICE'}">-->
+<!--                                        <i class="bi bi-mortarboard-fill mr-1"></i> Apprentice-->
+<!--                                    </span>-->
+
+<!--                                    &lt;!&ndash; Intern &ndash;&gt;-->
+<!--                                    <span class="status-badge badge-teal"-->
+<!--                                      th:if="${employee.employmentInformation.employmentType.name() == 'INTERN'}">-->
+<!--                                          <i class="bi bi-person-workspace mr-1"></i> Intern-->
+<!--                                    </span>-->
+<!--                                </td>-->
+                                <td data-label="Employment Status">
+                                    <!-- Active -->
                                     <span class="status-badge badge-active"
-                                          th:if="${employee.employmentInformation.employmentType.name() == 'REGULAR'}">
-                                        <i class="bi bi-check-circle-fill mr-1"></i> Regular
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'ACTIVE'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Active
                                     </span>
 
-                                    <!-- Probationary -->
+                                    <!-- On Leave -->
                                     <span class="status-badge badge-warning"
-                                      th:if="${employee.employmentInformation.employmentType.name() == 'PROBATIONARY'}">
-                                        <i class="bi bi-hourglass-split mr-1"></i> Probationary
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'ON_LEAVE'}">
+                                        <i class="bi bi-calendar-x-fill mr-1"></i> On Leave
                                     </span>
 
-                                    <!-- Contractual -->
-                                    <span class="status-badge badge-info"
-                                      th:if="${employee.employmentInformation.employmentType.name() == 'CONTRACTUAL'}">
-                                        <i class="bi bi-file-earmark-text-fill mr-1"></i> Contractual
+                                    <!-- Suspended -->
+                                    <span class="status-badge badge-danger"
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'SUSPENDED'}">
+                                        <i class="bi bi-pause-circle-fill mr-1"></i> Suspended
                                     </span>
 
-                                    <!-- Casual -->
+                                    <!-- Resigned -->
                                     <span class="status-badge badge-secondary"
-                                          th:if="${employee.employmentInformation.employmentType.name() == 'CASUAL'}">
-                                        <i class="bi bi-person-fill mr-1"></i> Casual
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'RESIGNED'}">
+                                        <i class="bi bi-box-arrow-right mr-1"></i> Resigned
                                     </span>
 
-                                    <!-- Part Time -->
-                                    <span class="status-badge badge-primary"
-                                      th:if="${employee.employmentInformation.employmentType.name() == 'PART_TIME'}">
-                                           <i class="bi bi-clock-fill mr-1"></i> Part Time
+                                    <!-- Terminated -->
+                                    <span class="status-badge badge-dark"
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'TERMINATED'}">
+                                        <i class="bi bi-x-circle-fill mr-1"></i> Terminated
                                     </span>
 
-                                    <!-- Project-Based -->
+                                    <!-- Retired -->
                                     <span class="status-badge badge-purple"
-                                          th:if="${employee.employmentInformation.employmentType.name() == 'PROJECT_BASED'}">
-                                        <i class="bi bi-kanban-fill mr-1"></i> Project-Based
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'RETIRED'}">
+                                        <i class="bi bi-award-fill mr-1"></i> Retired
                                     </span>
 
-                                    <!-- Apprentice -->
-                                    <span class="status-badge badge-cyan"
-                                          th:if="${employee.employmentInformation.employmentType.name() == 'APPRENTICE'}">
-                                        <i class="bi bi-mortarboard-fill mr-1"></i> Apprentice
+                                    <!-- Deceased -->
+                                    <span class="status-badge badge-black"
+                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'DECEASED'}">
+                                        <i class="bi bi-heartbreak-fill mr-1"></i> Deceased
                                     </span>
 
-                                    <!-- Intern -->
-                                    <span class="status-badge badge-teal"
-                                      th:if="${employee.employmentInformation.employmentType.name() == 'INTERN'}">
-                                          <i class="bi bi-person-workspace mr-1"></i> Intern
-                                    </span>
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">

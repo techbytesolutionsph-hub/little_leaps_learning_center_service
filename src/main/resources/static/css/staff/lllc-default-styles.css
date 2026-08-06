@@ -9566,9 +9566,20 @@ body.sidebar-toggled footer.sticky-footer{
         border-radius: 8px;
     }
 
+    .breadcrumb {
+        flex-wrap: wrap;
+        row-gap: 4px;
+    }
+
+    .breadcrumb-item {
+        white-space: nowrap;
+    }
+
+
     /* separator style */
     .breadcrumb-item + .breadcrumb-item::before {
         padding: 0 4px;
+        float: none;
     }
 }
 
@@ -9856,4 +9867,45 @@ body.sidebar-toggled footer.sticky-footer{
 .send-wallet-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(255, 193, 7, 0.35);
+}
+
+/* Text fields and dropdowns */
+.form-control,
+.form-select {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Focus effect */
+.form-control:focus,
+.form-select:focus {
+    border-color: rgb(0, 151, 157);
+    box-shadow: 0 0 0 0.1rem rgba(0, 151, 157, 0.15);
+    outline: none;
+}
+
+/* Disabled fields */
+.form-control:disabled,
+.form-select:disabled {
+    background: linear-gradient(135deg, #f8fafc, #eef2f7);
+    cursor: not-allowed;
+    opacity: 0.85;
+}
+
+/* Placeholder styling */
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+/* Dropdown arrow enhancement */
+.form-select {
+    cursor: pointer;
+    background-position: right 0.75rem center;
+}
+
+/* Hover effect */
+.form-control:hover,
+.form-select:hover {
+    border-color: rgb(0, 151, 157);
 }

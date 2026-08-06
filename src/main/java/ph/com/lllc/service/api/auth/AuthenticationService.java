@@ -63,6 +63,7 @@ public class AuthenticationService {
 
                     List<String> roles = this.findAllRoles(appUser);
                     List<String> permissions = this.findAllPermissions(appUser);
+                    loggingService.info(uuid, this.getClass().getName(), "", "User Permissions : " + permissions);
 
                     HttpSession session = httpRequest.getSession();
 
@@ -113,6 +114,7 @@ public class AuthenticationService {
 
                     List<String> roles = this.findAllRoles(appUser);
                     List<String> permissions = this.findAllPermissions(appUser);
+                    loggingService.info(uuid, this.getClass().getName(), "", "User Permissions : " + permissions);
 
                     HttpSession session = httpRequest.getSession();
 

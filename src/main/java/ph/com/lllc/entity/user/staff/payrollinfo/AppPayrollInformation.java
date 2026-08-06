@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_payroll_information")
+@Table(name = "lllc_app_employee_payroll_information")
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppPayrollInformation {

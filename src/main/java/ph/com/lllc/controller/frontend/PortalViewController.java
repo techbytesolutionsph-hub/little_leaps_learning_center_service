@@ -121,7 +121,7 @@ public class PortalViewController {
     }
 
     @GetMapping(value = "/admin/user-account/view-user/{username}")
-    public String adminViewUserPage(Model model, @PathVariable("username") String username) {
+    public String adminViewUserPage(Model model, @PathVariable("username") String username) throws ServiceException {
         this.setupPage(model, "admin", "View User");
 
         AppUserResponse user = portalFrontService.findByUsername(username);
@@ -131,7 +131,7 @@ public class PortalViewController {
     }
 
     @GetMapping(value = "/admin/user-account/edit-user/{username}")
-    public String adminUpdateUserPage(Model model, @PathVariable("username") String username) {
+    public String adminUpdateUserPage(Model model, @PathVariable("username") String username) throws ServiceException {
         this.setupPage(model, "admin", "Update User");
 
         AppUserResponse user = portalFrontService.findByUsername(username);

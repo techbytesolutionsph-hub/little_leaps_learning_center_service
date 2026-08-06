@@ -1,8 +1,5 @@
 $(document).ready(function () {
 
-    /* Initialized Location */
-    initEmployeeAddressLocationAutoFill();
-
     /* Initialized Date Pickers */
     initializeMaxTodayDatePicker("#employee-birth-date", "Select birth date");
     initializeMaxTodayDatePicker("#employee-date-hired", "Select date hired");
@@ -11,30 +8,6 @@ $(document).ready(function () {
 
     /* Initialized Image Upload */
     initializeImageUpload();
-
-    $("#search-credentials-btn").click(function () {
-        let username = $("#employee-cred-username").val();
-
-        if (!username) {
-            showErrorPopup("Required Field", "Please enter username");
-            return;
-        }
-
-        getUserByUsername(username);
-    });
-
-    $("#generate-id-number-btn").click(function () {
-        let dateHired = $("#employee-date-hired").val();
-
-        if (!dateHired) {
-            showErrorPopup("Required Field", "Please select Date Hired first.");
-            return;
-        }
-
-        let mmdd = dateHired.substring(5, 7) + dateHired.substring(8, 10);
-
-        getRunningSequence(mmdd);
-    });
 
     $(document).on("change", "#employee-gender", function () {
 
@@ -45,34 +18,34 @@ $(document).ready(function () {
 
         if (gender === "MALE") {
 
-            // Disable Maternity Leave
+            /* Disable Maternity Leave */
             maternity.val(0)
                 .prop("disabled", true)
                 .removeClass("is-invalid");
 
-            // Enable Paternity Leave
+            /* Enable Paternity Leave */
             paternity.prop("disabled", false);
 
         } else if (gender === "FEMALE") {
 
-            // Disable Paternity Leave
+            /* Disable Paternity Leave */
             paternity.val(0)
                 .prop("disabled", true)
                 .removeClass("is-invalid");
 
-            // Enable Maternity Leave
+            /* Enable Maternity Leave */
             maternity.prop("disabled", false);
 
         } else {
 
-            // Enable both if no gender selected
+            /* Enable both if no gender selected */
             maternity.prop("disabled", false);
             paternity.prop("disabled", false);
         }
 
     });
 
-    $("#add-employee-btn").on("click", function (e) {
+    $("#update-employee-btn").on("click", function (e) {
 
         e.preventDefault();
 
@@ -81,11 +54,11 @@ $(document).ready(function () {
         let firstInvalidField = null;
 
         /* Remove previous validation styles */
-        $("#add-employee-form .form-control, #add-employee-form .form-select")
+        $("#edit-employee-form .form-control, #edit-employee-form .form-select")
             .removeClass("is-invalid");
 
         /* Validate all required fields except HMO fields */
-        $("#add-employee-form [required]")
+        $("#edit-employee-form [required]")
             .not("#employee-hmo-provider, #employee-hmo-no")
             .each(function () {
 
@@ -133,12 +106,14 @@ $(document).ready(function () {
         }
 
         const employeePayload = getEmployeeFormData();
-        createEmployee(employeePayload);
+        console.log(employeePayload);
+
+        updateEmployee(employeePayload);
     });
 
 
     /* Remove validation style while typing/selecting */
-    $("#add-employee-form").on(
+    $("#edit-employee-form").on(
         "input change",
         ".form-control, .form-select",
         function () {
@@ -148,7 +123,7 @@ $(document).ready(function () {
 
 
     /* Remove invalid state when user types/selects */
-    $("#add-employee-form").on(
+    $("#edit-employee-form").on(
         "input change",
         ".form-control, .form-select",
         function () {
@@ -176,49 +151,11 @@ $(document).ready(function () {
     });
 });
 
-function getUserByUsername(username) {
-    $.ajax({
-        url: "/api/v1/account/admin/get-user/" + username,
-        type: "GET",
-        success: function(response) {
-            console.log("User details:", response);
-
-            $("#employee-cred-password").val(response.lastPassword);
-            $("#employee-cred-email").val(response.email);
-            $("#employee-cred-status").val(formatStatus(response.status));
-        },
-        error: function(xhr, status, error) {
-            console.error("Error fetching user:", xhr.responseText);
-            showInfoPopup("Info", "User not found.");
-        }
-    });
-}
-
-function getRunningSequence(dateHired) {
-    $.ajax({
-        url: "/api/v1/account/admin/get-running-sequence/" + dateHired,
-        type: "GET",
-        success: function(response) {
-            console.log("Running Sequence:", response);
-            $("#employee-id-number").val(response);
-        },
-        error: function(xhr) {
-            let message = "Error getting running sequence";
-
-            if (xhr.responseJSON && xhr.responseJSON.message) {
-                message = xhr.responseJSON.message;
-            }
-
-            showErrorPopup("Error", message);
-        }
-    });
-}
-
-function createEmployee(employeeRequest) {
+function updateEmployee(employeeRequest) {
 
     $.ajax({
-        url: "/api/v1/management/create-employee",
-        type: "POST",
+        url: "/api/v1/management/update-employee",
+        type: "PUT",
         contentType: "application/json",
         data: JSON.stringify(employeeRequest),
         success: function(response) {
@@ -232,7 +169,7 @@ function createEmployee(employeeRequest) {
             );
         },
         error: function(xhr, status, error) {
-            let message = "Unable to create employee.";
+            let message = "Unable to update employee.";
 
             if (xhr.responseJSON && xhr.responseJSON.message) {
                 message = xhr.responseJSON.message;
@@ -241,13 +178,6 @@ function createEmployee(employeeRequest) {
             showErrorPopup("Error", message);
         }
     });
-}
-
-function formatStatus(role) {
-    return role
-        .toLowerCase()
-        .replace(/_/g, " ")
-        .replace(/\b\w/g, char => char.toUpperCase());
 }
 
 function getEmployeeFormData() {
@@ -342,213 +272,4 @@ function getEmployeeFormData() {
 
         profileImageUrl: $('.image-preview').attr('src')
     };
-}
-
-/**
- * Initializes checkout location autofill functionality.
- * Loads PSGC data, binds cascading dropdowns, and auto-detects user location.
- *
- * External APIs used:
- * - https://psgc.gitlab.io/api/provinces.json
- * - https://psgc.gitlab.io/api/cities-municipalities.json
- * - https://psgc.gitlab.io/api/barangays.json
- * - https://nominatim.openstreetmap.org/reverse
- *
- * @function initEmployeeAddressLocationAutoFill
- * @returns {void}
- */
-function initEmployeeAddressLocationAutoFill() {
-
-    const countries = ["", "Philippines"];
-
-    const $country = $('#employee-country');
-    const $province = $('#employee-province');
-    const $city = $('#employee-city');
-    const $barangay = $('#employee-brgy');
-
-    let provinces = [];
-    let cities = [];
-    let barangays = [];
-
-
-    countries
-        .filter(c => c.trim() !== "")
-        .forEach(c =>
-            $country.append(
-                `<option value="${c}">${c}</option>`
-            )
-        );
-
-
-    $.when(
-        $.getJSON(
-            "https://psgc.gitlab.io/api/provinces.json",
-            d => provinces = d
-        ),
-
-        $.getJSON(
-            "https://psgc.gitlab.io/api/cities-municipalities.json",
-            d => cities = d
-        ),
-
-        $.getJSON(
-            "https://psgc.gitlab.io/api/barangays.json",
-            d => barangays = d
-        )
-
-    ).done(() => {
-        detectLocation();
-    });
-
-
-    $country.on('change', function () {
-
-        reset($province);
-        reset($city, true);
-        reset($barangay, true);
-
-
-        if(this.value === "Philippines") {
-            provinces.forEach(p => {
-                $province.append(
-                    `<option value="${p.code}">
-                        ${p.name}
-                     </option>`
-                );
-            });
-
-            $province.prop('disabled', false);
-        }
-    });
-
-    $province.on('change', function(){
-        reset($city);
-        reset($barangay,true);
-
-        cities
-            .filter(c => c.provinceCode === this.value)
-            .forEach(c => {
-                $city.append(
-                    `<option value="${c.code}">
-                        ${c.name}
-                     </option>`
-                );
-            });
-
-        $city.prop('disabled',false);
-    });
-
-
-
-    $city.on('change',function(){
-        reset($barangay);
-
-        barangays
-            .filter(b => b.cityCode === this.value)
-            .forEach(b=>{
-                $barangay.append(
-                    `<option value="${b.code}">
-                        ${b.name}
-                     </option>`
-                );
-            });
-
-        $barangay.prop('disabled',false);
-    });
-
-    function detectLocation(){
-
-        if(!navigator.geolocation)
-            return;
-
-
-        navigator.geolocation.getCurrentPosition(async ({coords})=>{
-
-            try{
-
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`
-                );
-
-
-                const data = await response.json();
-
-
-                if(data.address.country === "Philippines"){
-
-                    $country
-                        .val("Philippines")
-                        .trigger('change');
-
-
-                    setTimeout(()=>{
-
-                        selectProvince(
-                            data.address.state ||
-                            data.address.region
-                        );
-
-                    },500);
-
-                }
-
-
-            }catch(error){
-
-                console.error(
-                    "Location detection failed",
-                    error
-                );
-
-            }
-
-
-        });
-
-    }
-
-
-
-    function selectProvince(name){
-
-        const province = provinces.find(p =>
-            p.name
-                .toLowerCase()
-                .includes(
-                    (name || "")
-                        .toLowerCase()
-                )
-        );
-
-
-        if(province){
-
-            $province
-                .val(province.code)
-                .trigger('change');
-
-        }
-
-    }
-
-
-
-    function reset($element, disable=false){
-
-        $element
-            .empty()
-            .append(
-                `<option value="">
-                    Select
-                 </option>`
-            );
-
-
-        $element.prop(
-            'disabled',
-            disable
-        );
-
-    }
-
 }

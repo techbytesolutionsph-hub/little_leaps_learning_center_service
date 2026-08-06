@@ -59,7 +59,7 @@ public class UserAccountController {
 
     @Operation(summary = "Get Registered User by Username")
     @GetMapping("/get-user/{username}")
-    public ResponseEntity<AppUserResponse> getUserByUsername(@PathVariable String username) {
+    public ResponseEntity<AppUserResponse> getUserByUsername(@PathVariable String username) throws ServiceException {
         return ResponseEntity.ok(userAccountService.findByUsername(username));
     }
 

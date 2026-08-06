@@ -24,7 +24,7 @@ public class PortalFrontService {
         return userAccountService.getAllUsers();
     }
 
-    public AppUserResponse findByUsername(String username){
+    public AppUserResponse findByUsername(String username) throws ServiceException {
         return userAccountService.findByUsername(username);
     }
 
@@ -50,7 +50,7 @@ public class PortalFrontService {
                 .message("Currently Active")
                 .build();
 
-        long onLeaveEmployees = 0L;
+        long onLeaveEmployees = employmentRegistryService.getOnLeaveEmployeeCount();
         DashboardCardResponse totalOnLeaveEmployees = DashboardCardResponse.builder()
                 .value(String.valueOf(onLeaveEmployees))
                 .message("On Leave")

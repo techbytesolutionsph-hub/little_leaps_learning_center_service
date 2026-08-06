@@ -96,6 +96,13 @@
                                                     </div>
 
                                                     <div class="info-row">
+                                                        <span>Marital Status</span>
+                                                        <strong th:text="${@enumUtil.formatEnum(employee.maritalStatus)}">
+                                                            Single
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
                                                         <span>Birthday</span>
                                                         <strong th:text="${#temporals.format(employee.dateOfBirth, 'MMMM d, yyyy')}">
                                                             October 18, 1988

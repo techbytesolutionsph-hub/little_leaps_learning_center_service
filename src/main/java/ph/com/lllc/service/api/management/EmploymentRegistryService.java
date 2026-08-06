@@ -73,9 +73,9 @@ public class EmploymentRegistryService {
         employee.setDateOfBirth(LocalDate.parse(personal.getBirthDate()));
         employee.setAge(BigInteger.valueOf(personal.getAge()));
         employee.setGender(personal.getGender());
+        employee.setMaritalStatus(personal.getMaritalStatus());
         employee.setEmail(personal.getEmail());
         employee.setPhoneNumber(personal.getPhoneNumber());
-        employee.setStaffType(personal.getEmployeeType());
         employee.setProfileImageUrl(request.getProfileImageUrl());
 
         employee.setActive(Boolean.TRUE);
@@ -139,6 +139,7 @@ public class EmploymentRegistryService {
         employment.setAddress(employmentDTO.getCompanyAddress());
         employment.setBranchAssign(employmentDTO.getBranch());
         employment.setEmploymentType(employmentDTO.getEmploymentType());
+        employment.setStaffType(employmentDTO.getEmployeeType());
         employment.setEmploymentStatus(employmentDTO.getEmploymentStatus());
         employment.setImmediateSupervisor(employmentDTO.getImmediateSupervisor());
 
@@ -234,12 +235,148 @@ public class EmploymentRegistryService {
                 });
     }
 
+    @Transactional
+    public CommonResponse updateEmployee(String uuid, EmployeeRequest request) throws ServiceException {
+
+        String employeeId = request.getEmploymentInformation().getEmployeeIdNumber();
+
+        AppEmployeeProfile employee = appEmployeeProfileRepository
+                .findByEmployeeId(employeeId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Employee not found with ID: " + employeeId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found with ID: " + employeeId);
+                });
+
+        /*
+         * Personal Information
+         */
+        EmployeeRequest.PersonalInformationDTO personal = request.getPersonalInformation();
+
+        employee.setFirstName(personal.getFirstName());
+        employee.setMiddleName(personal.getMiddleName());
+        employee.setLastName(personal.getLastName());
+        employee.setDateOfBirth(LocalDate.parse(personal.getBirthDate()));
+        employee.setAge(BigInteger.valueOf(personal.getAge()));
+        employee.setGender(personal.getGender());
+        employee.setMaritalStatus(personal.getMaritalStatus());
+        employee.setEmail(personal.getEmail());
+        employee.setPhoneNumber(personal.getPhoneNumber());
+        employee.setProfileImageUrl(request.getProfileImageUrl());
+
+        /*
+         * Contact Information
+         */
+        EmployeeRequest.ContactInformationDTO contact = request.getContactInformation();
+        AppEmployeeContactInformation contactInfo = employee.getContactInformation();
+
+        contactInfo.setContactNumber(contact.getContactNumber());
+        contactInfo.setWorkEmail(contact.getWorkEmail());
+        contactInfo.setHomeEmail(contact.getHomeEmail());
+
+        /*
+         * Emergency Contact
+         */
+        EmployeeRequest.EmergencyContactDTO emergency = request.getEmergencyContact();
+        AppEmployeeEmergencyContact emergencyContact = employee.getEmergencyContact();
+
+        emergencyContact.setName(emergency.getName());
+        emergencyContact.setContactNumber(emergency.getContactNumber());
+        emergencyContact.setRelationship(emergency.getRelationship());
+
+        /*
+         * Address
+         */
+        EmployeeRequest.AddressDTO addressDTO = request.getAddress();
+        AppEmployeeAddress address = employee.getAddress().get(0);
+
+        address.setStreet(addressDTO.getStreet());
+        address.setBarangay(addressDTO.getBarangay());
+        address.setCity(addressDTO.getCity());
+        address.setProvince(addressDTO.getProvince());
+        address.setCountry(addressDTO.getCountry());
+        address.setZipNumber(addressDTO.getPostalCode());
+
+        /*
+         * Employment Information
+         */
+        EmployeeRequest.EmploymentInformationDTO employmentDTO = request.getEmploymentInformation();
+        AppEmploymentInformation employment = employee.getEmploymentInformation();
+
+        employment.setPosition(employmentDTO.getPosition());
+        employment.setDateHired(employmentDTO.getDateHired());
+        employment.setRegularStartDate(employmentDTO.getRegularDateStart());
+        employment.setEmployeeId(employmentDTO.getEmployeeIdNumber());
+        employment.setAddress(employmentDTO.getCompanyAddress());
+        employment.setBranchAssign(employmentDTO.getBranch());
+        employment.setEmploymentType(employmentDTO.getEmploymentType());
+        employment.setStaffType(employmentDTO.getEmployeeType());
+        employment.setEmploymentStatus(employmentDTO.getEmploymentStatus());
+        employment.setImmediateSupervisor(employmentDTO.getImmediateSupervisor());
+
+        /*
+         * Benefits
+         */
+        EmployeeRequest.BenefitsDTO benefitsDTO = request.getBenefits();
+        AppEmployeeBenefits benefits = employee.getEmployeeBenefits();
+
+        benefits.setTinNumber(benefitsDTO.getTinNumber());
+        benefits.setSssNumber(benefitsDTO.getSssNumber());
+        benefits.setPhilHealthNumber(benefitsDTO.getPhilhealthNumber());
+        benefits.setPagIbigNumber(benefitsDTO.getPagibigNumber());
+        benefits.setAllowance(benefitsDTO.getAllowance());
+        benefits.setRiceAllowance(benefitsDTO.getRiceAllowance());
+        benefits.setTransportationAllowance(benefitsDTO.getTransportationAllowance());
+        benefits.setCommunicationAllowance(benefitsDTO.getCommunicationAllowance());
+        benefits.setSickLeave(benefitsDTO.getSickLeave());
+        benefits.setVacationLeave(benefitsDTO.getVacationLeave());
+        benefits.setPaternityLeave(benefitsDTO.getPaternityLeave());
+        benefits.setMaternityLeave(benefitsDTO.getMaternityLeave());
+        benefits.setHmoProvider(benefitsDTO.getHmoProvider());
+        benefits.setHmoCardNumber(benefits.getHmoCardNumber());
+
+        benefits.setHasHmo(
+                benefitsDTO.getHmoProvider() != null && !benefitsDTO.getHmoProvider().isBlank()
+                        && benefits.getHmoCardNumber() != null && !benefits.getHmoCardNumber().isBlank()
+        );
+
+        /*
+         * Payroll Information
+         */
+        EmployeeRequest.PayrollInformationDTO payrollDTO = request.getPayrollInformation();
+        AppPayrollInformation payroll = employee.getPayrollInformation();
+
+        payroll.setBasicSalary(payrollDTO.getBasicSalary());
+        payroll.setDailyRate(payrollDTO.getDailyRate());
+        payroll.setHourlyRate(payrollDTO.getHourlyRate());
+        payroll.setBankName(payrollDTO.getBankName());
+        payroll.setBankAccountNumber(payrollDTO.getBankAccountNumber());
+        payroll.setBankBranch(payrollDTO.getBankBranch());
+        payroll.setSalaryType(payrollDTO.getSalaryType());
+        payroll.setPayrollCycle(payrollDTO.getPayrollCycle());
+        payroll.setEffectiveDate(payrollDTO.getEffectiveDate());
+
+        appEmployeeProfileRepository.save(employee);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("employee", employee);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.OK.value())
+                .returnMessage("Employee updated successfully!")
+                .responseBody(responseBody)
+                .build();
+    }
+
     public long getEmployeesCount() {
         return employeeProfileRepository.count();
     }
 
     public long getActiveEmployeeCount() {
         return employeeProfileRepository.countByEmploymentInformation_EmploymentStatus(EmploymentStatus.ACTIVE);
+    }
+
+    public long getOnLeaveEmployeeCount() {
+        return employeeProfileRepository.countByEmploymentInformation_EmploymentStatus(EmploymentStatus.ON_LEAVE);
     }
 
     public long getResignedEmployeeCount() {

@@ -48,4 +48,12 @@ public class EmploymentRegistryController {
         loggingService.info(uuid, this.getClass().getName(), "", "Employee ID : " + employeeId);
         return new ResponseEntity<>(employmentRegistryService.getAppEmployeeProfile(uuid, employeeId), HttpStatus.OK);
     }
+
+    @PutMapping("/update-employee")
+    @Operation(summary = "Update Employee")
+    public ResponseEntity<CommonResponse> updateEmployee(@RequestBody EmployeeRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "EmployeeRequest : " + request.toString());
+        return new ResponseEntity<>(employmentRegistryService.updateEmployee(uuid, request), HttpStatus.CREATED);
+    }
 }
