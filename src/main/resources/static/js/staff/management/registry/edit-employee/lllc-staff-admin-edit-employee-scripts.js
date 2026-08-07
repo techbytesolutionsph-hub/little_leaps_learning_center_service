@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    /* Initialized Location */
+    initEmployeeAddressLocationAutoFill();
+
     /* Initialized Date Pickers */
     initializeMaxTodayDatePicker("#employee-birth-date", "Select birth date");
     initializeMaxTodayDatePicker("#employee-date-hired", "Select date hired");
@@ -197,10 +200,10 @@ function getEmployeeFormData() {
 
         address: {
             street: $('#employee-street').val(),
-            barangay: $('#employee-brgy').val(),
-            city: $('#employee-city').val(),
-            province: $('#employee-province').val(),
-            country: $('#employee-country').val(),
+            barangay: $('#employee-brgy option:selected').text().trim(),
+            city: $('#employee-city option:selected').text().trim(),
+            province: $('#employee-province option:selected').text().trim(),
+            country: $('#employee-country option:selected').text().trim(),
             postalCode: $('#employee-postal-code').val()
         },
 
@@ -272,4 +275,233 @@ function getEmployeeFormData() {
 
         profileImageUrl: $('.image-preview').attr('src')
     };
+}
+
+/**
+ * Initializes checkout location autofill functionality.
+ * Loads PSGC data, binds cascading dropdowns, and auto-detects user location.
+ *
+ * External APIs used:
+ * - https://psgc.gitlab.io/api/provinces.json
+ * - https://psgc.gitlab.io/api/cities-municipalities.json
+ * - https://psgc.gitlab.io/api/barangays.json
+ * - https://nominatim.openstreetmap.org/reverse
+ *
+ * @function initEmployeeAddressLocationAutoFill
+ * @returns {void}
+ */
+function initEmployeeAddressLocationAutoFill() {
+
+    const countries = ["", "Philippines"];
+
+    const $country = $('#employee-country');
+    const $province = $('#employee-province');
+    const $city = $('#employee-city');
+    const $barangay = $('#employee-brgy');
+
+    let provinces = [];
+    let cities = [];
+    let barangays = [];
+
+
+    countries
+        .filter(c => c.trim() !== "")
+        .forEach(c =>
+            $country.append(
+                `<option value="${c}">${c}</option>`
+            )
+        );
+
+
+    $.when(
+        $.getJSON(
+            "https://psgc.gitlab.io/api/provinces.json",
+            d => provinces = d
+        ),
+
+        $.getJSON(
+            "https://psgc.gitlab.io/api/cities-municipalities.json",
+            d => cities = d
+        ),
+
+        $.getJSON(
+            "https://psgc.gitlab.io/api/barangays.json",
+            d => barangays = d
+        )
+
+    ).done(() => {
+
+        if (existingEmployeeAddress.province) {
+            loadExistingAddress();
+        } else {
+            detectLocation();
+        }
+    });
+
+
+    $country.on('change', function () {
+
+        reset($province);
+        reset($city, true);
+        reset($barangay, true);
+
+
+        if(this.value === "Philippines") {
+            provinces.forEach(p => {
+                $province.append(
+                    `<option value="${p.code}">
+                        ${p.name}
+                     </option>`
+                );
+            });
+
+            $province.prop('disabled', false);
+        }
+    });
+
+    $province.on('change', function(){
+        reset($city);
+        reset($barangay,true);
+
+        cities
+            .filter(c => c.provinceCode === this.value)
+            .forEach(c => {
+                $city.append(
+                    `<option value="${c.code}">
+                        ${c.name}
+                     </option>`
+                );
+            });
+
+        $city.prop('disabled',false);
+    });
+
+
+
+    $city.on('change',function(){
+        reset($barangay);
+
+        barangays
+            .filter(b => b.cityCode === this.value)
+            .forEach(b=>{
+                $barangay.append(
+                    `<option value="${b.code}">
+                        ${b.name}
+                     </option>`
+                );
+            });
+
+        $barangay.prop('disabled',false);
+    });
+
+    function detectLocation(){
+
+        if(!navigator.geolocation)
+            return;
+
+        navigator.geolocation.getCurrentPosition(async ({coords})=>{
+
+            try{
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`
+                );
+
+                const data = await response.json();
+
+                if(data.address.country === "Philippines"){
+                    $country
+                        .val("Philippines")
+                        .trigger('change');
+
+                    setTimeout(()=>{
+                        selectProvince(
+                            data.address.state ||
+                            data.address.region
+                        );
+                    },500);
+                }
+            }catch(error){
+                console.error(
+                    "Location detection failed",
+                    error
+                );
+            }
+        });
+    }
+
+    function selectProvince(name){
+        const province = provinces.find(p =>
+            p.name
+                .toLowerCase()
+                .includes(
+                    (name || "")
+                        .toLowerCase()
+                )
+        );
+
+        if(province){
+            $province
+                .val(province.code)
+                .trigger('change');
+        }
+    }
+
+    function reset($element, disable=false){
+        $element
+            .empty()
+            .append(`<option value="">Select</option>`);
+
+        $element
+            .prop('disabled', disable);
+    }
+
+    function loadExistingAddress() {
+
+        $country
+            .val(existingEmployeeAddress.country)
+            .trigger("change");
+
+        setTimeout(() => {
+            const province = provinces.find(p =>
+                p.name.toLowerCase() ===
+                existingEmployeeAddress.province.toLowerCase()
+            );
+
+            if (!province)
+                return;
+
+            $province
+                .val(province.code)
+                .trigger("change");
+
+            setTimeout(() => {
+                const city = cities.find(c =>
+                    c.provinceCode === province.code &&
+                    c.name.toLowerCase() ===
+                    existingEmployeeAddress.city.toLowerCase()
+                );
+
+                if (!city)
+                    return;
+
+                $city
+                    .val(city.code)
+                    .trigger("change");
+
+                setTimeout(() => {
+                    const barangay = barangays.find(b =>
+                        b.cityCode === city.code &&
+                        b.name.toLowerCase() ===
+                        existingEmployeeAddress.barangay.toLowerCase()
+                    );
+
+                    if (!barangay)
+                        return;
+
+                    $barangay.val(barangay.code);
+
+                }, 200);
+            }, 200);
+        }, 200);
+    }
 }

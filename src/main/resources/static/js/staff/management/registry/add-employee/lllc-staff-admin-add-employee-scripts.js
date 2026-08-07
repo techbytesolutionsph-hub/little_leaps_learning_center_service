@@ -461,56 +461,37 @@ function initEmployeeAddressLocationAutoFill() {
         if(!navigator.geolocation)
             return;
 
-
         navigator.geolocation.getCurrentPosition(async ({coords})=>{
 
             try{
-
                 const response = await fetch(
                     `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coords.latitude}&lon=${coords.longitude}`
                 );
 
-
                 const data = await response.json();
 
-
                 if(data.address.country === "Philippines"){
-
                     $country
                         .val("Philippines")
                         .trigger('change');
 
-
                     setTimeout(()=>{
-
                         selectProvince(
                             data.address.state ||
                             data.address.region
                         );
-
                     },500);
-
                 }
-
-
             }catch(error){
-
                 console.error(
                     "Location detection failed",
                     error
                 );
-
             }
-
-
         });
-
     }
 
-
-
     function selectProvince(name){
-
         const province = provinces.find(p =>
             p.name
                 .toLowerCase()
@@ -520,35 +501,19 @@ function initEmployeeAddressLocationAutoFill() {
                 )
         );
 
-
         if(province){
-
             $province
                 .val(province.code)
                 .trigger('change');
-
         }
-
     }
-
-
 
     function reset($element, disable=false){
-
         $element
             .empty()
-            .append(
-                `<option value="">
-                    Select
-                 </option>`
-            );
+            .append(`<option value="">Select</option>`);
 
-
-        $element.prop(
-            'disabled',
-            disable
-        );
-
+        $element
+            .prop('disabled', disable);
     }
-
 }
