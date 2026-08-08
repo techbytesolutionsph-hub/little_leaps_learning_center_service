@@ -1,5 +1,34 @@
 $(document).ready(function () {
 
+    function handleSidebarResize() {
+        const $sidenav = $("#mobile-sidenav");
+        const $burger = $("#burgerToggle");
+        const $body = $("body");
+
+        if ($(window).width() > 767) {
+            $sidenav.removeClass("show");
+            $burger.removeClass("open");
+            $body.removeClass("sidenav-open");
+        }
+    }
+
+    handleSidebarResize();
+
+    $(window).on("resize", function () {
+        handleSidebarResize();
+    });
+
+    $("#burgerToggle").on("click", function () {
+        const $sidenav = $("#mobile-sidenav");
+        const $burger = $(this);
+        const $body = $("body");
+
+        $sidenav.toggleClass("show");
+        $burger.toggleClass("open");
+        $body.toggleClass("sidenav-open");
+    });
+
+
     function closeSidebarIfNeeded() {
         const $sidenav = $("#mobile-sidenav");
         const $burger = $("#burgerToggle");
@@ -7,10 +36,15 @@ $(document).ready(function () {
 
         const isOpen = $sidenav.hasClass("show");
 
+        console.log("closeSidebarIfNeeded()");
+        console.log("Sidebar currently open:", isOpen);
+
         if (isOpen) {
             $sidenav.removeClass("show");
             $burger.removeClass("open");
             $body.removeClass("sidenav-open");
+
+            console.log("Sidebar closed");
         }
 
         return isOpen;

@@ -13,12 +13,12 @@
                 <!-- If login page is active -->
                 <th:block th:if="${page} == 'login'">
                     <li>
-                        <a th:class="'nav-link' + (${page} == 'home' ? ' active' : '')" th:href="@{/telatak/shop/home}">
+                        <a th:class="'nav-link' + (${page} == 'home' ? ' active' : '')" href="https://littleleapslearningcenter.netlify.app">
                             <i class="bi bi-house-door mr-2"></i>Home
                         </a>
                     </li>
                     <li>
-                        <a th:class="'nav-link' + (${page} == 'login' ? ' active' : '')" th:href="@{/telatak/seller/login}">
+                        <a th:class="'nav-link' + (${page} == 'login' ? ' active' : '')" th:href="@{/app/portal/login}">
                             <i class="bi bi-box-arrow-in-right mr-2"></i>Login
                         </a>
                     </li>
