@@ -67,6 +67,23 @@ public class PortalViewController {
         return "staff/clients/add/index";
     }
 
+    @GetMapping(value = "/client-management/view-client/{uuid}")
+    public String viewClientPage(Model model, @PathVariable("uuid") String uuid) {
+        this.setupPage(model, "clients", "Client Profile");
+
+        ClientRegistrationResponse client = portalFrontService.getClientProfileByUUID(uuid);
+        model.addAttribute("client", client);
+
+        return "staff/clients/view/index";
+    }
+
+    @GetMapping(value = "/client-management/edit-client/{uuid}")
+    public String editClientPage(Model model, @PathVariable("uuid") String uuid) {
+        this.setupPage(model, "clients", "Edit Client");
+
+        return "staff/clients/edit/index";
+    }
+
     @GetMapping(value = "/attendance/my-attendance")
     public String employeeAttendancePage(Model model, Authentication authentication) throws ServiceException {
         this.setupPage(model, "attendance", "My Attendance");

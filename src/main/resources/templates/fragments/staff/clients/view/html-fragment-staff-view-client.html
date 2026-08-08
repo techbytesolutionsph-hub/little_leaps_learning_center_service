@@ -1,0 +1,176 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-view-client(client)">
+        <!-- View Client - START -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-5 mb-3">
+                        <div class="card shadow mt-lg-1 mb-lg-1">
+                            <div class="card-body-white">
+                                <div class="profile-cover"></div>
+                                <div class="text-center mt-lg-2 mb-lg-2 px-2">
+                                    <img class="profile-image"
+                                         th:src="${client.profileImageUrl != null ? client.profileImageUrl : '/images/default-profile.png'}"
+                                         th:alt="${client.firstName + ' ' + client.lastName}">
+
+                                    <h5 class="basic-info-header mt-3 mb-1"
+                                        th:text="${client.firstName + ' ' + client.middleName + ' ' + client.lastName}">
+                                        John Doe
+                                    </h5>
+                                    <span class="badge badge-glossy bg-secondary">
+                                        Little Leaps Learner
+                                    </span>
+
+                                    <span class="badge badge-glossy bg-info"
+                                          th:text="${#strings.capitalize(client.enrollmentStatus.toString().toLowerCase())}">
+                                        Enrolled
+                                    </span>
+                                </div>
+
+                                <div class="basic-info p-3">
+                                    <div class="info-row">
+                                        <span>Client ID</span>
+                                        <strong th:text="${client.clientStudentId ?: '—'}"></strong>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span>Date Enrolled</span>
+                                        <strong th:text="${#temporals.format(client.dateEnrolled, 'MMMM d, yyyy')}">
+                                            January 1, 2026
+                                        </strong>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span>Program Type</span>
+                                        <strong th:text="${client.programType}">ABA</strong>
+                                    </div>
+
+                                    <div class="info-row">
+                                        <span>Branch</span>
+                                        <strong th:text="${client.branch}">San Juan Batangas</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 mb-3">
+                        <div class="card shadow mt-lg-1 mb-lg-1">
+                            <div class="card-body-white">
+                                <div class="accordion" id="clientAccordion">
+                                    <div class="accordion-item mb-lg-4">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#basicInfo">
+                                                <span>Basic Information</span>
+                                                <i class="accordion-icon bi bi-chevron-down"></i>
+                                            </button>
+                                        </h2>
+
+                                        <div id="basicInfo" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="basic-info p-1">
+                                                    <div class="info-row">
+                                                        <span>Gender</span>
+                                                        <strong th:text="${@enumUtil.formatEnum(client.gender)}">
+                                                            Male
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Birthday</span>
+                                                        <strong th:text="${#temporals.format(client.birthDate, 'MMMM d, yyyy')}">
+                                                            October 18, 1988
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Age</span>
+                                                        <strong th:text="${client.age}">
+                                                            10
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Diagnosis Concern</span>
+                                                        <strong th:text="${client.diagnosisConcern}">ABA</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="accordion-item mb-lg-4">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#benefits">
+                                                <span>Parent/Guardian Information</span>
+                                                <i class="accordion-icon bi bi-chevron-down"></i>
+                                            </button>
+                                        </h2>
+
+                                        <div id="benefits" class="accordion-collapse collapse show">
+                                            <div class="accordion-body">
+                                                <div class="basic-info p-1">
+                                                    <div class="info-row">
+                                                        <span>Parent name</span>
+                                                        <strong th:text="${client.parents[0].firstName + ' ' + client.parents[0].middleName + ' ' + client.parents[0].lastName}">
+                                                            John Doe
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Gender</span>
+                                                        <strong th:text="${@enumUtil.formatEnum(client.parents[0].gender)}">
+                                                            Male
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Phone</span>
+                                                        <strong th:text="${client.parents[0].contactNumber}">09106121529</strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Email</span>
+                                                        <strong th:text="${client.parents[0].email}">
+                                                            glenmark.anduiza@littleleapslearningcenter.com
+                                                        </strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Relationship to client</span>
+                                                        <strong th:text="${client.parents[0].relationshipToClient}"></strong>
+                                                    </div>
+
+                                                    <div class="info-row">
+                                                        <span>Address</span>
+                                                        <strong th:text="${client.parents[0].address}"></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-end">
+                    <button type="button" id="back-btn"
+                            class="btn-glossy-teal d-flex justify-content-center align-items-center"
+                            onclick="history.back()">
+                        <i class="bi bi-arrow-return-left me-2"></i> Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- View Client - END -->
+    </div>
+</html>

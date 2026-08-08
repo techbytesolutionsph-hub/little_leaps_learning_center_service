@@ -28,6 +28,9 @@ public class ClientRegistrationRequest {
     private String branch;
     private EnrollmentStatus enrollmentStatus;
 
+    /* Client Account Details */
+    private AccountAccessDTO accountAccess;
+
     /* Client Image URL */
     private String profileImageUrl;
 
@@ -49,5 +52,17 @@ public class ClientRegistrationRequest {
         private String relationshipToClient;
         private Gender gender;
         private String address;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AccountAccessDTO {
+
+        private String username;
+        private String password;
+        private String email;
+        private String status;
     }
 }

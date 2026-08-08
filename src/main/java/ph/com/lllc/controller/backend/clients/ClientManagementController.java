@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
+import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.util.logging.LoggingService;
 import ph.com.lllc.service.util.uuid.GenerateUUIDService;
@@ -28,7 +29,7 @@ public class ClientManagementController {
 
     @Operation(summary = "Client Logout")
     @PostMapping("/register-client")
-    public ResponseEntity<CommonResponse> registerClient(@Valid @RequestBody ClientRegistrationRequest request) {
+    public ResponseEntity<CommonResponse> registerClient(@Valid @RequestBody ClientRegistrationRequest request) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "ClientRegistrationRequest : " + request.toString());
         return ResponseEntity.ok(clientManagementService.registerClient(uuid, request));

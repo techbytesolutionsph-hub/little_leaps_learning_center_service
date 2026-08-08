@@ -81,4 +81,8 @@ public class PortalFrontService {
     public List<ClientRegistrationResponse> getClientProfiles(){
         return clientManagementService.getClientProfiles();
     }
+
+    public ClientRegistrationResponse getClientProfileByUUID(String uuid) {
+        return clientManagementService.getClientProfileByUUID(uuid);
+    }
 }
