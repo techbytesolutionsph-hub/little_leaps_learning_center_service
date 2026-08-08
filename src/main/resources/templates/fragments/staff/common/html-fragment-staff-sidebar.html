@@ -5,7 +5,9 @@
    Email: glenmark.ghl@gmail.com
 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <div th:fragment="staff-common-sidebar(nav)">
         <!-- Sidebar - Start -->
         <ul class="navbar-nav bg-gradient-mint-green sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -56,7 +58,7 @@
                 </div>
             </li>
 
-            <li class="nav-item"  th:classappend="${nav == 'reports'} ? ' active'">
+            <li class="nav-item"  th:classappend="${nav == 'caseManager'} ? ' active'" sec:authorize="@permission.has('VIEW_CASE_MANAGEMENT')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#caseManagement"
                    aria-expanded="true" aria-controls="caseManagement">
                     <i class="fas fa-folder-open"></i>
@@ -71,7 +73,7 @@
                 </div>
             </li>
 
-            <li class="nav-item"  th:classappend="${nav == 'therapist'} ? ' active'">
+            <li class="nav-item"  th:classappend="${nav == 'therapist'} ? ' active'" sec:authorize="@permission.has('VIEW_BEHAVIORAL_THERAPY')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#behavioralTherapy"
                    aria-expanded="true" aria-controls="behavioralTherapy">
                     <i class="fas fa-user-md"></i>
@@ -82,7 +84,30 @@
                         <h6 class="collapse-header">Therapy Management:</h6>
                         <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/schedule}">My Schedule</a>
                         <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/assign-client}">Assigned Clients</a>
-                        <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/attendance}">My Attendance</a>
+                        <a class="collapse-item" th:href="@{/app/portal/behavioral-therapy/client-schedule}">Client Schedule</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item"  th:classappend="${nav == 'attendance'} ? ' active'">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#attendance"
+                   aria-expanded="true" aria-controls="attendance">
+                    <i class="fas fa-user-clock"></i>
+                    <span>Attendance</span>
+                </a>
+                <div id="attendance" class="collapse" aria-labelledby="attendance" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Attendance:</h6>
+                        <a class="collapse-item"
+                           th:href="@{/app/portal/attendance/my-attendance}">
+                            My Attendance
+                        </a>
+
+                        <a class="collapse-item"
+                           sec:authorize="@permission.has('MANAGE_ALL_ATTENDANCES')"
+                           th:href="@{/app/portal/attendance/manage-attendance}">
+                            Attendance Management
+                        </a>
                     </div>
                 </div>
             </li>
@@ -104,7 +129,7 @@
                 </div>
             </li>
 
-            <li class="nav-item" th:classappend="${nav == 'management'} ? ' active'">
+            <li class="nav-item" th:classappend="${nav == 'management'} ? ' active'" sec:authorize="@permission.has('VIEW_HR_MANAGEMENT')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaffManagement"
                    aria-expanded="true" aria-controls="collapseStaffManagement">
                     <i class="fas fa-user-tie"></i>
@@ -121,15 +146,15 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider" sec:authorize="@permission.has('VIEW_SYSTEM_ADMINISTRATION')">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" sec:authorize="@permission.has('VIEW_SYSTEM_ADMINISTRATION')">
                 Interface
             </div>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item" th:classappend="${nav == 'utilities'} ? ' active'">
+            <li class="nav-item" th:classappend="${nav == 'utilities'} ? ' active'" sec:authorize="@permission.has('VIEW_SYSTEM_ADMINISTRATION')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                    aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
@@ -167,23 +192,23 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider">
+            <hr class="sidebar-divider" sec:authorize="@permission.has('VIEW_SYSTEM_ADMINISTRATION')">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" sec:authorize="@permission.has('VIEW_SYSTEM_ADMINISTRATION')">
                 Security
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item" th:classappend="${nav == 'admin'} ? ' active'">
+            <li class="nav-item" th:classappend="${nav == 'admin'} ? ' active'" sec:authorize="@permission.has('VIEW_SYSTEM_ADMINISTRATION')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
                    aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Administration</span>
+                    <span>System Administration</span>
                 </a>
                 <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Admin Management:</h6>
+                        <h6 class="collapse-header">Access Management:</h6>
                         <a class="collapse-item" th:href="@{/app/portal/admin/user-account}">User Account</a>
                     </div>
                 </div>

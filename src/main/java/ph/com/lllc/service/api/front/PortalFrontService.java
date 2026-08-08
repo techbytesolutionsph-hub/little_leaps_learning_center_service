@@ -12,6 +12,7 @@ import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -34,6 +35,10 @@ public class PortalFrontService {
 
     public AppEmployeeProfile getAppEmployeeProfile(String uuid, String employeeId) throws ServiceException {
         return employmentRegistryService.getAppEmployeeProfile(uuid, employeeId);
+    }
+
+    public Map<String, Object> getUserInfo(String username) throws ServiceException {
+        return userAccountService.getUserInfo(username);
     }
 
     public DashboardMetricsResponse employeeRegistryKPIs(){

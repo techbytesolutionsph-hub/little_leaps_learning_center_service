@@ -1,0 +1,155 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="common-staff-employee-attendance(userInfo)">
+        <!-- Employee Attendance - START -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold mb-3 mb-md-0">
+                    <i class="fa-solid fa-calendar-week mr-2"></i> Attendance
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="timesheet-container">
+
+                    <!-- Week Ending -->
+                    <div class="week-header">
+                        <div class="week-title">
+                            <i class="fa-solid fa-calendar-week"></i>
+                            <span>Week Ending</span>
+                        </div>
+
+                        <div class="week-picker">
+
+                            <button class="week-nav" id="prevWeek" title="Previous Week">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+
+                            <div class="date-box">
+                                <i class="fa-regular fa-calendar"></i>
+                                <span id="weekEnding"></span>
+                            </div>
+
+                            <button class="week-nav" id="nextWeek" title="Next Week">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Timesheet -->
+                    <div class="table-responsive">
+                        <table class="timesheet-table">
+                            <thead>
+                            <tr>
+                                <th style="width: 40%"></th>
+                                <th id="monHeader"></th>
+                                <th id="tueHeader"></th>
+                                <th id="wedHeader"></th>
+                                <th id="thuHeader"></th>
+                                <th id="friHeader"></th>
+                                <th id="satHeader"></th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <tr>
+                                <td colspan="8" class="work-item">
+                                    Little Leaps Learning Center
+                                    <br />
+                                    <span th:text="${userInfo['branchAssign']}">San Juan, Batangas Branch</span>
+                                </td>
+                            </tr>
+
+                            <tr class="child-row">
+                                <td th:text="${userInfo['employeeName']}">Glenn Mark Anduiza</td>
+                                <input type="hidden" id="employee-id" name="employeeId" th:value="${userInfo['employeeId']}">
+
+                                <td>
+                                    <input type="text" class="form-control text-sm hour-field"
+                                           id="monday-field" min="0" max="24" value="0"
+                                           style="width:45px;">
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control text-sm hour-field"
+                                           id="tuesday-field" min="0" max="24" value="0"
+                                           style="width:45px;">
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control text-sm hour-field"
+                                           id="wednesday-field" min="0" max="24" value="0"
+                                           style="width:45px;">
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control text-sm hour-field"
+                                           id="thursday-field" min="0" max="24" value="0"
+                                           style="width:45px;">
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control text-sm hour-field"
+                                           id="friday-field" min="0" max="24" value="0"
+                                           style="width:45px;">
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control text-sm hour-field"
+                                           id="saturday-field" min="0" max="24" value="0"
+                                           style="width:45px;">
+                                </td>
+
+                                <td>
+                                    <input type="text"
+                                           class="form-control text-sm hour-field"
+                                           id="total-hours-field"
+                                           style="width:45px;"
+                                           readonly>
+                                </td>
+                            </tr>
+
+                            <tr class="total-row">
+                                <td>Total</td>
+                                <td id="total-monday">0</td>
+                                <td id="total-tuesday">0</td>
+                                <td id="total-wednesday">0</td>
+                                <td id="total-thursday">0</td>
+                                <td id="total-friday">0</td>
+                                <td id="total-saturday">0</td>
+                                <td id="grand-total">0</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Bottom Buttons -->
+                    <div class="actions">
+                        <button type="button"
+                                class="btn btn-glossy-teal fw-semibold"
+                                id="save-attendance-btn"
+                                th:disabled="${userInfo['status'] != null and userInfo['status'].name() == 'SUBMITTED'}">
+                            <i class="fas fa-save mr-2"></i>
+                            Save
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-glossy-teal fw-semibold"
+                                id="submit-attendance-btn"
+                                th:disabled="${userInfo['status'] != null and userInfo['status'].name() == 'SUBMITTED'}">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Employee Attendance - END -->
+    </div>
+</html>

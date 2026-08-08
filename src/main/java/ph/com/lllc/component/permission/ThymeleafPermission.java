@@ -1,16 +1,27 @@
 package ph.com.lllc.component.permission;
 
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component("permission")
-@RequiredArgsConstructor
 public class ThymeleafPermission {
 
-    private final PermissionUtils permissionUtils;
+    public boolean has(String permission) {
 
-    public boolean has(HttpSession session, String permission){
-        return permissionUtils.hasPermission(session, permission);
+        Authentication authentication = SecurityContextHolder.getContext()
+                        .getAuthentication();
+
+        if (authentication == null) {
+            return false;
+        }
+
+        return authentication.getAuthorities()
+                .stream()
+                .anyMatch(authority ->
+                        authority.getAuthority().equals("FULL_ACCESS")
+                                ||
+                                authority.getAuthority().equals(permission)
+                );
     }
 }

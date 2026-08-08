@@ -1,0 +1,455 @@
+.timesheet-container {
+    padding: 20px 30px;
+}
+
+.week-header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:35px;
+    padding:15px 20px;
+    background:#ffffff;
+    border-radius:12px;
+    border:1px solid #e5e7eb;
+    box-shadow:0 3px 10px rgba(0,0,0,.05);
+}
+
+.week-title {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:13px;
+    font-weight:700;
+    color:#374151;
+}
+
+.week-title i {
+    color:#00979d;
+    font-size:20px;
+}
+
+.week-picker {
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* Navigation Button */
+.week-nav {
+    width: 27px;
+    height: 27px;
+    font-size: 12px;
+    font-weight: 800;
+    border-radius: 50%;
+    border: 1px solid #d1d5db;
+    background: #fff;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: .25s;
+}
+
+/* Date Display */
+.date-box {
+    min-width:200px;
+    height:35px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 10px;
+    background:#f0fafa;
+    border:1px solid #b8e5e7;
+    border-radius:8px;
+    color:#006b70;
+}
+
+.date-box i {
+    color:#00979d;
+}
+
+.date-box span {
+    font-weight:700;
+    font-size: 13px !important;
+}
+
+.toolbar button {
+    height: 45px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 0 18px;
+    color: #005a9e;
+    font-weight: 500;
+}
+
+.card-header-white{
+    background: linear-gradient(135deg, rgb(0, 151, 157), rgb(0, 199, 190)) !important;
+    color: #fff !important;
+    border-bottom: 4px solid rgb(167, 210, 211) !important;
+}
+
+/* =========================
+   Timesheet Table
+========================= */
+.table-responsive {
+    max-height: 600px;
+    overflow: auto;
+}
+
+.timesheet-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+/* Header */
+.timesheet-table thead th {
+    background-color: rgb(0, 151, 157) !important;
+    color: #fff !important;
+    border-bottom: 4px solid rgb(106, 176, 178);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px 10px;
+    border-right: 1px solid rgba(255,255,255,.15);
+    white-space: nowrap;
+}
+
+.timesheet-table thead th:last-child {
+    border-right: none;
+}
+
+/* Body */
+.timesheet-table tbody td {
+    padding: 14px 10px;
+    border-bottom: 1px solid #eef2f7;
+    border-right: 1px solid #eef2f7;
+    text-align: center;
+    vertical-align: middle;
+    transition: background .2s;
+}
+
+.timesheet-table tbody td:last-child {
+    border-right: none;
+}
+
+/* Zebra Rows */
+.timesheet-table tbody tr:nth-child(even) {
+    background: #fcfcfc;
+}
+
+/* Hover */
+.timesheet-table tbody tr:hover {
+    background: #f6fbff;
+}
+
+/* Work Item */
+.work-item {
+    background: linear-gradient(to right,#f8fafc,#eef6ff);
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    color: #2d3748;
+    text-align: left !important;
+}
+
+/* Employee Row */
+.child-row td:first-child {
+    text-align: left;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #374151;
+    padding-left: 30px;
+}
+
+/* Total Row */
+.total-row {
+    background: #e8f8f9 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #0f4c5c;
+}
+
+.total-row td {
+    border-top: 2px solid #00979d;
+}
+
+/* Hour Inputs */
+.hour-field {
+    width: 52px;
+    height: 36px;
+    margin: auto;
+    text-align: center;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-weight: 600;
+    transition: .2s;
+}
+
+.hour-field:focus {
+    border-color: #00979d;
+    box-shadow: 0 0 0 3px rgba(0,151,157,.15);
+}
+
+/* Readonly Total */
+#total-hours-field {
+    background: #f5f5f5;
+    color: #00979d;
+    font-weight: bold;
+}
+
+/* Weekend Header */
+#satHeader {
+    background: #0b7b80;
+}
+
+/* Rounded Header */
+.timesheet-table thead th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.timesheet-table thead th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.timesheet-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+}
+
+.work-item {
+    text-align: left !important;
+    background: #f3f3f3;
+    font-weight: 500;
+}
+
+.expand {
+    color: #0067b1;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.child-row td:first-child {
+    text-align: left;
+    padding-left: 45px;
+}
+
+.total-row {
+    background: #eaf5fc;
+    font-weight: 600;
+}
+
+/* Buttons */
+.actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.week-nav:hover {
+    background:#00979d;
+    color:#fff;
+    border-color:#00979d;
+    transform:translateY(-2px);
+}
+
+.hour-field {
+    width: 45px;
+    text-align: center;
+}
+
+#save-attendance-btn, #submit-attendance-btn{
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+}
+
+/* =========================
+   Mobile Attendance View
+========================= */
+@media (max-width: 768px) {
+
+    .timesheet-container {
+        padding: 10px;
+    }
+
+    /* Header */
+    .week-header {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .week-label {
+        width: 100%;
+        text-align: center;
+    }
+
+    .date-box {
+        width: 180px !important;
+        height: 40px !important;
+    }
+
+    .card-header {
+        min-height: 60px !important;
+        height: 60px !important;
+    }
+
+    .card-header h6{
+        margin-top: 15px !important;
+    }
+
+    /* Table to Card */
+    .timesheet-table,
+    .timesheet-table tbody,
+    .timesheet-table tr,
+    .timesheet-table td {
+        display: block;
+        width: 100%;
+    }
+
+    /* Hide desktop header */
+    .timesheet-table thead {
+        display: none;
+    }
+
+    /* Work Item */
+    .work-item {
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 15px !important;
+    }
+
+    /* Employee Card */
+    .child-row {
+        background: white;
+        border-radius: 12px;
+        padding: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+
+    .child-row td {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 35px;
+        font-size: 12px !important;
+        padding: 8px 15px !important;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Employee name */
+    .child-row td:first-child {
+        min-height: 50px;
+        justify-content: flex-start;
+        padding-left: 15px !important;
+    }
+
+    /* Day label */
+    .child-row td::before {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    /* Input alignment */
+    .child-row .hour-field {
+        width: 50px !important;
+        height: 36px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Total field */
+    #total-hours-field {
+        background: #f3fafa;
+        font-weight: 700;
+    }
+
+    /* Add labels */
+    .child-row td:nth-child(2)::before {
+        content:"Monday";
+        font-weight:600;
+    }
+
+    .child-row td:nth-child(3)::before {
+        content:"Tuesday";
+        font-weight:600;
+    }
+
+    .child-row td:nth-child(4)::before {
+        content:"Wednesday";
+        font-weight:600;
+    }
+
+    .child-row td:nth-child(5)::before {
+        content:"Thursday";
+        font-weight:600;
+    }
+
+    .child-row td:nth-child(6)::before {
+        content:"Friday";
+        font-weight:600;
+    }
+
+    .child-row td:nth-child(7)::before {
+        content:"Saturday";
+        font-weight:600;
+    }
+
+    .child-row td:nth-child(8)::before {
+        content:"Total Hours";
+        font-weight:700;
+    }
+
+    /* Input */
+    .hour-field {
+        width:55px !important;
+        height:35px;
+    }
+
+    /* Total row */
+    .total-row {
+        margin-top:15px;
+        border-radius:10px;
+        padding:10px;
+        background:#e8f8f9 !important;
+    }
+
+    .total-row td {
+        display:none;
+    }
+
+    /* Only show grand total */
+    .total-row td:first-child,
+    .total-row td:last-child {
+        display:flex;
+        justify-content:space-between;
+        padding:12px;
+    }
+
+    .total-row td:last-child::before {
+        content:"Total Hours";
+        font-weight:700;
+    }
+
+    /* Buttons */
+    .actions {
+        justify-content:center;
+    }
+
+    .actions button {
+        flex:1;
+        max-width:150px;
+    }
+}

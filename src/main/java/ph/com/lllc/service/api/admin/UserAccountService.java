@@ -9,6 +9,8 @@ import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.admin.CreateUserRequest;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.entity.user.common.*;
+import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
+import ph.com.lllc.enums.TimesheetStatus;
 import ph.com.lllc.enums.UserRole;
 import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.exception.ServiceException;
@@ -297,5 +299,30 @@ public class UserAccountService {
                 .returnCode(HttpStatus.OK.value())
                 .returnMessage("User account " + username + " has been disabled.")
                 .build();
+    }
+
+    public Map<String, Object> getUserInfo(String username) throws ServiceException {
+
+        /* Find user */
+        AppUser appUser = appUserRepository.findUserByUsername(username)
+                .orElseThrow(() -> new ServiceException(
+                        HttpStatus.NOT_FOUND.value(),
+                        "User not found: " + username));
+
+        AppWeeklyTimesheet currentTimesheet = appUser.getAppEmployeeProfile()
+                .getTimesheets()
+                .stream()
+                .max(Comparator.comparing(AppWeeklyTimesheet::getWeekEnding))
+                .orElse(null);
+
+        TimesheetStatus status = currentTimesheet != null ? currentTimesheet.getStatus() : TimesheetStatus.OPEN;
+        loggingService.info("", this.getClass().getName(), "", "TimesheetStatus : " + status);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("employeeId", appUser.getAppEmployeeProfile().getEmployeeId());
+        responseBody.put("employeeName", appUser.getAppEmployeeProfile().getFirstName() + " " + appUser.getAppEmployeeProfile().getLastName());
+        responseBody.put("branchAssign", appUser.getAppEmployeeProfile().getEmploymentInformation().getBranchAssign());
+        responseBody.put("status", currentTimesheet != null ? currentTimesheet.getStatus() : status);
+        return responseBody;
     }
 }

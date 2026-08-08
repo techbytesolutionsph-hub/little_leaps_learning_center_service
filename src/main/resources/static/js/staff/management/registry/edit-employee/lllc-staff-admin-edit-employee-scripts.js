@@ -303,6 +303,8 @@ function initEmployeeAddressLocationAutoFill() {
     let cities = [];
     let barangays = [];
 
+    const NCR_CODE = "130000000";
+    let isNCR = false;
 
     countries
         .filter(c => c.trim() !== "")
@@ -345,38 +347,57 @@ function initEmployeeAddressLocationAutoFill() {
         reset($city, true);
         reset($barangay, true);
 
-
         if(this.value === "Philippines") {
+            /* Add Metro Manila manually */
+            $province.append(
+                `<option value="${NCR_CODE}">
+                Metro Manila
+             </option>`
+            );
+
             provinces.forEach(p => {
+
                 $province.append(
                     `<option value="${p.code}">
-                        ${p.name}
-                     </option>`
+                    ${p.name}
+                 </option>`
                 );
             });
 
             $province.prop('disabled', false);
         }
+
     });
 
     $province.on('change', function(){
         reset($city);
         reset($barangay,true);
 
-        cities
-            .filter(c => c.provinceCode === this.value)
-            .forEach(c => {
-                $city.append(
-                    `<option value="${c.code}">
+        /* NCR has no province, get cities using regionCode */
+        if(this.value === NCR_CODE){
+            cities
+                .filter(c => c.regionCode === NCR_CODE)
+                .forEach(c => {
+                    $city.append(
+                        `<option value="${c.code}">
                         ${c.name}
-                     </option>`
-                );
-            });
+                    </option>`
+                    );
+                });
+        } else {
+            cities
+                .filter(c => c.provinceCode === this.value)
+                .forEach(c => {
+                    $city.append(
+                        `<option value="${c.code}">
+                        ${c.name}
+                    </option>`
+                    );
+                });
+        }
 
         $city.prop('disabled',false);
     });
-
-
 
     $city.on('change',function(){
         reset($barangay);

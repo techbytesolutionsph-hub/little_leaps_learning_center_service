@@ -11,6 +11,7 @@ import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.TimesheetStatus;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -31,6 +32,21 @@ public class AppWeeklyTimesheet {
 
     @Enumerated(EnumType.STRING)
     private TimesheetStatus status;
+
+    @Column(name = "submitted_at")
+    private LocalDateTime submittedAt;
+
+    @Column(name = "approved_at")
+    private LocalDateTime approvedAt;
+
+    @Column(name = "rejected_at")
+    private LocalDateTime rejectedAt;
+
+    @Column(name = "approver_name", length = 150)
+    private String approverName;
+
+    @Column(name = "approval_remarks", length = 1000)
+    private String approvalRemarks;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "timesheet", cascade = CascadeType.ALL, orphanRemoval = true)
