@@ -1,23 +1,31 @@
-package ph.com.lllc.entity.assessment;
+package ph.com.lllc.entity.user.client.schedule;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_assessment_slot")
+@Table(name = "lllc_app_therapy_slot")
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssessmentSlot {
+public class TherapySlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "assessment_slot_id")
+    @Column(name = "therapy_slot_id")
     private Long id;
+
+    /**
+     * MONDAY / WEDNESDAY / FRIDAY
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "day_of_week")
+    private DayOfWeek day;
 
     /**
      * 8:00 AM
@@ -31,8 +39,11 @@ public class AssessmentSlot {
     @Column(name = "end_time")
     private LocalTime endTime;
 
+    /**
+     * Parent schedule
+     */
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assessment_schedule_id", nullable = false)
-    private ClientInitialAssessmentSchedule assessmentSchedule;
+    @JoinColumn(name = "kid_session_schedule_id", nullable = false)
+    private ClientTherapySchedule kidSessionSchedule;
 }

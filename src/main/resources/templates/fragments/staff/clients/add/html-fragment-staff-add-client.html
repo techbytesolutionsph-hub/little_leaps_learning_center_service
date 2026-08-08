@@ -53,7 +53,7 @@
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Birthdate</label>
                                             <div class="date-input-wrapper">
-                                                <input type="text" id="client-birth-date" class="form-control" placeholder="Select birthdate">
+                                                <input type="text" id="client-birth-date" class="form-control" placeholder="Select birth date" required>
                                                 <i class="bi bi-calendar-event calendar-icon"></i>
                                             </div>
                                         </div>
@@ -81,14 +81,14 @@
                                             <label for="client-diagnosis" class="form-label text-sm fw-bold text-gray-800">Diagnosis/Concern</label>
                                             <select class="form-control text-sm variation-discount-type" id="client-diagnosis" required>
                                                 <option value="">Select a diagnosis</option>
-                                                <option value="SPEECH_DELAY">Speech Delay</option>
-                                                <option value="BEHAVIORAL_CONCERN">Behavioral Concern</option>
+                                                <option value="Speech Delay">Speech Delay</option>
+                                                <option value="Behavioral Concern">Behavioral Concern</option>
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Enrollment Date</label>
+                                            <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Date Enrolled</label>
                                             <div class="date-input-wrapper">
-                                                <input type="text" id="client-date-enrolled" class="form-control" placeholder="Select enrollment date">
+                                                <input type="text" id="client-date-enrolled" class="form-control" placeholder="Select date enrolled" required>
                                                 <i class="bi bi-calendar-event calendar-icon"></i>
                                             </div>
                                         </div>
@@ -97,30 +97,15 @@
                                             <select class="form-control text-sm variation-discount-type" id="client-program-type" required>
                                                 <option value="">Select program type</option>
                                                 <option value="ABA">ABA</option>
-                                                <option value="BEHAVIORAL_CONCERN">Behavioral Concern</option>
+                                                <option value="Behavioral Concern">Behavioral Concern</option>
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-assign-branch" class="form-label text-sm fw-bold text-gray-800">Branch</label>
+                                            <label for="client-assign-branch" class="form-label text-sm fw-bold text-gray-800">Assign Branch</label>
                                             <select class="form-control text-sm variation-discount-type" id="client-assign-branch" required>
-                                                <option value="">Select a branch</option>
-                                                <option value="SAN_JUAN">San Juan, Batangas</option>
-                                                <option value="CATANAUAN">Catanauan, Quezon</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-case-manager" class="form-label text-sm fw-bold text-gray-800">Case Manager</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-case-manager" required>
-                                                <option value="">Select case manager</option>
-                                                <option value="CASE_MGR_1">Andrie Alcantara</option>
-                                                <option value="CASE_MGR_2">Cyril Joy Morante</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-therapist" class="form-label text-sm fw-bold text-gray-800">Assigned Therapist</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-therapist" required>
-                                                <option value="">Select therapist</option>
-                                                <option value="THERAPIST_1">Andrie Alcantara</option>
+                                                <option value="" selected disabled>Select assign branch</option>
+                                                <option value="San Juan Batangas">San Juan Batangas</option>
+                                                <option value="Catanauan Quezon">Catanauan Quezon</option>
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
@@ -169,8 +154,8 @@
                                             <label for="client-parent-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship to client</label>
                                             <select class="form-control text-sm variation-discount-type" id="client-parent-relationship" required>
                                                 <option value="">Select a relationship</option>
-                                                <option value="PARENT">Parent</option>
-                                                <option value="GUARDIAN">Guardian</option>
+                                                <option value="Parent">Parent</option>
+                                                <option value="Guardian">Guardian</option>
                                             </select>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
@@ -185,6 +170,19 @@
                                             <label for="client-parent-address" class="form-label text-sm fw-bold text-gray-700">Complete Address</label>
                                             <input type="text" class="form-control text-sm variation-sku" id="client-parent-address" placeholder="Enter complete address" required>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card shadow mt-lg-1 mb-lg-1">
+                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
+                                        Account Access
+                                    </h5>
+                                </div>
+                                <div class="card-body-white">
+                                    <div class="row px-2">
+
                                     </div>
                                 </div>
                             </div>

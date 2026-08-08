@@ -6,9 +6,11 @@ import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardCardResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
+import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.admin.UserAccountService;
+import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.Map;
 public class PortalFrontService {
 
     private final UserAccountService userAccountService;
+    private final ClientManagementService clientManagementService;
     private final EmploymentRegistryService employmentRegistryService;
 
     public List<AppUserResponse> getAllUsers(){
@@ -73,5 +76,9 @@ public class PortalFrontService {
                 .totalOnLeaveEmployees(totalOnLeaveEmployees)
                 .totalResignedEmployees(totalResignedEmployees)
                 .build();
+    }
+
+    public List<ClientRegistrationResponse> getClientProfiles(){
+        return clientManagementService.getClientProfiles();
     }
 }

@@ -7,9 +7,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ph.com.lllc.entity.assessment.ClientInitialAssessmentSchedule;
-import ph.com.lllc.entity.neurodev.NeurodevelopmentalAssessmentSchedule;
-import ph.com.lllc.entity.schedule.ClientTherapySchedule;
+import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
+import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
+import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
+import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
@@ -35,6 +36,9 @@ public class AppClientProfile implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "app_client_id")
     private Long id;
+
+    @Column(name = "url_uuid")
+    private String uuid;
 
     @Column(name = "client_student_id", unique = true)
     private String clientStudentId;
@@ -70,12 +74,6 @@ public class AppClientProfile implements Serializable {
     @Column(name = "branch")
     private String branch;
 
-    @Column(name = "case_manager")
-    private String caseManager;
-
-    @Column(name = "therapist")
-    private String therapist;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private EnrollmentStatus enrollmentStatus;
@@ -100,6 +98,10 @@ public class AppClientProfile implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppClientAssignment> assignments;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppParentGuardian> appParentGuardian;
 
     @JsonManagedReference
@@ -116,7 +118,7 @@ public class AppClientProfile implements Serializable {
 
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "app_user_id", unique = true, nullable = false)
+    @JoinColumn(name = "app_user_id", unique = true, nullable = true)
     private AppUser appUser;
 
     @PrePersist

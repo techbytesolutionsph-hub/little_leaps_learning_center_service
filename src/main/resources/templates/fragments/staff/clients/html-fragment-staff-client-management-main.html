@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-client-management-main">
+    <div th:fragment="staff-client-management-main(clients)">
         <!-- Client Management - START -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -24,18 +24,73 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="clientTable">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Client Name</th>
-                            <th>Date Enrolled</th>
-                            <th>Guardian/Parent Name</th>
-                            <th>Diagnosis</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client Info</th>
+                                <th>Date Enrolled</th>
+                                <th>Guardian/Parent Name</th>
+                                <th>Diagnosis</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
+                            <tr th:each="client : ${clients}">
+                                <td data-label="ID" th:text="${client.id}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${client.profileImageUrl != null ? client.profileImageUrl : '/images/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
 
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${client.firstName + ' ' + client.lastName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${client.parents[0].email}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${client.parents[0].contactNumber}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Date Enrolled" th:text="${client.dateEnrolled}"></td>
+                                <td data-label="Guardian/Parent Name" th:text="${client.parents[0].firstName + ' ' + client.parents[0].lastName}"></td>
+                                <td data-label="Diagnosis" th:text="${client.diagnosisConcern}"></td>
+                                <td data-label="Status">
+                                    <span class="status-badge badge-active"
+                                          th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'ENROLLED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Enrolled
+                                    </span>
+
+                                    <span class="status-badge badge-danger"
+                                          th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'CANCELLED'}">
+                                        <i class="bi bi-pause-circle-fill mr-1"></i> Cancelled
+                                    </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/client-management/view-client/${client.uuid}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-eye mr-1"></i> View
+                                        </a>
+                                        <a th:href="@{|/app/portal/client-management/edit-client/${client.uuid}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-pen mr-1"></i> Edit
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

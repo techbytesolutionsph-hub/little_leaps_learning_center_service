@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
+import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
@@ -52,6 +53,9 @@ public class PortalViewController {
     @GetMapping(value = "/client-management")
     public String clientManagementPage(Model model) {
         this.setupPage(model, "clients", "Client Management");
+
+        List<ClientRegistrationResponse> clients = portalFrontService.getClientProfiles();
+        model.addAttribute("clients", clients);
 
         return "staff/clients/index";
     }

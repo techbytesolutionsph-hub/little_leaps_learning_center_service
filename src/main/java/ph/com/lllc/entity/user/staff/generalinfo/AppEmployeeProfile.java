@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.address.AppEmployeeAddress;
 import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
@@ -100,6 +101,10 @@ public class AppEmployeeProfile implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppClientAssignment> clientAssignments;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppEmployeeAddress> address;
 
     @JsonManagedReference
@@ -126,7 +131,7 @@ public class AppEmployeeProfile implements Serializable {
     @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppWeeklyTimesheet> timesheets;
 
-    @JsonBackReference("user-staff")
+    @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_user_id", unique = true, nullable = false)
     private AppUser appUser;

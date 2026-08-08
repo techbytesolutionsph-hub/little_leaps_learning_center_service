@@ -8,6 +8,15 @@ function initializeDatePicker(id, placeholder) {
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
         position: "auto"
     });
 }
@@ -22,6 +31,15 @@ function initializeMaxTodayDatePicker(id, placeholder) {
         altInputClass: "form-control text-sm default-input",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
         },
         position: "auto"
     });
@@ -38,6 +56,15 @@ function initializeMinTodayDatePicker(id, placeholder) {
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
         position: "auto"
     });
 }
@@ -53,6 +80,15 @@ function initializePastDatePicker(id, placeholder) {
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
         position: "auto"
     });
 }
@@ -67,6 +103,15 @@ function initializeFutureDatePicker(id, placeholder) {
         altInputClass: "form-control text-sm default-input",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
         },
         position: "auto"
     });
@@ -84,6 +129,15 @@ function initializeDateRangePicker(id, placeholder, minDate = null, maxDate = nu
         altInputClass: "form-control text-sm default-input",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
         },
         position: "auto"
     });
@@ -103,6 +157,15 @@ function initializeMonthYearPicker(id, placeholder) {
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
         position: "auto"
     });
 }
@@ -121,6 +184,15 @@ function initializeYearPicker(id, placeholder) {
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
         position: "auto"
     });
 }
@@ -135,6 +207,15 @@ function initializeDateTimePicker(id, placeholder) {
         time_24hr: false,
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
         },
         position: "auto"
     });
@@ -152,6 +233,15 @@ function initializeTimePicker(id, placeholder) {
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
         position: "auto"
     });
 }
@@ -166,6 +256,15 @@ function initializeMultipleDatePicker(id, placeholder) {
         altInputClass: "form-control text-sm default-input",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
         },
         position: "auto"
     });

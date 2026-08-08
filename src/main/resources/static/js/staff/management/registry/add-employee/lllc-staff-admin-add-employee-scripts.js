@@ -136,27 +136,18 @@ $(document).ready(function () {
         createEmployee(employeePayload);
     });
 
-
-    /* Remove validation style while typing/selecting */
-    $("#add-employee-form").on(
-        "input change",
-        ".form-control, .form-select",
-        function () {
-            $(this).removeClass("is-invalid");
-        }
-    );
-
-
     /* Remove invalid state when user types/selects */
+    function clearInvalidState($field) {
+        if ($field.val() && $field.val().trim() !== "") {
+            $field.removeClass("is-invalid");
+        }
+    }
+
     $("#add-employee-form").on(
         "input change",
         ".form-control, .form-select",
         function () {
-
-            if ($(this).val()) {
-                $(this).removeClass("is-invalid");
-            }
-
+            clearInvalidState($(this));
         }
     );
 
@@ -462,20 +453,25 @@ function initEmployeeAddressLocationAutoFill() {
         $city.prop('disabled',false);
     });
 
-    $city.on('change',function(){
+    $city.on('change', function () {
         reset($barangay);
 
+        const selectedCityCode = this.value;
+
         barangays
-            .filter(b => b.cityCode === this.value)
-            .forEach(b=>{
+            .filter(b =>
+                b.municipalityCode === selectedCityCode ||
+                b.cityCode === selectedCityCode
+            )
+            .forEach(b => {
                 $barangay.append(
                     `<option value="${b.code}">
-                        ${b.name}
-                     </option>`
+                    ${b.name}
+                </option>`
                 );
             });
 
-        $barangay.prop('disabled',false);
+        $barangay.prop('disabled', false);
     });
 
     function detectLocation(){

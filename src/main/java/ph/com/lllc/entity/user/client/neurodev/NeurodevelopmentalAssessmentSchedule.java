@@ -1,4 +1,4 @@
-package ph.com.lllc.entity.neurodev;
+package ph.com.lllc.entity.user.client.neurodev;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
