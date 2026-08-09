@@ -12,6 +12,7 @@ import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.client.AppParentGuardian;
 import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppUserRepository;
 import ph.com.lllc.repository.ClientProfileRepository;
@@ -52,6 +53,7 @@ public class ClientManagementService {
         clientProfile.setDateEnrolled(request.getDateEnrolled());
         clientProfile.setDiagnosisConcern(request.getDiagnosisConcern());
         clientProfile.setProgramType(request.getProgramType());
+        clientProfile.setAssignmentStatus(AssignmentStatus.INACTIVE);
         clientProfile.setBranch(request.getBranch());
         clientProfile.setEnrollmentStatus(request.getEnrollmentStatus());
         clientProfile.setProfileImageUrl(request.getProfileImageUrl());
@@ -155,6 +157,7 @@ public class ClientManagementService {
         clientProfile.setDateEnrolled(request.getDateEnrolled());
         clientProfile.setDiagnosisConcern(request.getDiagnosisConcern());
         clientProfile.setProgramType(request.getProgramType());
+        clientProfile.setAssignmentStatus(AssignmentStatus.INACTIVE);
         clientProfile.setBranch(request.getBranch());
         clientProfile.setEnrollmentStatus(request.getEnrollmentStatus());
 
@@ -282,6 +285,7 @@ public class ClientManagementService {
                 .dateEnrolled(client.getDateEnrolled())
                 .diagnosisConcern(client.getDiagnosisConcern())
                 .programType(client.getProgramType())
+                .assignmentStatus(client.getAssignmentStatus())
                 .branch(client.getBranch())
                 .enrollmentStatus(client.getEnrollmentStatus())
                 .profileImageUrl(client.getProfileImageUrl())

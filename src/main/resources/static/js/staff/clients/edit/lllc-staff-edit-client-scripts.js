@@ -216,7 +216,7 @@ function updateClient(clientRequest) {
                 response.returnMessage,
                 () => {
                     window.location.href =
-                        "/app/portal/client-management";
+                        "/app/portal/client-management/registry";
                 }
             );
         },

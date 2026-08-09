@@ -1,6 +1,7 @@
 package ph.com.lllc.dto.staff.clients;
 
 import lombok.*;
+import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
 
@@ -31,6 +32,7 @@ public class ClientRegistrationResponse {
     private LocalDate dateEnrolled;
     private String diagnosisConcern;
     private String programType;
+    private AssignmentStatus assignmentStatus;
     private String branch;
     private EnrollmentStatus enrollmentStatus;
 

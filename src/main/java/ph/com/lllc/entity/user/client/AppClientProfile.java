@@ -12,6 +12,7 @@ import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
 import ph.com.lllc.util.LocalDateUtils;
@@ -70,6 +71,10 @@ public class AppClientProfile implements Serializable {
 
     @Column(name = "program_type")
     private String programType;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "assignment_status")
+    private AssignmentStatus assignmentStatus;
 
     @Column(name = "branch")
     private String branch;

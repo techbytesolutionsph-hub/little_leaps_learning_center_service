@@ -50,41 +50,51 @@ public class PortalViewController {
         return "staff/dashboard/index";
     }
 
-    @GetMapping(value = "/client-management")
-    public String clientManagementPage(Model model) {
-        this.setupPage(model, "clients", "Client Management");
+    @GetMapping(value = "/client-management/registry")
+    public String clientRegistryPage(Model model) {
+        this.setupPage(model, "clients", "Client Registry");
 
         List<ClientRegistrationResponse> clients = portalFrontService.getClientProfiles();
         model.addAttribute("clients", clients);
 
-        return "staff/clients/index";
+        return "staff/clients/registry/index";
     }
 
-    @GetMapping(value = "/client-management/add-client")
+    @GetMapping(value = "/client-management/assignment")
+    public String clientAssignmentPage(Model model) {
+        this.setupPage(model, "clients", "Client Assignment");
+
+        List<ClientRegistrationResponse> clients = portalFrontService.getClientProfiles();
+        model.addAttribute("clients", clients);
+
+        return "staff/clients/assignment/index";
+    }
+
+    @GetMapping(value = "/client-management/registry/add-client")
     public String addClientPage(Model model) {
         this.setupPage(model, "clients", "Add Client");
 
-        return "staff/clients/add/index";
+        return "staff/clients/registry/add/index";
     }
 
-    @GetMapping(value = "/client-management/view-client/{uuid}")
+    @GetMapping(value = "/client-management/registry/view-client/{uuid}")
     public String viewClientPage(Model model, @PathVariable("uuid") String uuid) {
         this.setupPage(model, "clients", "Client Profile");
 
         ClientRegistrationResponse client = portalFrontService.getClientProfileByUUID(uuid);
         model.addAttribute("client", client);
 
-        return "staff/clients/view/index";
+        return "staff/clients/registry/view/index";
     }
 
-    @GetMapping(value = "/client-management/edit-client/{uuid}")
+    @GetMapping(value = "/client-management/registry/edit-client/{uuid}")
     public String editClientPage(Model model, @PathVariable("uuid") String uuid) {
         this.setupPage(model, "clients", "Edit Client");
 
         ClientRegistrationResponse client = portalFrontService.getClientProfileByUUID(uuid);
         model.addAttribute("client", client);
 
-        return "staff/clients/edit/index";
+        return "staff/clients/registry/edit/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

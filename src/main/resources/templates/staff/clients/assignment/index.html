@@ -8,10 +8,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
-        <title>Edit Client - Little Leaps Learning Center</title>
+        <title>Client Assignment - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/clients/edit/lllc-staff-edit-client-styles.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -29,12 +28,12 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading and Breadcrumbs - Start -->
-                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
-                        <!-- Add Client - Start -->
-                        <th:block th:insert="~{fragments/staff/clients/registry/edit/html-fragment-staff-edit-client :: staff-edit-client(${client})}"></th:block>
-                        <!-- Add Client - End -->
+                        <!-- Client Management Main - Start -->
+                        <th:block th:insert="~{fragments/staff/clients/assignment/html-fragment-staff-client-assignment-main :: staff-client-assignment-main(${clients})}"></th:block>
+                        <!-- Client Management Main - End -->
                     </div>
                 </div>
 
@@ -45,7 +44,6 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-        <script th:inline="javascript">const uuid = /*[[${client.uuid}]]*/ '';</script>
-        <script th:src="@{/js/staff/clients/edit/lllc-staff-edit-client-scripts.js}" type="text/javascript"></script>
+<!--        <script th:src="@{/js/staff/dashboard/lllc-staff-dashboard-scripts.js}" type="text/javascript"></script>-->
     </body>
 </html>

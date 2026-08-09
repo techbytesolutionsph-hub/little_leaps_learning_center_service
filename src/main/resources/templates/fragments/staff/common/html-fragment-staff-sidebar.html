@@ -36,10 +36,18 @@
             </li>
 
             <li class="nav-item"  th:classappend="${nav == 'clients'} ? ' active'">
-                <a class="nav-link" th:href="@{/app/portal/client-management}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#clientManagement"
+                   aria-expanded="true" aria-controls="clientManagement">
                     <i class="fas fa-users"></i>
                     <span>Client Management</span>
                 </a>
+                <div id="clientManagement" class="collapse" aria-labelledby="clientManagement" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Client Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/client-management/registry}">Client Registry</a>
+                        <a class="collapse-item" th:href="@{/app/portal/client-management/assignment}">Client Assignment</a>
+                    </div>
+                </div>
             </li>
 
             <li class="nav-item"  th:classappend="${nav == 'calendar'} ? ' active'">
