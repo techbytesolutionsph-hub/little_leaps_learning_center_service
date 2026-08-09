@@ -1,71 +1,7 @@
 $(document).ready(function () {
 
-    /* Image Upload Preview */
-    $(document).on('change', '.image-upload', async function (event) {
-
-        const file = event.target.files[0];
-
-        const $wrapper = $(this)
-            .closest('.mb-4')
-            .find('.color-upload-wrapper');
-
-        const $img = $wrapper.find('.image-preview');
-
-        $img.hide();
-        $wrapper.find('.remove-image').remove();
-
-        if (!file) return;
-
-        if (!file.type.startsWith('image/')) {
-            alert('Please select a valid image file.');
-            $(this).val('');
-            return;
-        }
-
-        const url = await uploadToCloudinary(file);
-
-        if (url) {
-            $img.attr('src', url).show();
-
-            const $removeBtn = $(`
-                        <button type="button"
-                            class="remove-image btn btn-sm btn-danger position-absolute d-flex justify-content-center align-items-center"
-                            style="top:8px; right:8px; width:28px; height:28px; border-radius:50%;">
-                            &times;
-                        </button>
-                    `);
-
-            $wrapper.css('position', 'relative').append($removeBtn);
-        }
-    });
-
-    /* Remove image */
-    $(document).on('click', '.remove-image', function () {
-        const $wrapper = $(this).closest('.color-upload-wrapper');
-        $wrapper.find('.image-preview').attr('src', '').hide();
-        $wrapper.siblings('.custom-file-upload').find('.image-upload').val('');
-        $(this).remove();
-    });
-
-    /* Cloudinary upload function */
-    async function uploadToCloudinary(file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "telatak");
-
-        try {
-            const res = await fetch("https://api.cloudinary.com/v1_1/dx8es7rbm/image/upload", {
-                method: "POST",
-                body: formData
-            });
-            const data = await res.json();
-            return data.secure_url;
-        } catch (err) {
-            console.error("Cloudinary upload error:", err);
-            alert("Upload failed. Try again.");
-            return null;
-        }
-    }
+    /* Initialized Image Upload */
+    initializeImageUpload();
 
     $('#generate-password-btn').on('click', function () {
         $.get('/api/v1/account/admin/generate-temp-password', function (response) {

@@ -7,6 +7,17 @@ $(document).ready(function () {
     /* Initialized Image Upload */
     initializeImageUpload();
 
+    $("#search-credentials-btn").click(function () {
+        let username = $("#client-cred-username").val();
+
+        if (!username) {
+            showErrorPopup("Required Field", "Please enter username");
+            return;
+        }
+
+        getUserByUsername(username);
+    });
+
     $("#add-client-btn").on("click", function (e) {
 
         e.preventDefault();
@@ -163,6 +174,31 @@ function buildClientRequest() {
         parents: [parent],
         accountAccess: accountAccess
     };
+}
+
+function formatStatus(role) {
+    return role
+        .toLowerCase()
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+function getUserByUsername(username) {
+    $.ajax({
+        url: "/api/v1/account/admin/get-user/" + username,
+        type: "GET",
+        success: function(response) {
+            console.log("User details:", response);
+
+            $("#client-cred-password").val(response.lastPassword);
+            $("#client-cred-email").val(response.email);
+            $("#client-cred-status").val(formatStatus(response.status));
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching user:", xhr.responseText);
+            showInfoPopup("Info", "User not found.");
+        }
+    });
 }
 
 function createClient(clientRequest) {

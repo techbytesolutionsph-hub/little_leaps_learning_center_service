@@ -81,12 +81,15 @@ public class PortalViewController {
     public String editClientPage(Model model, @PathVariable("uuid") String uuid) {
         this.setupPage(model, "clients", "Edit Client");
 
+        ClientRegistrationResponse client = portalFrontService.getClientProfileByUUID(uuid);
+        model.addAttribute("client", client);
+
         return "staff/clients/edit/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")
     public String employeeAttendancePage(Model model, Authentication authentication) throws ServiceException {
-        this.setupPage(model, "attendance", "My Attendance");
+        this.setupPage(model, "attendance", "My Timesheet");
         String username = authentication.getName();
 
         Map<String, Object> userInfo = portalFrontService.getUserInfo(username);

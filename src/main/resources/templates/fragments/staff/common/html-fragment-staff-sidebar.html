@@ -93,20 +93,14 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#attendance"
                    aria-expanded="true" aria-controls="attendance">
                     <i class="fas fa-user-clock"></i>
-                    <span>Attendance</span>
+                    <span>Time & Attendance</span>
                 </a>
                 <div id="attendance" class="collapse" aria-labelledby="attendance" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Attendance:</h6>
                         <a class="collapse-item"
                            th:href="@{/app/portal/attendance/my-attendance}">
-                            My Attendance
-                        </a>
-
-                        <a class="collapse-item"
-                           sec:authorize="@permission.has('MANAGE_ALL_ATTENDANCES')"
-                           th:href="@{/app/portal/attendance/manage-attendance}">
-                            Attendance Management
+                            My Timesheet
                         </a>
                     </div>
                 </div>
@@ -130,17 +124,32 @@
             </li>
 
             <li class="nav-item" th:classappend="${nav == 'management'} ? ' active'" sec:authorize="@permission.has('VIEW_HR_MANAGEMENT')">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStaffManagement"
-                   aria-expanded="true" aria-controls="collapseStaffManagement">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseHRManagement"
+                   aria-expanded="true" aria-controls="collapseHRManagement">
                     <i class="fas fa-user-tie"></i>
                     <span>HR Management</span>
                 </a>
-                <div id="collapseStaffManagement" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
+                <div id="collapseHRManagement" class="collapse" aria-labelledby="headingHRManagement" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Employee Management:</h6>
                         <a class="collapse-item" th:href="@{/app/portal/hr-management/employee-registry}">Employee Registry</a>
                         <a class="collapse-item" th:href="@{/app/portal/hr-management/attendances}">Employee Attendances</a>
-                        <a class="collapse-item" th:href="@{/app/portal/hr-management/schedule}">Employee Schedule</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item" th:classappend="${nav == 'payroll'} ? ' active'" sec:authorize="@permission.has('VIEW_PAYROLL_MANAGEMENT')">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePayrollManagement"
+                   aria-expanded="true" aria-controls="collapsePayrollManagement">
+                    <i class="fas fa-money-check-alt"></i>
+                    <span>Payroll Management</span>
+                </a>
+                <div id="collapsePayrollManagement" class="collapse" aria-labelledby="headingPayroll" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Employee Management:</h6>
+                        <a class="collapse-item" th:href="@{/app/portal/hr-management/employee-registry}">Payroll Processing</a>
+                        <a class="collapse-item" th:href="@{/app/portal/hr-management/attendances}">Timesheets</a>
+                        <a class="collapse-item" th:href="@{/app/portal/hr-management/attendances}">Payslips</a>
                     </div>
                 </div>
             </li>

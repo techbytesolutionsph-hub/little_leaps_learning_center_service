@@ -27,7 +27,7 @@ public class ClientManagementController {
     private final GenerateUUIDService generateUUIDService;
     private final ClientManagementService clientManagementService;
 
-    @Operation(summary = "Client Logout")
+    @Operation(summary = "Register Client")
     @PostMapping("/register-client")
     public ResponseEntity<CommonResponse> registerClient(@Valid @RequestBody ClientRegistrationRequest request) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
@@ -39,5 +39,13 @@ public class ClientManagementController {
     @Operation(summary = "Get Clients")
     public ResponseEntity<List<ClientRegistrationResponse>> getClientProfiles(){
         return new ResponseEntity<>(clientManagementService.getClientProfiles(), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Update Client")
+    @PostMapping("/update-client")
+    public ResponseEntity<CommonResponse> updateClient(@Valid @RequestBody ClientRegistrationRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "ClientRegistrationRequest : " + request.toString());
+        return ResponseEntity.ok(clientManagementService.updateClient(uuid, request));
     }
 }

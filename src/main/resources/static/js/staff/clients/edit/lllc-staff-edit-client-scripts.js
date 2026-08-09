@@ -7,7 +7,18 @@ $(document).ready(function () {
     /* Initialized Image Upload */
     initializeImageUpload();
 
-    $("#add-client-btn").on("click", function (e) {
+    $("#search-credentials-btn").click(function () {
+        let username = $("#client-cred-username").val();
+
+        if (!username) {
+            showErrorPopup("Required Field", "Please enter username");
+            return;
+        }
+
+        getUserByUsername(username);
+    });
+
+    $("#update-client-btn").on("click", function (e) {
 
         e.preventDefault();
 
@@ -16,12 +27,11 @@ $(document).ready(function () {
         let firstInvalidField = null;
 
         /* Remove previous validation styles */
-        $("#add-client-form .form-control, #add-client-form .form-select")
+        $("#update-client-form .form-control, #update-client-form .form-select")
             .removeClass("is-invalid");
 
         /* Validate all required fields except HMO fields */
-        $("#add-client-form [required]")
-            .not("#employee-hmo-provider, #employee-hmo-no")
+        $("#update-client-form [required]")
             .each(function () {
 
                 let field = $(this);
@@ -72,8 +82,8 @@ $(document).ready(function () {
         const clientRequest = buildClientRequest();
         console.log(clientRequest);
 
-        /* Create Client Record */
-        createClient(clientRequest);
+        /* update Client Record */
+        updateClient(clientRequest);
     });
 
     /* Remove invalid state when user types/selects */
@@ -83,7 +93,7 @@ $(document).ready(function () {
         }
     }
 
-    $("#add-client-form").on(
+    $("#update-client-form").on(
         "input change",
         ".form-control, .form-select",
         function () {
@@ -110,8 +120,8 @@ $(document).ready(function () {
 
 function buildClientRequest() {
     /*
-         * Get values
-         */
+     * Get values
+     */
     const firstName = $("#client-firstname").val()?.trim();
     const middleName = $("#client-middlename").val()?.trim();
     const lastName = $("#client-lastname").val()?.trim();
@@ -148,6 +158,7 @@ function buildClientRequest() {
     };
 
     return {
+        uuid: uuid,
         firstName: firstName,
         middleName: middleName,
         lastName: lastName,
@@ -165,10 +176,35 @@ function buildClientRequest() {
     };
 }
 
-function createClient(clientRequest) {
+function formatStatus(role) {
+    return role
+        .toLowerCase()
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, char => char.toUpperCase());
+}
+
+function getUserByUsername(username) {
+    $.ajax({
+        url: "/api/v1/account/admin/get-user/" + username,
+        type: "GET",
+        success: function(response) {
+            console.log("User details:", response);
+
+            $("#client-cred-password").val(response.lastPassword);
+            $("#client-cred-email").val(response.email);
+            $("#client-cred-status").val(formatStatus(response.status));
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching user:", xhr.responseText);
+            showInfoPopup("Info", "User not found.");
+        }
+    });
+}
+
+function updateClient(clientRequest) {
 
     $.ajax({
-        url: "/api/v1/client/register-client",
+        url: "/api/v1/client/update-client",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(clientRequest),

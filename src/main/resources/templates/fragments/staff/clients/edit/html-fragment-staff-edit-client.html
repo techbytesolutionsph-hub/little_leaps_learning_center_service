@@ -6,9 +6,9 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-edit-client">
-        <!-- Add Client - START -->
-        <form id="add-client-form" autocomplete="off" class="needs-validation">
+    <div th:fragment="staff-edit-client(client)">
+        <!-- Update Client - START -->
+        <form id="update-client-form" autocomplete="off" class="needs-validation">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold">
@@ -34,32 +34,37 @@
                                     <div class="row px-2">
                                         <div class="col-12 col-md-5 mt-2 mb-2">
                                             <label for="client-firstname" class="form-label text-sm fw-bold text-gray-700">First name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-firstname" placeholder="Enter first name" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-firstname"
+                                                   placeholder="Enter first name" th:value="${client.firstName}" required>
                                         </div>
                                         <div class="col-12 col-md-2 mt-2 mb-2">
                                             <label for="client-middlename" class="form-label text-sm fw-bold text-gray-700">M.I.</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-middlename" placeholder="M.I." required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-middlename"
+                                                   placeholder="M.I."  th:value="${client.middleName}" required>
                                         </div>
                                         <div class="col-12 col-md-5 mt-2 mb-2">
                                             <label for="client-lastname" class="form-label text-sm fw-bold text-gray-700">Last name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-lastname" placeholder="Enter last name" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-lastname"
+                                                   placeholder="Enter last name" th:value="${client.lastName}" required>
                                         </div>
                                     </div>
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-age" class="form-label text-sm fw-bold text-gray-700">Age</label>
-                                            <input type="number" class="form-control text-sm variation-sku" id="client-age" placeholder="Enter age" required>
+                                            <input type="number" class="form-control text-sm variation-sku" id="client-age"
+                                                   placeholder="Enter age"  th:value="${client.age}" required>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Birthdate</label>
                                             <div class="date-input-wrapper">
-                                                <input type="text" id="client-birth-date" class="form-control" placeholder="Select birth date" required>
+                                                <input type="text" id="client-birth-date" class="form-control"
+                                                       placeholder="Select birth date" th:value="${client.birthDate}" required>
                                                 <i class="bi bi-calendar-event calendar-icon"></i>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-gender" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-gender" th:field="*{client.gender}" required>
                                                 <option value="">Select a gender</option>
                                                 <option value="MALE">Male</option>
                                                 <option value="FEMALE">Female</option>
@@ -79,7 +84,7 @@
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-diagnosis" class="form-label text-sm fw-bold text-gray-800">Diagnosis/Concern</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-diagnosis" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-diagnosis" th:field="*{client.diagnosisConcern}" required>
                                                 <option value="">Select a diagnosis</option>
                                                 <option value="Speech Delay">Speech Delay</option>
                                                 <option value="Behavioral Concern">Behavioral Concern</option>
@@ -88,13 +93,14 @@
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Date Enrolled</label>
                                             <div class="date-input-wrapper">
-                                                <input type="text" id="client-date-enrolled" class="form-control" placeholder="Select date enrolled" required>
+                                                <input type="text" id="client-date-enrolled" class="form-control"
+                                                       placeholder="Select date enrolled" th:value="${client.dateEnrolled}" required>
                                                 <i class="bi bi-calendar-event calendar-icon"></i>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-program-type" class="form-label text-sm fw-bold text-gray-800">Program Type</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-program-type" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-program-type" th:field="*{client.programType}" required>
                                                 <option value="">Select program type</option>
                                                 <option value="ABA">ABA</option>
                                                 <option value="Behavioral Concern">Behavioral Concern</option>
@@ -102,7 +108,7 @@
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-assign-branch" class="form-label text-sm fw-bold text-gray-800">Assign Branch</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-assign-branch" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-assign-branch" th:field="*{client.branch}" required>
                                                 <option value="" selected disabled>Select assign branch</option>
                                                 <option value="San Juan Batangas">San Juan Batangas</option>
                                                 <option value="Catanauan Quezon">Catanauan Quezon</option>
@@ -110,7 +116,7 @@
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-enrollment-status" class="form-label text-sm fw-bold text-gray-800">Enrollment Status</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-enrollment-status" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-enrollment-status" th:field="*{client.enrollmentStatus}" required>
                                                 <option value="">Select a status</option>
                                                 <option value="ENROLLED">Enrolled</option>
                                                 <option value="CANCELLED">Cancelled</option>
@@ -130,29 +136,34 @@
                                     <div class="row px-2">
                                         <div class="col-12 col-md-5 mt-2 mb-2">
                                             <label for="client-parent-firstname" class="form-label text-sm fw-bold text-gray-700">First name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-firstname" placeholder="Enter first name" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-firstname"
+                                                   placeholder="Enter first name" th:value="${client.parents[0].firstName}" required>
                                         </div>
                                         <div class="col-12 col-md-2 mt-2 mb-2">
                                             <label for="client-parent-middlename" class="form-label text-sm fw-bold text-gray-700">M.I.</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-middlename" placeholder="M.I." required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-middlename"
+                                                   placeholder="M.I." th:value="${client.parents[0].middleName}" required>
                                         </div>
                                         <div class="col-12 col-md-5 mt-2 mb-2">
                                             <label for="client-parent-lastname" class="form-label text-sm fw-bold text-gray-700">Last name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-lastname" placeholder="Enter last name" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-lastname"
+                                                   placeholder="Enter last name" th:value="${client.parents[0].lastName}" required>
                                         </div>
                                     </div>
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-parent-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-email" placeholder="Enter email" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-email"
+                                                   placeholder="Enter email" th:value="${client.parents[0].email}" required>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-parent-contact-no" class="form-label text-sm fw-bold text-gray-700">Contact No.</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-contact-no" placeholder="Enter contact number" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-contact-no"
+                                                   placeholder="Enter contact number" th:value="${client.parents[0].contactNumber}" required>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-parent-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship to client</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-parent-relationship" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-parent-relationship" th:field="*{client.parents[0].relationshipToClient}" required>
                                                 <option value="">Select a relationship</option>
                                                 <option value="Parent">Parent</option>
                                                 <option value="Guardian">Guardian</option>
@@ -160,7 +171,7 @@
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-parent-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-parent-gender" required>
+                                            <select class="form-control text-sm variation-discount-type" id="client-parent-gender" th:field="*{client.parents[0].gender}" required>
                                                 <option value="">Select a gender</option>
                                                 <option value="MALE">Male</option>
                                                 <option value="FEMALE">Female</option>
@@ -168,7 +179,8 @@
                                         </div>
                                         <div class="col-12 col-md-12 mt-2 mb-2">
                                             <label for="client-parent-address" class="form-label text-sm fw-bold text-gray-700">Complete Address</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-address" placeholder="Enter complete address" required>
+                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-address"
+                                                   placeholder="Enter complete address" th:value="${client.parents[0].address}" required>
                                         </div>
                                     </div>
                                 </div>
@@ -184,27 +196,44 @@
                                     <div class="row px-2">
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-cred-username" class="form-label text-sm fw-bold text-gray-700">
-                                                Username <small class="text-muted fw-normal">(Retrieved after client account search)</small>
+                                                Username
+                                                <small class="text-muted fw-normal">
+                                                    (Retrieved after client account search)
+                                                </small>
                                             </label>
 
                                             <div class="input-group">
-                                                <input type="text" class="form-control text-sm" id="client-cred-username" placeholder="Enter username then click search">
-                                                <button class="btn btn-outline-primary" type="button" id="search-credentials-btn">
+                                                <input type="text"
+                                                       class="form-control text-sm"
+                                                       id="client-cred-username"
+                                                       placeholder="Enter username then click search"
+                                                       th:value="${client.accountAccess.username}"
+                                                       th:disabled="${client.accountAccess.username != null and !#strings.isEmpty(client.accountAccess.username)}">
+
+                                                <button class="btn btn-outline-primary"
+                                                        type="button"
+                                                        id="search-credentials-btn"
+                                                        th:disabled="${client.accountAccess.username != null and !#strings.isEmpty(client.accountAccess.username)}">
                                                     <i class="bi bi-search"></i>
                                                 </button>
                                             </div>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-cred-password" class="form-label text-sm fw-bold text-gray-700">Password</label>
-                                            <input type="password" class="form-control text-sm" id="client-cred-password" placeholder="Retrieved password" disabled>
+                                            <input type="password" class="form-control text-sm" id="client-cred-password"
+                                                   placeholder="Retrieved password" th:value="${client.accountAccess.password}" disabled>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-cred-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
-                                            <input type="text" class="form-control text-sm" id="client-cred-email" placeholder="Retrieved email" disabled>
+                                            <input type="text" class="form-control text-sm" id="client-cred-email"
+                                                   placeholder="Retrieved email" th:value="${client.accountAccess.email}" disabled>
                                         </div>
                                         <div class="col-12 col-md-6 mt-2 mb-2">
                                             <label for="client-cred-status" class="form-label text-sm fw-bold text-gray-700">Status</label>
-                                            <input type="text" class="form-control text-sm" id="client-cred-status" placeholder="Retrieved status" disabled>
+                                            <input type="text" class="form-control text-sm" id="client-cred-status"
+                                                   placeholder="Retrieved status" th:value="${client.accountAccess.status != null
+                                            ? #strings.capitalize(client.accountAccess.status.toLowerCase())
+                                            : ''}" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -229,7 +258,11 @@
 
                                             <div class="mt-2 color-upload-wrapper">
                                                 <div class="image-preview-container">
-                                                    <img class="image-preview" src="" alt="Preview">
+                                                    <img class="image-preview"
+                                                         th:src="${client.profileImageUrl != null and !#strings.isEmpty(client.profileImageUrl)
+                                                            ? client.profileImageUrl
+                                                            : '/images/no-image.png'}"
+                                                         alt="Preview">
                                                 </div>
 
                                                 <small class="text-muted text-xs d-block mt-2">
@@ -245,7 +278,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary fw-semibold" id="add-client-btn">
+                        <button type="button" class="btn btn-secondary fw-semibold" id="update-client-btn">
                             <i class="fa-solid fa-user-check mr-2"></i>
                             Update Client
                         </button>

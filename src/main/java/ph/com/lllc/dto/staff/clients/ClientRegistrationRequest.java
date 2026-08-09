@@ -13,6 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 public class ClientRegistrationRequest {
 
+    Long id;
+    private String uuid;
+
+    /* Client School ID */
+    private String clientStudentId;
+
     /* Client Information */
     private String firstName;
     private String middleName;
