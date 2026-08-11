@@ -50,7 +50,7 @@ public class ClientManagementController {
     }
 
     @Operation(summary = "Update Client")
-    @PostMapping("/update-client")
+    @PutMapping("/update-client")
     public ResponseEntity<CommonResponse> updateClient(@Valid @RequestBody ClientRegistrationRequest request) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "ClientRegistrationRequest : " + request.toString());

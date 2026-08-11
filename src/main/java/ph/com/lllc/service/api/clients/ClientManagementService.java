@@ -63,7 +63,7 @@ public class ClientManagementService {
 
         /* Enrollment Details */
         clientProfile.setDateEnrolled(request.getDateEnrolled());
-        clientProfile.setDiagnosisConcern(request.getDiagnosisConcern());
+        clientProfile.setDiagnosisConcerns(request.getDiagnosisConcerns());
         clientProfile.setProgramType(request.getProgramType());
         clientProfile.setAssignmentStatus(AssignmentStatus.INACTIVE);
         clientProfile.setBranch(request.getBranch());
@@ -162,7 +162,7 @@ public class ClientManagementService {
         clientProfile.setGender(request.getGender());
 
         clientProfile.setDateEnrolled(request.getDateEnrolled());
-        clientProfile.setDiagnosisConcern(request.getDiagnosisConcern());
+        clientProfile.setDiagnosisConcerns(request.getDiagnosisConcerns());
         clientProfile.setProgramType(request.getProgramType());
         clientProfile.setAssignmentStatus(AssignmentStatus.INACTIVE);
         clientProfile.setBranch(request.getBranch());
@@ -355,7 +355,7 @@ public class ClientManagementService {
                 .birthDate(client.getBirthDate())
                 .gender(client.getGender())
                 .dateEnrolled(client.getDateEnrolled())
-                .diagnosisConcern(client.getDiagnosisConcern())
+                .diagnosisConcerns(client.getDiagnosisConcerns())
                 .programType(client.getProgramType())
                 .assignmentStatus(client.getAssignmentStatus())
                 .branch(client.getBranch())

@@ -1,14 +1,12 @@
 package ph.com.lllc.dto.staff.clients;
 
 import lombok.*;
-import ph.com.lllc.enums.AssignmentStatus;
-import ph.com.lllc.enums.ClientServiceType;
-import ph.com.lllc.enums.EnrollmentStatus;
-import ph.com.lllc.enums.Gender;
+import ph.com.lllc.enums.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -34,7 +32,7 @@ public class ClientRegistrationResponse {
 
     /* Client Enrollment Details */
     private LocalDate dateEnrolled;
-    private String diagnosisConcern;
+    private Set<DiagnosisConcern> diagnosisConcerns;
     private String programType;
     private AssignmentStatus assignmentStatus;
     private String branch;

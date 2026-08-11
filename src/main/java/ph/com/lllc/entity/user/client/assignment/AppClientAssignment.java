@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentRole;
@@ -42,13 +44,8 @@ public class AppClientAssignment implements Serializable {
     @Column(name = "assignment_role", nullable = false)
     private AssignmentRole assignmentRole;
 
-    @ElementCollection
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(
-            name = "lllc_app_client_diagnosis_concern",
-            joinColumns = @JoinColumn(name = "app_client_id")
-    )
-    @Column(name = "diagnosis_concern", nullable = false)
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "diagnosis_concerns", columnDefinition = "jsonb")
     private Set<DiagnosisConcern> diagnosisConcerns;
 
     @Enumerated(EnumType.STRING)

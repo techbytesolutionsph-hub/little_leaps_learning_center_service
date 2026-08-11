@@ -8,251 +8,363 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <div th:fragment="staff-add-client">
         <!-- Add Client - START -->
-        <form id="add-client-form" autocomplete="off" class="needs-validation">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold">
-                        <i class="fa-solid fa-user mr-2"></i> New Client
-                    </h6>
-                    <button type="button"
-                            class="btn-glossy-teal d-flex justify-content-center align-items-center"
-                            id="back-btn"
-                            data-url="/app/portal/client-management/registry">
-                        <i class="bi bi-arrow-return-left mr-2"></i> Back
-                    </button>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="card shadow mt-lg-1 mb-lg-1">
-                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
-                                        Client Information
-                                    </h5>
-                                </div>
-                                <div class="card-body-white mt-lg-1 mb-lg-1">
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-5 mt-2 mb-2">
-                                            <label for="client-firstname" class="form-label text-sm fw-bold text-gray-700">First name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-firstname" placeholder="Enter first name" required>
-                                        </div>
-                                        <div class="col-12 col-md-2 mt-2 mb-2">
-                                            <label for="client-middlename" class="form-label text-sm fw-bold text-gray-700">M.I.</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-middlename" placeholder="M.I." required>
-                                        </div>
-                                        <div class="col-12 col-md-5 mt-2 mb-2">
-                                            <label for="client-lastname" class="form-label text-sm fw-bold text-gray-700">Last name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-lastname" placeholder="Enter last name" required>
-                                        </div>
-                                    </div>
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-age" class="form-label text-sm fw-bold text-gray-700">Age</label>
-                                            <input type="number" class="form-control text-sm variation-sku" id="client-age" placeholder="Enter age" required>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Birthdate</label>
-                                            <div class="date-input-wrapper">
-                                                <input type="text" id="client-birth-date" class="form-control" placeholder="Select birth date" required>
-                                                <i class="bi bi-calendar-event calendar-icon"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-gender" required>
-                                                <option value="">Select a gender</option>
-                                                <option value="MALE">Male</option>
-                                                <option value="FEMALE">Female</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="client-form-layout">
+            <div class="client-form-main">
+                <section class="client-section-card mb-2">
+                    <div class="client-section-header">
+                        <div class="section-number">1</div>
+                        <div class="section-header-content">
+                            <h3>Personal Information</h3>
+                            <p>Basic personal details of the client.</p>
+                        </div>
+                    </div>
+
+                    <div class="client-section-body">
+                        <div class="row px-2">
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-firstname" class="form-label">First name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-firstname" placeholder="Enter first name" required>
+                                <div class="field-error">First name is required.</div>
                             </div>
-
-                            <div class="card shadow mt-lg-1 mb-lg-1">
-                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
-                                        Client Enrollment Details
-                                    </h5>
-                                </div>
-                                <div class="card-body-white">
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-diagnosis" class="form-label text-sm fw-bold text-gray-800">Diagnosis/Concern</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-diagnosis" required>
-                                                <option value="">Select a diagnosis</option>
-                                                <option value="Speech Delay">Speech Delay</option>
-                                                <option value="Behavioral Concern">Behavioral Concern</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-birth-date" class="text-sm fw-bold text-gray-700">Date Enrolled</label>
-                                            <div class="date-input-wrapper">
-                                                <input type="text" id="client-date-enrolled" class="form-control" placeholder="Select date enrolled" required>
-                                                <i class="bi bi-calendar-event calendar-icon"></i>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-program-type" class="form-label text-sm fw-bold text-gray-800">Program Type</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-program-type" required>
-                                                <option value="">Select program type</option>
-                                                <option value="ABA">ABA</option>
-                                                <option value="Behavioral Concern">Behavioral Concern</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-assign-branch" class="form-label text-sm fw-bold text-gray-800">Assign Branch</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-assign-branch" required>
-                                                <option value="" selected disabled>Select assign branch</option>
-                                                <option value="San Juan Batangas">San Juan Batangas</option>
-                                                <option value="Catanauan Quezon">Catanauan Quezon</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-enrollment-status" class="form-label text-sm fw-bold text-gray-800">Enrollment Status</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-enrollment-status" required>
-                                                <option value="">Select a status</option>
-                                                <option value="ENROLLED">Enrolled</option>
-                                                <option value="CANCELLED">Cancelled</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-middlename" class="form-label">Middle name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-middlename" placeholder="Enter middle name" required>
+                                <div class="field-error"> Middle name is required.</div>
                             </div>
-
-                            <div class="card shadow mt-lg-1 mb-lg-1">
-                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
-                                        Guardian/Parent Details
-                                    </h5>
-                                </div>
-                                <div class="card-body-white">
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-5 mt-2 mb-2">
-                                            <label for="client-parent-firstname" class="form-label text-sm fw-bold text-gray-700">First name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-firstname" placeholder="Enter first name" required>
-                                        </div>
-                                        <div class="col-12 col-md-2 mt-2 mb-2">
-                                            <label for="client-parent-middlename" class="form-label text-sm fw-bold text-gray-700">M.I.</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-middlename" placeholder="M.I." required>
-                                        </div>
-                                        <div class="col-12 col-md-5 mt-2 mb-2">
-                                            <label for="client-parent-lastname" class="form-label text-sm fw-bold text-gray-700">Last name</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-lastname" placeholder="Enter last name" required>
-                                        </div>
-                                    </div>
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-parent-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-email" placeholder="Enter email" required>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-parent-contact-no" class="form-label text-sm fw-bold text-gray-700">Contact No.</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-contact-no" placeholder="Enter contact number" required>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-parent-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship to client</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-parent-relationship" required>
-                                                <option value="">Select a relationship</option>
-                                                <option value="Parent">Parent</option>
-                                                <option value="Guardian">Guardian</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-parent-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
-                                            <select class="form-control text-sm variation-discount-type" id="client-parent-gender" required>
-                                                <option value="">Select a gender</option>
-                                                <option value="MALE">Male</option>
-                                                <option value="FEMALE">Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-12 col-md-12 mt-2 mb-2">
-                                            <label for="client-parent-address" class="form-label text-sm fw-bold text-gray-700">Complete Address</label>
-                                            <input type="text" class="form-control text-sm variation-sku" id="client-parent-address" placeholder="Enter complete address" required>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card shadow mt-lg-1 mb-lg-1">
-                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
-                                        Account Access
-                                    </h5>
-                                </div>
-                                <div class="card-body-white mt-lg-1 mb-lg-1">
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-cred-username" class="form-label text-sm fw-bold text-gray-700">
-                                                Username <small class="text-muted fw-normal">(Retrieved after client account search)</small>
-                                            </label>
-
-                                            <div class="input-group">
-                                                <input type="text" class="form-control text-sm" id="client-cred-username" placeholder="Enter username then click search">
-                                                <button class="btn btn-outline-primary" type="button" id="search-credentials-btn">
-                                                    <i class="bi bi-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-cred-password" class="form-label text-sm fw-bold text-gray-700">Password</label>
-                                            <input type="password" class="form-control text-sm" id="client-cred-password" placeholder="Retrieved password" disabled>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-cred-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
-                                            <input type="text" class="form-control text-sm" id="client-cred-email" placeholder="Retrieved email" disabled>
-                                        </div>
-                                        <div class="col-12 col-md-6 mt-2 mb-2">
-                                            <label for="client-cred-status" class="form-label text-sm fw-bold text-gray-700">Status</label>
-                                            <input type="text" class="form-control text-sm" id="client-cred-status" placeholder="Retrieved status" disabled>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-lastname" class="form-label">Last name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-lastname" placeholder="Enter last name" required>
+                                <div class="field-error"> Last name is required.</div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="card shadow mt-lg-1 mb-lg-1">
-                                <div class="card-header-white py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h5 class="m-0 text-sm font-weight-bold text-gray-800">
-                                        Client Photo
-                                    </h5>
+
+                        <div class="row px-2">
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-age" class="form-label">Age<span class="required">*</span></label>
+                                <input type="number" class="form-control required-field" id="client-age" placeholder="Enter age"  min="0" required>
+                                <div class="field-error"> Age is required.</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-birth-date" class="form-label">Birthdate<span class="required">*</span></label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" class="form-control required-field" id="client-birth-date">
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
                                 </div>
-                                <div class="card-body-white">
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-12 mt-2 mb-2">
-                                            <label class="form-label text-sm fw-bold text-gray-800">Upload Photo</label>
-
-                                            <label class="custom-file-upload">
-                                                <i class="bi bi-upload mr-2"></i>Choose File
-                                                <input type="file" class="image-upload hidden-upload" accept="image/*">
-                                            </label>
-
-                                            <div class="mt-2 color-upload-wrapper">
-                                                <div class="image-preview-container">
-                                                    <img class="image-preview" src="" alt="Preview">
-                                                </div>
-
-                                                <small class="text-muted text-xs d-block mt-2">
-                                                    Allowed formats: JPG, PNG. Max size: 1MB
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="field-error">Birthdate is required.</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-gender" class="form-label">Gender<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="client-gender">
+                                        <option value="" selected disabled>Select a gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                    </select>
                                 </div>
+                                <div class="field-error">Gender is required.</div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary fw-semibold" id="add-client-btn">
-                            <i class="fa-solid fa-user-plus mr-2"></i>
-                            Add Client
+                </section>
+
+                <section class="client-section-card mb-2">
+                    <div class="client-section-header">
+                        <div class="section-number">2</div>
+                        <div class="section-header-content">
+                            <h3>Enrollment Details</h3>
+                            <p>Enrollment and program information.</p>
+                        </div>
+                    </div>
+
+                    <div class="client-section-body">
+                        <div class="row px-2">
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="assign-client-diagnosis-concern" class="form-label">
+                                    Diagnosis Concern<span class="required">*</span>
+                                </label>
+
+                                <div class="multi-select-wrapper" id="diagnosis-concern-wrapper">
+
+                                    <button type="button" class="multi-select-button" id="assign-client-diagnosis-concern">
+                                                        <span class="multi-select-placeholder">
+                                                            Select diagnosis concern
+                                                        </span>
+                                        <i class="bi bi-chevron-down"></i>
+                                    </button>
+
+                                    <div class="multi-select-dropdown" id="diagnosis-concern-dropdown">
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="SPEECH_DELAY">
+                                            <span>Speech Delay</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="BEHAVIORAL_CONCERNS">
+                                            <span>Behavioral Concerns</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="ASD">
+                                            <span>ASD</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="ADHD">
+                                            <span>ADHD</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns"value="LEARNING_DIFFICULTIES">
+                                            <span>Learning Difficulties</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="GLOBAL_DEVELOPMENTAL_DELAY">
+                                            <span>Global Developmental Delay</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="SENSORY_CONCERNS">
+                                            <span>Sensory Concerns</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="SOCIAL_INTERACTION_DIFFICULTIES">
+                                            <span>Social Interaction Difficulties</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="COMMUNICATION_SKILLS">
+                                            <span>Communication Skills</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="DEVELOPMENTAL_DELAY">
+                                            <span>Developmental Delay</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="INTELLECTUAL_DISABILITY">
+                                            <span>Intellectual Disability</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="field-error">
+                                    At least one diagnosis / concern is required.
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-program-type" class="form-label">Program Type<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="client-program-type">
+                                        <option value="" selected disabled>Select program type</option>
+                                        <option value="ABA">ABA</option>
+                                        <option value="Tutorial">Tutorial</option>
+                                        <option value="Playschool">Playschool</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Program type is required.</div>
+                            </div>
+
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-date-enrolled" class="form-label">Date Enrolled<span class="required">*</span></label>
+                                <div class="date-input-wrapper">
+                                    <input type="text" class="form-control required-field" id="client-date-enrolled" placeholder="Select date enrolled" required>
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
+                                </div>
+                                <div class="field-error"> Date enrolled is required.</div>
+                            </div>
+
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-assign-branch" class="form-label">Assign Branch<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="client-assign-branch">
+                                        <option value="" selected disabled>Select assign branch</option>
+                                        <option value="San Juan Batangas">San Juan Batangas</option>
+                                        <option value="Catanauan Quezon">Catanauan Quezon</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Branch is required.</div>
+                            </div>
+
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-enrollment-status" class="form-label">Enrollment Status<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="client-enrollment-status">
+                                        <option value="" selected disabled>Select a status</option>
+                                        <option value="ENROLLED">Enrolled</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Status is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="client-section-card mb-2">
+                    <div class="client-section-header">
+                        <div class="section-number">3</div>
+                        <div class="section-header-content">
+                            <h3>Guardian/Parent Details</h3>
+                            <p>Basic personal details of the parent/guardian.</p>
+                        </div>
+                    </div>
+
+                    <div class="client-section-body">
+                        <div class="row px-2">
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-parent-firstname" class="form-label">First name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-parent-firstname" placeholder="Enter first name" required>
+                                <div class="field-error">First name is required.</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-parent-middlename" class="form-label">Middle name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-parent-middlename" placeholder="Enter middle name" required>
+                                <div class="field-error">Middle name is required.</div>
+                            </div>
+                            <div class="col-12 col-md-4 mt-2 mb-2">
+                                <label for="client-parent-lastname" class="form-label">Last name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-parent-lastname" placeholder="Enter last name" required>
+                                <div class="field-error"> Last name is required.</div>
+                            </div>
+                        </div>
+
+                        <div class="row px-2">
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-parent-email" class="form-label">Email<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-parent-email" placeholder="Enter email" required>
+                                <div class="field-error">Email is required.</div>
+                            </div>
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-parent-contact-no" class="form-label">Contact No.<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-parent-contact-no" placeholder="Enter contact number" required>
+                                <div class="field-error">Contact number is required.</div>
+                            </div>
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-parent-relationship" class="form-label">Relationship to client<span class="required">*</span></label>
+                                <select class="form-select required-field" id="client-parent-relationship" required>
+                                    <option value="" selected disabled>Select a relationship</option>
+                                    <option value="Parent">Parent</option>
+                                    <option value="Guardian">Guardian</option>
+                                </select>
+                                <div class="field-error">Relationship to client is required.</div>
+                            </div>
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-parent-gender" class="form-label">Gender<span class="required">*</span></label>
+                                <select class="form-select required-field" id="client-parent-gender" required>
+                                    <option value="" selected disabled>Select a gender</option>
+                                    <option value="MALE">Male</option>
+                                    <option value="FEMALE">Female</option>
+                                </select>
+                                <div class="field-error">Gender is required.</div>
+                            </div>
+                            <div class="col-12 col-md-12 mt-2 mb-2">
+                                <label for="client-parent-address" class="form-label">Complete Address<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="client-parent-address" placeholder="Enter complete address" required>
+                                <div class="field-error">Complete address is required.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="client-section-card mb-2">
+                    <div class="client-section-header">
+                        <div class="section-number">4</div>
+                        <div class="section-header-content">
+                            <h3>Account Access</h3>
+                            <p>Set up the parent's or guardian's login and account access.</p>
+                        </div>
+                    </div>
+
+                    <div class="client-section-body">
+                        <div class="row px-2">
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-cred-username" class="form-label">
+                                    Username <small class="text-muted fw-normal">(Retrieved after client account search)</small>
+                                </label>
+
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="client-cred-username" placeholder="Enter username then click search">
+                                    <button class="btn btn-outline-primary" type="button" id="search-credentials-btn">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-cred-password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="client-cred-password" placeholder="Retrieved password" disabled>
+                            </div>
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-cred-email" class="form-label">Email</label>
+                                <input type="text" class="form-control" id="client-cred-email" placeholder="Retrieved email" disabled>
+                            </div>
+                            <div class="col-12 col-md-6 mt-2 mb-2">
+                                <label for="client-cred-status" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="client-cred-status" placeholder="Retrieved status" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="client-form-side">
+                <section class="client-photo-card mb-4">
+                    <div class="client-photo-header">
+                        <h3>Client Photo</h3>
+                        <p>Upload a client profile photo.</p>
+                    </div>
+
+                    <div class="client-photo-body">
+                        <div id="photoDropZone" class="photo-drop-zone">
+                            <div id="photoPlaceholder" class="photo-placeholder">
+                                <div class="photo-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+
+                                <div class="photo-upload-text">
+                                    Click to upload or drag and drop
+                                </div>
+
+                                <div class="photo-format">
+                                    JPG, PNG (Max. 1MB)
+                                </div>
+                            </div>
+
+                            <img id="clientPhotoPreview" class="client-photo-preview" alt="Client photo preview">
+                            <input type="file" id="clientPhoto" name="profileImage" accept="image/jpeg,image/png,.jpg,.jpeg,.png" hidden>
+                        </div>
+
+                        <button type="button" id="choosePhotoBtn" class="choose-photo-btn">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            Choose File
+                        </button>
+
+                        <button type="button" id="removePhotoBtn" class="remove-photo-btn">
+                            <i class="fa-solid fa-trash-can"></i>
+                            Remove photo
                         </button>
                     </div>
-                </div>
+                </section>
             </div>
-        </form>
+        </div>
+
+        <div class="client-section-footer mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <button type="button" class="btn btn-back fw-semibold"
+                        id="back-client-btn" data-url="/app/portal/client-management/registry">
+                    <i class="fa-solid fa-arrow-left mr-2"></i>
+                    Back
+                </button>
+
+                <button type="button" class="btn btn-submit fw-semibold" id="add-client-btn">
+                    <i class="fa-solid fa-user-plus mr-2"></i>
+                    Add Client
+                </button>
+            </div>
+        </div>
         <!-- Add Client - END -->
     </div>
 </html>

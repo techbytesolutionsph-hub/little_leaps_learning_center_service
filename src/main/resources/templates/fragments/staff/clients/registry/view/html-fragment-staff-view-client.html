@@ -98,7 +98,12 @@
 
                                                     <div class="info-row">
                                                         <span>Diagnosis Concern</span>
-                                                        <strong th:text="${client.diagnosisConcern}">ABA</strong>
+                                                        <strong>
+                                                            <span th:each="diagnosis, stat : ${client.diagnosisConcerns}">
+                                                                <span th:text="${diagnosis.displayName}">Speech Delay</span>
+                                                                <br th:unless="${stat.last}">
+                                                            </span>
+                                                        </strong>
                                                     </div>
                                                 </div>
                                             </div>

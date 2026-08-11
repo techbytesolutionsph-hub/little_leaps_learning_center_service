@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
@@ -14,6 +16,7 @@ import ph.com.lllc.entity.user.client.pricing.AppClientServicePricing;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.enums.AssignmentStatus;
+import ph.com.lllc.enums.DiagnosisConcern;
 import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
 import ph.com.lllc.util.LocalDateUtils;
@@ -22,6 +25,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -67,8 +71,9 @@ public class AppClientProfile implements Serializable {
     @Column(name = "date_enrolled")
     private LocalDate dateEnrolled;
 
-    @Column(name = "diagnosis_concern")
-    private String diagnosisConcern;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "diagnosis_concerns", columnDefinition = "jsonb")
+    private Set<DiagnosisConcern> diagnosisConcerns;
 
     @Column(name = "program_type")
     private String programType;

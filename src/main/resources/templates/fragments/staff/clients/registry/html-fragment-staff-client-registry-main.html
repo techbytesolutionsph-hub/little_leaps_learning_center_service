@@ -66,7 +66,12 @@
                                 </td>
                                 <td data-label="Date Enrolled" th:text="${client.dateEnrolled}"></td>
                                 <td data-label="Guardian/Parent Name" th:text="${client.parents[0].firstName + ' ' + client.parents[0].lastName}"></td>
-                                <td data-label="Diagnosis" th:text="${client.diagnosisConcern}"></td>
+                                <td data-label="Diagnosis">
+                                    <span th:each="diagnosis : ${client.diagnosisConcerns}"
+                                          th:text="${diagnosis.displayName}"
+                                          style="display: block;">
+                                    </span>
+                                </td>
                                 <td data-label="Status">
                                     <span class="status-badge badge-active"
                                           th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'ENROLLED'}">

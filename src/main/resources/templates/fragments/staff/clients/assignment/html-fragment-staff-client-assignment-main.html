@@ -59,7 +59,12 @@
                                     </div>
                                 </td>
                                 <td data-label="Date Enrolled" th:text="${client.dateEnrolled}"></td>
-                                <td data-label="Diagnosis" th:text="${client.diagnosisConcern}"></td>
+                                <td data-label="Diagnosis">
+                                    <span th:each="diagnosis : ${client.diagnosisConcerns}"
+                                          th:text="${diagnosis.displayName}"
+                                          style="display: block;">
+                                    </span>
+                                </td>
                                 <td data-label="Assign Status">
                                     <span class="status-badge badge-active"
                                           th:if="${client.assignmentStatus != null and client.assignmentStatus.name() == 'ACTIVE'}">

@@ -5,7 +5,7 @@ html, body {
 body {
     margin-top: 0;
     min-height: 100vh;
-    background-image: url('/img/base/login-background-image.png');
+    background-image: url('/img/base/login-desktop-bg.jpg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -157,7 +157,7 @@ body {
     }
 
     body {
-        background-image: url('/img/base/login-mobile-background-image.png');
+        background-image: url('/img/base/login-desktop-bg.jpg');
         display: flex;
         flex-direction: column;
     }
