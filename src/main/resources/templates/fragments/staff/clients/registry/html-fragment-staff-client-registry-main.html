@@ -25,7 +25,7 @@
                     <table class="table table-bordered" id="clientTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Client ID</th>
                                 <th>Client Info</th>
                                 <th>Date Enrolled</th>
                                 <th>Guardian/Parent Name</th>
@@ -36,7 +36,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="client : ${clients}">
-                                <td data-label="ID" th:text="${client.id}"></td>
+                                <td data-label="ID" th:text="${client.clientId}"></td>
                                 <td data-label="Client Info">
                                     <div class="d-flex align-items-center">
                                         <!-- Profile Image -->
@@ -80,11 +80,11 @@
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
-                                        <a th:href="@{|/app/portal/client-management/registry/view-client/${client.uuid}|}"
+                                        <a th:href="@{|/app/portal/client-management/registry/view-client/${client.clientId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
-                                        <a th:href="@{|/app/portal/client-management/registry/edit-client/${client.uuid}|}"
+                                        <a th:href="@{|/app/portal/client-management/registry/edit-client/${client.clientId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-pen mr-1"></i> Edit
                                         </a>

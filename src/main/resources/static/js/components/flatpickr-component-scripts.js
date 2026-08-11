@@ -4,7 +4,7 @@ function initializeDatePicker(id, placeholder) {
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -28,7 +28,7 @@ function initializeMaxTodayDatePicker(id, placeholder) {
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
         maxDate: "today",
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -52,7 +52,7 @@ function initializeMinTodayDatePicker(id, placeholder) {
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
         minDate: "today",
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -76,7 +76,7 @@ function initializePastDatePicker(id, placeholder) {
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
         maxDate: new Date().fp_incr(-1),
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -100,7 +100,7 @@ function initializeFutureDatePicker(id, placeholder) {
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
         minDate: new Date().fp_incr(1),
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -126,7 +126,7 @@ function initializeDateRangePicker(id, placeholder, minDate = null, maxDate = nu
         dateFormat: "Y-m-d",
         minDate: minDate,
         maxDate: maxDate,
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -153,7 +153,7 @@ function initializeMonthYearPicker(id, placeholder) {
             })
         ],
         altInput: true,
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -180,7 +180,7 @@ function initializeYearPicker(id, placeholder) {
             })
         ],
         altInput: true,
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
@@ -203,7 +203,7 @@ function initializeDateTimePicker(id, placeholder) {
         dateFormat: "Y-m-d H:i",
         altInput: true,
         altFormat: "Y-m-d h:i K",
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         time_24hr: false,
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
@@ -228,7 +228,7 @@ function initializeTimePicker(id, placeholder) {
         dateFormat: "H:i",
         altInput: true,
         altFormat: "h:i K",
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         time_24hr: false,
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
@@ -253,7 +253,7 @@ function initializeMultipleDatePicker(id, placeholder) {
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
-        altInputClass: "form-control text-sm default-input",
+        altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },

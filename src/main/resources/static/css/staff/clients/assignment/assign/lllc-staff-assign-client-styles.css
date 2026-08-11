@@ -1,0 +1,232 @@
+.profile-cover{
+    height: 90px;
+    background: linear-gradient(135deg, rgb(0, 151, 157), rgb(0, 199, 190));
+    border-radius:.5rem .5rem 0 0;
+}
+
+.profile-image{
+    width:120px;
+    height:120px;
+    object-fit:cover;
+    border-radius:50%;
+    border:5px solid #fff;
+    margin-top:-60px;
+}
+
+.basic-info-header{
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.basic-info{
+    font-size: 12px;
+}
+
+.badge-glossy {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    padding: 0.55em 0.8em;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.4),
+    0 2px 4px rgba(0,0,0,0.15);
+}
+
+.badge-glossy::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(
+            to bottom,
+            rgba(255,255,255,0.35),
+            rgba(255,255,255,0)
+    );
+    pointer-events: none;
+}
+
+.info-row{
+    display:flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 6px;
+}
+
+.info-row span{
+    color:#6c757d;
+}
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.accordion-item {
+    border: none !important;
+    border-radius: 12px !important;
+    overflow: hidden;
+    margin-bottom: 18px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: all .3s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+/* Accordion Header */
+.accordion-header .accordion-button {
+    height: 50px !important;
+    background: linear-gradient(135deg, rgb(0, 151, 157), rgb(0, 199, 190)) !important;
+    border-radius: .5rem !important;
+    font-size: 14px !important;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: none !important;
+}
+
+/* Remove Bootstrap default arrow */
+.accordion-button::after {
+    display: none;
+}
+
+/* Custom arrow */
+.accordion-icon {
+    font-size: 1rem;
+    transition: transform .3s ease;
+    color: #fff;
+}
+
+/* Rotate arrow when opened */
+.accordion-button:not(.collapsed) .accordion-icon {
+    transform: rotate(180deg);
+}
+
+/* Hover effect */
+.accordion-button:hover .accordion-icon {
+    transform: scale(1.15);
+}
+
+/* Keep rotation while opened + hover */
+.accordion-button:not(.collapsed):hover .accordion-icon {
+    transform: rotate(180deg) scale(1.15);
+}
+
+.accordion-body {
+    background: #ffffff;
+    padding: 0.85rem !important;
+    border-radius: 0 0 .5rem .5rem;
+}
+
+
+.info-row strong {
+    max-width: 65%;
+    text-align: right;
+    word-break: break-word;
+}
+
+/* Flatpickr input */
+#client-assignment-date{
+    /*font-family: 'Poppins', sans-serif;*/
+    font-size: 12px;
+    background-color: #fff;
+    border: 1px solid #d3cece;
+    border-radius: 8px;
+    height: 34px;
+}
+
+/* Focus */
+#client-assignment-date:focus{
+    border-color: rgb(176, 220, 222);
+    box-shadow: 0 0 0 0.1rem rgb(176, 220, 222);
+}
+
+#client-assignment-date::placeholder{
+    font-size: 12px !important;
+}
+
+.date-input-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+}
+
+.date-input-wrapper input {
+    padding-right: 42px;
+}
+
+/* icon positioning */
+.calendar-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(0, 151, 157);
+    font-size: 12px !important;
+    pointer-events: none;
+}
+
+/* Calendar popup size */
+.flatpickr-calendar {
+    min-width: 260px;
+    width: auto;
+    font-size: 12px !important;
+    z-index: 9999 !important;
+}
+
+/* Flatpickr visible input */
+.flatpickr-input {
+    /*font-family: 'Poppins', sans-serif;*/
+    font-size: 12px !important;
+    background-color: #fff !important;
+    border: 1px solid #d3cece;
+    border-radius: 8px;
+    height: 30px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.flatpickr-input::placeholder {
+    font-size: 12px !important;
+}
+
+.flatpickr-input::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+/* Increase height spacing */
+.flatpickr-days {
+    padding: 8px;
+}
+
+/* Calendar theme override */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: rgb(0, 151, 157);
+    border-color: rgb(0, 151, 157);
+}
+
+.flatpickr-day:hover {
+    background: rgb(176, 220, 222);
+}
+
+
+/*#back-btn{*/
+/*    width: 100px;*/
+/*    height: 35px;*/
+/*    font-size: 13px;*/
+/*}*/
+
+#assign-staff-btn{
+    width: 140px;
+    height: 30px;
+    font-size: 13px;
+}

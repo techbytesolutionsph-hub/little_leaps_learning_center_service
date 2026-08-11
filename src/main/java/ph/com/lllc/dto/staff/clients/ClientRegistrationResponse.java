@@ -2,9 +2,11 @@ package ph.com.lllc.dto.staff.clients;
 
 import lombok.*;
 import ph.com.lllc.enums.AssignmentStatus;
+import ph.com.lllc.enums.ClientServiceType;
 import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class ClientRegistrationResponse {
 
     Long id;
     private String uuid;
+
+    private String clientId;
 
     /* Client School ID */
     private String clientStudentId;
@@ -72,5 +76,17 @@ public class ClientRegistrationResponse {
         private String password;
         private String email;
         private String status;
+    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ClientServicePricingDTO {
+
+        private ClientServiceType serviceType;
+        private BigDecimal price;
+        private LocalDate effectiveDate;
+        private String notes;
     }
 }

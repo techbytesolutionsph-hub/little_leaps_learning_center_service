@@ -51,6 +51,10 @@ public class SequenceGeneratorService {
         return getNextSequence(String.format("%s.app_user_client_id_seq", schemaPropertiesConfig.getSchema()));
     }
 
+    public long getAssignmentIdNextSequence() throws ServiceException {
+        return getNextSequence(String.format("%s.assignment_id_seq", schemaPropertiesConfig.getSchema()));
+    }
+
     public long getPayrollIdNextSequence() throws ServiceException {
         return getNextSequence(String.format("%s.payroll_id_seq", schemaPropertiesConfig.getSchema()));
     }

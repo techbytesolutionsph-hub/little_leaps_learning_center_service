@@ -158,7 +158,7 @@ function buildClientRequest() {
     };
 
     return {
-        uuid: uuid,
+        clientId: clientId,
         firstName: firstName,
         middleName: middleName,
         lastName: lastName,

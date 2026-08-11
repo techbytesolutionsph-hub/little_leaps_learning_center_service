@@ -11,7 +11,7 @@
         <title>Edit Client - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/clients/edit/lllc-staff-edit-client-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/clients/registry/edit/lllc-staff-edit-client-styles.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -45,7 +45,7 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-        <script th:inline="javascript">const uuid = /*[[${client.uuid}]]*/ '';</script>
+        <script th:inline="javascript">const clientId = /*[[${client.clientId}]]*/ '';</script>
         <script th:src="@{/js/staff/clients/edit/lllc-staff-edit-client-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

@@ -82,7 +82,11 @@ public class PortalFrontService {
         return clientManagementService.getClientProfiles();
     }
 
-    public ClientRegistrationResponse getClientProfileByUUID(String uuid) {
-        return clientManagementService.getClientProfileByUUID(uuid);
+    public ClientRegistrationResponse getClientProfileByClientId(String uuid) throws ServiceException {
+        return clientManagementService.getClientProfileByClientId(uuid);
+    }
+
+    public Map<String, String> mapCaseManagerBehavioralTherapist() {
+        return clientManagementService.mapCaseManagerBehavioralTherapist();
     }
 }

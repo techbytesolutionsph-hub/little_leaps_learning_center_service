@@ -8,6 +8,10 @@ CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.app_user_client_id_
     START WITH 1
     INCREMENT BY 1;
 
+CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.assignment_id_seq
+    START WITH 1
+    INCREMENT BY 1;
+
 CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.payroll_id_seq
     START WITH 1
     INCREMENT BY 1;

@@ -8,6 +8,8 @@ import java.time.Year;
 public class IdGeneratorUtils {
 
     private static final String COMPANY_PREFIX = "3LC";
+    private static final String CLIENT_ID_PREFIX = "CLI";
+    private static final String ASSIGNMENT_ID_PREFIX = "CA";
 
     private IdGeneratorUtils() {
     }
@@ -26,6 +28,41 @@ public class IdGeneratorUtils {
                 "%s-%s-%04d",
                 COMPANY_PREFIX,
                 dateHired,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * CLIENT ID FORMAT
+     * =========================================================
+     * CLI-000001
+     * CLI-000002
+     * CLI-000003
+     */
+    public String generateClientId(long runningCode) {
+
+        return String.format(
+                "%s-%06d",
+                CLIENT_ID_PREFIX,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * CLIENT ID FORMAT
+     * =========================================================
+     * CA-2026-00001
+     * CA-2026-00002
+     * CA-2026-00003
+     */
+    public String generateAssignmentId(String assignYear, long runningCode) {
+
+        return String.format(
+                "%s-%s-%05d",
+                ASSIGNMENT_ID_PREFIX,
+                assignYear,
                 runningCode
         );
     }

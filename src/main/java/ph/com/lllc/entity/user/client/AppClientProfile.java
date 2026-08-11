@@ -10,6 +10,7 @@ import lombok.Setter;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
+import ph.com.lllc.entity.user.client.pricing.AppClientServicePricing;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.enums.AssignmentStatus;
@@ -38,8 +39,8 @@ public class AppClientProfile implements Serializable {
     @Column(name = "app_client_id")
     private Long id;
 
-    @Column(name = "url_uuid")
-    private String uuid;
+    @Column(name = "client_id")
+    private String clientId;
 
     @Column(name = "client_student_id", unique = true)
     private String clientStudentId;
@@ -120,6 +121,10 @@ public class AppClientProfile implements Serializable {
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientInitialAssessmentSchedule> assessmentSchedules;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppClientServicePricing> servicePricings;
 
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)

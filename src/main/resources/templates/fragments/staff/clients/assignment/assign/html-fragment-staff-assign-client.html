@@ -1,0 +1,430 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-assign-client(staff)">
+        <!-- Assign Client - START -->
+        <div class="assignment-page">
+            <div class="stepper-card">
+                <div class="stepper">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Select Client</span>
+                            <span class="step-subtitle">Choose a client</span>
+                        </div>
+                    </div>
+
+                    <div class="step-line"></div>
+
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Assignment Details</span>
+                            <span class="step-subtitle">Select assignee & details</span>
+                        </div>
+                    </div>
+
+                    <div class="step-line"></div>
+
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Review & Confirm</span>
+                            <span class="step-subtitle">Review and confirm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="assignmentForm">
+                <div class="assignment-grid">
+                    <!-- Step 1 - Select Client -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-circle-user"></i>
+                                1. Select Client
+                            </h2>
+
+                            <p class="card-description">
+                                Search and select the client you want to assign.
+                            </p>
+                        </div>
+
+                        <div class="search-row">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-sm" id="client-id" placeholder="Enter Client ID">
+                                <button class="btn btn-outline-primary" type="button" id="search-client-btn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CLIENT -->
+                        <div class="client-card" id="clientCard" style="display: none;">
+
+                            <div class="client-avatar">
+                                <img id="clientAvatar" src="" alt="Client">
+                            </div>
+
+                            <!-- CLIENT INFO CARD -->
+                            <div class="client-info">
+                                <div class="client-name" id="clientName"></div>
+
+                                <div class="client-id">
+                                    <input type="hidden" id="selected-client-id">
+                                    <span class="client-label">Client ID:</span>
+                                    <span class="client-value" id="clientIdValue"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">DOB:</span>
+                                    <span class="client-value" id="clientDob"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">Gender:</span>
+                                    <span class="client-value" id="clientGender"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">Guardian:</span>
+                                    <span class="client-value" id="clientGuardian"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">Contact No:</span>
+                                    <span class="client-value" id="clientContact"></span>
+                                </div>
+                            </div>
+
+                            <div class="client-selected-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+
+                        <!-- CLIENT SUMMARY -->
+                        <div class="summary-card" id="clientSummary" style="display: none;">
+
+                            <div class="summary-title">
+                                Client Summary
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    Diagnosis
+                                </div>
+
+                                <div class="summary-value" id="summaryDiagnosis"></div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Date Enrolled
+                                </div>
+
+                                <div class="summary-value" id="summaryDateEnrolled"></div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-users"></i>
+                                    Status
+                                </div>
+
+                                <div class="summary-value" id="summaryStatus"></div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    Branch
+                                </div>
+
+                                <div class="summary-value" id="summaryBranch"></div>
+                            </div>
+
+                            <a href="#" class="profile-link" id="clientProfileLink">
+                                View full client profile
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 - Assignment Details -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-users"></i>
+                                2. Assignment Details
+                            </h2>
+
+                            <p class="card-description">
+                                Select the assignee and provide assignment information.
+                            </p>
+                        </div>
+
+                        <!-- Assign To -->
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="assign-client-to" class="form-label">Assign To<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="assign-client-to">
+                                        <option value="" selected disabled>Select therapist</option>
+                                        <option th:each="employee : ${staff}"
+                                                th:value="${employee.key}"
+                                                th:text="${employee.value}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select an assignee.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="assign-client-role" class="form-label">Role<span class="required">*</span></label>
+                                <div class="select-wrapper">
+
+                                    <select class="form-select required-field" id="assign-client-role">
+                                        <option value="" selected disabled>Select role</option>
+                                        <option value="PRIMARY_BEHAVIORAL_THERAPIST">Primary Behavioral Therapist</option>
+                                        <option value="SECONDARY_BEHAVIORAL_THERAPIST">Secondary Behavioral Therapist</option>
+                                        <option value="PRIMARY_CASE_MANAGER">Primary Case Manager</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a role.</div>
+                            </div>
+
+                            <!-- Diagnosis Concern -->
+                            <div class="form-group">
+                                <label for="assign-client-diagnosis-concern" class="form-label">
+                                    Diagnosis Concern<span class="required">*</span>
+                                </label>
+
+                                <div class="multi-select-wrapper" id="diagnosis-concern-wrapper">
+
+                                    <button type="button" class="multi-select-button" id="assign-client-diagnosis-concern">
+                                        <span class="multi-select-placeholder">
+                                            Select diagnosis concern
+                                        </span>
+                                        <i class="bi bi-chevron-down"></i>
+                                    </button>
+
+                                    <div class="multi-select-dropdown" id="diagnosis-concern-dropdown">
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="SPEECH_DELAY">
+                                            <span>Speech Delay</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="BEHAVIORAL_CONCERNS">
+                                            <span>Behavioral Concerns</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="ASD">
+                                            <span>ASD</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="ADHD">
+                                            <span>ADHD</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns"value="LEARNING_DIFFICULTIES">
+                                            <span>Learning Difficulties</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="GLOBAL_DEVELOPMENTAL_DELAY">
+                                            <span>Global Developmental Delay</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="SENSORY_CONCERNS">
+                                            <span>Sensory Concerns</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="SOCIAL_INTERACTION_DIFFICULTIES">
+                                            <span>Social Interaction Difficulties</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="COMMUNICATION_SKILLS">
+                                            <span>Communication Skills</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="DEVELOPMENTAL_DELAY">
+                                            <span>Developmental Delay</span>
+                                        </label>
+
+                                        <label class="multi-select-option">
+                                            <input type="checkbox" name="diagnosisConcerns" value="INTELLECTUAL_DISABILITY">
+                                            <span>Intellectual Disability</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="field-error">
+                                    Please select at least one diagnosis concern.
+                                </div>
+                            </div>
+
+                            <!-- Assignment Status -->
+                            <div class="form-group">
+                                <label for="assign-client-status" class="form-label">Assignment Status<span class="required">*</span></label>
+                                <div class="select-wrapper">
+
+                                    <select class="form-select required-field" id="assign-client-status">
+                                        <option value="" selected disabled>Select status</option>
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="INACTIVE">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a role.</div>
+                            </div>
+
+                            <!-- Assigned Date -->
+                            <div class="form-group">
+                                <label for="assign-client-assign-date" class="form-label">Assigned Date<span class="required">*</span></label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" class="form-control required-field" id="assign-client-assign-date">
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
+                                </div>
+                                <div class="field-error">Please select a start date.</div>
+                            </div>
+
+                            <!-- Assign Branch -->
+                            <div class="form-group">
+                                <label for="assign-client-assign-branch" class="form-label">Assign Branch<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="assign-client-assign-branch">
+                                        <option value="" selected disabled>Select assign branch</option>
+                                        <option value="San Juan Batangas">San Juan Batangas</option>
+                                        <option value="Catanauan Quezon">Catanauan Quezon</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a frequency.</div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="form-group full">
+                                <label for="assign-client-notes" class="form-label">Notes <span style="font-weight:400;">(Optional)</span></label>
+                                <div class="notes-wrapper">
+                                    <textarea id="assign-client-notes" class="form-control" maxlength="500"
+                                              placeholder="Add notes or special instructions..."></textarea>
+                                    <span class="char-counter">
+                                        <span id="charCount">0</span> / 500
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="btn btn-cancel" id="cancel-btn">
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancel
+                    </button>
+
+                    <div class="action-right">
+                        <button type="button" class="btn btn-next" id="next-btn">
+                            Next: Review
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-section" id="reviewSection">
+                <div class="review-card">
+
+                    <h2 class="card-title">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        3. Review & Confirm
+                    </h2>
+
+                    <p class="card-description">
+                        Please review the assignment details before confirming.
+                    </p>
+
+                    <div class="review-item">
+                        <span class="review-label">Client</span>
+                        <span class="review-value">Cotton Anduiza</span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Assign To</span>
+                        <span class="review-value" id="reviewAssignee">
+                            Therapist Sarah Dela Cruz
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Role</span>
+                        <span class="review-value" id="reviewRole">
+                            Primary Therapist
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Diagnosis Concern</span>
+                        <span class="review-value" id="reviewDiagnosisConcern">
+                            —
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Assigned Date</span>
+                        <span class="review-value" id="reviewAssignedDate">
+                            2026-08-03
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Assign Branch</span>
+                        <span class="review-value" id="assignBranch">
+                            2 times per week
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Notes</span>
+                        <span class="review-value" id="reviewNotes">
+                            —
+                        </span>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="btn btn-cancel" id="back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </button>
+
+                    <div class="action-right">
+                        <button type="button" class="btn btn-next" id="confirm-btn">
+                            Confirm Assignment
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Assign Client - END -->
+    </div>
+</html>

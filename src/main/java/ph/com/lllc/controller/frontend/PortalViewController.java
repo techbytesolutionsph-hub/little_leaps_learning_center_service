@@ -60,6 +60,33 @@ public class PortalViewController {
         return "staff/clients/registry/index";
     }
 
+    @GetMapping(value = "/client-management/registry/add-client")
+    public String addClientRegistryPage(Model model) {
+        this.setupPage(model, "clients", "Add Client");
+
+        return "staff/clients/registry/add/index";
+    }
+
+    @GetMapping(value = "/client-management/registry/view-client/{clientId}")
+    public String viewClientRegistryPage(Model model, @PathVariable("clientId") String clientId) throws ServiceException {
+        this.setupPage(model, "clients", "Client Profile");
+
+        ClientRegistrationResponse client = portalFrontService.getClientProfileByClientId(clientId);
+        model.addAttribute("client", client);
+
+        return "staff/clients/registry/view/index";
+    }
+
+    @GetMapping(value = "/client-management/registry/edit-client/{clientId}")
+    public String editClientRegistryPage(Model model, @PathVariable("clientId") String clientId) throws ServiceException {
+        this.setupPage(model, "clients", "Edit Client");
+
+        ClientRegistrationResponse client = portalFrontService.getClientProfileByClientId(clientId);
+        model.addAttribute("client", client);
+
+        return "staff/clients/registry/edit/index";
+    }
+
     @GetMapping(value = "/client-management/assignment")
     public String clientAssignmentPage(Model model) {
         this.setupPage(model, "clients", "Client Assignment");
@@ -70,31 +97,21 @@ public class PortalViewController {
         return "staff/clients/assignment/index";
     }
 
-    @GetMapping(value = "/client-management/registry/add-client")
-    public String addClientPage(Model model) {
-        this.setupPage(model, "clients", "Add Client");
+    @GetMapping(value = "/client-management/assignment/view-assign-client")
+    public String assignClient2Page(Model model) {
+        this.setupPage(model, "clients", "View Assign Client");
 
-        return "staff/clients/registry/add/index";
+        return "staff/clients/assignment/view/index";
     }
 
-    @GetMapping(value = "/client-management/registry/view-client/{uuid}")
-    public String viewClientPage(Model model, @PathVariable("uuid") String uuid) {
-        this.setupPage(model, "clients", "Client Profile");
+    @GetMapping(value = "/client-management/assignment/assign-client/{clientId}")
+    public String assignClientPage(Model model, @PathVariable("clientId") String clientId) {
+        this.setupPage(model, "clients", "Assign Client");
 
-        ClientRegistrationResponse client = portalFrontService.getClientProfileByUUID(uuid);
-        model.addAttribute("client", client);
+        Map<String, String> staff = portalFrontService.mapCaseManagerBehavioralTherapist();
+        model.addAttribute("staff", staff);
 
-        return "staff/clients/registry/view/index";
-    }
-
-    @GetMapping(value = "/client-management/registry/edit-client/{uuid}")
-    public String editClientPage(Model model, @PathVariable("uuid") String uuid) {
-        this.setupPage(model, "clients", "Edit Client");
-
-        ClientRegistrationResponse client = portalFrontService.getClientProfileByUUID(uuid);
-        model.addAttribute("client", client);
-
-        return "staff/clients/registry/edit/index";
+        return "staff/clients/assignment/assign/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

@@ -2,46 +2,58 @@ package ph.com.lllc.service.api.clients;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import ph.com.lllc.dto.response.CommonResponse;
+import ph.com.lllc.dto.staff.clients.AssignClientRequest;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.client.AppParentGuardian;
+import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.common.AppUser;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.exception.ServiceException;
+import ph.com.lllc.repository.AppClientAssignmentRepository;
 import ph.com.lllc.repository.AppUserRepository;
 import ph.com.lllc.repository.ClientProfileRepository;
+import ph.com.lllc.repository.management.AppEmployeeProfileRepository;
+import ph.com.lllc.service.db.SequenceGeneratorService;
+import ph.com.lllc.service.util.IdGeneratorUtils;
 import ph.com.lllc.service.util.logging.LoggingService;
-import ph.com.lllc.service.util.uuid.GenerateUUIDService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
 public class ClientManagementService {
 
     private final ClientProfileRepository clientProfileRepository;
+    private final AppClientAssignmentRepository appClientAssignmentRepository;
+    private final AppEmployeeProfileRepository appEmployeeProfileRepository;
     private final AppUserRepository appUserRepository;
-    private final GenerateUUIDService generateUUIDService;
+    private final SequenceGeneratorService sequenceGeneratorService;
+    private final IdGeneratorUtils idGeneratorUtils;
     private final LoggingService loggingService;
+
+    @Value("${app.lllc.job-positions}")
+    private String jobPositions;
 
     @Transactional
     public CommonResponse registerClient(String uuid, ClientRegistrationRequest request) throws ServiceException {
 
-        String clientUUID = generateUUIDService.generateUUID();
+        long nextUserSeq = sequenceGeneratorService.getClientIdNextSequence();
+        String clientId =  idGeneratorUtils.generateClientId(nextUserSeq);
 
         /* Create Client Profile */
         AppClientProfile clientProfile = new AppClientProfile();
-        clientProfile.setUuid(clientUUID);
+        clientProfile.setClientId(clientId);
         clientProfile.setFirstName(request.getFirstName());
         clientProfile.setMiddleName(request.getMiddleName());
         clientProfile.setLastName(request.getLastName());
@@ -132,20 +144,15 @@ public class ClientManagementService {
                 .toList();
     }
 
-    public ClientRegistrationResponse getClientProfileByUUID(String uuid) {
-        AppClientProfile clientProfile = clientProfileRepository.findByUuid(uuid);
+    public ClientRegistrationResponse getClientProfileByClientId(String clientId) throws ServiceException {
+        AppClientProfile clientProfile = this.findAppClientProfileByClientId("", clientId);
         return mapToClientRegistrationResponse(clientProfile);
     }
 
     @Transactional
     public CommonResponse updateClient(String uuid, ClientRegistrationRequest request) throws ServiceException {
 
-        AppClientProfile clientProfile = clientProfileRepository.findByUuid(request.getUuid());
-
-        if (clientProfile == null) {
-            loggingService.error(uuid, getClass().getName(), "Client not found: " + request.getUuid(), HttpStatus.NOT_FOUND.value() );
-            throw new ServiceException(HttpStatus.NOT_FOUND.value(), "Client not found: " + request.getUuid());
-        }
+        AppClientProfile clientProfile = this.findAppClientProfileByClientId(uuid, request.getClientId());
 
         clientProfile.setFirstName(request.getFirstName());
         clientProfile.setMiddleName(request.getMiddleName());
@@ -244,6 +251,71 @@ public class ClientManagementService {
                 .build();
     }
 
+    public Map<String, String> mapCaseManagerBehavioralTherapist() {
+
+        List<String> positions = Arrays.stream(jobPositions.split(","))
+                .map(String::trim)
+                .filter(position -> !position.isBlank())
+                .toList();
+
+        List<AppEmployeeProfile> employees = appEmployeeProfileRepository.findByEmploymentInformation_PositionIn(positions);
+
+        Map<String, String> employeeMap = new LinkedHashMap<>();
+
+        for (AppEmployeeProfile employee : employees) {
+
+            String fullName = Stream.of(
+                            employee.getFirstName(),
+                            employee.getMiddleName(),
+                            employee.getLastName()
+                    )
+                    .filter(Objects::nonNull)
+                    .filter(name -> !name.isBlank())
+                    .collect(Collectors.joining(" "));
+
+            employeeMap.put(employee.getEmployeeId(), fullName);
+        }
+
+        return employeeMap;
+    }
+
+    @Transactional
+    public CommonResponse assignClient(String uuid, AssignClientRequest request) throws ServiceException {
+
+        AppClientProfile clientProfile = this.findAppClientProfileByClientId(uuid, request.getClientId());
+        AppEmployeeProfile appEmployeeProfile = this.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
+
+        String year = String.valueOf(request.getAssignedDate().getYear());
+        long nextUserSeq = sequenceGeneratorService.getAssignmentIdNextSequence();
+        String assignmentId =  idGeneratorUtils.generateAssignmentId(year, nextUserSeq);
+
+        AppClientAssignment clientAssignment = new AppClientAssignment();
+        clientAssignment.setAssignmentId(assignmentId);
+        clientAssignment.setAssignmentRole(request.getRole());
+        clientAssignment.setDiagnosisConcerns(request.getDiagnosisConcerns());
+        clientAssignment.setStatus(request.getAssignStatus());
+        clientAssignment.setBranch(request.getAssignBranch());
+        clientAssignment.setAssignedAt(request.getAssignedDate());
+        clientAssignment.setNotes(request.getNotes());
+        clientAssignment.setAppClientProfile(clientProfile);
+        clientAssignment.setAppEmployeeProfile(appEmployeeProfile);
+
+        AppClientAssignment saved = appClientAssignmentRepository.save(clientAssignment);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("assignClient", saved);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Client assigned successfully!")
+                .responseBody(responseBody)
+                .build();
+    }
+
+    public List<AppClientAssignment> getAssignedClients() {
+        return appClientAssignmentRepository.findAll();
+    }
+
     private ClientRegistrationResponse mapToClientRegistrationResponse(
             AppClientProfile client) {
 
@@ -274,7 +346,7 @@ public class ClientManagementService {
 
         return ClientRegistrationResponse.builder()
                 .id(client.getId())
-                .uuid(client.getUuid())
+                .clientId(client.getClientId())
                 .clientStudentId(client.getClientStudentId())
                 .firstName(client.getFirstName())
                 .middleName(client.getMiddleName())
@@ -315,6 +387,23 @@ public class ClientManagementService {
                         parent.getAddress()
                 ))
                 .toList();
+    }
+
+    private AppEmployeeProfile findAppEmployeeProfileByEmployeeId(String uuid, String employeeId) throws ServiceException {
+        return appEmployeeProfileRepository
+                .findByEmployeeId(employeeId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Employee not found with ID: " + employeeId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found with ID: " + employeeId);
+                });
+    }
+
+    private AppClientProfile findAppClientProfileByClientId(String uuid, String clientId) throws ServiceException {
+        return clientProfileRepository.findByClientId(clientId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Client not found with ID: " + clientId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Client not found with ID: " + clientId);
+                });
     }
 
 }
