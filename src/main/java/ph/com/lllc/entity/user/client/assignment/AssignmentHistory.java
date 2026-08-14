@@ -6,18 +6,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentHistoryAction;
+import ph.com.lllc.enums.AssignmentRole;
+import ph.com.lllc.enums.AssignmentStatus;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(
         name = "lllc_app_client_assignment_history",
         indexes = {
                 @Index(
-                        name = "idx_assignment_history_assignment",
-                        columnList = "assignment_id"
+                        name = "idx_assignment_history_client",
+                        columnList = "client_student_id"
+                ),
+                @Index(
+                        name = "idx_assignment_history_assignee",
+                        columnList = "assignee_id"
                 ),
                 @Index(
                         name = "idx_assignment_history_event_date",
@@ -25,8 +34,6 @@ import java.time.LocalDateTime;
                 )
         }
 )
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AssignmentHistory {
@@ -49,46 +56,24 @@ public class AssignmentHistory {
     private String description;
 
     /**
-     * Previous assignee.
+     * Assignee (Case Manager or Behavioral Therapist)
      *
-     * Useful when an assignment is reassigned.
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "previous_assignee_id")
-    private AppEmployeeProfile previousAssignee;
+    @JoinColumn(name = "assignee_id")
+    private AppEmployeeProfile assignee;
+
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "assignment_role", nullable = false, length = 50)
+    private AssignmentRole assignmentRole;
 
     /**
-     * New assignee.
-     *
-     * Useful when an assignment is created or reassigned.
+     * Assignment status.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "new_assignee_id")
-    private AppEmployeeProfile newAssignee;
-
-    /**
-     * Previous role.
-     */
-    @Column(name = "previous_role", length = 50)
-    private String previousRole;
-
-    /**
-     * New role.
-     */
-    @Column(name = "new_role", length = 50)
-    private String newRole;
-
-    /**
-     * Previous status.
-     */
-    @Column(name = "previous_status", length = 30)
-    private String previousStatus;
-
-    /**
-     * New status.
-     */
-    @Column(name = "new_status", length = 30)
-    private String newStatus;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false, length = 30)
+    private AssignmentStatus assignmentStatus;
 
     /**
      * User/employee who performed the action.
@@ -106,10 +91,10 @@ public class AssignmentHistory {
     /**
      * Parent assignment.
      */
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "assignment_id", nullable = false)
-    @JsonBackReference("assignment-history")
-    private AppClientAssignment assignment;
+    @JoinColumn(name = "client_student_id", nullable = false)
+    private AppClientProfile appClientProfile;
 
     @PrePersist
     protected void onCreate() {

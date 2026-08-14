@@ -1,7 +1,6 @@
 package ph.com.lllc.entity.user.client.assignment;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,13 +17,32 @@ import ph.com.lllc.enums.DiagnosisConcern;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_client_assignment")
+@Table(
+        name = "lllc_app_client_assignment",
+        indexes = {
+                @Index(
+                        name = "idx_client_assignment_client",
+                        columnList = "client_student_id"
+                ),
+                @Index(
+                        name = "idx_client_assignment_client_role",
+                        columnList = "client_student_id, assignment_role"
+                ),
+                @Index(
+                        name = "idx_client_assignment_client_status",
+                        columnList = "client_student_id, status"
+                ),
+                @Index(
+                        name = "idx_client_assignment_assigned_at",
+                        columnList = "assigned_at"
+                )
+        }
+)
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppClientAssignment implements Serializable {
@@ -64,19 +82,9 @@ public class AppClientAssignment implements Serializable {
     @Column(name = "unassigned_at")
     private LocalDate unassignedAt;
 
-    @OneToMany(mappedBy = "assignment", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("eventDateTime DESC")
-    @JsonManagedReference("assignment-history")
-    private List<AssignmentHistory> history;
-
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_student_id", nullable = false)
     private AppClientProfile appClientProfile;
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "employee_id", nullable = false)
-    private AppEmployeeProfile appEmployeeProfile;
 
 }

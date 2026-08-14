@@ -104,8 +104,8 @@ public class PortalViewController {
         return "staff/clients/assignment/view/index";
     }
 
-    @GetMapping(value = "/client-management/assignment/assign-client/{clientId}")
-    public String assignClientPage(Model model, @PathVariable("clientId") String clientId) {
+    @GetMapping(value = "/client-management/assignment/assign-client")
+    public String assignClientPage(Model model) {
         this.setupPage(model, "clients", "Assign Client");
 
         Map<String, String> staff = portalFrontService.mapCaseManagerBehavioralTherapist();

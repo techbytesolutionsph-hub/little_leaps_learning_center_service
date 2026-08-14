@@ -1,14 +1,11 @@
 package ph.com.lllc.dto.staff.clients;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ph.com.lllc.enums.AssignmentRole;
-import ph.com.lllc.enums.AssignmentStatus;
-import ph.com.lllc.enums.DiagnosisConcern;
+import lombok.*;
+import ph.com.lllc.enums.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,15 +15,53 @@ import java.util.Set;
 public class AssignedClientResponse {
 
     private Long id;
-    private String clientId;
-    private String clientName;
-    private String employeeId;
-    private String employeeName;
-    private AssignmentRole assignmentRole;
+    private String assignmentId;
+
+    private String clientFullName;
+    private LocalDate clientBirthDate;
+    private Integer clientAge;
+    private Gender clientGender;
+    private LocalDate dateEnrolled;
+
+    private String guardianFullName;
+    private String guardianEmail;
+    private String guardianContactNo;
+
+    private Integer currentAssignmentCount;
+    private Integer currentActiveCount;
+    private Integer currentEndedCount;
+
+    private String caseManagerFullName;
+    private String caseManagerPosition;
+
     private Set<DiagnosisConcern> diagnosisConcerns;
+    private String programType;
     private AssignmentStatus status;
     private String branch;
     private String notes;
     private LocalDate assignedAt;
     private LocalDate unassignedAt;
+
+    private String employeeId;
+    private String assigneeFullName;
+    private String assigneePosition;
+    private AssignmentRole assignmentRole;
+
+    List<AssignmentHistoryResponse> history;
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class AssignmentHistoryResponse{
+
+        private String description;
+        private AssignmentHistoryAction action;
+        private String assigneeFullName;
+        private AssignmentRole assignmentRole;
+        private AssignmentStatus assignmentStatus;
+        private String assignedByFullName;
+        private LocalDateTime eventDateTime;
+    }
 }

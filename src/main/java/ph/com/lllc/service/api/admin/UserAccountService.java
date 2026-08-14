@@ -1,14 +1,20 @@
 package ph.com.lllc.service.api.admin;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.admin.CreateUserRequest;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.entity.user.common.*;
+import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
 import ph.com.lllc.enums.TimesheetStatus;
 import ph.com.lllc.enums.UserRole;
@@ -16,6 +22,7 @@ import ph.com.lllc.enums.UserStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.*;
 import ph.com.lllc.service.db.SequenceGeneratorService;
+import ph.com.lllc.service.security.staff.PortalUserDetails;
 import ph.com.lllc.service.util.IdGeneratorUtils;
 import ph.com.lllc.service.util.PasswordGeneratorService;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -324,5 +331,33 @@ public class UserAccountService {
         responseBody.put("branchAssign", appUser.getAppEmployeeProfile().getEmploymentInformation().getBranchAssign());
         responseBody.put("status", currentTimesheet != null ? currentTimesheet.getStatus() : status);
         return responseBody;
+    }
+
+    public AppEmployeeProfile getLoggedInEmployee(HttpServletRequest request) throws ServiceException {
+
+        HttpSession session = request.getSession(false);
+
+        if (session == null) {
+            throw new ServiceException("User session not found.");
+        }
+
+        SecurityContext securityContext = (SecurityContext) session.getAttribute(
+                HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY);
+
+        if (securityContext == null) {
+            throw new ServiceException("Security context not found.");
+        }
+
+        Authentication authentication = securityContext.getAuthentication();
+
+        if (authentication == null
+                || !(authentication.getPrincipal() instanceof PortalUserDetails userDetails)) {
+
+            throw new ServiceException("Invalid authenticated staff user.");
+        }
+
+        return Optional
+                .ofNullable(userDetails.getAppEmployeeProfile())
+                .orElseThrow(() -> new ServiceException("Authenticated user is not linked to an employee profile."));
     }
 }

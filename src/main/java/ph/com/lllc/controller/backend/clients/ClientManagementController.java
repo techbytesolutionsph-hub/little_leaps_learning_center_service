@@ -2,6 +2,7 @@ package ph.com.lllc.controller.backend.clients;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.clients.AssignClientRequest;
+import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
@@ -59,15 +61,15 @@ public class ClientManagementController {
 
     @Operation(summary = "Assign Client")
     @PostMapping("/assign-client")
-    public ResponseEntity<CommonResponse> assignClient(@Valid @RequestBody AssignClientRequest request) throws ServiceException {
+    public ResponseEntity<CommonResponse> assignClient(@Valid @RequestBody AssignClientRequest request, HttpServletRequest httpRequest) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "AssignClientRequest : " + request.toString());
-        return ResponseEntity.ok(clientManagementService.assignClient(uuid, request));
+        return ResponseEntity.ok(clientManagementService.assignClient(uuid, request, httpRequest));
     }
 
     @Operation(summary = "Get Assign Clients")
     @GetMapping("/get-assign-client")
-    public ResponseEntity<List<AppClientAssignment>> getAssignedClients() {
+    public ResponseEntity<List<AssignedClientResponse>> getAssignedClients() {
         return ResponseEntity.ok(clientManagementService.getAssignedClients());
     }
 }

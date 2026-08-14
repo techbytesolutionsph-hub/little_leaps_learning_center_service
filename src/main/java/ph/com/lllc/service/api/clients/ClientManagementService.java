@@ -1,5 +1,6 @@
 package ph.com.lllc.service.api.clients;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,19 +10,24 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.clients.AssignClientRequest;
+import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.client.AppParentGuardian;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
+import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.AssignmentHistoryAction;
+import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppClientAssignmentRepository;
 import ph.com.lllc.repository.AppUserRepository;
 import ph.com.lllc.repository.ClientProfileRepository;
 import ph.com.lllc.repository.management.AppEmployeeProfileRepository;
+import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.db.SequenceGeneratorService;
 import ph.com.lllc.service.util.IdGeneratorUtils;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -38,6 +44,7 @@ public class ClientManagementService {
     private final AppClientAssignmentRepository appClientAssignmentRepository;
     private final AppEmployeeProfileRepository appEmployeeProfileRepository;
     private final AppUserRepository appUserRepository;
+    private final UserAccountService userAccountService;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final IdGeneratorUtils idGeneratorUtils;
     private final LoggingService loggingService;
@@ -280,7 +287,7 @@ public class ClientManagementService {
     }
 
     @Transactional
-    public CommonResponse assignClient(String uuid, AssignClientRequest request) throws ServiceException {
+    public CommonResponse assignClient(String uuid, AssignClientRequest request, HttpServletRequest httpRequest) throws ServiceException {
 
         AppClientProfile clientProfile = this.findAppClientProfileByClientId(uuid, request.getClientId());
         AppEmployeeProfile appEmployeeProfile = this.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
@@ -289,6 +296,9 @@ public class ClientManagementService {
         long nextUserSeq = sequenceGeneratorService.getAssignmentIdNextSequence();
         String assignmentId =  idGeneratorUtils.generateAssignmentId(year, nextUserSeq);
 
+        /*
+         * Create assignment
+         */
         AppClientAssignment clientAssignment = new AppClientAssignment();
         clientAssignment.setAssignmentId(assignmentId);
         clientAssignment.setAssignmentRole(request.getRole());
@@ -298,22 +308,162 @@ public class ClientManagementService {
         clientAssignment.setAssignedAt(request.getAssignedDate());
         clientAssignment.setNotes(request.getNotes());
         clientAssignment.setAppClientProfile(clientProfile);
-        clientAssignment.setAppEmployeeProfile(appEmployeeProfile);
 
-        AppClientAssignment saved = appClientAssignmentRepository.save(clientAssignment);
+        /*
+         * Add assignment to client
+         */
+        if (clientProfile.getAssignments() == null) {
+            clientProfile.setAssignments(new ArrayList<>());
+        }
 
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("assignClient", saved);
+        clientProfile.getAssignments().add(clientAssignment);
+
+        /* Update Assignment Status to ACTIVE */
+        clientProfile.setAssignmentStatus(AssignmentStatus.ACTIVE);
+
+        /*
+         * Create assignment history
+         */
+        AssignmentHistory history = new AssignmentHistory();
+        history.setAction(AssignmentHistoryAction.ASSIGNED);
+        history.setDescription(this.createDescription(appEmployeeProfile, request));
+        history.setAssignee(appEmployeeProfile);
+        history.setAssignmentRole(request.getRole());
+        history.setAssignmentStatus(request.getAssignStatus());
+        history.setChangedBy(userAccountService.getLoggedInEmployee(httpRequest));
+        history.setAppClientProfile(clientProfile);
+
+        /*
+         * Add history to client
+         */
+        if (clientProfile.getAssignmentHistories() == null) {
+            clientProfile.setAssignmentHistories(new ArrayList<>());
+        }
+
+        clientProfile.getAssignmentHistories().add(history);
+
+
+        clientProfileRepository.save(clientProfile);
 
         return CommonResponse.builder()
                 .returnCode(HttpStatus.CREATED.value())
                 .returnMessage("Client assigned successfully!")
-                .responseBody(responseBody)
                 .build();
     }
 
-    public List<AppClientAssignment> getAssignedClients() {
-        return appClientAssignmentRepository.findAll();
+    public List<AssignedClientResponse> getAssignedClients() {
+        return appClientAssignmentRepository.findAll()
+                .stream()
+                .map(this::buildAssignedClientResponse)
+                .toList();
+    }
+
+    private AssignedClientResponse buildAssignedClientResponse(AppClientAssignment response){
+
+        AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
+        AppClientProfile client = response.getAppClientProfile();
+        List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
+
+        AssignmentHistory caseManager = assigmentHistory.stream()
+                .filter(history ->
+                        history.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER
+                )
+                .findFirst()
+                .orElse(null);
+
+        AppEmployeeProfile assignee = caseManager != null
+                ? caseManager.getAssignee()
+                : null;
+
+         Integer activeCount = Math.toIntExact(assigmentHistory.stream()
+                 .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ACTIVE)
+                 .count());
+
+        Integer endedCount = Math.toIntExact(assigmentHistory.stream()
+                .filter(history -> history.getAssignmentStatus() == AssignmentStatus.INACTIVE)
+                .count());
+
+        return AssignedClientResponse.builder()
+                .id(response.getId())
+                .assignmentId(response.getAssignmentId())
+
+                .clientFullName(client.getFirstName() + " " + client.getLastName())
+                .clientBirthDate(response.getAppClientProfile().getBirthDate())
+                .clientAge(response.getAppClientProfile().getAge())
+                .clientGender(response.getAppClientProfile().getGender())
+                .dateEnrolled(response.getAppClientProfile().getDateEnrolled())
+
+                .guardianFullName(guardian.getFirstName() + " " + guardian.getLastName())
+                .guardianEmail(guardian.getEmail())
+                .guardianContactNo(guardian.getContactNumber())
+
+                .currentAssignmentCount(assigmentHistory.size())
+                .currentActiveCount(activeCount)
+                .currentEndedCount(endedCount)
+
+                .caseManagerFullName(
+                        caseManager != null && caseManager.getAssignee() != null
+                                ? caseManager.getAssignee().getFirstName() + " "
+                                + caseManager.getAssignee().getLastName()
+                                : "-"
+                )
+                .caseManagerPosition(
+                        caseManager != null && caseManager.getAssignee() != null
+                                ? caseManager.getAssignee().getEmploymentInformation().getPosition()
+                                : "-"
+                )
+
+                .diagnosisConcerns(response.getDiagnosisConcerns())
+                .programType(client.getProgramType())
+                .status(response.getStatus())
+                .branch(response.getBranch())
+                .notes(response.getNotes())
+                .assignedAt(response.getAssignedAt())
+                .unassignedAt(response.getUnassignedAt())
+
+                .employeeId(
+                        assignee != null
+                                ? assignee.getEmploymentInformation().getEmployeeId()
+                                : null
+                )
+                .assigneeFullName(
+                        assignee != null
+                                ? assignee.getFirstName() + " " + assignee.getLastName()
+                                : "-"
+                )
+                .assigneePosition(
+                        assignee != null
+                                ? assignee.getEmploymentInformation().getPosition()
+                                : "-"
+                )
+                .assignmentRole(response.getAssignmentRole())
+                .history(buildAssignmentHistories(assigmentHistory))
+                .build();
+    }
+
+    private List<AssignedClientResponse.AssignmentHistoryResponse> buildAssignmentHistories(List<AssignmentHistory> assigmentHistory){
+        return assigmentHistory.stream()
+                .map(item -> AssignedClientResponse.AssignmentHistoryResponse.builder()
+                        .description(item.getDescription())
+                        .action(item.getAction())
+                        .assigneeFullName(
+                                item.getAssignee() != null
+                                        ? item.getAssignee().getFirstName() + " "
+                                        + item.getAssignee().getLastName()
+                                        : "-"
+                        )
+                        .assignmentRole(item.getAssignmentRole())
+                        .assignmentStatus(item.getAssignmentStatus())
+                        .assignedByFullName(
+                                item.getChangedBy() != null
+                                        ? item.getChangedBy().getFirstName() + " "
+                                        + item.getChangedBy().getLastName()
+                                        : "-"
+                        )
+                        .eventDateTime(item.getEventDateTime())
+                        .build()
+                )
+                .toList();
     }
 
     private ClientRegistrationResponse mapToClientRegistrationResponse(
@@ -387,6 +537,16 @@ public class ClientManagementService {
                         parent.getAddress()
                 ))
                 .toList();
+    }
+
+    private String createDescription(AppEmployeeProfile appEmployeeProfile, AssignClientRequest request){
+        return "Client assigned to "
+                + appEmployeeProfile.getFirstName()
+                + " "
+                + appEmployeeProfile.getLastName()
+                + " as "
+                + request.getRole().getDisplayName()
+                + ".";
     }
 
     private AppEmployeeProfile findAppEmployeeProfileByEmployeeId(String uuid, String employeeId) throws ServiceException {

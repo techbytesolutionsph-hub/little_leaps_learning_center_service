@@ -9429,7 +9429,7 @@ body.sidebar-toggled footer.sticky-footer{
     pointer-events: none;
     backface-visibility: hidden;
 }
-
+.btn-glossy-teal-header,
 .btn-glossy-teal {
     display: inline-flex;
     align-items: center;
@@ -9450,6 +9450,9 @@ body.sidebar-toggled footer.sticky-footer{
     cursor: pointer;
 }
 
+.btn-glossy-teal-header:hover,
+.btn-glossy-teal-header:focus,
+.btn-glossy-teal-header:active,
 .btn-glossy-teal:hover,
 .btn-glossy-teal:focus,
 .btn-glossy-teal:active {
@@ -9459,6 +9462,10 @@ body.sidebar-toggled footer.sticky-footer{
     transform: translateY(-1px);
     box-shadow:
             0 4px 8px rgba(0,90,95,0.25);
+}
+
+.btn-glossy-teal-header{
+    padding: 0.35rem 0.65rem !important;
 }
 
 .breadcrumb-box {

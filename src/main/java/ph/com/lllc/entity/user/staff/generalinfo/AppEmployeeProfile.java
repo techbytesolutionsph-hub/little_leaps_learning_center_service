@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.address.AppEmployeeAddress;
 import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
@@ -18,7 +17,6 @@ import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
 import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
 import ph.com.lllc.enums.Gender;
 import ph.com.lllc.enums.MaritalStatus;
-import ph.com.lllc.enums.StaffType;
 import ph.com.lllc.util.LocalDateUtils;
 
 import java.io.Serializable;
@@ -98,10 +96,6 @@ public class AppEmployeeProfile implements Serializable {
 
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AppClientAssignment> clientAssignments;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)

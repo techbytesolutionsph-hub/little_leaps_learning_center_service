@@ -13,6 +13,13 @@
                 <h6 class="m-0 font-weight-bold">
                     <img src="/img/lordicon/little-leap-kids-icon.svg" width="24" height="24" class="mr-2" alt="Homepage"> Client Assignment Records
                 </h6>
+
+                <a th:href="@{/app/portal/client-management/assignment/assign-client}"
+                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                   id="add-client-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> New Assignment
+                </a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -94,10 +101,7 @@
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
-                                        <a th:href="@{|/app/portal/client-management/assignment/assign-client/${client.clientId}|}"
-                                           class="btn-glossy-teal action-btn d-flex align-items-center">
-                                            <i class="fas fa-user-plus mr-1"></i> Assign
-                                        </a>
+
                                         <a th:if="${client.assignmentStatus != null and client.assignmentStatus.name() == 'ACTIVE'}"
                                            th:href="@{|/app/portal/client-management/assignment/edit-assignment/${client.clientId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">

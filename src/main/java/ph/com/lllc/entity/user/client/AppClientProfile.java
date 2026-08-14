@@ -11,6 +11,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
+import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
 import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
 import ph.com.lllc.entity.user.client.pricing.AppClientServicePricing;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
@@ -110,6 +111,10 @@ public class AppClientProfile implements Serializable {
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AppClientAssignment> assignments;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AssignmentHistory> assignmentHistories;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)

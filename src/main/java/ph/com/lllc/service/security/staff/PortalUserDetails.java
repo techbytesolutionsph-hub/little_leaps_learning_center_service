@@ -36,6 +36,10 @@ public class PortalUserDetails implements UserDetails {
         this.profileImageUrl = this.resolveProfileImage(staff);
     }
 
+    public AppEmployeeProfile getAppEmployeeProfile() {
+        return user.getAppEmployeeProfile();
+    }
+
     private String resolveProfileImage(AppEmployeeProfile staff) {
 
         /* Super Admin profile image */

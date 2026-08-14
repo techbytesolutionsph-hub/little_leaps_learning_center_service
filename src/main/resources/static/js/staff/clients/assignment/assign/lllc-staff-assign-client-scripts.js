@@ -341,7 +341,7 @@ function populateClientDetails(client) {
         : "-");
 
     /* Client Summary */
-    $("#summaryDiagnosis").text(client.diagnosisConcern || "-");
+    $("#programType").text(client.programType || "-");
     $("#summaryDateEnrolled").text(client.dateEnrolled || "-");
     $("#summaryStatus").text(formatEnumValue(client.assignmentStatus));
     $("#summaryBranch").text(client.branch || "-");
