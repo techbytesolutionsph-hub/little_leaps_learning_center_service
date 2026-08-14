@@ -17,6 +17,7 @@ public class AssignedClientResponse {
     private Long id;
     private String assignmentId;
 
+    private String clientProfilePicture;
     private String clientFullName;
     private LocalDate clientBirthDate;
     private Integer clientAge;
@@ -43,6 +44,7 @@ public class AssignedClientResponse {
     private LocalDate unassignedAt;
 
     private String employeeId;
+    private String assigneeProfilePicture;
     private String assigneeFullName;
     private String assigneePosition;
     private AssignmentRole assignmentRole;

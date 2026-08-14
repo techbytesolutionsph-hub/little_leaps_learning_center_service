@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
+import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
@@ -91,15 +93,18 @@ public class PortalViewController {
     public String clientAssignmentPage(Model model) {
         this.setupPage(model, "clients", "Client Assignment");
 
-        List<ClientRegistrationResponse> clients = portalFrontService.getClientProfiles();
-        model.addAttribute("clients", clients);
+        List<AssignedClientResponse> assignments =  portalFrontService.getAssignedClients();
+        model.addAttribute("assignments", assignments);
 
         return "staff/clients/assignment/index";
     }
 
-    @GetMapping(value = "/client-management/assignment/view-assign-client")
-    public String assignClient2Page(Model model) {
+    @GetMapping(value = "/client-management/assignment/view-assignment")
+    public String viewClientAssignmentPage(Model model, @RequestParam("id") String assignmentId) throws ServiceException {
         this.setupPage(model, "clients", "View Assign Client");
+
+        AssignedClientResponse assignment = portalFrontService.findByAssignmentId("", assignmentId);
+        model.addAttribute("assignment", assignment);
 
         return "staff/clients/assignment/view/index";
     }
@@ -112,6 +117,16 @@ public class PortalViewController {
         model.addAttribute("staff", staff);
 
         return "staff/clients/assignment/assign/index";
+    }
+
+    @GetMapping(value = "/client-management/assessment-schedule")
+    public String clientAssessmentSchedulePage(Model model) {
+        this.setupPage(model, "clients", "Assessment Schedule");
+
+        List<AssignedClientResponse> assignments =  portalFrontService.getAssignedClients();
+        model.addAttribute("assignments", assignments);
+
+        return "staff/clients/assessment-schedule/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

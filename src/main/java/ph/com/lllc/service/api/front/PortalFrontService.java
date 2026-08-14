@@ -6,6 +6,7 @@ import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardCardResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
+import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
@@ -88,5 +89,13 @@ public class PortalFrontService {
 
     public Map<String, String> mapCaseManagerBehavioralTherapist() {
         return clientManagementService.mapCaseManagerBehavioralTherapist();
+    }
+
+    public List<AssignedClientResponse> getAssignedClients() {
+        return clientManagementService.getAssignedClients();
+    }
+
+    public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
+        return clientManagementService.findByAssignmentId(uuid, assignmentId);
     }
 }

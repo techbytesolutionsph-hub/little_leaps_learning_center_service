@@ -72,7 +72,7 @@ public class AuthenticationService {
                     session.setAttribute("ROLES", roles);
                     session.setAttribute("PERMISSIONS", permissions);
 
-                    this.saveLoginHistory(uuid, request.getUsername(), httpRequest);
+//                    this.saveLoginHistory(uuid, request.getUsername(), httpRequest);
 
                     return PortalLoginResponse.builder()
                             .success(Boolean.TRUE)

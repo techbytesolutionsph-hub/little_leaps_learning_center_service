@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface AppClientAssignmentRepository extends JpaRepository<AppClientAssignment, Long> {
 
     Optional<AppClientAssignment> findFirstByAppClientProfileAndStatusOrderByAssignedAtDesc(AppClientProfile appClientProfile, AssignmentStatus status);
+    Optional<AppClientAssignment> findByAssignmentId(String assignmentId);
 }

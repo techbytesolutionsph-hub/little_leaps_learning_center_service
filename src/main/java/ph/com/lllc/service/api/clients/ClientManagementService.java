@@ -358,11 +358,31 @@ public class ClientManagementService {
                 .toList();
     }
 
+    public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
+            AppClientAssignment assignment = appClientAssignmentRepository.findByAssignmentId(assignmentId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Client assignment not found with ID: " + assignmentId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Client assignment not found with ID: " + assignmentId);
+                });
+        return buildAssignedClientResponse(assignment);
+    }
+
     private AssignedClientResponse buildAssignedClientResponse(AppClientAssignment response){
 
         AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
         AppClientProfile client = response.getAppClientProfile();
         List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
+
+        AssignmentHistory currentAssignmentHistory = assigmentHistory.stream()
+                .filter(history ->
+                        history.getAssignmentRole() == response.getAssignmentRole()
+                )
+                .filter(history ->
+                        history.getAssignmentStatus() == response.getStatus()
+                )
+                .findFirst()
+                .orElse(null);
+
 
         AssignmentHistory caseManager = assigmentHistory.stream()
                 .filter(history ->
@@ -371,8 +391,8 @@ public class ClientManagementService {
                 .findFirst()
                 .orElse(null);
 
-        AppEmployeeProfile assignee = caseManager != null
-                ? caseManager.getAssignee()
+        AppEmployeeProfile assignee = currentAssignmentHistory != null
+                ? currentAssignmentHistory.getAssignee()
                 : null;
 
          Integer activeCount = Math.toIntExact(assigmentHistory.stream()
@@ -387,6 +407,7 @@ public class ClientManagementService {
                 .id(response.getId())
                 .assignmentId(response.getAssignmentId())
 
+                .clientProfilePicture(client.getProfileImageUrl())
                 .clientFullName(client.getFirstName() + " " + client.getLastName())
                 .clientBirthDate(response.getAppClientProfile().getBirthDate())
                 .clientAge(response.getAppClientProfile().getAge())
@@ -426,6 +447,11 @@ public class ClientManagementService {
                                 ? assignee.getEmploymentInformation().getEmployeeId()
                                 : null
                 )
+                .assigneeProfilePicture(
+                        assignee != null
+                                ? assignee.getProfileImageUrl()
+                                : "/img/base/default-profile.png"
+                )
                 .assigneeFullName(
                         assignee != null
                                 ? assignee.getFirstName() + " " + assignee.getLastName()
@@ -443,6 +469,10 @@ public class ClientManagementService {
 
     private List<AssignedClientResponse.AssignmentHistoryResponse> buildAssignmentHistories(List<AssignmentHistory> assigmentHistory){
         return assigmentHistory.stream()
+                .sorted(Comparator.comparing(
+                        AssignmentHistory::getEventDateTime,
+                        Comparator.nullsLast(Comparator.reverseOrder())
+                ))
                 .map(item -> AssignedClientResponse.AssignmentHistoryResponse.builder()
                         .description(item.getDescription())
                         .action(item.getAction())

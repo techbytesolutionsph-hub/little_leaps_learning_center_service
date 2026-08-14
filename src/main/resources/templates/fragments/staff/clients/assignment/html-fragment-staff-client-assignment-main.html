@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-client-assignment-main(clients)">
+    <div th:fragment="staff-client-assignment-main(assignments)">
         <!-- Client Management - START -->
         <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -26,22 +26,22 @@
                     <table class="table table-bordered" id="clientTable">
                         <thead>
                             <tr>
-                                <th>Client ID</th>
+                                <th>Assignment ID</th>
                                 <th>Client Info</th>
-                                <th>Date Enrolled</th>
+<!--                                <th>Date Enrolled</th>-->
                                 <th>Diagnosis</th>
+                                <th>Assigned To</th>
                                 <th>Assign Status</th>
-                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="client : ${clients}">
-                                <td data-label="ID" th:text="${client.clientId}"></td>
+                            <tr th:each="assignment : ${assignments}">
+                                <td data-label="ID" th:text="${assignment.assignmentId}"></td>
                                 <td data-label="Client Info">
                                     <div class="d-flex align-items-center">
                                         <!-- Profile Image -->
-                                        <img th:src="${client.profileImageUrl != null ? client.profileImageUrl : '/images/default-profile.png'}"
+                                        <img th:src="${assignment.clientProfilePicture != null ? assignment.clientProfilePicture : '/img/base/default-profile.png'}"
                                              class="rounded-circle me-2"
                                              style="width:45px;height:45px;object-fit:cover;"
                                              alt="Profile">
@@ -49,61 +49,72 @@
                                         <!-- Employee Details -->
                                         <div>
                                             <div class="fw-bold text-dark"
-                                                 th:text="${client.firstName + ' ' + client.lastName}">
+                                                 th:text="${assignment.clientFullName}">
                                                 Maria Santos
                                             </div>
 
                                             <div class="text-muted small"
-                                                 th:text="${client.parents[0].email}">
+                                                 th:text="${assignment.guardianEmail}">
                                                 maria.santos@littleleaps.com
                                             </div>
 
                                             <div class="text-muted small"
-                                                 th:text="${client.parents[0].contactNumber}">
+                                                 th:text="${assignment.guardianContactNo}">
                                                 0917-123-4567
                                             </div>
                                         </div>
                                     </div>
                                 </td>
-                                <td data-label="Date Enrolled" th:text="${client.dateEnrolled}"></td>
+<!--                                <td data-label="Date Enrolled" th:text="${assignment.dateEnrolled}"></td>-->
                                 <td data-label="Diagnosis">
-                                    <span th:each="diagnosis : ${client.diagnosisConcerns}"
+                                    <span th:each="diagnosis : ${assignment.diagnosisConcerns}"
                                           th:text="${diagnosis.displayName}"
                                           style="display: block;">
                                     </span>
                                 </td>
+                                <td data-label="Assigned To">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${assignment.assigneeProfilePicture != null ? assignment.assigneeProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${assignment.assigneeFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assignment.assigneePosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td data-label="Assign Status">
                                     <span class="status-badge badge-active"
-                                          th:if="${client.assignmentStatus != null and client.assignmentStatus.name() == 'ACTIVE'}">
+                                          th:if="${assignment.status != null and assignment.status.name() == 'ACTIVE'}">
                                         <i class="bi bi-check-circle-fill mr-1"></i> Assigned
                                     </span>
 
                                     <span class="status-badge badge-danger"
-                                          th:if="${client.assignmentStatus != null and client.assignmentStatus.name() == 'INACTIVE'}">
+                                          th:if="${assignment.status != null and assignment.status.name() == 'INACTIVE'}">
                                         <i class="bi bi-pause-circle-fill mr-1"></i> Unassigned
-                                    </span>
-                                </td>
-                                <td data-label="Status">
-                                    <span class="status-badge badge-active"
-                                          th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'ENROLLED'}">
-                                        <i class="bi bi-check-circle-fill mr-1"></i> Enrolled
-                                    </span>
-
-                                    <span class="status-badge badge-danger"
-                                          th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'CANCELLED'}">
-                                        <i class="bi bi-pause-circle-fill mr-1"></i> Cancelled
                                     </span>
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
-                                        <a th:if="${client.assignmentStatus != null and client.assignmentStatus.name() == 'ACTIVE'}"
-                                           th:href="@{|/app/portal/client-management/assignment/view-assignment/${client.clientId}|}"
+                                        <a th:if="${assignment.status != null and assignment.status.name() == 'ACTIVE'}"
+                                           th:href="@{|/app/portal/client-management/assignment/view-assignment?id=${assignment.assignmentId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
 
-                                        <a th:if="${client.assignmentStatus != null and client.assignmentStatus.name() == 'ACTIVE'}"
-                                           th:href="@{|/app/portal/client-management/assignment/edit-assignment/${client.clientId}|}"
+                                        <a th:if="${assignment.status != null and assignment.status.name() == 'ACTIVE'}"
+                                           th:href="@{|/app/portal/client-management/assignment/edit-assignment?id=${assignment.assignmentId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-pen mr-1"></i> Edit
                                         </a>
