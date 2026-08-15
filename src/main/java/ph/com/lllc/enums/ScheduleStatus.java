@@ -1,8 +1,8 @@
 package ph.com.lllc.enums;
 
 public enum ScheduleStatus {
-    ACTIVE,
+    SCHEDULED,
+    PENDING,
     COMPLETED,
-    CANCELLED,
-    ON_HOLD
+    CANCELLED
 }

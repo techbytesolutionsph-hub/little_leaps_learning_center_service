@@ -12,7 +12,6 @@ import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.SessionFrequency;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -35,12 +34,16 @@ public class ClientTherapySchedule {
     @Column(name = "frequency")
     private SessionFrequency frequency;
 
+    /**
+     * Schedule status - SCHEDULED, COMPLETED, CANCELLED, PENDING
+     */
     @Enumerated(EnumType.STRING)
     private ScheduleStatus status;
 
-    private LocalDate effectiveDate;
-
-    private LocalDate expirationDate;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "therapist_id")
+    private AppEmployeeProfile therapist;
 
     /**
      * Dynamic schedules
@@ -57,9 +60,4 @@ public class ClientTherapySchedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id", nullable = false)
     private AppClientProfile appClientProfile;
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private AppEmployeeProfile therapist;
 }

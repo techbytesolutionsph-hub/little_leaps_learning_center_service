@@ -1,0 +1,805 @@
+/* =========================================================
+   ASSESSMENT SCHEDULE
+========================================================= */
+.schedule-card, .client-card {
+    width: 100%;
+    box-sizing: border-box;
+}
+/* =========================================================
+   CLIENT CARD
+========================================================= */
+.client-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px;
+    margin-bottom: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(16, 24, 40, 0.05);
+}
+/* =========================================================
+   VIEW CLIENT PROFILE BUTTON
+========================================================= */
+.client-card .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 40px;
+    padding: 0 15px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.client-card .btn-outline {
+    border: 1px solid #009da7;
+    background: #ffffff;
+    color: #009da7;
+}
+.client-card .btn-outline:hover {
+    background: #effafa;
+    border-color: #008b94;
+    color: #008b94;
+}
+.client-card .btn-outline i {
+    font-size: 12px;
+}
+.client-info {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+.client-avatar {
+    width: 62px;
+    height: 62px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.client-avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+.client-details {
+    min-width: 0;
+}
+.client-name-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 7px;
+}
+.client-name-row h2 {
+    margin: 0;
+    color: #344054;
+    font-size: 16px;
+    font-weight: 600;
+}
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+.status-badge.active {
+    color: #16803c;
+    background: #e9f8ef;
+}
+.client-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #667085;
+    font-size: 12px;
+}
+.client-meta strong {
+    margin-left: 4px;
+    color: #344054;
+    font-weight: 500;
+}
+/* =========================================================
+   BUTTONS
+========================================================= */
+.schedule-card .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 15px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.schedule-card .btn-primary {
+    border: 1px solid #009da7;
+    background: #009da7;
+    color: #ffffff;
+}
+.schedule-card .btn-primary:hover {
+    background: #008b94;
+    border-color: #008b94;
+}
+.schedule-card .btn-outline {
+    border: 1px solid #009da7;
+    background: #ffffff;
+    color: #009da7;
+}
+.schedule-card .btn-outline:hover {
+    background: #effafa;
+}
+/* =========================================================
+   SCHEDULE CARD
+========================================================= */
+.schedule-card {
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(16, 24, 40, 0.05);
+}
+/* =========================================================
+   SCHEDULE HEADER
+========================================================= */
+.schedule-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+.schedule-header > div:first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.schedule-header h2 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 6px;
+    color: #344054;
+    font-size: 17px;
+    font-weight: 600;
+}
+.schedule-header h2 i {
+    color: #009da7;
+}
+.schedule-header p {
+    max-width: 520px;
+    margin: 0;
+    color: #667085;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+/* =========================================================
+   SCHEDULE ACTIONS
+========================================================= */
+.schedule-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* =========================================================
+   WEEKLY / MONTHLY
+========================================================= */
+.view-switch {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+}
+.view-btn {
+    height: 39px;
+    padding: 0 14px;
+    border: 0;
+    background: #ffffff;
+    color: #667085;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.view-btn:hover {
+    background: #f8fafc;
+}
+.view-btn.active {
+    background: #009da7;
+    color: #ffffff;
+}
+/* =========================================================
+   WEEK NAVIGATION
+========================================================= */
+.week-navigation {
+    display: flex;
+    align-items: center;
+    height: 39px;
+    overflow: hidden;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+    background: #ffffff;
+}
+.week-navigation button {
+    width: 38px;
+    height: 39px;
+    padding: 0;
+    border: 0;
+    background: #ffffff;
+    color: #667085;
+    cursor: pointer;
+}
+.week-navigation button:hover {
+    background: #f8fafc;
+    color: #009da7;
+}
+#weekLabel {
+    min-width: 175px;
+    padding: 0 10px;
+    text-align: center;
+    color: #475467;
+    font-size: 12px;
+}
+/* =========================================================
+   CALENDAR CONTAINER
+========================================================= */
+.calendar-container {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 3px;
+}
+/* =========================================================
+   CALENDAR
+========================================================= */
+.assessment-calendar {
+    min-width: 1080px;
+    overflow: hidden;
+    border: 1px solid #d9e1ea;
+    border-radius: 8px;
+    background: #ffffff;
+}
+/* =========================================================
+   CALENDAR HEADER
+========================================================= */
+.assessment-calendar-header {
+    display: grid;
+    grid-template-columns: 265px repeat(7, minmax(105px, 1fr));
+    border-bottom: 1px solid #d9e1ea;
+    background: #ffffff;
+}
+.calendar-header-cell {
+    min-height: 60px;
+    padding: 10px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #d9e1ea;
+    text-align: center;
+}
+.calendar-header-cell:last-child {
+    border-right: 0;
+}
+.calendar-header-cell.therapist-header {
+    align-items: flex-start;
+    padding-left: 15px;
+    text-align: left;
+}
+.calendar-day-name {
+    color: #344054;
+    font-size: 12px;
+    font-weight: 600;
+}
+.calendar-day-date {
+    margin-top: 4px;
+    color: #667085;
+    font-size: 10px;
+}
+/* =========================================================
+   THERAPIST ROW
+========================================================= */
+.assessment-therapist-row {
+    display: grid;
+    grid-template-columns: 265px repeat(7, minmax(105px, 1fr));
+    min-height: 140px;
+    border-bottom: 1px solid #d9e1ea;
+}
+.assessment-therapist-row:last-child {
+    border-bottom: 0;
+}
+/* =========================================================
+   THERAPIST INFO
+========================================================= */
+.therapist-info {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 12px;
+    border-right: 1px solid #d9e1ea;
+    background: #ffffff;
+}
+.therapist-avatar {
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.therapist-avatar img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+.therapist-details {
+    min-width: 0;
+    padding-right: 15px;
+}
+.therapist-name {
+    margin: 2px 0 7px;
+    color: #344054;
+    font-size: 14px;
+    font-weight: 600;
+}
+.therapist-role {
+    display: inline-block;
+    margin-bottom: 9px;
+    padding: 4px 7px;
+    border-radius: 4px;
+    background: #eaf9fa;
+    color: #008891;
+    font-size: 9px;
+    font-weight: 600;
+}
+.therapist-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: #667085;
+    font-size: 9px;
+    line-height: 1.3;
+}
+.therapist-menu {
+    position: absolute;
+    top: 12px;
+    right: 10px;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #667085;
+    cursor: pointer;
+}
+.therapist-menu:hover {
+    color: #009da7;
+}
+/* =========================================================
+   DAY CELL
+========================================================= */
+.assessment-day-cell {
+    min-height: 140px;
+    padding: 15px 9px;
+    border-right: 1px solid #d9e1ea;
+    background: #ffffff;
+    transition: background 0.15s ease;
+}
+.assessment-day-cell:last-child {
+    border-right: 0;
+}
+.assessment-day-cell:hover {
+    background: #fcfefe;
+}
+/* =========================================================
+   EMPTY DAY
+========================================================= */
+.empty-day {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.empty-day-add {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #b8c2cc;
+    opacity: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.assessment-day-cell:hover .empty-day-add {
+    opacity: 1;
+}
+.empty-day-add:hover {
+    background: #eaf9fa;
+    color: #009da7;
+}
+/* =========================================================
+   SCHEDULE SLOT
+========================================================= */
+.assessment-schedule-slot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* horizontal center */
+    min-height: 31px;
+    margin-bottom: 7px;
+    padding: 3px 4px;
+    border: 1px solid #9ad5a9;
+    border-radius: 5px;
+    background: #f0fbf3;
+    color: #23743b;
+    font-size: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.assessment-schedule-slot:last-child {
+    margin-bottom: 0;
+}
+.assessment-schedule-slot:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+.schedule-slot-time {
+    white-space: nowrap;
+}
+.schedule-slot-menu {
+    width: 30px !important;
+    height: 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: currentColor;
+    font-size: 9px;
+    opacity: 0.6;
+    cursor: pointer;
+}
+/* =========================================================
+   STATUS COLORS
+========================================================= */
+.assessment-schedule-slot.pending {
+    border-color: #f1c76a;
+    background: #fff9e9;
+    color: #9a6b00;
+}
+.assessment-schedule-slot.cancelled {
+    border-color: #ef9d9d;
+    background: #fff1f1;
+    color: #b93232;
+}
+.assessment-schedule-slot.completed {
+    border-color: #b8c1cc;
+    background: #f2f4f7;
+    color: #667085;
+}
+/* =========================================================
+   ADD THERAPIST
+========================================================= */
+.add-therapist {
+    width: 100%;
+    min-height: 62px;
+    margin-top: 20px;
+    border: 1px dashed #cbd5df;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #009da7;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.add-therapist:hover {
+    border-color: #009da7;
+    background: #eaf9fa;
+}
+.add-therapist i {
+    margin-right: 7px;
+}
+/* =========================================================
+   LEGEND
+========================================================= */
+.legend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding: 14px;
+    border: 1px solid #d9e1ea;
+    border-radius: 7px;
+    color: #667085;
+    font-size: 10px;
+}
+.legend > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.legend-title {
+    color: #344054;
+    font-weight: 600;
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.legend-color {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border-radius: 3px;
+    border: 1px solid;
+}
+.legend-color.scheduled {
+    background: #f0fbf3;
+    border-color: #9ad5a9;
+}
+.legend-color.pending {
+    background: #fff9e9;
+    border-color: #f1c76a;
+}
+.legend-color.cancelled {
+    background: #fff1f1;
+    border-color: #ef9d9d;
+}
+.legend-color.completed {
+    background: #f2f4f7;
+    border-color: #b8c1cc;
+}
+.timezone {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+/* =========================================================
+   ASSESSMENT SCHEDULE MODAL
+========================================================= */
+.assessment-schedule-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.45);
+}
+.assessment-schedule-modal-overlay.show {
+    display: flex;
+}
+.assessment-schedule-modal {
+    width: 100%;
+    max-width: 570px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+.assessment-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 22px;
+    border-bottom: 1px solid #e5e7eb;
+}
+.assessment-modal-title {
+    margin: 0 0 5px;
+    color: #344054;
+    font-size: 17px;
+    font-weight: 600;
+}
+.assessment-modal-description {
+    margin: 0;
+    color: #667085;
+    font-size: 12px;
+}
+.assessment-modal-close {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: #f2f4f7;
+    color: #667085;
+    cursor: pointer;
+}
+.assessment-modal-close:hover {
+    background: #eaecf0;
+}
+.assessment-modal-body {
+    padding: 22px;
+}
+.assessment-form-group {
+    margin-bottom: 17px;
+}
+.assessment-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.assessment-form-label {
+    display: block;
+    margin-bottom: 7px;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 500;
+}
+.assessment-required {
+    color: #e74c3c;
+}
+.assessment-form-control {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    outline: none;
+    border: 1px solid #d0d5dd;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #344054;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+.assessment-form-control:focus {
+    border-color: #009da7;
+    box-shadow: 0 0 0 3px rgba(0, 157, 167, 0.1);
+}
+textarea.assessment-form-control {
+    height: auto;
+    min-height: 90px;
+    padding: 11px 12px;
+    resize: vertical;
+}
+.assessment-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding-top: 4px;
+}
+.assessment-modal-btn {
+    height: 40px;
+    padding: 0 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.assessment-modal-btn.cancel {
+    border: 1px solid #d0d5dd;
+    background: #ffffff;
+    color: #667085;
+}
+.assessment-modal-btn.cancel:hover {
+    background: #f8fafc;
+}
+.assessment-modal-btn.save {
+    border: 1px solid #009da7;
+    background: #009da7;
+    color: #ffffff;
+}
+.assessment-modal-btn.save:hover {
+    background: #008b94;
+}
+/* =========================================================
+   THERAPIST MENU
+========================================================= */
+.assessment-therapist-menu {
+    position: fixed;
+    z-index: 10000;
+    min-width: 150px;
+    padding: 5px;
+    border: 1px solid #e4e7ec;
+    border-radius: 7px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(16, 24, 40, 0.12);
+}
+.assessment-therapist-menu button {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 10px;
+    border: 0;
+    border-radius: 5px;
+    background: transparent;
+    color: #344054;
+    font-size: 11px;
+    text-align: left;
+    cursor: pointer;
+}
+.assessment-therapist-menu button:hover {
+    background: #f5f7fa;
+}
+.assessment-therapist-menu button.delete {
+    color: #d92d20;
+}
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+.assessment-empty-state {
+    padding: 45px 20px;
+    text-align: center;
+    color: #98a2b3;
+    font-size: 12px;
+}
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 1200px) {
+    .schedule-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .schedule-actions {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 768px) {
+    .client-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+    }
+    .client-card .btn {
+        width: 100%;
+    }
+    .schedule-card {
+        padding: 16px;
+    }
+    .schedule-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .view-switch, .week-navigation, .schedule-actions > .btn {
+        width: 100%;
+    }
+    .view-btn {
+        flex: 1;
+    }
+    #weekLabel {
+        flex: 1;
+    }
+    .legend {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .legend > div:first-child {
+        flex-wrap: wrap;
+        gap: 10px 15px;
+    }
+}
+@media (max-width: 576px) {
+    .client-info {
+        align-items: flex-start;
+    }
+    .client-name-row {
+        flex-wrap: wrap;
+    }
+    .assessment-form-row {
+        grid-template-columns: 1fr;
+    }
+    .assessment-schedule-modal {
+        max-height: 95vh;
+    }
+    .assessment-modal-header, .assessment-modal-body {
+        padding: 18px;
+    }
+}

@@ -10,6 +10,8 @@ public class IdGeneratorUtils {
     private static final String COMPANY_PREFIX = "3LC";
     private static final String CLIENT_ID_PREFIX = "CLI";
     private static final String ASSIGNMENT_ID_PREFIX = "CA";
+    private static final String INITIAL_ASSESSMENT_ID_PREFIX = "IA";
+    private static final String ASSESSMENT_ID_PREFIX = "ASCH";
 
     private IdGeneratorUtils() {
     }
@@ -62,6 +64,42 @@ public class IdGeneratorUtils {
         return String.format(
                 "%s-%s-%05d",
                 ASSIGNMENT_ID_PREFIX,
+                assignYear,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * CLIENT ID FORMAT
+     * =========================================================
+     * IA-2026-00001
+     * IA-2026-00002
+     * IA-2026-00003
+     */
+    public String generateInitialAssessmentId(String assignYear, long runningCode) {
+
+        return String.format(
+                "%s-%s-%05d",
+                INITIAL_ASSESSMENT_ID_PREFIX,
+                assignYear,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * CLIENT ID FORMAT
+     * =========================================================
+     * ASCH-2026-00001
+     * ASCH-2026-00002
+     * ASCH-2026-00003
+     */
+    public String generateAssessmentId(String assignYear, long runningCode) {
+
+        return String.format(
+                "%s-%s-%05d",
+                ASSESSMENT_ID_PREFIX,
                 assignYear,
                 runningCode
         );

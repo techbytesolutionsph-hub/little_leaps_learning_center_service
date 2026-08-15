@@ -32,22 +32,21 @@ public class ClientInitialAssessmentSchedule {
     private LocalDate assessmentDate;
 
     /**
-     * Branch / Venue
-     */
-    @Column(name = "venue")
-    private String venue;
-
-    /**
-     * Schedule status - ACTIVE, COMPLETED, CANCELLED, ON HOLD
+     * Schedule status - SCHEDULED, COMPLETED, CANCELLED, PENDING
      */
     @Enumerated(EnumType.STRING)
     private ScheduleStatus status;
 
     /**
-     * Remarks for client/kid
+     * Notes/Remarks for client/kid
      */
-    @Column(name = "remarks", length = 1000)
-    private String remarks;
+    @Column(name = "notes", length = 1000)
+    private String notes;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "case_manager_id")
+    private AppEmployeeProfile caseManager;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "assessmentSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -57,9 +56,4 @@ public class ClientInitialAssessmentSchedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "app_client_id")
     private AppClientProfile appClientProfile;
-
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private AppEmployeeProfile therapist;
 }

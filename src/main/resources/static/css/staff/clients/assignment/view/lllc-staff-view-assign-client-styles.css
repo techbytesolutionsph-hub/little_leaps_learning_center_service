@@ -785,7 +785,7 @@ body {
     align-items: center;
 }
 
-.btn {
+.action-btn {
     height: 38px;
     border-radius: 6px;
     padding: 0 16px;
