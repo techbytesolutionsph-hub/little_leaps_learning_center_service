@@ -286,6 +286,28 @@ public class ClientManagementService {
         return employeeMap;
     }
 
+    public Map<String, String> mapCaseManagers() {
+        List<AppEmployeeProfile> employees = appEmployeeProfileRepository.findByEmploymentInformation_PositionIn(List.of("Case Manager"));
+
+        Map<String, String> employeeMap = new LinkedHashMap<>();
+
+        for (AppEmployeeProfile employee : employees) {
+
+            String fullName = Stream.of(
+                            employee.getFirstName(),
+                            employee.getMiddleName(),
+                            employee.getLastName()
+                    )
+                    .filter(Objects::nonNull)
+                    .filter(name -> !name.isBlank())
+                    .collect(Collectors.joining(" "));
+
+            employeeMap.put(employee.getEmployeeId(), fullName);
+        }
+
+        return employeeMap;
+    }
+
     @Transactional
     public CommonResponse assignClient(String uuid, AssignClientRequest request, HttpServletRequest httpRequest) throws ServiceException {
 
@@ -358,6 +380,10 @@ public class ClientManagementService {
                 .toList();
     }
 
+    public AssignedClientResponse getAssignedClient(String uuid, String assignmentId) throws ServiceException {
+        return this.findByAssignmentId(uuid, assignmentId);
+    }
+
     public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
             AppClientAssignment assignment = appClientAssignmentRepository.findByAssignmentId(assignmentId)
                 .orElseThrow(() -> {
@@ -407,6 +433,7 @@ public class ClientManagementService {
                 .id(response.getId())
                 .assignmentId(response.getAssignmentId())
 
+                .clientId(client.getClientId())
                 .clientProfilePicture(client.getProfileImageUrl())
                 .clientFullName(client.getFirstName() + " " + client.getLastName())
                 .clientBirthDate(response.getAppClientProfile().getBirthDate())

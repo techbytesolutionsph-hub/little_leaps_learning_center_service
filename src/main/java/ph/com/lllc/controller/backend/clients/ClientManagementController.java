@@ -13,7 +13,6 @@ import ph.com.lllc.dto.staff.clients.AssignClientRequest;
 import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
-import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -68,8 +67,16 @@ public class ClientManagementController {
     }
 
     @Operation(summary = "Get Assign Clients")
-    @GetMapping("/get-assign-client")
+    @GetMapping("/get-assign-clients")
     public ResponseEntity<List<AssignedClientResponse>> getAssignedClients() {
         return ResponseEntity.ok(clientManagementService.getAssignedClients());
+    }
+
+    @Operation(summary = "Get Assign Client")
+    @GetMapping("/get-assign-client")
+    public ResponseEntity<AssignedClientResponse> getAssignedClient(@RequestParam("id") String assignmentId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "Assignment ID : " + assignmentId);
+        return ResponseEntity.ok(clientManagementService.getAssignedClient(uuid, assignmentId));
     }
 }

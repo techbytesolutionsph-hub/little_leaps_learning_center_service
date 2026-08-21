@@ -1,0 +1,378 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-add-initial-assessment(caseManagers)">
+        <!-- Assign Client - START -->
+        <div class="assignment-page">
+            <div class="stepper-card">
+                <div class="stepper">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Select Client</span>
+                            <span class="step-subtitle">Choose a client</span>
+                        </div>
+                    </div>
+
+                    <div class="step-line"></div>
+
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Initial Assessment Schedule Details</span>
+                            <span class="step-subtitle">Select initial assessment schedule</span>
+                        </div>
+                    </div>
+
+                    <div class="step-line"></div>
+
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Review & Confirm</span>
+                            <span class="step-subtitle">Review and confirm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="assignmentForm">
+                <div class="assignment-grid">
+                    <!-- Step 1 - Select Client -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-circle-user"></i>
+                                1. Select Client
+                            </h2>
+
+                            <p class="card-description">
+                                Select a client for initial assessment.
+                            </p>
+                        </div>
+
+                        <div class="search-row">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-sm" id="client-id" placeholder="Enter Assignment ID">
+                                <button class="btn btn-outline-primary" type="button" id="search-client-btn">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- CLIENT -->
+                        <div class="client-card" id="clientCard" style="display: none;">
+
+                            <div class="client-avatar">
+                                <img id="clientAvatar" src="" alt="Client">
+                            </div>
+
+                            <!-- CLIENT INFO CARD -->
+                            <div class="client-info">
+                                <div class="client-name" id="clientName"></div>
+
+                                <div class="client-id">
+                                    <input type="hidden" id="selected-client-id">
+                                    <span class="client-label">Client ID:</span>
+                                    <span class="client-value" id="clientIdValue"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">DOB:</span>
+                                    <span class="client-value" id="clientDob"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">Gender:</span>
+                                    <span class="client-value" id="clientGender"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">Guardian:</span>
+                                    <span class="client-value" id="clientGuardian"></span>
+                                </div>
+
+                                <div class="client-meta">
+                                    <span class="client-label">Contact No:</span>
+                                    <span class="client-value" id="clientContact"></span>
+                                </div>
+                            </div>
+
+                            <div class="client-selected-icon">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </div>
+
+                        <!-- CLIENT SUMMARY -->
+                        <div class="summary-card" id="clientSummary" style="display: none;">
+
+                            <div class="summary-title">
+                                <i class="fas fa-users mr-2"></i>
+                                <span>Assignee Details</span>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    Assign To
+                                </div>
+
+                                <div class="summary-value">
+                                    <div class="employee-summary">
+                                        <img src="/img/base/default-profile.png" alt="Sarah Dela Cruz" class="employee-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name">
+                                                Mark Andrie Alcantara
+                                            </div>
+
+                                            <div class="employee-position">
+                                                Case Manager
+                                            </div>
+
+                                            <input type="hidden" id="employee-id" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Assignee Role
+                                </div>
+
+                                <div class="summary-value">
+                                    <span class="assignment-type-badge" id="assignee-role">
+                                        Primary Case Manager
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-users"></i>
+                                    Assigned At
+                                </div>
+
+                                <div class="summary-value" id="assigned-at"></div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    Branch
+                                </div>
+
+                                <div class="summary-value" id="assigned-branch"></div>
+                            </div>
+
+                            <a href="#" class="profile-link" id="clientProfileLink">
+                                View full assignment details
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 - Assignment Details -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fas fa-calendar-alt"></i>
+                                2. Initial Assessment Schedule Details
+                            </h2>
+
+                            <p class="card-description">
+                                Select initial assessment schedule
+                            </p>
+                        </div>
+
+                        <!-- Assign To -->
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label for="assign-client-to" class="form-label">Case Manager<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="assign-client-to" disabled>
+                                        <option value="" selected disabled>Select case manager</option>
+                                        <option th:each="caseManager : ${caseManagers}"
+                                                th:value="${caseManager.key}"
+                                                th:text="${caseManager.value}">
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a case manager.</div>
+                            </div>
+
+                            <!-- Assignment Status -->
+                            <div class="form-group">
+                                <label for="assign-client-status" class="form-label">Schedule Status<span class="required">*</span></label>
+                                <div class="select-wrapper">
+
+                                    <select class="form-select required-field" id="assign-client-status">
+                                        <option value="" selected disabled>Select status</option>
+                                        <option value="SCHEDULED">Scheduled</option>
+                                        <option value="PENDING">Pending</option>
+                                        <option value="COMPLETED">Completed</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a role.</div>
+                            </div>
+
+                            <!-- Initial Assessment Date -->
+                            <div class="form-group">
+                                <label for="assign-client-initial-assessment-date" class="form-label">Initial Assessment Date<span class="required">*</span></label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" class="form-control required-field" id="assign-client-initial-assessment-date">
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
+                                </div>
+                                <div class="field-error">Please select an assessment date.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="assign-client-assessment-start-time" class="form-label">
+                                    Start Time<span class="required">*</span>
+                                </label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" class="form-control required-field" id="assign-client-assessment-start-time">
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
+                                </div>
+                                <div class="field-error">Please select a start date.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="assign-client-assessment-end-time" class="form-label">
+                                    End Time<span class="required">*</span>
+                                </label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" class="form-control required-field" id="assign-client-assessment-end-time">
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
+                                </div>
+                                <div class="field-error">Please select an end date.</div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="form-group full">
+                                <label for="assign-client-notes" class="form-label">Notes <span style="font-weight:400;">(Optional)</span></label>
+                                <div class="notes-wrapper">
+                                    <textarea id="assign-client-notes" class="form-control" maxlength="500"
+                                              placeholder="Add notes or special instructions..."></textarea>
+                                    <span class="char-counter">
+                                        <span id="charCount">0</span> / 500
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="action-btn btn-cancel" id="cancel-btn">
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancel
+                    </button>
+
+                    <div class="action-right">
+                        <button type="button" class="action-btn btn-next" id="next-btn">
+                            Next: Review
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-section" id="reviewSection">
+                <div class="review-card">
+
+                    <h2 class="card-title">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        3. Review & Confirm
+                    </h2>
+
+                    <p class="card-description">
+                        Please review the assignment details before confirming.
+                        Please review the assignment details before confirming.
+                    </p>
+
+                    <div class="review-item">
+                        <span class="review-label">Client</span>
+                        <span class="review-value" id="clientFullName">Cotton Anduiza</span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Case Manager</span>
+                        <span class="review-value" id="reviewAssignee">
+                            Therapist Sarah Dela Cruz
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Assignee Role</span>
+                        <span class="review-value" id="reviewAssigneeRole">
+                            Primary Case Manager
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Schedule Status</span>
+                        <span class="review-value" id="reviewScheduleStatus">
+                            Scheduled
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Initial Assessment Date</span>
+                        <span class="review-value" id="reviewInitialAssessmentDate">
+                            2026-08-03
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Start Time</span>
+                        <span class="review-value" id="reviewStartTime">
+                            1:00 PM
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">End Time</span>
+                        <span class="review-value" id="reviewEndTime">
+                            3:00 PM
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Notes</span>
+                        <span class="review-value" id="reviewNotes">
+                            —
+                        </span>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="action-btn btn-cancel" id="back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </button>
+
+                    <div class="action-right">
+                        <button type="button" class="action-btn btn-next" id="confirm-btn">
+                            Confirm Assignment
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Assign Client - END -->
+    </div>
+</html>

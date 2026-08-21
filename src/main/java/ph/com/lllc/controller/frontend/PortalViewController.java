@@ -129,6 +129,16 @@ public class PortalViewController {
         return "staff/clients/assessment-schedule/index";
     }
 
+    @GetMapping(value = "/client-management/assessment-schedule/initial-assessment")
+    public String addInitialAssessmentSchedulePage(Model model) {
+        this.setupPage(model, "clients", "Add Initial Assessment Schedule");
+
+        Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
+        model.addAttribute("caseManagers", caseManagers);
+
+        return "staff/clients/assessment-schedule/assessment/add/index";
+    }
+
     @GetMapping(value = "/attendance/my-attendance")
     public String employeeAttendancePage(Model model, Authentication authentication) throws ServiceException {
         this.setupPage(model, "attendance", "My Timesheet");

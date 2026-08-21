@@ -91,6 +91,10 @@ public class PortalFrontService {
         return clientManagementService.mapCaseManagerBehavioralTherapist();
     }
 
+    public Map<String, String> mapCaseManagers() {
+        return clientManagementService.mapCaseManagers();
+    }
+
     public List<AssignedClientResponse> getAssignedClients() {
         return clientManagementService.getAssignedClients();
     }

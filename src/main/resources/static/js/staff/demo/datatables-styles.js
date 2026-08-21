@@ -36,6 +36,30 @@ $(document).ready(function() {
     }
   });
 
+  $('#initialAssessmentTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: "No initial assessment records found"
+    }
+  });
+
+  $('#regularAssessmentTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: "No regular assessment records found"
+    }
+  });
+
   // $('#sendFundsTable').DataTable({
   //   pageLength: 5,
   //   lengthMenu: [

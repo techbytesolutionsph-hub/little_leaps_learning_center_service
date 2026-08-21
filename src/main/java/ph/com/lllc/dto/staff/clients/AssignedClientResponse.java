@@ -17,6 +17,7 @@ public class AssignedClientResponse {
     private Long id;
     private String assignmentId;
 
+    private String clientId;
     private String clientProfilePicture;
     private String clientFullName;
     private LocalDate clientBirthDate;

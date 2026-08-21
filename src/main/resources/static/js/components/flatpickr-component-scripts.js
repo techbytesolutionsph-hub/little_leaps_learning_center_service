@@ -21,6 +21,31 @@ function initializeDatePicker(id, placeholder) {
     });
 }
 
+function initializeTimePicker(id, placeholder) {
+    flatpickr(id, {
+        enableTime: true,
+        noCalendar: true,
+        time_24hr: false,
+        dateFormat: "h:i K",
+        altInput: true,
+        altFormat: "h:i K",
+        altInputClass: "form-control text-sm required-field",
+
+        onReady: function (selectedDates, dateStr, instance) {
+            instance.altInput.setAttribute("placeholder", placeholder);
+        },
+
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                $(instance.input).removeClass("is-invalid");
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
+
+        position: "auto"
+    });
+}
+
 function initializeMaxTodayDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,

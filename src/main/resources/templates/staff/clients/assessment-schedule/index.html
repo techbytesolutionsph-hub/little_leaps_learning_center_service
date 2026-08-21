@@ -35,249 +35,199 @@
                         <!-- Assessment Schedule - Start -->
 <!--                        <th:block th:insert="~{fragments/staff/clients/assignment/assign/html-fragment-staff-assign-client :: staff-assign-client(${staff})}"></th:block>-->
                         <!-- Assessment Schedule - End -->
-                        <div class="app">
-                            <main class="main">
-                                <section class="content">
-                                    <div class="client-card">
-                                        <div class="client-info">
 
-                                            <div class="client-avatar">
-                                                <img src="https://i.pravatar.cc/150?img=47" alt="Client">
-                                            </div>
-
-                                            <div class="client-details">
-                                                <div class="client-name-row">
-                                                    <h2>Cotton Trampe Anduiza</h2>
-                                                    <span class="status-badge active">
-                                                        Active
-                                                    </span>
-                                                </div>
-
-                                                <div class="client-meta">
-                                                    <span>
-                                                        Client ID:
-                                                        <strong>CLI-000001</strong>
-                                                    </span>
-
-                                                    <span>
-                                                        Program Type:
-                                                        <strong>ABA</strong>
-                                                    </span>
-
-                                                    <span>
-                                                        Branch:
-                                                        <strong>Catanuan Quezon</strong>
-                                                    </span>
+                        <div class="row">
+                            <!-- Total Employees count -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card shadow h-100 py-1">
+                                    <div class="card-body-white" style="background-color: white !important;">
+                                        <div class="row no-gutters align-items-center">
+                                            <!-- Icon -->
+                                            <div class="col-auto mr-3">
+                                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                                    <img class="lordicon-bounce" src="/img/lordicon/total-initial-assessment-scheduled.svg" width="45" height="45" alt="Total Employees">
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <button class="btn btn-outline">
-                                            <i class="fa-solid fa-user"></i>
-                                            View Client Profile
-                                        </button>
-                                    </div>
-
-                                    <!-- =========================
-                                         SCHEDULE CARD
-                                    ========================== -->
-                                    <div class="schedule-card">
-                                        <div class="schedule-header">
-                                            <div>
-                                                <h2>
-                                                    <i class="fa-regular fa-calendar-days"></i>
-                                                    Assessment Schedules
-                                                </h2>
-
-                                                <p>
-                                                    Manage and view assessment schedules
-                                                </p>
-                                            </div>
-
-                                            <div class="schedule-actions">
-<!--                                                <div class="view-switch">-->
-<!--                                                    <button id="weeklyViewBtn" class="view-btn active">-->
-<!--                                                        Weekly View-->
-<!--                                                    </button>-->
-
-<!--                                                    <button id="monthlyViewBtn" class="view-btn">-->
-<!--                                                        Monthly View-->
-<!--                                                    </button>-->
-<!--                                                </div>-->
-
-                                                <div class="week-navigation">
-                                                    <button id="previousWeek">
-                                                        <i class="fa-solid fa-chevron-left"></i>
-                                                    </button>
-
-                                                    <div id="weekLabel">
-                                                        Aug 11 - Aug 17, 2026
-                                                    </div>
-
-                                                    <button id="nextWeek">
-                                                        <i class="fa-solid fa-chevron-right"></i>
-                                                    </button>
+                                            <!-- Text -->
+                                            <div class="col">
+                                                <div class="kpi-header text-xs font-weight-bolder  mb-2">
+                                                    Initial Assessments Scheduled
                                                 </div>
-
-                                                <button id="openScheduleModal" class="btn btn-primary">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                    Add Schedule
-                                                </button>
-                                            </div>
-                                        </div>
-
-
-                                        <!-- =========================
-                                             CALENDAR
-                                        ========================== -->
-                                        <div class="calendar-container">
-                                            <div id="calendar"></div>
-                                        </div>
-
-                                        <!-- ADD THERAPIST -->
-                                        <button id="addTherapist" class="add-therapist">
-                                            <i class="fa-solid fa-plus"></i>
-                                            Add Another Therapist
-                                        </button>
-
-                                        <!-- LEGEND -->
-                                        <div class="legend">
-                                            <div>
-                                                <span class="legend-title">
-                                                    Legend
-                                                </span>
-
-                                                <span class="legend-item">
-                                                    <span class="legend-color scheduled"></span>
-                                                    Scheduled
-                                                </span>
-
-                                                <span class="legend-item">
-                                                    <span class="legend-color pending"></span>
-                                                    Pending
-                                                </span>
-
-                                                <span class="legend-item">
-                                                    <span class="legend-color cancelled"></span>
-                                                    Cancelled
-                                                </span>
-
-                                                <span class="legend-item">
-                                                    <span class="legend-color completed"></span>
-                                                    Completed
-                                                </span>
-                                            </div>
-
-                                            <div class="timezone">
-                                                <i class="fa-regular fa-clock"></i>
-                                                All times are displayed in local time
+                                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                                    24
+                                                </div>
+                                                <div class="text-xs text-muted mt-2">
+                                                    <span class="kpi-circle-badge">
+                                                        Total Scheduled
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </section>
-                            </main>
+                                </div>
+                            </div>
+
+                            <!-- Total Currently Active Employees count -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card shadow h-100 py-1">
+                                    <div class="card-body-white" style="background-color: white !important;">
+                                        <div class="row no-gutters align-items-center">
+                                            <!-- Icon -->
+                                            <div class="col-auto mr-3">
+                                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                                    <img class="lordicon-bounce" src="/img/lordicon/total-assessment-scheduled.svg" width="45" height="45" alt="Total Employees">
+                                                </div>
+                                            </div>
+
+                                            <!-- Text -->
+                                            <div class="col">
+                                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                                    Regular Assessments Scheduled
+                                                </div>
+                                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                                    20
+                                                </div>
+                                                <div class="text-xs text-muted mt-2">
+                                                    <span class="kpi-circle-badge">
+                                                        Total Scheduled
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Total On Leave Employees count -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card shadow h-100 py-1">
+                                    <div class="card-body-white" style="background-color: white !important;">
+                                        <div class="row no-gutters align-items-center">
+                                            <!-- Icon -->
+                                            <div class="col-auto mr-3">
+                                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                                    <img class="lordicon-bounce" src="/img/lordicon/total-completed-assessment.svg" width="45" height="45" alt="On Leave">
+                                                </div>
+                                            </div>
+
+                                            <!-- Text -->
+                                            <div class="col">
+                                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                                    Assessments Completed
+                                                </div>
+                                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                                    2
+                                                </div>
+                                                <div class="text-xs text-muted mt-2">
+                                                    <span class="kpi-circle-badge">
+                                                        Total Completed
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Total Resigned Employees count -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card shadow h-100 py-1">
+                                    <div class="card-body-white" style="background-color: white !important;">
+                                        <div class="row no-gutters align-items-center">
+                                            <!-- Icon -->
+                                            <div class="col-auto mr-3">
+                                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                                    <img class="lordicon-bounce" src="/img/lordicon/total-upcoming-assessment.svg" width="45" height="45" alt="Total Employees">
+                                                </div>
+                                            </div>
+
+                                            <!-- Text -->
+                                            <div class="col">
+                                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                                    Upcoming Assessments
+                                                </div>
+                                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                                    2
+                                                </div>
+                                                <div class="text-xs text-muted mt-2">
+                                                    <span class="kpi-circle-badge">
+                                                        Total Upcoming
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold">
+                                    <i class="fas fa-file-lines mr-2"></i> Initial Assessment Records
+                                </h6>
+                                <a th:href="@{/app/portal/client-management/assessment-schedule/initial-assessment}"
+                                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                                   id="add-initial-assessment-schedule-btn" style="text-decoration: none">
 
-                        <!-- =========================
-                             ADD / EDIT SCHEDULE MODAL
-                        ========================== -->
+                                    <i class="fa-solid fa-user-plus mr-2"></i> Add Assessment
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="initialAssessmentTable">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Client Info</th>
+                                            <th>Assessment Date</th>
+                                            <th>Assigned Case Manager</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-<!--                        <div id="scheduleModal" class="modal-overlay">-->
-<!--                            <div class="modal">-->
-<!--                                <div class="modal-header">-->
-<!--                                    <div>-->
-<!--                                        <h2 id="modalTitle">-->
-<!--                                            Add Assessment Schedule-->
-<!--                                        </h2>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-<!--                                        <p>-->
-<!--                                            Create a schedule for the selected Case Manager/Behavioral Therapist.-->
-<!--                                        </p>-->
-<!--                                    </div>-->
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold">
+                                    <i class="fas fa-calendar-alt mr-2"></i> Regular Assessment Records
+                                </h6>
+                                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                                   id="add-assessment-schedule-btn" style="text-decoration: none">
 
-<!--                                    <button id="closeModal" class="modal-close">-->
-<!--                                        <i class="fa-solid fa-xmark"></i>-->
-<!--                                    </button>-->
-<!--                                </div>-->
+                                    <i class="fa-solid fa-user-plus mr-2"></i> Add Assessment
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="regularAssessmentTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Client ID</th>
+                                            <th>Client Info</th>
+                                            <th>Date Enrolled</th>
+                                            <th>Guardian/Parent Name</th>
+                                            <th>Diagnosis</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-<!--                                <form id="scheduleForm">-->
-<!--                                    <input type="hidden" id="scheduleId">-->
-
-<!--                                    &lt;!&ndash; THERAPIST &ndash;&gt;-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label>Therapist<span>*</span></label>-->
-
-<!--                                        <select id="therapistSelect" required>-->
-<!--                                            <option value="">-->
-<!--                                                Select therapist-->
-<!--                                            </option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-
-<!--                                    &lt;!&ndash; DAY &ndash;&gt;-->
-<!--                                    <div class="form-row">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Day<span>*</span></label>-->
-<!--                                            <select id="daySelect" required>-->
-<!--                                                <option value="" selected disabled>Select a day</option>-->
-<!--                                                <option value="Monday">Monday</option>-->
-<!--                                                <option value="Tuesday">Tuesday</option>-->
-<!--                                                <option value="Wednesday">Wednesday</option>-->
-<!--                                                <option value="Thursday">Thursday</option>-->
-<!--                                                <option value="Friday">Friday</option>-->
-<!--                                                <option value="Saturday">Saturday</option>-->
-<!--                                                <option value="Sunday">Sunday</option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-
-<!--                                        &lt;!&ndash; STATUS &ndash;&gt;-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Status<span>*</span></label>-->
-<!--                                            <select id="statusSelect" required>-->
-<!--                                                <option value="" selected disabled>Select a status</option>-->
-<!--                                                <option value="SCHEDULED">Scheduled</option>-->
-<!--                                                <option value="PENDING">Pending</option>-->
-<!--                                                <option value="CANCELLED">Cancelled</option>-->
-<!--                                                <option value="COMPLETED">Completed</option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-
-
-<!--                                    &lt;!&ndash; TIME &ndash;&gt;-->
-<!--                                    <div class="form-row">-->
-<!--                                        <div class="form-group">-->
-<!--                                            <label>Start Time<span>*</span></label>-->
-<!--                                            <input type="time" id="startTime" required>-->
-<!--                                        </div>-->
-
-<!--                                        <div class="form-group">-->
-<!--                                            <label>End Time<span>*</span></label>-->
-<!--                                            <input type="time" id="endTime" required>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-
-<!--                                    &lt;!&ndash; NOTES &ndash;&gt;-->
-<!--                                    <div class="form-group">-->
-<!--                                        <label>Notes</label>-->
-<!--                                        <textarea id="scheduleNotes" rows="3" placeholder="Add notes or special instructions..."></textarea>-->
-<!--                                    </div>-->
-
-<!--                                    &lt;!&ndash; ACTIONS &ndash;&gt;-->
-<!--                                    <div class="modal-footer">-->
-<!--                                        <button type="button" id="cancelModal" class="btn btn-secondary">-->
-<!--                                            Cancel-->
-<!--                                        </button>-->
-
-<!--                                        <button type="submit" class="btn btn-primary">-->
-<!--                                            <i class="fa-solid fa-check"></i>-->
-<!--                                            Save Schedule-->
-<!--                                        </button>-->
-<!--                                    </div>-->
-<!--                                </form>-->
-<!--                            </div>-->
-<!--                        </div>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -9590,6 +9590,10 @@ body.sidebar-toggled footer.sticky-footer{
     }
 }
 
+#initialAssessmentTable td,
+#initialAssessmentTable th,
+#regularAssessmentTable td,
+#regularAssessmentTable th,
 #userTable td,
 #userTable th,
 #employeeTable td,
@@ -9732,7 +9736,22 @@ body.sidebar-toggled footer.sticky-footer{
 
 .bg-tangerine-soft {
     background-color: #fff1e3;
-    border-color: #ffa24a !important;
+    color: #FFA24A;
+}
+
+.bg-purple-soft {
+    background-color: #f1e9ff;
+    color: #805AD5;
+}
+
+.bg-blue-soft {
+    background-color: #e8f4ff;
+    color: #4A90E2;
+}
+
+.bg-light-teal-soft {
+    background-color: #ECF9F9;
+    color: #00979D;
 }
 
 .bg-burnt-orange-soft {
