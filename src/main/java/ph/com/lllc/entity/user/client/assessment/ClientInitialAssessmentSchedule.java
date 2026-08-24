@@ -22,9 +22,11 @@ public class ClientInitialAssessmentSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "assessment_id")
     private Long id;
 
+
+    @Column(name = "initial_assessment_id")
+    private String initialAssessmentId;
     /**
      * Assessment Date
      */

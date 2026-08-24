@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
 
 @Repository
-public interface KidAssessmentScheduleRepository extends JpaRepository<ClientInitialAssessmentSchedule, Long> {
+public interface ClientInitialAssessmentScheduleRepository extends JpaRepository<ClientInitialAssessmentSchedule, Long> {
 }

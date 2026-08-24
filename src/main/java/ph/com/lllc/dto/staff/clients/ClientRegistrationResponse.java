@@ -15,7 +15,6 @@ import java.util.Set;
 public class ClientRegistrationResponse {
 
     Long id;
-    private String uuid;
 
     private String clientId;
 

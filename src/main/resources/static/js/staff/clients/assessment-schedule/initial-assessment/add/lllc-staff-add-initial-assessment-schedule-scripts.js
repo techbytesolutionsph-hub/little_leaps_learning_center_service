@@ -44,27 +44,6 @@ $(document).ready(function () {
         $(this).toggleClass("selected");
     });
 
-    // Validation
-    function validateForm() {
-        let valid = true;
-
-        $(".required-field").each(function () {
-            const $field = $(this);
-            const $error = $field.parent().next(".field-error");
-
-            if (!$field.val()) {
-                $field.addClass("is-invalid");
-                $error.addClass("show");
-                valid = false;
-            } else {
-                $field.removeClass("is-invalid");
-                $error.removeClass("show");
-            }
-        });
-
-        return valid;
-    }
-
     $(".required-field").on("change", function () {
         const $field = $(this);
 
@@ -73,36 +52,6 @@ $(document).ready(function () {
             $field.parent().next(".field-error").removeClass("show");
         }
     });
-
-    /* Load review */
-    function loadReview() {
-        $("#clientFullName").text($("#clientName").text() || "—");
-        $("#reviewAssignee").text(
-            getSelectedText("assign-client-to")
-        );
-        $("#reviewAssigneeRole").text($("#assignee-role").text() || "—");
-
-        $("#reviewScheduleStatus").text(getSelectedText("assign-client-status"));
-        $("#reviewInitialAssessmentDate").text($("#assign-client-initial-assessment-date").val() || "—");
-        $("#reviewStartTime").text(
-            formatTime($("#assign-client-assessment-start-time").val())
-        );
-        $("#reviewEndTime").text(
-            formatTime($("#assign-client-assessment-end-time").val())
-        );
-        $("#reviewNotes").text($.trim($("#assign-client-notes").val()) || "—");
-    }
-
-    function getSelectedText(id) {
-        const $select = $("#" + id);
-
-        if (!$select.length || !$select.val()) {
-            return "—";
-        }
-
-        return $select.find("option:selected").text();
-    }
-
 
     $('#next-btn').on('click', function (e) {
         if (!validateForm()) {
@@ -143,7 +92,7 @@ $(document).ready(function () {
         console.log("Confirmed assessment:", assessment);
 
         /* Save Initial Assessment */
-        // saveInitialAssessment(assignment);
+        saveInitialAssessment(assessment);
     });
 
     $('#cancel-btn').on('click', function (e) {
@@ -157,21 +106,72 @@ $(document).ready(function () {
             }
         );
     });
-
-    // Get assignment data
-    function getAssignmentData() {
-        return {
-            clientId: $("#selected-client-id").val(),
-            employeeId: $("#employee-id").text(),
-            assigneeRole: $("#assignee-role").text(),
-            scheduleStatus: $("#assign-client-status").val(),
-            initialAssessmentDate: $("#assign-client-initial-assessment-date").val(),
-            startTime: $("#assign-client-assessment-start-time").val(),
-            endTime: $("#assign-client-assessment-end-time").val(),
-            notes: $.trim($("#assign-client-notes").val()) || null
-        };
-    }
 });
+
+/* Get Initial Assessment Schedule Data */
+function getAssignmentData() {
+    return {
+        clientId: $("#clientIdValue").text(),
+        employeeId: $("#employee-id").text(),
+        scheduleStatus: $("#assign-client-status").val(),
+        assessmentDate: $("#assign-client-initial-assessment-date").val(),
+        notes: $.trim($("#assign-client-notes").val()) || null,
+        slots: [{
+            startTime: $("#assign-client-assessment-start-time").val(),
+            endTime: $("#assign-client-assessment-end-time").val()
+        }]
+    };
+}
+
+/* Load review */
+function loadReview() {
+    $("#clientFullName").text($("#clientName").text() || "—");
+    $("#reviewAssignee").text(
+        getSelectedText("assign-client-to")
+    );
+    $("#reviewAssigneeRole").text($("#assignee-role").text() || "—");
+
+    $("#reviewScheduleStatus").text(getSelectedText("assign-client-status"));
+    $("#reviewInitialAssessmentDate").text($("#assign-client-initial-assessment-date").val() || "—");
+    $("#reviewStartTime").text(
+        formatTime($("#assign-client-assessment-start-time").val())
+    );
+    $("#reviewEndTime").text(
+        formatTime($("#assign-client-assessment-end-time").val())
+    );
+    $("#reviewNotes").text($.trim($("#assign-client-notes").val()) || "—");
+}
+
+function getSelectedText(id) {
+    const $select = $("#" + id);
+
+    if (!$select.length || !$select.val()) {
+        return "—";
+    }
+
+    return $select.find("option:selected").text();
+}
+
+// Validation
+function validateForm() {
+    let valid = true;
+
+    $(".required-field").each(function () {
+        const $field = $(this);
+        const $error = $field.parent().next(".field-error");
+
+        if (!$field.val()) {
+            $field.addClass("is-invalid");
+            $error.addClass("show");
+            valid = false;
+        } else {
+            $field.removeClass("is-invalid");
+            $error.removeClass("show");
+        }
+    });
+
+    return valid;
+}
 
 function getClientByClientID(assignmentId){
     $.ajax({
@@ -207,7 +207,7 @@ function getClientByClientID(assignmentId){
 function saveInitialAssessment(request) {
 
     $.ajax({
-        url: "/api/v1/client/save-initial-assessment",
+        url: "/api/v1/assessment/save-initial-assessment",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(request),

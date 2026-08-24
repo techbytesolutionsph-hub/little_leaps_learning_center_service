@@ -445,7 +445,7 @@ public class ClientManagementService {
                 .guardianEmail(guardian.getEmail())
                 .guardianContactNo(guardian.getContactNumber())
 
-                .currentAssignmentCount(assigmentHistory.size())
+                .currentAssignmentCount(activeCount)
                 .currentActiveCount(activeCount)
                 .currentEndedCount(endedCount)
 
@@ -494,7 +494,7 @@ public class ClientManagementService {
                 .build();
     }
 
-    private List<AssignedClientResponse.AssignmentHistoryResponse> buildAssignmentHistories(List<AssignmentHistory> assigmentHistory){
+    public List<AssignedClientResponse.AssignmentHistoryResponse> buildAssignmentHistories(List<AssignmentHistory> assigmentHistory){
         return assigmentHistory.stream()
                 .sorted(Comparator.comparing(
                         AssignmentHistory::getEventDateTime,
@@ -596,7 +596,7 @@ public class ClientManagementService {
                 .toList();
     }
 
-    private String createDescription(AppEmployeeProfile appEmployeeProfile, AssignClientRequest request){
+    public String createDescription(AppEmployeeProfile appEmployeeProfile, AssignClientRequest request){
         return "Client assigned to "
                 + appEmployeeProfile.getFirstName()
                 + " "
@@ -606,7 +606,7 @@ public class ClientManagementService {
                 + ".";
     }
 
-    private AppEmployeeProfile findAppEmployeeProfileByEmployeeId(String uuid, String employeeId) throws ServiceException {
+    public AppEmployeeProfile findAppEmployeeProfileByEmployeeId(String uuid, String employeeId) throws ServiceException {
         return appEmployeeProfileRepository
                 .findByEmployeeId(employeeId)
                 .orElseThrow(() -> {
@@ -615,7 +615,7 @@ public class ClientManagementService {
                 });
     }
 
-    private AppClientProfile findAppClientProfileByClientId(String uuid, String clientId) throws ServiceException {
+    public AppClientProfile findAppClientProfileByClientId(String uuid, String clientId) throws ServiceException {
         return clientProfileRepository.findByClientId(clientId)
                 .orElseThrow(() -> {
                     loggingService.error(uuid, getClass().getName(), "Client not found with ID: " + clientId, HttpStatus.NOT_FOUND.value());
