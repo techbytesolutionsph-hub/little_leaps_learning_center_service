@@ -15,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class InitialAssessmentResponse {
 
+    private String initialAssessmentId;
     private LocalDate assessmentDate;
     private ScheduleStatus scheduleStatus;
     private String notes;

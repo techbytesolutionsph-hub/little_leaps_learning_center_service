@@ -24,6 +24,7 @@ import ph.com.lllc.repository.ClientProfileRepository;
 import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.db.SequenceGeneratorService;
 import ph.com.lllc.service.util.IdGeneratorUtils;
+import ph.com.lllc.service.util.logging.LoggingService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,6 +43,7 @@ public class AssessmentScheduleService {
     private final ClientInitialAssessmentScheduleRepository clientInitialAssessmentScheduleRepository;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final IdGeneratorUtils idGeneratorUtils;
+    private final LoggingService loggingService;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
@@ -108,6 +110,16 @@ public class AssessmentScheduleService {
                 .map(this::buildInitialAssessmentResponse)
                 .toList();
     }
+
+    public InitialAssessmentResponse findByInitialAssessmentId(String uuid, String initialAssessmentId) throws ServiceException {
+        ClientInitialAssessmentSchedule schedule = clientInitialAssessmentScheduleRepository.findByInitialAssessmentId(initialAssessmentId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Initial assessment schedule not found with ID: " + initialAssessmentId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Initial assessment schedule not found with ID: " + initialAssessmentId);
+                });
+        return this.buildInitialAssessmentResponse(schedule);
+    }
+
     private InitialAssessmentResponse buildInitialAssessmentResponse(ClientInitialAssessmentSchedule response){
 
         AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
@@ -124,6 +136,7 @@ public class AssessmentScheduleService {
 
 
         return InitialAssessmentResponse.builder()
+                .initialAssessmentId(response.getInitialAssessmentId())
                 .assessmentDate(response.getAssessmentDate())
                 .scheduleStatus(response.getStatus())
                 .notes(response.getNotes())

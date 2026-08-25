@@ -1,0 +1,333 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-view-initial-assessment(assessment)">
+        <!-- View Initial Assessment - START -->
+        <div class="assignment-page">
+            <!-- CLIENT SUMMARY CARD -->
+            <section class="client-summary-card">
+                <!-- Client Avatar -->
+                <div class="client-avatar-wrapper">
+                    <img th:src="${assessment.clientProfilePicture != null ? assessment.clientProfilePicture : '/img/base/default-profile.png'}"
+                         alt="Zoe Garcia" class="client-avatar">
+                </div>
+
+                <!-- Client Information -->
+                <div class="client-information">
+                    <div class="client-name-row">
+                        <h2 class="client-name" th:text="${assessment.clientFullName}">
+                            Zoe Garcia
+                        </h2>
+
+                        <span class="client-id-badge" th:text="${assessment.initialAssessmentId}">
+                            CLI-00045
+                        </span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        DOB:&nbsp;<span th:text="${assessment.clientBirthDate}">2018-05-12</span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fas fa-venus-mars"></i>
+                        Gender:&nbsp;<span th:text="${#strings.capitalize(assessment.clientGender.name().toLowerCase())}">
+                                    Male
+                                </span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-regular fa-calendar"></i>
+                        Enrollment Date:&nbsp;<span th:text="${assessment.dateEnrolled}">2026-07-28</span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-regular fa-user"></i>
+                        Guardian:&nbsp;<span th:text="${assessment.guardianFullName}">Maria Garcia</span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-solid fa-phone"></i>
+                        Contact No.:&nbsp;<span th:text="${assessment.guardianContactNo}">09171234567</span>
+                    </div>
+                </div>
+
+                <!-- Assessment Date and Time -->
+                <div class="summary-stat">
+                    <div class="summary-stat-icon program-icon">
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+
+                    <div class="summary-stat-content">
+                        <div class="summary-stat-label">
+                            Assessment Date and Time
+                        </div>
+                        <div class="program-name">
+                            <span th:text="${#temporals.format(assessment.assessmentDate, 'MMMM dd, yyyy')}">
+                                August 24, 2026
+                            </span>
+                            <br>
+                            <span th:text="${#temporals.format(assessment.slots[0].startTime, 'hh:mm a') + ' - ' + #temporals.format(assessment.slots[0].endTime, 'hh:mm a')}" style="font-size: 11px">
+                                01:00 PM - 03:00 PM
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Program -->
+                <div class="summary-stat">
+                    <div class="summary-stat-icon program-icon">
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+
+                    <div class="summary-stat-content">
+                        <div class="summary-stat-label">
+                            Program
+                        </div>
+                        <div class="program-name" th:text="${assessment.programType}">
+                            Speech Therapy
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Case Manager -->
+                <div class="summary-stat case-manager-stat">
+                    <div class="summary-stat-icon manager-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="summary-stat-content">
+                        <div class="summary-stat-label">
+                            Case Manager
+                        </div>
+                        <div class="manager-name" th:text="${assessment.assigneeFullName}">
+                            John Cruz
+                        </div>
+                        <div class="summary-stat-subtext" th:text="${assessment.assigneePosition}">
+                            Case Manager
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- MAIN CONTENT -->
+            <div class="assignment-content">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <!-- ASSIGNMENT DETAILS  -->
+                    <section class="content-card assignment-details-card">
+                        <div class="card-title">
+                            <i class="fas fa-users"></i>
+                            <span>Initial Assessment Schedule Details</span>
+                        </div>
+
+                        <div class="details-table">
+                            <!-- Assignment ID -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Initial Assessment ID
+                                </div>
+
+                                <div class="details-value" th:text="${assessment.initialAssessmentId}">
+                                    IA-2026-00001
+                                </div>
+                            </div>
+
+                            <!-- Assign To -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Assign To
+                                </div>
+
+                                <div class="details-value">
+                                    <div class="employee-summary">
+                                        <img  th:src="${assessment.assigneeProfilePicture != null ? assessment.assigneeProfilePicture : '/img/base/default-profile.png'}"
+                                              alt="Sarah Dela Cruz" class="employee-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" th:text="${assessment.assigneeFullName}">
+                                                Mark Andrie Alcantara
+                                            </div>
+
+                                            <div class="employee-position" th:text="${assessment.assigneePosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Assignment Type -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Assignee Role
+                                </div>
+
+                                <div class="details-value">
+                                    <span class="assignment-type-badge" th:text="${assessment.assignmentRole.getDisplayName()}">
+                                        Primary Case Manager
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Start Date -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Diagnosis Concerned
+                                </div>
+
+                                <div class="details-value"
+                                     th:text="${#strings.listJoin(assessment.diagnosisConcerns.![displayName], ', ')}">
+                                    Behavioral Concerns, ASD, Speech Delay
+                                </div>
+                            </div>
+
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Assessment Date and Time
+                                </div>
+
+                                <div class="details-value"
+                                     th:text="${#temporals.format(assessment.assessmentDate, 'MMMM dd, yyyy') + ' ' + #temporals.format(assessment.slots[0].startTime, 'hh:mm a') + ' - ' + #temporals.format(assessment.slots[0].endTime, 'hh:mm a')}">
+                                    August 24, 2026 01:00 PM - 03:00 PM
+                                </div>
+                            </div>
+
+                            <!-- Expected End Date -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Branch
+                                </div>
+
+                                <div class="details-value" th:text="${assessment.branch}">
+                                    Catanauan Quezon
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Status
+                                </div>
+
+                                <div class="details-value">
+                                    <span class="status-badge status-active" th:text="${#strings.capitalize(assessment.scheduleStatus.name().toLowerCase())}">
+                                        SCHEDULED
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="details-row details-row-notes">
+                                <div class="details-label">
+                                    Notes
+                                </div>
+
+                                <div class="details-value notes-value" th:text="${assessment.notes}">
+                                    Primary therapist for speech and
+                                    behavioral intervention.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="right-column">
+                    <!-- ASSIGNMENT TIMELINE -->
+                    <section class="content-card timeline-card">
+                        <div class="card-title">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Assignment Timeline</span>
+                        </div>
+
+                        <div class="timeline-container">
+                            <div class="timeline-item"
+                                 th:each="history, iterStat : ${assessment.history}"
+                                 th:classappend="${iterStat.last} ? ' last' : ''">
+
+                                <div class="timeline-marker timeline-marker-green">
+                                    <span></span>
+                                </div>
+
+                                <div class="timeline-content">
+                                    <div class="timeline-heading"
+                                         th:text="${#strings.capitalize(history.action.name().toLowerCase())}">
+                                        Assigned
+                                    </div>
+
+                                    <div class="timeline-date"
+                                         th:text="${#temporals.format(history.eventDateTime, 'MMMM dd, yyyy hh:mm a')}">
+                                        August 12, 2026 11:45 PM
+                                    </div>
+                                </div>
+
+                                <div class="timeline-description"
+                                     th:text="${history.description}">
+                                    Client assigned to Mark Andrie Alcantara as Primary Case Manager.
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ASSIGNMENT HISTORY -->
+                    <section class="content-card history-card">
+                        <div class="card-title">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Assignment History</span>
+                        </div>
+
+                        <div class="history-table-wrapper">
+                            <table class="history-table">
+                                <thead>
+                                    <tr>
+                                        <th>Action</th>
+                                        <th>Date &amp; Time</th>
+                                        <th>By</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="history : ${assessment.history}">
+                                        <td>
+                                            <strong th:text="${#strings.capitalize(history.action.name().toLowerCase().replace('_', ' '))}">
+                                                Assigned
+                                            </strong>
+                                        </td>
+
+                                        <td th:text="${#temporals.format(history.eventDateTime, 'MMMM dd, yyyy hh:mm a')}">
+                                            August 12, 2026 11:45 PM
+                                        </td>
+
+                                        <td th:text="${history.assignedByFullName}">
+                                            Glenn Mark Anduiza
+                                        </td>
+
+                                        <td th:text="${history.description}">
+                                            Client assigned to Mark Andrie Alcantara as Primary Case Manager.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="history-button-container">
+                            <button type="button" class="view-history-btn" id="viewAllHistoryBtn">
+                                <i class="fa-regular fa-eye"></i>
+                                <span>View All History</span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <!-- View Initial Assessment - END -->
+    </div>
+</html>

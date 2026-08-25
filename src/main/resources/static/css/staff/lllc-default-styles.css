@@ -9590,6 +9590,10 @@ body.sidebar-toggled footer.sticky-footer{
     }
 }
 
+#upgradingProgramTable td,
+#upgradingProgramTable th,
+#neurodevAssessmentTable td,
+#neurodevAssessmentTable th,
 #initialAssessmentTable td,
 #initialAssessmentTable th,
 #regularAssessmentTable td,

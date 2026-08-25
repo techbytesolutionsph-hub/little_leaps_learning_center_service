@@ -1,0 +1,371 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-initial-assessment-main(assessments)">
+        <!-- Assessment Main - START -->
+        <div class="row">
+            <!-- Total Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/total-initial-assessment-scheduled.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder  mb-2">
+                                    Initial Assessment Scheduled
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    24
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Total Scheduled
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Currently Active Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/total-assessment-scheduled.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Therapy Session Scheduled
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    20
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Total Scheduled
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total On Leave Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/upgrading-program-icon.svg" width="45" height="45" alt="On Leave">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Upgrading Program Scheduled
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    2
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Total Scheduled
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Resigned Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/neurodevelopmental-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Neurodev Assessment Scheduled
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    2
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Total Scheduled
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-file-lines mr-2"></i> Initial Assessment Records
+                </h6>
+                <a th:href="@{/app/portal/client-management/client-schedule/initial-assessment}"
+                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                   id="add-initial-assessment-schedule-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add Assessment
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="initialAssessmentTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client Info</th>
+                                <th>Assessment Date</th>
+                                <th>Assigned Case Manager</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="assessment : ${assessments}">
+                                <td data-label="ID" th:text="${assessment.initialAssessmentId}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${assessment.clientProfilePicture != null ? assessment.clientProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${assessment.clientFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assessment.guardianEmail}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assessment.guardianContactNo}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assessment Date"
+                                    th:text="${#temporals.format(assessment.assessmentDate, 'MMMM dd, yyyy')}">
+                                </td>
+                                <td data-label="Assigned Case Manager">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${assessment.assigneeProfilePicture != null ? assessment.assigneeProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${assessment.assigneeFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assessment.assigneePosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <!-- Scheduled -->
+                                    <span class="status-badge badge-active"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'SCHEDULED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Scheduled
+                                    </span>
+
+                                    <!-- Pending -->
+                                    <span class="status-badge badge-warning"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'PENDING'}">
+                                        <i class="bi bi-clock-fill mr-1"></i> Pending
+                                    </span>
+
+                                    <!-- Completed -->
+                                    <span class="status-badge badge-success"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'COMPLETED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Completed
+                                    </span>
+
+                                    <!-- Cancelled -->
+                                    <span class="status-badge badge-danger"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'CANCELLED'}">
+                                        <i class="bi bi-x-circle-fill mr-1"></i> Cancelled
+                                    </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                      th:if="${assessment.scheduleStatus == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i> Unassigned
+                                    </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/client-management/client-schedule/view-initial-assessment?id=${assessment.initialAssessmentId}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-eye mr-1"></i> View
+                                        </a>
+
+                                        <button th:if="${assessment.scheduleStatus == null or assessment.scheduleStatus.name() != 'COMPLETED'}"
+                                                class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-check-circle mr-1"></i> Complete
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-calendar-alt mr-2"></i> Therapy Session Records
+                </h6>
+                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                   id="add-assessment-schedule-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add Session
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="regularAssessmentTable">
+                        <thead>
+                            <tr>
+                                <th>Client ID</th>
+                                <th>Client Info</th>
+                                <th>Date Enrolled</th>
+                                <th>Guardian/Parent Name</th>
+                                <th>Diagnosis</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fa fa-angle-double-up mr-2"></i> Upgrading Program Records
+                </h6>
+                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                   id="add-upgrading-program-schedule-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add Program
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="upgradingProgramTable">
+                        <thead>
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Client Info</th>
+                            <th>Date Enrolled</th>
+                            <th>Guardian/Parent Name</th>
+                            <th>Diagnosis</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fa-solid fa-brain mr-2"></i> Neurodev Assessment Records
+                </h6>
+                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                   class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                   id="add-neurodev-assessment-schedule-btn" style="text-decoration: none">
+
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add Assessment
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="neurodevAssessmentTable">
+                        <thead>
+                        <tr>
+                            <th>Client ID</th>
+                            <th>Client Info</th>
+                            <th>Date Enrolled</th>
+                            <th>Guardian/Parent Name</th>
+                            <th>Diagnosis</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Assessment Main - END -->
+    </div>
+</html>

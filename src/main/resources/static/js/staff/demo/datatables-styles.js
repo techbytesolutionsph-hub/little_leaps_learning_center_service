@@ -56,34 +56,34 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No regular assessment records found"
+      emptyTable: "No therapy session records found"
     }
   });
 
-  // $('#sendFundsTable').DataTable({
-  //   pageLength: 5,
-  //   lengthMenu: [
-  //     [5, 10, 25, 50, 100],
-  //     [5, 10, 25, 50, 100]
-  //   ],
-  //   order: [[0, 'desc']],
-  //   language: {
-  //     emptyTable: "No PayMongo send funds records found"
-  //   }
-  // });
-  //
-  // $('#totalPayoutTable').DataTable({
-  //   pageLength: 5,
-  //   lengthMenu: [
-  //     [5, 10, 25, 50, 100],
-  //     [5, 10, 25, 50, 100]
-  //   ],
-  //   order: [[0, 'desc']],
-  //   language: {
-  //     emptyTable: "No PayMongo payout records found"
-  //   }
-  // });
-  //
+  $('#upgradingProgramTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: "No upgrading program records found"
+    }
+  });
+
+  $('#neurodevAssessmentTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: "No Neurodevelopmental assessment records found"
+    }
+  });
+
   // $('#pendingPayoutTable').DataTable({
   //   pageLength: 5,
   //   lengthMenu: [

@@ -16,6 +16,7 @@ import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
+import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
@@ -69,8 +70,8 @@ public class PortalViewController {
         return "staff/clients/registry/add/index";
     }
 
-    @GetMapping(value = "/client-management/registry/view-client/{clientId}")
-    public String viewClientRegistryPage(Model model, @PathVariable("clientId") String clientId) throws ServiceException {
+    @GetMapping(value = "/client-management/registry/view-client")
+    public String viewClientRegistryPage(Model model, @RequestParam("id") String clientId) throws ServiceException {
         this.setupPage(model, "clients", "Client Profile");
 
         ClientRegistrationResponse client = portalFrontService.getClientProfileByClientId(clientId);
@@ -119,24 +120,34 @@ public class PortalViewController {
         return "staff/clients/assignment/assign/index";
     }
 
-    @GetMapping(value = "/client-management/assessment-schedule")
+    @GetMapping(value = "/client-management/client-schedule")
     public String clientAssessmentSchedulePage(Model model) {
-        this.setupPage(model, "clients", "Assessment Schedule");
+        this.setupPage(model, "clients", "Client Schedule");
 
-        List<AssignedClientResponse> assignments =  portalFrontService.getAssignedClients();
-        model.addAttribute("assignments", assignments);
+        List<InitialAssessmentResponse> assessments = portalFrontService.getInitialAssessmentSchedule();
+        model.addAttribute("assessments", assessments);
 
-        return "staff/clients/assessment-schedule/index";
+        return "staff/clients/client-schedule/index";
     }
 
-    @GetMapping(value = "/client-management/assessment-schedule/initial-assessment")
+    @GetMapping(value = "/client-management/client-schedule/initial-assessment")
     public String addInitialAssessmentSchedulePage(Model model) {
         this.setupPage(model, "clients", "Add Initial Assessment Schedule");
 
         Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
         model.addAttribute("caseManagers", caseManagers);
 
-        return "staff/clients/assessment-schedule/assessment/add/index";
+        return "staff/clients/client-schedule/initial-assessment/add/index";
+    }
+
+    @GetMapping(value = "/client-management/client-schedule/view-initial-assessment")
+    public String viewInitialAssessmentSchedulePage(Model model, @RequestParam("id") String initialAssessmentId) throws ServiceException {
+        this.setupPage(model, "clients", "View Initial Assessment Schedule");
+
+        InitialAssessmentResponse assessment = portalFrontService.findByInitialAssessmentId("", initialAssessmentId);
+        model.addAttribute("assessment", assessment);
+
+        return "staff/clients/client-schedule/initial-assessment/view/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

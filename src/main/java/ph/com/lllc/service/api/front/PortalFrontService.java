@@ -8,9 +8,11 @@ import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
+import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.admin.UserAccountService;
+import ph.com.lllc.service.api.clients.AssessmentScheduleService;
 import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
 
@@ -23,6 +25,7 @@ public class PortalFrontService {
 
     private final UserAccountService userAccountService;
     private final ClientManagementService clientManagementService;
+    private final AssessmentScheduleService assessmentScheduleService;
     private final EmploymentRegistryService employmentRegistryService;
 
     public List<AppUserResponse> getAllUsers(){
@@ -101,5 +104,13 @@ public class PortalFrontService {
 
     public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
         return clientManagementService.findByAssignmentId(uuid, assignmentId);
+    }
+
+    public List<InitialAssessmentResponse> getInitialAssessmentSchedule() {
+        return assessmentScheduleService.getInitialAssessmentSchedule();
+    }
+
+    public InitialAssessmentResponse findByInitialAssessmentId(String uuid, String initialAssessmentId) throws ServiceException {
+        return assessmentScheduleService.findByInitialAssessmentId(uuid, initialAssessmentId);
     }
 }

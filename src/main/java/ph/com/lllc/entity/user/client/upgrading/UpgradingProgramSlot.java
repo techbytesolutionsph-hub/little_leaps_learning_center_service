@@ -1,8 +1,11 @@
-package ph.com.lllc.entity.user.client.schedule;
+package ph.com.lllc.entity.user.client.upgrading;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -10,14 +13,14 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_therapy_slot")
+@Table(name = "lllc_app_upgrading_program_slot")
 @NoArgsConstructor
 @AllArgsConstructor
-public class TherapySlot {
+public class UpgradingProgramSlot {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "therapy_slot_id")
+    @Column(name = "upgrading_program_slot_id")
     private Long id;
 
     /**
@@ -44,6 +47,6 @@ public class TherapySlot {
      */
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "therapy_session_schedule_id", nullable = false)
-    private ClientTherapySchedule therapySchedule;
+    @JoinColumn(name = "upgrading_program_session_id", nullable = false)
+    private ClientUpgradingProgramSchedule upgradingProgramSchedule;
 }

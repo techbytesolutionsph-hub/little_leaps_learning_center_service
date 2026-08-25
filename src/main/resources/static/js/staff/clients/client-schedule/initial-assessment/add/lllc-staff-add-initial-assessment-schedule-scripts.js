@@ -219,7 +219,7 @@ function saveInitialAssessment(request) {
                 response.returnMessage,
                 () => {
                     window.location.href =
-                        "/app/portal/client-management/assessment-schedule";
+                        "/app/portal/client-management/client-schedule";
                 }
             );
         },

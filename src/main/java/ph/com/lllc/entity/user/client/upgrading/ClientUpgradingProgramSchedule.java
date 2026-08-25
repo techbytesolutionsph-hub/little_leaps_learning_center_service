@@ -1,4 +1,4 @@
-package ph.com.lllc.entity.user.client.schedule;
+package ph.com.lllc.entity.user.client.upgrading;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -17,14 +17,14 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "lllc_app_client_therapy_schedule")
+@Table(name = "lllc_app_client_upgrading_program_schedule")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ClientTherapySchedule {
+public class ClientUpgradingProgramSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "session_id")
+    @Column(name = "upgrading_program_id")
     private Long id;
 
     /**
@@ -53,8 +53,8 @@ public class ClientTherapySchedule {
      * FRIDAY 3-5
      */
     @JsonManagedReference
-    @OneToMany(mappedBy = "therapySchedule", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TherapySlot> scheduleSlots;
+    @OneToMany(mappedBy = "upgradingProgramSchedule", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UpgradingProgramSlot> upgradingProgramSlots;
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
