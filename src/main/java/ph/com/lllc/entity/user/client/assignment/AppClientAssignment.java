@@ -58,6 +58,14 @@ public class AppClientAssignment implements Serializable {
     @Column(name = "assignment_id", nullable = false)
     private String assignmentId;
 
+    /**
+     * Assignee (Case Manager or Behavioral Therapist)
+     *
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "assignee_id")
+    private AppEmployeeProfile assignee;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "assignment_role", nullable = false)
     private AssignmentRole assignmentRole;

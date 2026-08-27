@@ -17,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class AssignClientRequest {
 
+    private String assignmentId;
     private String clientId;
     private String employeeId;
     private AssignmentRole role;

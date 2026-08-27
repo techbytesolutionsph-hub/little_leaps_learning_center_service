@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-assign-client(staff)">
+    <div th:fragment="staff-edit-assign-client(assignmment, staff)">
         <!-- Assign Client - START -->
         <div class="assignment-page">
             <div class="stepper-card">
@@ -70,40 +70,42 @@
                         </div>
 
                         <!-- CLIENT -->
-                        <div class="client-card" id="clientCard" style="display: none;">
+                        <div class="client-card" id="clientCard" >
+                            <input type="hidden" id="assignment-id" th:value="${assignment.assignmentId}">
 
                             <div class="client-avatar">
-                                <img id="clientAvatar" src="" alt="Client">
+                                <img id="clientAvatar" th:src="${assignment.clientProfilePicture}" alt="Client">
                             </div>
 
                             <!-- CLIENT INFO CARD -->
                             <div class="client-info">
-                                <div class="client-name" id="clientName"></div>
+                                <div class="client-name" id="clientName" th:text="${assignment.clientFullName}"></div>
 
                                 <div class="client-id">
                                     <input type="hidden" id="selected-client-id">
                                     <span class="client-label">Client ID:</span>
-                                    <span class="client-value" id="clientIdValue"></span>
+                                    <span class="client-value" id="clientIdValue" th:text="${assignment.clientId}"></span>
                                 </div>
 
                                 <div class="client-meta">
                                     <span class="client-label">DOB:</span>
-                                    <span class="client-value" id="clientDob"></span>
+                                    <span class="client-value" id="clientDob"
+                                          th:text="${#temporals.format(assignment.clientBirthDate, 'MMMM dd, yyyy')}"></span>
                                 </div>
 
                                 <div class="client-meta">
                                     <span class="client-label">Gender:</span>
-                                    <span class="client-value" id="clientGender"></span>
+                                    <span class="client-value" id="clientGender" th:text="${#strings.capitalize(#strings.toLowerCase(assignment.clientGender))}"></span>
                                 </div>
 
                                 <div class="client-meta">
                                     <span class="client-label">Guardian:</span>
-                                    <span class="client-value" id="clientGuardian"></span>
+                                    <span class="client-value" id="clientGuardian" th:text="${assignment.guardianFullName}"></span>
                                 </div>
 
                                 <div class="client-meta">
                                     <span class="client-label">Contact No:</span>
-                                    <span class="client-value" id="clientContact"></span>
+                                    <span class="client-value" id="clientContact" th:text="${assignment.guardianContactNo}"></span>
                                 </div>
                             </div>
 
@@ -113,7 +115,7 @@
                         </div>
 
                         <!-- CLIENT SUMMARY -->
-                        <div class="summary-card" id="clientSummary" style="display: none;">
+                        <div class="summary-card" id="clientSummary">
 
                             <div class="summary-title">
                                 Client Summary
@@ -125,7 +127,7 @@
                                     Program Type
                                 </div>
 
-                                <div class="summary-value" id="programType"></div>
+                                <div class="summary-value" id="programType" th:text="${assignment.programType}"></div>
                             </div>
 
                             <div class="summary-row">
@@ -134,7 +136,8 @@
                                     Date Enrolled
                                 </div>
 
-                                <div class="summary-value" id="summaryDateEnrolled"></div>
+                                <div class="summary-value" id="summaryDateEnrolled"
+                                     th:text="${#temporals.format(assignment.dateEnrolled, 'MMMM dd, yyyy')}"></div>
                             </div>
 
                             <div class="summary-row">
@@ -143,7 +146,10 @@
                                     Status
                                 </div>
 
-                                <div class="summary-value" id="summaryStatus"></div>
+                                <div class="summary-value"
+                                     id="summaryStatus"
+                                     th:text="${#strings.capitalize(#strings.toLowerCase(assignment.status))}">
+                                </div>
                             </div>
 
                             <div class="summary-row">
@@ -152,7 +158,7 @@
                                     Branch
                                 </div>
 
-                                <div class="summary-value" id="summaryBranch"></div>
+                                <div class="summary-value" id="summaryBranch" th:text="${assignment.branch}"></div>
                             </div>
 
                             <a href="#" class="profile-link" id="clientProfileLink">
@@ -184,7 +190,8 @@
                                         <option value="" selected disabled>Select therapist</option>
                                         <option th:each="employee : ${staff}"
                                                 th:value="${employee.key}"
-                                                th:text="${employee.value}">
+                                                th:text="${employee.value}"
+                                                th:selected="${employee.key == assignment.employeeId}">
                                         </option>
                                     </select>
                                 </div>
@@ -197,9 +204,20 @@
 
                                     <select class="form-select required-field" id="assign-client-role">
                                         <option value="" selected disabled>Select role</option>
-                                        <option value="PRIMARY_BEHAVIORAL_THERAPIST">Primary Behavioral Therapist</option>
-                                        <option value="SECONDARY_BEHAVIORAL_THERAPIST">Secondary Behavioral Therapist</option>
-                                        <option value="PRIMARY_CASE_MANAGER">Primary Case Manager</option>
+                                        <option value="PRIMARY_BEHAVIORAL_THERAPIST"
+                                                th:selected="${assignment.assignmentRole.toString() == 'PRIMARY_BEHAVIORAL_THERAPIST'}">
+                                            Primary Behavioral Therapist
+                                        </option>
+
+                                        <option value="SECONDARY_BEHAVIORAL_THERAPIST"
+                                                th:selected="${assignment.assignmentRole.toString() == 'SECONDARY_BEHAVIORAL_THERAPIST'}">
+                                            Secondary Behavioral Therapist
+                                        </option>
+
+                                        <option value="PRIMARY_CASE_MANAGER"
+                                                th:selected="${assignment.assignmentRole.toString() == 'PRIMARY_CASE_MANAGER'}">
+                                            Primary Case Manager
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="field-error">Please select a role.</div>
@@ -214,65 +232,102 @@
                                 <div class="multi-select-wrapper" id="diagnosis-concern-wrapper">
 
                                     <button type="button" class="multi-select-button" id="assign-client-diagnosis-concern">
-                                        <span class="multi-select-placeholder">
-                                            Select diagnosis concern
-                                        </span>
+                                            <span class="multi-select-placeholder"
+                                                  id="diagnosis-concern-placeholder">
+                                                Select diagnosis concern
+                                            </span>
+
                                         <i class="bi bi-chevron-down"></i>
                                     </button>
 
-                                    <div class="multi-select-dropdown" id="diagnosis-concern-dropdown">
+                                    <div class="multi-select-dropdown"
+                                         id="diagnosis-concern-dropdown">
+
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="SPEECH_DELAY">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="SPEECH_DELAY"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).SPEECH_DELAY)}">
                                             <span>Speech Delay</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="BEHAVIORAL_CONCERNS">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="BEHAVIORAL_CONCERNS"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).BEHAVIORAL_CONCERNS)}">
                                             <span>Behavioral Concerns</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="ASD">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="ASD"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).ASD)}">
                                             <span>ASD</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="ADHD">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="ADHD"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).ADHD)}">
                                             <span>ADHD</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns"value="LEARNING_DIFFICULTIES">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="LEARNING_DIFFICULTIES"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).LEARNING_DIFFICULTIES)}">
                                             <span>Learning Difficulties</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="GLOBAL_DEVELOPMENTAL_DELAY">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="GLOBAL_DEVELOPMENTAL_DELAY"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).GLOBAL_DEVELOPMENTAL_DELAY)}">
                                             <span>Global Developmental Delay</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="SENSORY_CONCERNS">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="SENSORY_CONCERNS"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).SENSORY_CONCERNS)}">
                                             <span>Sensory Concerns</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="SOCIAL_INTERACTION_DIFFICULTIES">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="SOCIAL_INTERACTION_DIFFICULTIES"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).SOCIAL_INTERACTION_DIFFICULTIES)}">
                                             <span>Social Interaction Difficulties</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="COMMUNICATION_SKILLS">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="COMMUNICATION_SKILLS"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).COMMUNICATION_SKILLS)}">
                                             <span>Communication Skills</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="DEVELOPMENTAL_DELAY">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="DEVELOPMENTAL_DELAY"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).DEVELOPMENTAL_DELAY)}">
                                             <span>Developmental Delay</span>
                                         </label>
 
                                         <label class="multi-select-option">
-                                            <input type="checkbox" name="diagnosisConcerns" value="INTELLECTUAL_DISABILITY">
+                                            <input type="checkbox"
+                                                   name="diagnosisConcerns"
+                                                   value="INTELLECTUAL_DISABILITY"
+                                                   th:checked="${assignment.diagnosisConcerns != null and assignment.diagnosisConcerns.contains(T(ph.com.lllc.enums.DiagnosisConcern).INTELLECTUAL_DISABILITY)}">
                                             <span>Intellectual Disability</span>
                                         </label>
                                     </div>
@@ -290,8 +345,13 @@
 
                                     <select class="form-select required-field" id="assign-client-status">
                                         <option value="" selected disabled>Select status</option>
-                                        <option value="ASSIGNED">Assigned</option>
-                                        <option value="REASSIGNED">Reassigned</option>
+                                        <option value="ASSIGNED" th:selected="${assignment.status.toString() == 'ASSIGNED'}">
+                                            Assigned
+                                        </option>
+
+                                        <option value="REASSIGNED" th:selected="${assignment.status.toString() == 'REASSIGNED'}">
+                                            Reassigned
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="field-error">Please select a role.</div>
@@ -301,7 +361,7 @@
                             <div class="form-group">
                                 <label for="assign-client-assign-date" class="form-label">Assigned Date<span class="required">*</span></label>
                                 <div class="date-input-wrapper">
-                                    <input type="date" class="form-control required-field" id="assign-client-assign-date">
+                                    <input type="date" class="form-control required-field" id="assign-client-assign-date" th:value="${assignment.assignedAt}">
                                     <i class="bi bi-calendar-event calendar-icon"></i>
                                 </div>
                                 <div class="field-error">Please select a start date.</div>
@@ -313,8 +373,15 @@
                                 <div class="select-wrapper">
                                     <select class="form-select required-field" id="assign-client-assign-branch">
                                         <option value="" selected disabled>Select assign branch</option>
-                                        <option value="San Juan Batangas">San Juan Batangas</option>
-                                        <option value="Catanauan Quezon">Catanauan Quezon</option>
+                                        <option value="San Juan Batangas"
+                                                th:selected="${assignment.branch == 'San Juan Batangas'}">
+                                            San Juan Batangas
+                                        </option>
+
+                                        <option value="Catanauan Quezon"
+                                                th:selected="${assignment.branch == 'Catanauan Quezon'}">
+                                            Catanauan Quezon
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="field-error">Please select a frequency.</div>
@@ -325,7 +392,7 @@
                                 <label for="assign-client-notes" class="form-label">Notes <span style="font-weight:400;">(Optional)</span></label>
                                 <div class="notes-wrapper">
                                     <textarea id="assign-client-notes" class="form-control" maxlength="500"
-                                              placeholder="Add notes or special instructions..."></textarea>
+                                              placeholder="Add notes or special instructions..." th:text="${assignment.notes}"></textarea>
                                     <span class="char-counter">
                                         <span id="charCount">0</span> / 500
                                     </span>
@@ -418,7 +485,7 @@
 
                     <div class="action-right">
                         <button type="button" class="action-btn btn-next" id="confirm-btn">
-                            Confirm Assignment
+                            Update Assignment
                             <i class="fa-solid fa-check"></i>
                         </button>
                     </div>

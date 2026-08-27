@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-initial-assessment-main(assessments)">
+    <div th:fragment="staff-initial-assessment-main(kpi, assessments)">
         <!-- Assessment Main - START -->
         <div class="row">
             <!-- Total Employees count -->
@@ -26,11 +26,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder  mb-2">
                                     Initial Assessment Scheduled
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalScheduledInitialAssessments.value}">
                                     24
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalScheduledInitialAssessments.message}">
                                         Total Scheduled
                                     </span>
                                 </div>
@@ -252,10 +252,10 @@
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
 
-                                        <button th:if="${assessment.scheduleStatus == null or assessment.scheduleStatus.name() != 'COMPLETED'}"
+                                        <a th:href="@{|/app/portal/client-management/client-schedule/edit-initial-assessment?id=${assessment.initialAssessmentId}|}"
                                                 class="btn-glossy-teal action-btn d-flex align-items-center">
-                                            <i class="bi bi-check-circle mr-1"></i> Complete
-                                        </button>
+                                            <i class="bi bi-pen mr-1"></i> Edit
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

@@ -6,7 +6,6 @@ body {
     margin: 0;
     background: #f7f9fb;
     color: #465266;
-    font-size: 14px;
 }
 
 button,
@@ -389,6 +388,7 @@ textarea {
 }
 
 .assignment-type-badge {
+    text-transform: capitalize;
     display: inline-flex;
     padding: 2px 8px;
     border-radius: 7px;
@@ -977,4 +977,8 @@ textarea.form-control {
 
 .multi-select-option span {
     line-height: 1.4;
+}
+
+#reviewAssigneeRole{
+    text-transform: capitalize;
 }

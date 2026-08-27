@@ -91,8 +91,8 @@ $(document).ready(function () {
 
         console.log("Confirmed assessment:", assessment);
 
-        /* Save Initial Assessment */
-        saveInitialAssessment(assessment);
+        /* Update Initial Assessment */
+        updateInitialAssessment(assessment);
     });
 
     $('#cancel-btn').on('click', function (e) {
@@ -111,8 +111,9 @@ $(document).ready(function () {
 /* Get Initial Assessment Schedule Data */
 function getAssignmentData() {
     return {
+        initialAssessmentId: $("#initial-assessment-id").val(),
         clientId: $("#clientIdValue").text(),
-        employeeId: $("#employee-id").text(),
+        employeeId: $("#employee-id").val(),
         scheduleStatus: $("#assign-client-status").val(),
         assessmentDate: $("#assign-client-initial-assessment-date").val(),
         notes: $.trim($("#assign-client-notes").val()) || null,
@@ -204,11 +205,11 @@ function getClientByClientID(assignmentId){
     });
 }
 
-function saveInitialAssessment(request) {
+function updateInitialAssessment(request) {
 
     $.ajax({
-        url: "/api/v1/assessment/save-initial-assessment",
-        type: "POST",
+        url: "/api/v1/assessment/update-initial-assessment",
+        type: "PUT",
         contentType: "application/json",
         data: JSON.stringify(request),
 
@@ -224,7 +225,7 @@ function saveInitialAssessment(request) {
             );
         },
         error: function(xhr, status, error) {
-            let message = "Unable to save initial assessment.";
+            let message = "Unable to update initial assessment.";
 
             if (xhr.responseJSON) {
 

@@ -80,8 +80,8 @@ public class PortalViewController {
         return "staff/clients/registry/view/index";
     }
 
-    @GetMapping(value = "/client-management/registry/edit-client/{clientId}")
-    public String editClientRegistryPage(Model model, @PathVariable("clientId") String clientId) throws ServiceException {
+    @GetMapping(value = "/client-management/registry/edit-client")
+    public String editClientRegistryPage(Model model, @RequestParam("id") String clientId) throws ServiceException {
         this.setupPage(model, "clients", "Edit Client");
 
         ClientRegistrationResponse client = portalFrontService.getClientProfileByClientId(clientId);
@@ -102,12 +102,27 @@ public class PortalViewController {
 
     @GetMapping(value = "/client-management/assignment/view-assignment")
     public String viewClientAssignmentPage(Model model, @RequestParam("id") String assignmentId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "clients", "View Assign Client");
 
-        AssignedClientResponse assignment = portalFrontService.findByAssignmentId("", assignmentId);
+        AssignedClientResponse assignment = portalFrontService.findByAssignmentId(uuid, assignmentId);
         model.addAttribute("assignment", assignment);
 
         return "staff/clients/assignment/view/index";
+    }
+
+    @GetMapping(value = "/client-management/assignment/edit-assignment")
+    public String editClientAssignmentPage(Model model, @RequestParam("id") String assignmentId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "Edit Assign Client");
+
+        Map<String, String> staff = portalFrontService.mapCaseManagerBehavioralTherapist();
+        model.addAttribute("staff", staff);
+
+        AssignedClientResponse assignment = portalFrontService.findByAssignmentId(uuid, assignmentId);
+        model.addAttribute("assignment", assignment);
+
+        return "staff/clients/assignment/edit/index";
     }
 
     @GetMapping(value = "/client-management/assignment/assign-client")
@@ -124,7 +139,10 @@ public class PortalViewController {
     public String clientAssessmentSchedulePage(Model model) {
         this.setupPage(model, "clients", "Client Schedule");
 
-        List<InitialAssessmentResponse> assessments = portalFrontService.getInitialAssessmentSchedule();
+        DashboardMetricsResponse kpi = portalFrontService.clientSchedulesKPIs();
+        model.addAttribute("kpi", kpi);
+
+        List<InitialAssessmentResponse> assessments = portalFrontService.getInitialAssessmentSchedules();
         model.addAttribute("assessments", assessments);
 
         return "staff/clients/client-schedule/index";
@@ -148,6 +166,19 @@ public class PortalViewController {
         model.addAttribute("assessment", assessment);
 
         return "staff/clients/client-schedule/initial-assessment/view/index";
+    }
+
+    @GetMapping(value = "/client-management/client-schedule/edit-initial-assessment")
+    public String editInitialAssessmentSchedulePage(Model model, @RequestParam("id") String initialAssessmentId) throws ServiceException {
+        this.setupPage(model, "clients", "Edit Initial Assessment Schedule");
+
+        Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
+        model.addAttribute("caseManagers", caseManagers);
+
+        InitialAssessmentResponse assessment = portalFrontService.findByInitialAssessmentId("", initialAssessmentId);
+        model.addAttribute("assessment", assessment);
+
+        return "staff/clients/client-schedule/initial-assessment/edit/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

@@ -60,6 +60,30 @@ $(document).ready(function () {
             .get();
     }
 
+    function updateDiagnosisConcernPlaceholder() {
+        const selected = [];
+
+        $('#diagnosis-concern-dropdown input[name="diagnosisConcerns"]:checked')
+            .each(function () {
+                selected.push($(this).siblings('span').text().trim());
+            });
+
+        const $placeholder = $('#diagnosis-concern-placeholder');
+
+        if (selected.length === 0) {
+            $placeholder.text('Select diagnosis concern');
+        } else {
+            $placeholder.text(selected.join(', '));
+        }
+    }
+
+    updateDiagnosisConcernPlaceholder();
+
+    $('#diagnosis-concern-dropdown input[name="diagnosisConcerns"]')
+        .on('change', function () {
+            updateDiagnosisConcernPlaceholder();
+        });
+
     $dropdown.on('change', 'input[name="diagnosisConcerns"]', function () {
         updateDiagnosisConcernText();
 

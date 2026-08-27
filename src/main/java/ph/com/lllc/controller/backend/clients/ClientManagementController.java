@@ -79,4 +79,12 @@ public class ClientManagementController {
         loggingService.info(uuid, this.getClass().getName(), "", "Assignment ID : " + assignmentId);
         return ResponseEntity.ok(clientManagementService.getAssignedClient(uuid, assignmentId));
     }
+
+    @Operation(summary = "Assign Client")
+    @PutMapping("/update-assign-client")
+    public ResponseEntity<CommonResponse> updateAssignClient(@Valid @RequestBody AssignClientRequest request, HttpServletRequest httpRequest) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "AssignClientRequest : " + request.toString());
+        return ResponseEntity.ok(clientManagementService.updateAssignClient(uuid, request, httpRequest));
+    }
 }

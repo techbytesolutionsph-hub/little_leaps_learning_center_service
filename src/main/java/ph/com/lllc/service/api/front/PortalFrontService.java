@@ -82,6 +82,18 @@ public class PortalFrontService {
                 .build();
     }
 
+    public DashboardMetricsResponse clientSchedulesKPIs(){
+        long initialAssessments = assessmentScheduleService.findAllScheduledInitialAssessments();
+        DashboardCardResponse totalInitialAssessments = DashboardCardResponse.builder()
+                .value(String.valueOf(initialAssessments))
+                .message("Total Scheduled")
+                .build();
+
+        return DashboardMetricsResponse.builder()
+                .totalScheduledInitialAssessments(totalInitialAssessments)
+                .build();
+    }
+
     public List<ClientRegistrationResponse> getClientProfiles(){
         return clientManagementService.getClientProfiles();
     }
@@ -106,8 +118,8 @@ public class PortalFrontService {
         return clientManagementService.findByAssignmentId(uuid, assignmentId);
     }
 
-    public List<InitialAssessmentResponse> getInitialAssessmentSchedule() {
-        return assessmentScheduleService.getInitialAssessmentSchedule();
+    public List<InitialAssessmentResponse> getInitialAssessmentSchedules() {
+        return assessmentScheduleService.getInitialAssessmentSchedules();
     }
 
     public InitialAssessmentResponse findByInitialAssessmentId(String uuid, String initialAssessmentId) throws ServiceException {

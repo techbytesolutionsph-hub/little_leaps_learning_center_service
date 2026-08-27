@@ -329,6 +329,12 @@ public class ClientManagementService {
         clientAssignment.setBranch(request.getAssignBranch());
         clientAssignment.setAssignedAt(request.getAssignedDate());
         clientAssignment.setNotes(request.getNotes());
+
+        /*
+         * Update assigned employee if applicable
+         */
+        clientAssignment.setAssignee(appEmployeeProfile);
+
         clientAssignment.setAppClientProfile(clientProfile);
 
         /*
@@ -384,6 +390,76 @@ public class ClientManagementService {
         return this.findByAssignmentId(uuid, assignmentId);
     }
 
+    @Transactional
+    public CommonResponse updateAssignClient(String uuid,
+            AssignClientRequest request, HttpServletRequest httpRequest) throws ServiceException {
+
+        AppClientProfile clientProfile = this.findAppClientProfileByClientId(uuid, request.getClientId());
+
+        AppEmployeeProfile appEmployeeProfile = this.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
+
+        /*
+         * Find existing assignment
+         */
+        AppClientAssignment clientAssignment = clientProfile.getAssignments()
+                .stream()
+                .filter(assignment ->
+                        assignment.getAssignmentId().equals(request.getAssignmentId()))
+                .findFirst()
+                .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND.value(), "Client assignment not found."));
+
+        /*
+         * Update assignment
+         */
+        clientAssignment.setAssignmentRole(request.getRole());
+        clientAssignment.setDiagnosisConcerns(request.getDiagnosisConcerns());
+        clientAssignment.setStatus(request.getAssignStatus());
+        clientAssignment.setBranch(request.getAssignBranch());
+        clientAssignment.setAssignedAt(request.getAssignedDate());
+        clientAssignment.setNotes(request.getNotes());
+
+        /*
+         * Update assigned employee if applicable
+         */
+        clientAssignment.setAssignee(appEmployeeProfile);
+
+        /*
+         * Update client assignment status
+         */
+        clientProfile.setAssignmentStatus(AssignmentStatus.ACTIVE);
+
+        /*
+         * Create assignment history
+         */
+        AssignmentHistory history = new AssignmentHistory();
+        history.setAction(AssignmentHistoryAction.UPDATED);
+        history.setDescription(this.createDescription(appEmployeeProfile, request));
+        history.setAssignee(appEmployeeProfile);
+        history.setAssignmentRole(request.getRole());
+        history.setAssignmentStatus(request.getAssignStatus());
+        history.setChangedBy(userAccountService.getLoggedInEmployee(httpRequest));
+        history.setAppClientProfile(clientProfile);
+
+        /*
+         * Add history to client
+         */
+        if (clientProfile.getAssignmentHistories() == null) {
+            clientProfile.setAssignmentHistories(new ArrayList<>());
+        }
+
+        clientProfile.getAssignmentHistories().add(history);
+
+        /*
+         * Save changes
+         */
+        clientProfileRepository.save(clientProfile);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.OK.value())
+                .returnMessage("Client assignment updated successfully!")
+                .build();
+    }
+
     public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
             AppClientAssignment assignment = appClientAssignmentRepository.findByAssignmentId(assignmentId)
                 .orElseThrow(() -> {
@@ -421,13 +497,23 @@ public class ClientManagementService {
                 ? currentAssignmentHistory.getAssignee()
                 : null;
 
-         Integer activeCount = Math.toIntExact(assigmentHistory.stream()
-                 .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ACTIVE)
-                 .count());
+        List<AppClientAssignment> assignments = client.getAssignments();
 
-        Integer endedCount = Math.toIntExact(assigmentHistory.stream()
-                .filter(history -> history.getAssignmentStatus() == AssignmentStatus.INACTIVE)
-                .count());
+        long activeCount = assignments.stream()
+                .filter(assignment -> assignment.getStatus() == AssignmentStatus.ASSIGNED)
+                .filter(assignment ->
+                        assignment.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER
+                                || assignment.getAssignmentRole() == AssignmentRole.PRIMARY_BEHAVIORAL_THERAPIST
+                                || assignment.getAssignmentRole() == AssignmentRole.SECONDARY_BEHAVIORAL_THERAPIST)
+                .count();
+
+        long endedCount = assignments.stream()
+                .filter(assignment -> assignment.getStatus() == AssignmentStatus.INACTIVE)
+                .filter(assignment ->
+                        assignment.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER
+                                || assignment.getAssignmentRole() == AssignmentRole.PRIMARY_BEHAVIORAL_THERAPIST
+                                || assignment.getAssignmentRole() == AssignmentRole.SECONDARY_BEHAVIORAL_THERAPIST)
+                .count();
 
         return AssignedClientResponse.builder()
                 .id(response.getId())
@@ -435,19 +521,19 @@ public class ClientManagementService {
 
                 .clientId(client.getClientId())
                 .clientProfilePicture(client.getProfileImageUrl())
-                .clientFullName(client.getFirstName() + " " + client.getLastName())
+                .clientFullName(client.getFirstName() + " " + client.getMiddleName() + " " + client.getLastName())
                 .clientBirthDate(response.getAppClientProfile().getBirthDate())
                 .clientAge(response.getAppClientProfile().getAge())
                 .clientGender(response.getAppClientProfile().getGender())
                 .dateEnrolled(response.getAppClientProfile().getDateEnrolled())
 
-                .guardianFullName(guardian.getFirstName() + " " + guardian.getLastName())
+                .guardianFullName(guardian.getFirstName() + " " + guardian.getMiddleName() + " " + guardian.getLastName())
                 .guardianEmail(guardian.getEmail())
                 .guardianContactNo(guardian.getContactNumber())
 
-                .currentAssignmentCount(activeCount)
-                .currentActiveCount(activeCount)
-                .currentEndedCount(endedCount)
+                .currentAssignmentCount(Math.toIntExact(activeCount))
+                .currentActiveCount(Math.toIntExact(activeCount))
+                .currentEndedCount(Math.toIntExact(endedCount))
 
                 .caseManagerFullName(
                         caseManager != null && caseManager.getAssignee() != null

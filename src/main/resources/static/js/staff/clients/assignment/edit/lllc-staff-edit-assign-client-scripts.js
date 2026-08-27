@@ -80,6 +80,32 @@ $(document).ready(function () {
             .get();
     }
 
+    function updateDiagnosisConcernPlaceholder() {
+        const selected = [];
+
+        $('#diagnosis-concern-dropdown input[name="diagnosisConcerns"]:checked')
+            .each(function () {
+                selected.push($(this).siblings('span').text().trim());
+            });
+
+        const $placeholder = $('#diagnosis-concern-placeholder');
+
+        if (selected.length === 0) {
+            $placeholder.text('Select diagnosis concern');
+        } else {
+            $placeholder.text(selected.join(', '));
+        }
+    }
+
+    // Initial load - important for EDIT
+    updateDiagnosisConcernPlaceholder();
+
+    // Update when checkbox changes
+    $('#diagnosis-concern-dropdown input[name="diagnosisConcerns"]')
+        .on('change', function () {
+            updateDiagnosisConcernPlaceholder();
+        });
+
     $dropdown.on('change', 'input[name="diagnosisConcerns"]', function () {
         updateDiagnosisConcernText();
 
@@ -212,10 +238,10 @@ $(document).ready(function () {
 
         const assignment = getAssignmentData();
 
-        console.log("Confirmed assignment:", assignment);
+        console.log("Update assignment:", assignment);
 
-        /* Save Assign Client */
-        assignClient(assignment);
+        /* Update Assign Client */
+        updateAssignClient(assignment);
     });
 
     $('#cancel-btn').on('click', function (e) {
@@ -233,7 +259,8 @@ $(document).ready(function () {
     // Get assignment data
     function getAssignmentData() {
         return {
-            clientId: $("#selected-client-id").val(),
+            assignmentId: $("#assignment-id").val(),
+            clientId: $("#clientIdValue").text(),
             employeeId: $("#assign-client-to").val(),
             role: $("#assign-client-role").val(),
             diagnosisConcerns: getSelectedDiagnosisConcerns(),
@@ -276,11 +303,11 @@ function getClientByClientID(clientId){
     });
 }
 
-function assignClient(request) {
+function updateAssignClient(request) {
 
     $.ajax({
-        url: "/api/v1/client/assign-client",
-        type: "POST",
+        url: "/api/v1/client/update-assign-client",
+        type: "PUT",
         contentType: "application/json",
         data: JSON.stringify(request),
 
@@ -296,7 +323,7 @@ function assignClient(request) {
             );
         },
         error: function(xhr, status, error) {
-            let message = "Unable to register client.";
+            let message = "Unable to update client.";
 
             if (xhr.responseJSON) {
 
@@ -334,7 +361,7 @@ function populateClientDetails(client) {
 
     $("#clientName").text(fullName || "-");
     $("#clientIdValue").text(client.clientId || "-");
-    $("#clientDob").text(formatDate(client.birthDate));
+    $("#clientDob").text(client.birthDate || "-");
     $("#clientGender").text(formatEnumValue(client.gender));
     $("#clientGuardian").text(guardianName);
     $("#clientContact").text(guardian && guardian.contactNumber
@@ -343,7 +370,7 @@ function populateClientDetails(client) {
 
     /* Client Summary */
     $("#programType").text(client.programType || "-");
-    $("#summaryDateEnrolled").text(formatDate(client.dateEnrolled));
+    $("#summaryDateEnrolled").text(client.dateEnrolled || "-");
     $("#summaryStatus").text(formatEnumValue(client.assignmentStatus));
     $("#summaryBranch").text(client.branch || "-");
 
@@ -366,18 +393,6 @@ function populateClientDetails(client) {
 
     $("#clientSummary")
         .fadeIn(200);
-}
-
-function formatDate(date) {
-    if (!date) {
-        return "-";
-    }
-
-    return new Date(date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
 }
 
 function formatEnumValue(value) {

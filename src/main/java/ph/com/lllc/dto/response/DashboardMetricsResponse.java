@@ -14,4 +14,8 @@ public class DashboardMetricsResponse {
     private DashboardCardResponse totalOnLeaveEmployees;
     private DashboardCardResponse totalResignedEmployees;
 
+    private DashboardCardResponse totalScheduledInitialAssessments;
+    private DashboardCardResponse totalScheduledTherapySessions;
+    private DashboardCardResponse totalScheduledUpgradingPrograms;
+    private DashboardCardResponse totalScheduledNeurodevAssessments;
 }

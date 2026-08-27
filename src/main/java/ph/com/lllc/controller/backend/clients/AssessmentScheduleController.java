@@ -30,7 +30,7 @@ public class AssessmentScheduleController {
 
     @Operation(summary = "Save Initial Assessment Schedule")
     @PostMapping("/save-initial-assessment")
-    public ResponseEntity<CommonResponse> registerClient(@Valid @RequestBody InitialAssessmentRequest request, HttpServletRequest httpRequest) throws ServiceException {
+    public ResponseEntity<CommonResponse> saveInitialAssessmentSchedule(@Valid @RequestBody InitialAssessmentRequest request, HttpServletRequest httpRequest) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "InitialAssessmentRequest : " + request.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(assessmentScheduleService.saveInitialAssessmentSchedule(uuid, request, httpRequest));
@@ -39,6 +39,22 @@ public class AssessmentScheduleController {
     @Operation(summary = "Get Initial Assessments")
     @GetMapping("/get-initial-assessments")
     public ResponseEntity<List<InitialAssessmentResponse>> getAssignedClients() {
-        return ResponseEntity.ok(assessmentScheduleService.getInitialAssessmentSchedule());
+        return ResponseEntity.ok(assessmentScheduleService.getInitialAssessmentSchedules());
+    }
+
+    @Operation(summary = "Get Initial Assessment")
+    @GetMapping("/get-initial-assessment")
+    public ResponseEntity<InitialAssessmentResponse> getAssignedClient(@RequestParam("id") String initialAssessmentId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "initialAssessmentId : " + initialAssessmentId);
+        return ResponseEntity.ok(assessmentScheduleService.getInitialAssessmentSchedule(uuid, initialAssessmentId));
+    }
+
+    @Operation(summary = "Update Initial Assessment Schedule")
+    @PutMapping("/update-initial-assessment")
+    public ResponseEntity<CommonResponse> updateInitialAssessmentSchedule(@Valid @RequestBody InitialAssessmentRequest request, HttpServletRequest httpRequest) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "InitialAssessmentRequest : " + request.toString());
+        return ResponseEntity.ok(assessmentScheduleService.updateInitialAssessmentSchedule(uuid, request, httpRequest));
     }
 }

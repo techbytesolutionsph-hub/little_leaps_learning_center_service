@@ -38,7 +38,6 @@ body {
     background: var(--page-background);
     color: var(--text-primary);
     /*font-family: "Segoe UI", Arial, Helvetica, sans-serif;*/
-    font-size: 13px;
     line-height: 1.5;
 }
 
@@ -568,9 +567,12 @@ body {
    ================================================================ */
 
 .timeline-container {
-    max-height: 500px;
+    height: 200px;
     overflow-y: auto;
+    overflow-x: hidden;
     scrollbar-width: thin;
+    scrollbar-color: #b8c0cc transparent;
+
     position: relative;
     border: 1px solid var(--border);
     border-radius: 5px;
@@ -586,6 +588,7 @@ body {
 }
 
 .timeline-container::-webkit-scrollbar-thumb {
+    background: #b8c0cc;
     border-radius: 10px;
 }
 
@@ -677,9 +680,14 @@ body {
    ================================================================ */
 
 .history-table-wrapper {
-    width: 100%;
-    overflow-x: auto;
+    max-height: 200px;          /* Adjust height as needed */
+    overflow-y: auto;
+    overflow-x: hidden;
+
     border: 1px solid var(--border);
+    border-radius: 5px;
+    scrollbar-width: thin;
+    scrollbar-color: #b8c0cc transparent;
 }
 
 .history-table {

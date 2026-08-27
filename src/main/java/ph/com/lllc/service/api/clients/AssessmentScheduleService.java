@@ -6,21 +6,21 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ph.com.lllc.dto.response.CommonResponse;
-import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentRequest;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.client.AppParentGuardian;
 import ph.com.lllc.entity.user.client.assessment.AssessmentSlot;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
+import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentHistoryAction;
 import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.AssignmentStatus;
+import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.exception.ServiceException;
-import ph.com.lllc.repository.ClientInitialAssessmentScheduleRepository;
-import ph.com.lllc.repository.ClientProfileRepository;
+import ph.com.lllc.repository.*;
 import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.db.SequenceGeneratorService;
 import ph.com.lllc.service.util.IdGeneratorUtils;
@@ -41,6 +41,9 @@ public class AssessmentScheduleService {
     private final UserAccountService userAccountService;
     private final ClientProfileRepository clientProfileRepository;
     private final ClientInitialAssessmentScheduleRepository clientInitialAssessmentScheduleRepository;
+    private final ClientTherapyScheduleRepository clientTherapyScheduleRepository;
+    private final ClientUpgradingProgramScheduleRepository clientUpgradingProgramScheduleRepository;
+    private final NeurodevelopmentalAssessmentRepository neurodevelopmentalAssessmentRepository;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final IdGeneratorUtils idGeneratorUtils;
     private final LoggingService loggingService;
@@ -104,11 +107,15 @@ public class AssessmentScheduleService {
                 .build();
     }
 
-    public List<InitialAssessmentResponse> getInitialAssessmentSchedule() {
+    public List<InitialAssessmentResponse> getInitialAssessmentSchedules() {
         return clientInitialAssessmentScheduleRepository.findAll()
                 .stream()
                 .map(this::buildInitialAssessmentResponse)
                 .toList();
+    }
+
+    public InitialAssessmentResponse getInitialAssessmentSchedule(String uuid, String initialAssessmentId) throws ServiceException {
+        return this.findByInitialAssessmentId(uuid, initialAssessmentId);
     }
 
     public InitialAssessmentResponse findByInitialAssessmentId(String uuid, String initialAssessmentId) throws ServiceException {
@@ -118,6 +125,99 @@ public class AssessmentScheduleService {
                     return new ServiceException(HttpStatus.NOT_FOUND.value(), "Initial assessment schedule not found with ID: " + initialAssessmentId);
                 });
         return this.buildInitialAssessmentResponse(schedule);
+    }
+
+    @Transactional
+    public CommonResponse updateInitialAssessmentSchedule(String uuid,
+            InitialAssessmentRequest request, HttpServletRequest httpRequest) throws ServiceException {
+
+        AppClientProfile clientProfile = clientManagementService.findAppClientProfileByClientId(uuid, request.getClientId());
+
+        AppEmployeeProfile employeeProfile = clientManagementService.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
+
+        ClientInitialAssessmentSchedule schedule = clientInitialAssessmentScheduleRepository.findByInitialAssessmentId(request.getInitialAssessmentId())
+                        .orElseThrow(() -> new ServiceException(HttpStatus.NOT_FOUND.value(), "Initial assessment schedule not found: " + request.getInitialAssessmentId()));
+
+        /*
+         * Update schedule
+         */
+        schedule.setAssessmentDate(request.getAssessmentDate());
+        schedule.setStatus(request.getScheduleStatus());
+        schedule.setNotes(request.getNotes());
+        schedule.setCaseManager(employeeProfile);
+
+        /*
+         * Update assessment slot
+         */
+        if (request.getSlots() == null || request.getSlots().isEmpty()) {
+            throw new ServiceException("Assessment slot is required.");
+        }
+
+        InitialAssessmentRequest.AssessmentSlotRequest slotRequest = request.getSlots().get(0);
+        AssessmentSlot slot = schedule.getSlots().get(0);
+
+        slot.setStartTime(slotRequest.getStartTime());
+        slot.setEndTime(slotRequest.getEndTime());
+
+        slot.setAssessmentSchedule(schedule);
+        schedule.getSlots().add(slot);
+
+        /*
+         * Make sure the schedule belongs to the requested client
+         */
+        if (schedule.getAppClientProfile() == null
+                || !schedule.getAppClientProfile().equals(clientProfile)) {
+            throw new ServiceException(
+                    "Initial assessment schedule does not belong to the specified client.");
+        }
+
+        /*
+         * Create assignment history
+         */
+        AssignmentHistory history = new AssignmentHistory();
+        history.setAction(AssignmentHistoryAction.UPDATED);
+        history.setDescription(this.createDescription(
+                employeeProfile,
+                request.getAssessmentDate(),
+                slotRequest.getStartTime(),
+                slotRequest.getEndTime())
+        );
+
+        history.setAssignee(employeeProfile);
+        history.setAssignmentRole(AssignmentRole.PRIMARY_CASE_MANAGER);
+        history.setAssignmentStatus(AssignmentStatus.UPDATED);
+        history.setChangedBy(userAccountService.getLoggedInEmployee(httpRequest));
+        history.setAppClientProfile(clientProfile);
+
+        /*
+         * Add history to client
+         */
+        if (clientProfile.getAssignmentHistories() == null) {
+            clientProfile.setAssignmentHistories(new ArrayList<>());
+        }
+
+        clientProfile.getAssignmentHistories().add(history);
+
+        /*
+         * Save
+         */
+        clientInitialAssessmentScheduleRepository.save(schedule);
+        clientProfileRepository.save(clientProfile);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.OK.value())
+                .returnMessage("Initial assessment schedule updated successfully!")
+                .build();
+    }
+
+    public long findAllScheduledInitialAssessments() {
+        List<InitialAssessmentResponse> responses = new ArrayList<>();
+        List<ClientInitialAssessmentSchedule> schedules = clientInitialAssessmentScheduleRepository.findByStatus(ScheduleStatus.SCHEDULED);
+        for (ClientInitialAssessmentSchedule schedule : schedules) {
+            InitialAssessmentResponse response = this.buildInitialAssessmentResponse(schedule);
+            responses.add(response);
+        }
+        return responses.size();
     }
 
     private InitialAssessmentResponse buildInitialAssessmentResponse(ClientInitialAssessmentSchedule response){
@@ -134,6 +234,13 @@ public class AssessmentScheduleService {
                         .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
                         .orElse(null);
 
+        AppClientAssignment assigneeAssignment = client.getAssignments()
+                .stream()
+                .filter(assignment -> assignment.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER)
+                .filter(assignment -> assignment.getStatus() == AssignmentStatus.ASSIGNED)
+                .findFirst()
+                .orElse(null);
+
 
         return InitialAssessmentResponse.builder()
                 .initialAssessmentId(response.getInitialAssessmentId())
@@ -149,12 +256,12 @@ public class AssessmentScheduleService {
 
                 .clientId(client.getClientId())
                 .clientProfilePicture(client.getProfileImageUrl())
-                .clientFullName(client.getFirstName() + " " + client.getLastName())
+                .clientFullName(client.getFirstName() + " " + client.getMiddleName() + " " + client.getLastName())
                 .clientBirthDate(response.getAppClientProfile().getBirthDate())
                 .clientAge(response.getAppClientProfile().getAge())
                 .clientGender(response.getAppClientProfile().getGender())
 
-                .guardianFullName(guardian.getFirstName() + " " + guardian.getLastName())
+                .guardianFullName(guardian.getFirstName() + " " + guardian.getMiddleName() + " " + guardian.getLastName())
                 .guardianEmail(guardian.getEmail())
                 .guardianContactNo(guardian.getContactNumber())
 
@@ -168,14 +275,35 @@ public class AssessmentScheduleService {
                 )
                 .branch(client.getBranch())
                 .enrollmentStatus(response.getAppClientProfile().getEnrollmentStatus())
-
-                .employeeId(response.getCaseManager().getEmployeeId())
-                .assigneeProfilePicture(response.getCaseManager().getProfileImageUrl())
-                .assigneeFullName(response.getCaseManager().getFirstName() + " " + response.getCaseManager().getLastName())
-                .assigneePosition(
-                        response.getCaseManager() != null
-                                ? response.getCaseManager().getEmploymentInformation().getPosition()
+                .employeeId(
+                        assigneeAssignment != null && assigneeAssignment.getAssignee() != null
+                                ? assigneeAssignment.getAssignee()
+                                .getEmploymentInformation()
+                                .getEmployeeId()
+                                : null
+                )
+                .assigneeProfilePicture(
+                        assigneeAssignment != null && assigneeAssignment.getAssignee() != null
+                                ? assigneeAssignment.getAssignee().getProfileImageUrl()
+                                : "/img/base/default-profile.png"
+                )
+                .assigneeFullName(
+                        assigneeAssignment != null && assigneeAssignment.getAssignee() != null
+                                ? assigneeAssignment.getAssignee().getFirstName() + " "
+                                + assigneeAssignment.getAssignee().getLastName()
                                 : "-"
+                )
+                .assigneePosition(
+                        assigneeAssignment != null && assigneeAssignment.getAssignee() != null
+                                ? assigneeAssignment.getAssignee()
+                                .getEmploymentInformation()
+                                .getPosition()
+                                : "-"
+                )
+                .assignedAt(
+                        assigneeAssignment != null
+                                ? assigneeAssignment.getAssignedAt()
+                                : null
                 )
                 .assignmentRole(AssignmentRole.PRIMARY_CASE_MANAGER)
                 .history(this.buildAssignmentHistories(assigmentHistory))

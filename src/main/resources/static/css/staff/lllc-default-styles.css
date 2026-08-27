@@ -9504,8 +9504,31 @@ body.sidebar-toggled footer.sticky-footer{
     padding: 0 8px;
 }
 
-.d-sm-flex h1.h5 {
-    font-size: clamp(16px, 2vw, 20px);
+/* Hide breadcrumb on mobile */
+@media (max-width: 575.98px) {
+    .breadcrumb-box {
+        display: none !important;
+    }
+}
+
+/* Show breadcrumb on desktop */
+@media (min-width: 576px) {
+    .breadcrumb-box {
+        display: block;
+    }
+}
+
+/* Mobile */
+.page-title {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    .page-title {
+        font-size: 1.25rem;
+    }
 }
 
 /* Quill content responsive */

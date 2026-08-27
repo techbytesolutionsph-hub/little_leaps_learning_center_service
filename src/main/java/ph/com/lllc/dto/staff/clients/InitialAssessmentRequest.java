@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class InitialAssessmentRequest {
 
+    private String initialAssessmentId;
     private String clientId;
     private String employeeId;
     private LocalDate assessmentDate;

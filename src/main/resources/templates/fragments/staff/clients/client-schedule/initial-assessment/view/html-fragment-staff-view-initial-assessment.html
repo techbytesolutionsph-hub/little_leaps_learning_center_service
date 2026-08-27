@@ -23,15 +23,18 @@
                         <h2 class="client-name" th:text="${assessment.clientFullName}">
                             Zoe Garcia
                         </h2>
+                    </div>
 
-                        <span class="client-id-badge" th:text="${assessment.initialAssessmentId}">
-                            CLI-00045
+                    <div class="client-info-row">
+                        <i class="fa-solid fa-id-card"></i>
+                        Assessment ID:&nbsp;<span class="client-id-badge" th:text="${assessment.initialAssessmentId}">
+                            IA-2026-00001
                         </span>
                     </div>
 
                     <div class="client-info-row">
                         <i class="fa-regular fa-calendar-days"></i>
-                        DOB:&nbsp;<span th:text="${assessment.clientBirthDate}">2018-05-12</span>
+                        DOB:&nbsp;<span th:text="${#temporals.format(assessment.clientBirthDate, 'MMMM dd, yyyy')}">2018-05-12</span>
                     </div>
 
                     <div class="client-info-row">
@@ -43,7 +46,7 @@
 
                     <div class="client-info-row">
                         <i class="fa-regular fa-calendar"></i>
-                        Enrollment Date:&nbsp;<span th:text="${assessment.dateEnrolled}">2026-07-28</span>
+                        Enrollment Date:&nbsp;<span th:text="${#temporals.format(assessment.dateEnrolled, 'MMMM dd, yyyy')}">2026-07-28</span>
                     </div>
 
                     <div class="client-info-row">
@@ -245,7 +248,7 @@
                     <section class="content-card timeline-card">
                         <div class="card-title">
                             <i class="fa-regular fa-clock"></i>
-                            <span>Assignment Timeline</span>
+                            <span>Client Onboarding Timeline</span>
                         </div>
 
                         <div class="timeline-container">
@@ -281,7 +284,7 @@
                     <section class="content-card history-card">
                         <div class="card-title">
                             <i class="fa-regular fa-clock"></i>
-                            <span>Assignment History</span>
+                            <span>Client Onboarding History</span>
                         </div>
 
                         <div class="history-table-wrapper">

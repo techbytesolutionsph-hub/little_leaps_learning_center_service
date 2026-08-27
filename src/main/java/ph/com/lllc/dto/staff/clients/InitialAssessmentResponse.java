@@ -59,6 +59,7 @@ public class InitialAssessmentResponse {
     private String assigneeProfilePicture;
     private String assigneeFullName;
     private String assigneePosition;
+    private LocalDate assignedAt;
     private AssignmentRole assignmentRole;
 
     List<AssignmentHistoryResponse> history;
