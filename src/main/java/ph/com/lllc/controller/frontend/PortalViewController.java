@@ -17,6 +17,7 @@ import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
 import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
+import ph.com.lllc.dto.staff.clients.TherapySessionResponse;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
@@ -145,10 +146,13 @@ public class PortalViewController {
         List<InitialAssessmentResponse> assessments = portalFrontService.getInitialAssessmentSchedules();
         model.addAttribute("assessments", assessments);
 
+        List<TherapySessionResponse> therapies = portalFrontService.getTherapySessionResponse();
+        model.addAttribute("therapies", therapies);
+
         return "staff/clients/client-schedule/index";
     }
 
-    @GetMapping(value = "/client-management/client-schedule/initial-assessment")
+    @GetMapping(value = "/client-management/client-schedule/add-initial-assessment")
     public String addInitialAssessmentSchedulePage(Model model) {
         this.setupPage(model, "clients", "Add Initial Assessment Schedule");
 
@@ -179,6 +183,30 @@ public class PortalViewController {
         model.addAttribute("assessment", assessment);
 
         return "staff/clients/client-schedule/initial-assessment/edit/index";
+    }
+
+    @GetMapping(value = "/client-management/client-schedule/add-therapy-session-assignee")
+    public String addTherapySessionAssigneePage(Model model) {
+        this.setupPage(model, "clients", "Add Therapy Session Assignee");
+
+        Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
+        model.addAttribute("caseManagers", caseManagers);
+
+        return "staff/clients/client-schedule/therapy-session/add/assignee/index";
+    }
+
+    @GetMapping(value = "/client-management/client-schedule/add-therapy-session-schedule")
+    public String addTherapySessionSchedulePage(Model model, @RequestParam("id") String therapySessionId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "Add Therapy Session Schedule");
+
+        Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
+        model.addAttribute("caseManagers", caseManagers);
+
+        TherapySessionResponse therapy = portalFrontService.findByTherapySessionId(uuid, therapySessionId);
+        model.addAttribute("therapy", therapy);
+
+        return "staff/clients/client-schedule/therapy-session/add/schedule/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

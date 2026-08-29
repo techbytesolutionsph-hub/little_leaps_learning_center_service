@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-initial-assessment-main(kpi, assessments)">
+    <div th:fragment="staff-initial-assessment-main(kpi, assessments, therapies)">
         <!-- Assessment Main - START -->
         <div class="row">
             <!-- Total Employees count -->
@@ -57,11 +57,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
                                     Therapy Session Scheduled
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalScheduledTherapySessions.value}">
                                     20
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalScheduledTherapySessions.message}">
                                         Total Scheduled
                                     </span>
                                 </div>
@@ -88,11 +88,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
                                     Upgrading Program Scheduled
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalScheduledUpgradingPrograms.value}">
                                     2
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalScheduledUpgradingPrograms.message}">
                                         Total Scheduled
                                     </span>
                                 </div>
@@ -119,11 +119,11 @@
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
                                     Neurodev Assessment Scheduled
                                 </div>
-                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalScheduledNeurodevAssessments.value}">
                                     2
                                 </div>
                                 <div class="text-xs text-muted mt-2">
-                                    <span class="kpi-circle-badge">
+                                    <span class="kpi-circle-badge" th:text="${kpi.totalScheduledNeurodevAssessments.message}">
                                         Total Scheduled
                                     </span>
                                 </div>
@@ -139,7 +139,7 @@
                 <h6 class="m-0 font-weight-bold">
                     <i class="fas fa-file-lines mr-2"></i> Initial Assessment Records
                 </h6>
-                <a th:href="@{/app/portal/client-management/client-schedule/initial-assessment}"
+                <a th:href="@{/app/portal/client-management/client-schedule/add-initial-assessment}"
                    class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
                    id="add-initial-assessment-schedule-btn" style="text-decoration: none">
 
@@ -270,11 +270,11 @@
                 <h6 class="m-0 font-weight-bold">
                     <i class="fas fa-calendar-alt mr-2"></i> Therapy Session Records
                 </h6>
-                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                <a th:href="@{/app/portal/client-management/client-schedule/add-therapy-session-assignee}"
                    class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
-                   id="add-assessment-schedule-btn" style="text-decoration: none">
+                   id="add-therapy-session-assignee-btn" style="text-decoration: none">
 
-                    <i class="fa-solid fa-user-plus mr-2"></i> Add Session
+                    <i class="fa-solid fa-user-plus mr-2"></i> Add Assignee
                 </a>
             </div>
             <div class="card-body">
@@ -282,17 +282,138 @@
                     <table class="table table-bordered" id="regularAssessmentTable">
                         <thead>
                             <tr>
-                                <th>Client ID</th>
+                                <th>ID</th>
                                 <th>Client Info</th>
-                                <th>Date Enrolled</th>
-                                <th>Guardian/Parent Name</th>
-                                <th>Diagnosis</th>
+                                <th>Assigned Behavioral Therapist</th>
                                 <th>Status</th>
+                                <th>Frequency</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
+                            <tr th:each="therapy : ${therapies}">
+                                <td data-label="ID" th:text="${therapy.therapySessionId}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${therapy.clientProfilePicture != null ? therapy.clientProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
 
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${therapy.clientFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${therapy.guardianEmail}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${therapy.guardianContactNo}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assigned Behavioral Therapist">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${therapy.therapistProfilePicture != null ? therapy.therapistProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${therapy.therapistFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${therapy.therapistPosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <!-- Scheduled -->
+                                    <span class="status-badge badge-active"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'SCHEDULED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Scheduled
+                                    </span>
+
+                                    <!-- Pending -->
+                                    <span class="status-badge badge-warning"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'PENDING'}">
+                                        <i class="bi bi-clock-fill mr-1"></i> Pending
+                                    </span>
+
+                                    <!-- Completed -->
+                                    <span class="status-badge badge-success"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'COMPLETED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Completed
+                                    </span>
+
+                                    <!-- Cancelled -->
+                                    <span class="status-badge badge-danger"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'CANCELLED'}">
+                                        <i class="bi bi-x-circle-fill mr-1"></i> Cancelled
+                                    </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${therapy.status == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i> Unassigned
+                                    </span>
+                                </td>
+                                <td data-label="Frequency">
+
+                                    <!-- Once -->
+                                    <span class="status-badge badge-info"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'ONCE'}">
+                                        <i class="bi bi-calendar-event-fill mr-1"></i> Once
+                                    </span>
+
+                                    <!-- Twice -->
+                                    <span class="status-badge badge-primary"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'TWICE'}">
+                                        <i class="bi bi-calendar2-week-fill mr-1"></i> Twice
+                                    </span>
+
+                                    <!-- Thrice -->
+                                    <span class="status-badge badge-purple"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'THRICE'}">
+                                        <i class="bi bi-calendar3-fill mr-1"></i> Thrice
+                                    </span>
+
+                                    <!-- Daily -->
+                                    <span class="status-badge badge-teal"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'DAILY'}">
+                                        <i class="bi bi-calendar-check-fill mr-1"></i> Daily
+                                    </span>
+
+                                    <!-- No Frequency -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${therapy.frequency == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i> Undetermined
+                                    </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/client-management/client-schedule/add-therapy-session-schedule?id=${therapy.therapySessionId}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-calendar-plus-fill mr-1"></i> Add Schedule
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -304,7 +425,7 @@
                 <h6 class="m-0 font-weight-bold">
                     <i class="fa fa-angle-double-up mr-2"></i> Upgrading Program Records
                 </h6>
-                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                <a th:href="@{/app/portal/client-management/client-schedule/add-therapy-session}"
                    class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
                    id="add-upgrading-program-schedule-btn" style="text-decoration: none">
 
@@ -316,11 +437,10 @@
                     <table class="table table-bordered" id="upgradingProgramTable">
                         <thead>
                         <tr>
-                            <th>Client ID</th>
+                            <th>ID</th>
                             <th>Client Info</th>
-                            <th>Date Enrolled</th>
-                            <th>Guardian/Parent Name</th>
-                            <th>Diagnosis</th>
+                            <th>Assessment Date</th>
+                            <th>Assigned Case Manager</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -350,11 +470,10 @@
                     <table class="table table-bordered" id="neurodevAssessmentTable">
                         <thead>
                         <tr>
-                            <th>Client ID</th>
+                            <th>ID</th>
                             <th>Client Info</th>
-                            <th>Date Enrolled</th>
-                            <th>Guardian/Parent Name</th>
-                            <th>Diagnosis</th>
+                            <th>Assessment Date</th>
+                            <th>Assigned Case Manager</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>

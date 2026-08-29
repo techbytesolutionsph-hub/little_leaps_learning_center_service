@@ -1,0 +1,350 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
+        <title>Assessment Schedule - Little Leaps Learning Center</title>
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
+        <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/clients/client-schedule/lllc-staff-client-assessment-schedule-styles.css}" rel="stylesheet" type="text/css">
+    </head>
+    <body class="container-fluid p-0" id="page-top">
+        <div id="wrapper">
+            <!-- Sidebar - Start -->
+            <th:block th:insert="~{fragments/staff/common/html-fragment-staff-sidebar :: staff-common-sidebar(${nav})}"></th:block>
+            <!-- Sidebar - End -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+
+                    <!-- Main Navigation Bar - Start -->
+                    <th:block th:insert="~{fragments/staff/common/html-fragment-staff-main-navbar :: staff-common-main-navbar}"></th:block>
+                    <!-- Main Navigation Bar - End -->
+
+                    <div class="container-fluid">
+
+                        <!-- Page Heading and Breadcrumbs - Start -->
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <!-- Page Heading and Breadcrumbs - End -->
+
+                        <!-- Assessment Schedule - Start -->
+<!--                        <th:block th:insert="~{fragments/staff/clients/assignment/assign/html-fragment-staff-assign-client :: staff-assign-client(${staff})}"></th:block>-->
+                        <!-- Assessment Schedule - End -->
+
+                        <section class="dashboard-card">
+                            <div class="section-header">
+                                <span class="section-number">1</span>
+                                <div class="section-header-content">
+                                    <div class="section-title">Search Client</div>
+                                    <div class="section-description">Search client by ID to view client information.</div>
+                                </div>
+                            </div>
+
+                            <div class="client-search-row">
+                                <input type="text" id="assignmentIdInput" class="client-id-input" placeholder="Enter Assignment ID e.g. CA-2026-00001">
+                                <button type="button" id="searchClientButton" class="search-button">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+
+                            <!-- CLIENT PROFILE -->
+                            <div id="clientProfile" class="client-profile">
+                                <div class="client-profile-layout">
+                                    <div class="client-photo">
+                                        <img id="clientAvatar" src="https://i.pravatar.cc/200?img=47" alt="Client">
+                                    </div>
+
+                                    <div class="client-profile-content">
+                                        <!-- Client Name & Status -->
+                                        <div class="client-name-row">
+                                            <div id="clientName" class="client-name">-</div>
+                                            <span id="clientStatus" class="status-badge"> - </span>
+                                        </div>
+
+                                        <!-- Client Information -->
+                                        <div class="client-info-grid">
+                                            <!-- Client ID -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-person-vcard"></i>
+                                                <span class="client-info-label"> Client ID </span> <span id="clientIdValue"> - </span>
+                                            </div>
+
+                                            <!-- Gender -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-gender-female"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Gender </span> <span id="clientGender"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Email -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-envelope"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Email </span> <span id="clientEmail"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Program Type -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-people"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Program Type </span> <span id="clientProgramType"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Guardian -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-person-heart"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Guardian </span> <span id="clientGuardian"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Branch -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-geo-alt"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Branch </span> <span id="clientBranch"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Date of Birth -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-calendar3"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Date of Birth </span> <span id="clientDateOfBirth"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Contact Number -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-telephone"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Contact No. </span> <span id="clientContactNo"> - </span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Address -->
+                                            <div class="client-info-item">
+                                                <i class="bi bi-geo"></i>
+                                                <div>
+                                                    <span class="client-info-label"> Address </span> <span id="clientAddress"> - </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="dashboard-card">
+                            <div class="calendar-main-header">
+                                <div class="section-header">
+                                    <span class="section-number">2</span>
+                                    <div class="section-header-content">
+                                        <div class="section-title">Add Therapy Session Schedule</div>
+                                        <div class="section-description">
+                                            Select a date and time to add therapy session schedule.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="calendar-actions-left">
+                                    <button id="todayButton" class="today-button"> Today </button>
+
+                                    <button id="previousWeek" class="nav-button">
+                                        <i class="bi bi-chevron-left"></i>
+                                    </button>
+
+                                    <button id="nextWeek" class="nav-button">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </button>
+
+                                    <div id="currentWeek" class="current-week"></div>
+
+                                    <div class="view-switch">
+                                        <button id="weekViewButton" class="active"> Week </button>
+                                        <button id="dayViewButton"> Day </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calendar-layout">
+                                <!-- LEFT -->
+                                <div class="calendar-sidebar">
+                                    <button id="addScheduleButton" class="add-schedule-button">
+                                        <i class="bi bi-plus-lg"></i> Add Schedule
+                                    </button>
+
+                                    <div class="calendar-helper-text mt-2">
+                                        Click on a time slot in the calendar or click “Add Schedule” to create a new session.
+                                    </div>
+
+                                    <div class="legend">
+                                        <div class="legend-item">
+                                            <div class="legend-dot legend-scheduled"></div>
+                                            Scheduled
+                                        </div>
+
+                                        <div class="legend-item">
+                                            <div class="legend-dot legend-confirmed"></div>
+                                            Confirmed
+                                        </div>
+
+                                        <div class="legend-item">
+                                            <div class="legend-dot legend-completed"></div>
+                                            Completed
+                                        </div>
+
+                                        <div class="legend-item">
+                                            <div class="legend-dot legend-cancelled"></div>
+                                            Cancelled
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CALENDAR -->
+                                <div class="calendar-wrapper">
+
+                                    <div id="calendar" class="calendar"></div>
+
+                                    <div class="tip-box">
+                                        <i class="bi bi-info-circle"></i>
+                                        <span> Tip: Click on any “+” slot in the calendar to quickly add a new therapy session. </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div class="modal fade" id="addAssessmentScheduleModal" tabindex="-1"
+                             aria-labelledby="addAssessmentScheduleModalLabel" aria-hidden="true">
+
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content assessment-schedule-modal">
+                                    <!-- Modal Header -->
+                                    <div class="modal-header assessment-modal-header">
+                                        <div>
+                                            <h5 class="modal-title" id="addAssessmentScheduleModalLabel">
+                                                Add Assessment Schedule
+                                            </h5>
+
+                                            <p class="assessment-modal-subtitle">
+                                                Create a new assessment schedule for the selected client.
+                                            </p>
+                                        </div>
+
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                    </div>
+
+                                    <!-- Modal Body -->
+                                    <div class="modal-body assessment-modal-body">
+                                        <form id="addAssessmentScheduleForm">
+                                            <!-- Frequency / Status / Therapist -->
+                                            <div class="row g-3">
+                                                <!-- Frequency -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-frequency" class="assessment-form-label"> Session Frequency <span class="required">*</span> </label>
+                                                        <select id="assessment-frequency" name="frequency" class="form-select assessment-form-control" required>
+                                                        <option value="" selected disabled>Select frequency</option>
+                                                        <option value="ONCE">Once</option>
+                                                        <option value="TWICE">Twice</option>
+                                                        <option value="THRICE">Thrice</option>
+                                                    </select>
+                                                        <div class="field-error">Session frequency is required.</div>
+                                                    </div>
+                                                </div>
+                                                <!-- Status -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-status" class="assessment-form-label"> Schedule Status <span class="required">*</span> </label>
+                                                        <select id="assessment-status" name="status" class="form-select assessment-form-control" required>
+                                                            <option value="" selected disabled>Select status</option>
+                                                            <option value="SCHEDULED">Scheduled</option>
+                                                            <option value="PENDING">Pending</option>
+                                                            <option value="COMPLETED">Completed</option>
+                                                            <option value="CANCELLED">Cancelled</option>
+                                                        </select>
+                                                        <div class="field-error">Schedule status is required.</div>
+                                                    </div>
+                                                </div>
+                                                <!-- Therapist -->
+                                                <div class="col-12">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-therapist" class="assessment-form-label"> Therapist <span class="required">*</span> </label>
+                                                        <select id="assessment-therapist" name="therapist" class="form-select assessment-form-control" required>
+                                                            <option value="" selected disabled>Select therapist</option>
+                                                            <!-- Replace these with Thymeleaf options -->
+                                                            <option value="EMP-00001">Therapist A</option>
+                                                            <option value="EMP-00002">Therapist B</option>
+                                                            <option value="EMP-00003">Therapist C</option>
+                                                        </select>
+                                                        <div class="field-error">Therapist is required.</div>
+                                                    </div>
+                                                </div>
+                                                <!-- Therapy Date -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-therapy-date" class="assessment-form-label"> Therapy Date <span class="required">*</span> </label>
+                                                        <input type="date" id="assessment-therapy-date" name="therapyDate" class="form-control assessment-form-control" required>
+                                                        <div class="field-error">Therapy date is required.</div>
+                                                    </div>
+                                                </div>
+                                                <!-- Day -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-day" class="assessment-form-label"> Day <span class="required">*</span> </label>
+                                                        <input type="text" id="assessment-day" name="day" class="form-control assessment-form-control" placeholder="Day" readonly required>
+                                                    </div>
+                                                </div>
+                                                <!-- Start Time -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-start-time" class="assessment-form-label"> Start Time <span class="required">*</span> </label>
+                                                        <input type="time" id="assessment-start-time" name="startTime" class="form-control assessment-form-control" required>
+                                                        <div class="field-error">Start time is required.</div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Time -->
+                                                <div class="col-12 col-md-6">
+                                                    <div class="assessment-form-group">
+                                                        <label for="assessment-end-time" class="assessment-form-label"> End Time <span class="required">*</span> </label>
+                                                        <input type="time" id="assessment-end-time" name="endTime" class="form-control assessment-form-control" required>
+                                                        <div class="field-error">End time is required.</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- Modal Footer -->
+                                    <div class="modal-footer assessment-modal-footer">
+                                        <button type="button" class="btn assessment-btn-cancel" data-bs-dismiss="modal">
+                                            <i class="bi bi-x-circle-fill text-m font-bold mr-1"></i> Cancel
+                                        </button>
+                                        <button type="submit" form="addAssessmentScheduleForm" class="btn assessment-btn-save">
+                                            <i class="bi bi-calendar-plus-fill text-m font-bold mr-1"></i> Save Schedule
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Footer - Start -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-footer :: staff-common-footer}"></th:block>
+                <!-- Footer - End -->
+            </div>
+        </div>
+
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
+        <script th:src="@{/js/staff/clients/client-schedule/lllc-staff-client-assessment-schedule-scripts.js}" type="text/javascript"></script>
+    </body>
+</html>

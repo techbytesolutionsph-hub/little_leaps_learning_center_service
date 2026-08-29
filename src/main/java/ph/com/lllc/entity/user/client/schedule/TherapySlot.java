@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -19,6 +20,12 @@ public class TherapySlot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "therapy_slot_id")
     private Long id;
+
+    /**
+     * Assessment Date
+     */
+    @Column(name = "therapy_date")
+    private LocalDate therapyDate;
 
     /**
      * MONDAY / WEDNESDAY / FRIDAY

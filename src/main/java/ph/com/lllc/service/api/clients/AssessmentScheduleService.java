@@ -8,12 +8,15 @@ import org.springframework.stereotype.Service;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentRequest;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
+import ph.com.lllc.dto.staff.clients.TherapySessionRequest;
+import ph.com.lllc.dto.staff.clients.TherapySessionResponse;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.client.AppParentGuardian;
 import ph.com.lllc.entity.user.client.assessment.AssessmentSlot;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
+import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentHistoryAction;
 import ph.com.lllc.enums.AssignmentRole;
@@ -32,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -210,6 +214,65 @@ public class AssessmentScheduleService {
                 .build();
     }
 
+    public CommonResponse saveTherapySessionDetails(String uuid, TherapySessionRequest request, HttpServletRequest httpRequest) throws ServiceException {
+
+        AppClientProfile clientProfile = clientManagementService.findAppClientProfileByClientId(uuid, request.getClientId());
+
+        AppEmployeeProfile employeeProfile = clientManagementService.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
+
+        String year = String.valueOf(LocalDate.now().getYear());
+        long nextUserSeq = sequenceGeneratorService.getAssessmentIdNextSequence();
+        String therapySessionId =  idGeneratorUtils.generateAssessmentId(year, nextUserSeq);
+
+        ClientTherapySchedule schedule = new ClientTherapySchedule();
+        schedule.setTherapySessionId(therapySessionId);
+        schedule.setAssignmentRole(request.getAssignmentRole());
+        schedule.setFrequency(request.getFrequency());
+        schedule.setStatus(request.getStatus());
+        schedule.setNotes(request.getNotes());
+        schedule.setTherapist(employeeProfile);
+
+        schedule.setAppClientProfile(clientProfile);
+        clientProfile.getSessionSchedules().add(schedule);
+
+        /*
+         * Create assignment history
+         */
+        AssignmentHistory history = new AssignmentHistory();
+        history.setAction(AssignmentHistoryAction.ASSIGNED);
+        history.setDescription("Therapy session assigned to " + employeeProfile.getFirstName() + " " + employeeProfile.getLastName());
+        history.setAssignee(employeeProfile);
+        history.setAssignmentRole(request.getAssignmentRole());
+        history.setAssignmentStatus(AssignmentStatus.ASSIGNED);
+        history.setChangedBy(userAccountService.getLoggedInEmployee(httpRequest));
+        history.setAppClientProfile(clientProfile);
+
+        /*
+         * Add history to client
+         */
+        if (clientProfile.getAssignmentHistories() == null) {
+            clientProfile.setAssignmentHistories(new ArrayList<>());
+        }
+
+        clientProfile.getAssignmentHistories().add(history);
+
+        clientProfileRepository.save(clientProfile);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Therapy session assigned successfully!")
+                .build();
+    }
+
+    public TherapySessionResponse findByTherapySessionId(String uuid, String therapySessionId) throws ServiceException {
+        ClientTherapySchedule schedule = clientTherapyScheduleRepository.findByTherapySessionId(therapySessionId)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Therapy session schedule not found with ID: " + therapySessionId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Therapy session schedule not found with ID: " + therapySessionId);
+                });
+        return this.buildTherapySessionResponse(schedule);
+    }
+
     public long findAllScheduledInitialAssessments() {
         List<InitialAssessmentResponse> responses = new ArrayList<>();
         List<ClientInitialAssessmentSchedule> schedules = clientInitialAssessmentScheduleRepository.findByStatus(ScheduleStatus.SCHEDULED);
@@ -218,6 +281,135 @@ public class AssessmentScheduleService {
             responses.add(response);
         }
         return responses.size();
+    }
+
+    public List<TherapySessionResponse> getTherapySessionResponse() {
+        return clientTherapyScheduleRepository.findAll()
+                .stream()
+                .map(this::buildTherapySessionResponse)
+                .toList();
+    }
+
+    public long findAllTherapySessionSchedules() {
+        List<TherapySessionResponse> responses = new ArrayList<>();
+        List<ClientTherapySchedule> schedules = clientTherapyScheduleRepository.findByStatus(ScheduleStatus.SCHEDULED);
+        for (ClientTherapySchedule schedule : schedules) {
+            TherapySessionResponse response = this.buildTherapySessionResponse(schedule);
+            responses.add(response);
+        }
+        return responses.size();
+    }
+
+    private TherapySessionResponse buildTherapySessionResponse(ClientTherapySchedule response){
+
+        AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
+        AppClientProfile client = response.getAppClientProfile();
+        List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
+
+        AppClientAssignment caseManager = client.getAssignments()
+                .stream()
+                .filter(assignment -> assignment.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER)
+                .filter(assignment -> assignment.getStatus() == AssignmentStatus.ASSIGNED)
+                .findFirst()
+                .orElse(null);
+
+        AppEmployeeProfile therapist = response.getTherapist();
+
+        AssignmentHistory updatedHistory =
+                response.getAppClientProfile()
+                        .getAssignmentHistories()
+                        .stream()
+                        .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ASSIGNED)
+                        .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
+                        .orElse(null);
+
+        return TherapySessionResponse.builder()
+                .therapySessionId(response.getTherapySessionId())
+                .assignmentRole(response.getAssignmentRole())
+                .frequency(response.getFrequency())
+                .status(response.getStatus())
+                .notes(response.getNotes())
+                .scheduleSlots(
+                        response.getScheduleSlots() == null
+                                ? List.of()
+                                : response.getScheduleSlots()
+                                .stream()
+                                .map(slot -> TherapySessionResponse.TherapySlotRequest.builder()
+                                        .therapyDate(slot.getTherapyDate())
+                                        .day(slot.getDay())
+                                        .startTime(slot.getStartTime())
+                                        .endTime(slot.getEndTime())
+                                        .build()
+                                )
+                                .toList()
+                )
+
+                .clientStudentId(client.getClientStudentId())
+
+                .clientId(client.getClientId())
+                .clientProfilePicture(client.getProfileImageUrl())
+                .clientFullName(client.getFirstName() + " " + client.getMiddleName() + " " + client.getLastName())
+                .clientBirthDate(response.getAppClientProfile().getBirthDate())
+                .clientAge(response.getAppClientProfile().getAge())
+                .clientGender(response.getAppClientProfile().getGender())
+
+                .guardianFullName(guardian.getFirstName() + " " + guardian.getMiddleName() + " " + guardian.getLastName())
+                .guardianEmail(guardian.getEmail())
+                .guardianContactNo(guardian.getContactNumber())
+
+                .dateEnrolled(response.getAppClientProfile().getDateEnrolled())
+                .diagnosisConcerns(response.getAppClientProfile().getDiagnosisConcerns())
+                .programType(client.getProgramType())
+                .assignmentStatus(
+                        updatedHistory != null
+                                ? updatedHistory.getAssignmentStatus()
+                                : null
+                )
+                .branch(client.getBranch())
+                .enrollmentStatus(response.getAppClientProfile().getEnrollmentStatus())
+
+                .caseManagerId(
+                        caseManager != null && caseManager.getAssignee() != null
+                                ? caseManager.getAssignee()
+                                .getEmploymentInformation()
+                                .getEmployeeId()
+                                : null
+                )
+                .caseManagerProfilePicture(
+                        caseManager != null && caseManager.getAssignee() != null
+                                ? caseManager.getAssignee().getProfileImageUrl()
+                                : "/img/base/default-profile.png"
+                )
+                .caseManagerFullName(
+                        caseManager != null && caseManager.getAssignee() != null
+                                ? caseManager.getAssignee().getFirstName() + " "
+                                + caseManager.getAssignee().getLastName()
+                                : "-"
+                )
+                .caseManagerPosition(
+                        caseManager != null && caseManager.getAssignee() != null
+                                ? caseManager.getAssignee()
+                                .getEmploymentInformation()
+                                .getPosition()
+                                : "-"
+                )
+                .caseManagerAssignedAt(
+                        caseManager != null
+                                ? caseManager.getAssignedAt()
+                                : null
+                )
+                .assignmentRole(AssignmentRole.PRIMARY_CASE_MANAGER)
+
+                .therapistId(therapist.getEmployeeId())
+                .therapistProfilePicture(therapist.getProfileImageUrl())
+                .therapistFullName(therapist.getFirstName() + " " + therapist.getLastName())
+                .therapistPosition(therapist.getEmploymentInformation() != null
+                        ? therapist.getEmploymentInformation()
+                        .getPosition()
+                        : "-")
+
+                .history(this.buildTSAssignmentHistories(assigmentHistory))
+                .build();
     }
 
     private InitialAssessmentResponse buildInitialAssessmentResponse(ClientInitialAssessmentSchedule response){
@@ -247,10 +439,21 @@ public class AssessmentScheduleService {
                 .assessmentDate(response.getAssessmentDate())
                 .scheduleStatus(response.getStatus())
                 .notes(response.getNotes())
-                .slots(List.of(InitialAssessmentResponse.InitialAssessmentDto.builder()
-                                .startTime(response.getSlots().get(0).getStartTime())
-                                .endTime(response.getSlots().get(0).getEndTime())
-                        .build()))
+                .slots(
+                        Optional.ofNullable(response.getSlots())
+                                .orElseGet(List::of)
+                                .stream()
+                                .map(slot -> InitialAssessmentResponse.InitialAssessmentDto.builder()
+                                        .startTime(slot.getStartTime())
+                                        .endTime(slot.getEndTime())
+                                        .build()
+                                )
+                                .toList()
+                )
+//                .slots(List.of(InitialAssessmentResponse.InitialAssessmentDto.builder()
+//                                .startTime(response.getSlots().get(0).getStartTime())
+//                                .endTime(response.getSlots().get(0).getEndTime())
+//                        .build()))
 
                 .clientStudentId(client.getClientStudentId())
 
@@ -317,6 +520,35 @@ public class AssessmentScheduleService {
                         Comparator.nullsLast(Comparator.reverseOrder())
                 ))
                 .map(item -> InitialAssessmentResponse.AssignmentHistoryResponse.builder()
+                        .description(item.getDescription())
+                        .action(item.getAction())
+                        .assigneeFullName(
+                                item.getAssignee() != null
+                                        ? item.getAssignee().getFirstName() + " "
+                                        + item.getAssignee().getLastName()
+                                        : "-"
+                        )
+                        .assignmentRole(item.getAssignmentRole())
+                        .assignmentStatus(item.getAssignmentStatus())
+                        .assignedByFullName(
+                                item.getChangedBy() != null
+                                        ? item.getChangedBy().getFirstName() + " "
+                                        + item.getChangedBy().getLastName()
+                                        : "-"
+                        )
+                        .eventDateTime(item.getEventDateTime())
+                        .build()
+                )
+                .toList();
+    }
+
+    public List<TherapySessionResponse.AssignmentHistoryResponse> buildTSAssignmentHistories(List<AssignmentHistory> assigmentHistory){
+        return assigmentHistory.stream()
+                .sorted(Comparator.comparing(
+                        AssignmentHistory::getEventDateTime,
+                        Comparator.nullsLast(Comparator.reverseOrder())
+                ))
+                .map(item -> TherapySessionResponse.AssignmentHistoryResponse.builder()
                         .description(item.getDescription())
                         .action(item.getAction())
                         .assigneeFullName(

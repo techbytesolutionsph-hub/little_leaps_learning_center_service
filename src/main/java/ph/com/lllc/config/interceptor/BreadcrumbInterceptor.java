@@ -78,14 +78,14 @@ public class BreadcrumbInterceptor implements HandlerInterceptor {
         /* limit to max 3 words */
         String[] words = label.split("\\s+");
 
-        if (words.length > 3) {
+        if (words.length > 4) {
             label = String.join(" ",
-                    Arrays.copyOfRange(words, 0, 3));
+                    Arrays.copyOfRange(words, 0, 4));
         }
 
         /* limit overall length to 20 chars */
-        if (label.length() > 23) {
-            label = label.substring(0, 23).trim() + "...";
+        if (label.length() > 30) {
+            label = label.substring(0, 30).trim() + "...";
         }
 
         return label;

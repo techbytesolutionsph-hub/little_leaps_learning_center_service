@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.SessionFrequency;
 
@@ -27,6 +28,9 @@ public class ClientTherapySchedule {
     @Column(name = "session_id")
     private Long id;
 
+    @Column(name = "therapy_session_id")
+    private String therapySessionId;
+
     /**
      * ONCE / TWICE / THRICE
      */
@@ -39,6 +43,16 @@ public class ClientTherapySchedule {
      */
     @Enumerated(EnumType.STRING)
     private ScheduleStatus status;
+
+    /**
+     * Notes/Remarks for client/kid
+     */
+    @Column(name = "notes", length = 1000)
+    private String notes;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "assignment_role", nullable = false)
+    private AssignmentRole assignmentRole;
 
     @JsonBackReference
     @ManyToOne

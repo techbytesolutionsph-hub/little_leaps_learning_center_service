@@ -6,9 +6,11 @@ import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.enums.ScheduleStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ClientTherapyScheduleRepository extends JpaRepository<ClientTherapySchedule, Long> {
 
+    Optional<ClientTherapySchedule> findByTherapySessionId(String therapySessionId);
     List<ClientTherapySchedule> findByStatus(ScheduleStatus scheduleStatus);
 }

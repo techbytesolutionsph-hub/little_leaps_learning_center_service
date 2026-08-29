@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentRequest;
 import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
+import ph.com.lllc.dto.staff.clients.TherapySessionRequest;
+import ph.com.lllc.dto.staff.clients.TherapySessionResponse;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.clients.AssessmentScheduleService;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -56,5 +58,19 @@ public class AssessmentScheduleController {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "InitialAssessmentRequest : " + request.toString());
         return ResponseEntity.ok(assessmentScheduleService.updateInitialAssessmentSchedule(uuid, request, httpRequest));
+    }
+
+    @Operation(summary = "Save Therapy Session Details")
+    @PostMapping("/save-therapy-session-details")
+    public ResponseEntity<CommonResponse> saveTherapySessionDetails(@Valid @RequestBody TherapySessionRequest request, HttpServletRequest httpRequest) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "TherapySessionRequest : " + request.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(assessmentScheduleService.saveTherapySessionDetails(uuid, request, httpRequest));
+    }
+
+    @Operation(summary = "Get All Therapy Session Details")
+    @GetMapping("/get-therapy-session-details")
+    public ResponseEntity<List<TherapySessionResponse>> getTherapySessionDetails() {
+        return ResponseEntity.ok(assessmentScheduleService.getTherapySessionResponse());
     }
 }
