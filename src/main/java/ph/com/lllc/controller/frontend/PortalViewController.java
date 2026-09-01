@@ -117,8 +117,11 @@ public class PortalViewController {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "clients", "Edit Assign Client");
 
-        Map<String, String> staff = portalFrontService.mapCaseManagerBehavioralTherapist();
-        model.addAttribute("staff", staff);
+        Map<String, String> caseManager = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager"));
+        model.addAttribute("caseManager", caseManager);
+
+        Map<String, String> therapist = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager", "Behavioral Therapist"));
+        model.addAttribute("therapist", therapist);
 
         AssignedClientResponse assignment = portalFrontService.findByAssignmentId(uuid, assignmentId);
         model.addAttribute("assignment", assignment);
@@ -130,8 +133,11 @@ public class PortalViewController {
     public String assignClientPage(Model model) {
         this.setupPage(model, "clients", "Assign Client");
 
-        Map<String, String> staff = portalFrontService.mapCaseManagerBehavioralTherapist();
-        model.addAttribute("staff", staff);
+        Map<String, String> caseManager = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager"));
+        model.addAttribute("caseManager", caseManager);
+
+        Map<String, String> therapist = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager", "Behavioral Therapist"));
+        model.addAttribute("therapist", therapist);
 
         return "staff/clients/assignment/assign/index";
     }
@@ -189,8 +195,8 @@ public class PortalViewController {
     public String addTherapySessionAssigneePage(Model model) {
         this.setupPage(model, "clients", "Add Therapy Session Assignee");
 
-        Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
-        model.addAttribute("caseManagers", caseManagers);
+        Map<String, String> therapists = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager", "Behavioral Therapist"));
+        model.addAttribute("therapists", therapists);
 
         return "staff/clients/client-schedule/therapy-session/add/assignee/index";
     }

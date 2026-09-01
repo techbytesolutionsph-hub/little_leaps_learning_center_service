@@ -2,8 +2,8 @@ package ph.com.lllc.dto.staff.clients;
 
 import lombok.*;
 import ph.com.lllc.enums.AssignmentRole;
-import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.SessionFrequency;
+import ph.com.lllc.enums.TherapyScheduleStatus;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class TherapySessionRequest {
     private String employeeId;
     private AssignmentRole assignmentRole;
     private SessionFrequency frequency;
-    private ScheduleStatus status;
+    private TherapyScheduleStatus status;
     private String notes;
 
     private List<TherapySlotRequest> scheduleSlots;

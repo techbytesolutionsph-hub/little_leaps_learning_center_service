@@ -117,29 +117,29 @@
 
                             <div class="summary-title">
                                 <i class="fas fa-users mr-2"></i>
-                                <span>Assignee Details</span>
+                                <span>Assignment Details</span>
                             </div>
 
                             <div class="summary-row">
                                 <div class="summary-label">
                                     <i class="fa-solid fa-user-doctor"></i>
-                                    Assign To
+                                    Case Manager
                                 </div>
 
                                 <div class="summary-value">
                                     <div class="employee-summary">
-                                        <img src="/img/base/default-profile.png" alt="Sarah Dela Cruz" class="employee-avatar">
+                                        <img src="/img/base/default-profile.png" alt="Sarah Dela Cruz" class="employee-avatar" id="case-manager-avatar">
 
                                         <div class="employee-information">
-                                            <div class="employee-name">
+                                            <div class="employee-name" id="case-manager-name">
                                                 Mark Andrie Alcantara
                                             </div>
 
-                                            <div class="employee-position">
+                                            <div class="employee-position" id="case-manager-position">
                                                 Case Manager
                                             </div>
 
-                                            <input type="hidden" id="employee-id" class="form-control">
+                                            <input type="hidden" id="case-manager-id" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -148,14 +148,61 @@
                             <div class="summary-row">
                                 <div class="summary-label">
                                     <i class="fa-regular fa-calendar"></i>
-                                    Assignee Role
+                                    Case Manager Role
                                 </div>
 
                                 <div class="summary-value">
-                                    <span class="assignment-type-badge" id="assignee-role">
+                                    <span class="assignment-type-badge" id="case-manager-role">
                                         Primary Case Manager
                                     </span>
                                 </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    Behavioral Therapist
+                                </div>
+
+                                <div class="summary-value">
+                                    <div class="employee-summary">
+                                        <img src="/img/base/default-profile.png" alt="Sarah Dela Cruz" class="employee-avatar" id="behavioral-therapist-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" id="behavioral-therapist-name">
+                                                Mark Andrie Alcantara
+                                            </div>
+
+                                            <div class="employee-position" id="behavioral-therapist-position">
+                                                Case Manager
+                                            </div>
+
+                                            <input type="hidden" id="behavioral-therapist-id" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Behavioral Therapist Role
+                                </div>
+
+                                <div class="summary-value">
+                                    <span class="assignment-type-badge" id="behavioral-therapist-role">
+                                        Primary Behavioral Therapist
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                    Diagnosis Concerns
+                                </div>
+
+                                <div class="summary-value" id="diagnosisConcerns"></div>
                             </div>
 
                             <div class="summary-row">

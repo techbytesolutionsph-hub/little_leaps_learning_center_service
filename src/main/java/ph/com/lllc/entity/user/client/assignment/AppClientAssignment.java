@@ -6,18 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.AssignmentStatus;
-import ph.com.lllc.enums.DiagnosisConcern;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -28,10 +24,6 @@ import java.util.Set;
                 @Index(
                         name = "idx_client_assignment_client",
                         columnList = "client_student_id"
-                ),
-                @Index(
-                        name = "idx_client_assignment_client_role",
-                        columnList = "client_student_id, assignment_role"
                 ),
                 @Index(
                         name = "idx_client_assignment_client_status",
@@ -59,27 +51,30 @@ public class AppClientAssignment implements Serializable {
     private String assignmentId;
 
     /**
-     * Assignee (Case Manager or Behavioral Therapist)
-     *
+     * Assigned Case Manager
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee_id")
-    private AppEmployeeProfile assignee;
+    @JoinColumn(name = "case_manager_id")
+    private AppEmployeeProfile caseManager;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "assignment_role", nullable = false)
-    private AssignmentRole assignmentRole;
+    @Column(name = "case_manager_role", nullable = false, length = 50)
+    private AssignmentRole caseManagerRole;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(name = "diagnosis_concerns", columnDefinition = "jsonb")
-    private Set<DiagnosisConcern> diagnosisConcerns;
+    /**
+     * Assigned Behavioral Therapist
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "behavioral_therapist_id")
+    private AppEmployeeProfile behavioralTherapist;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "behavioral_therapist_role", nullable = false, length = 50)
+    private AssignmentRole behavioralTherapistRole;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private AssignmentStatus status;
-
-    @Column(name = "branch")
-    private String branch;
 
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;

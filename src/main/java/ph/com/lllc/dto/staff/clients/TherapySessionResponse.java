@@ -19,7 +19,7 @@ public class TherapySessionResponse {
     private String therapySessionId;
     private AssignmentRole assignmentRole;
     private SessionFrequency frequency;
-    private ScheduleStatus status;
+    private TherapyScheduleStatus status;
     private String notes;
 
     private List<TherapySlotRequest> scheduleSlots;
@@ -30,10 +30,13 @@ public class TherapySessionResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class TherapySlotRequest {
+        private Long id;
         private LocalDate therapyDate;
         private DayOfWeek day;
         private LocalTime startTime;
         private LocalTime endTime;
+        private TherapySlotStatus status;
+        private String notes;
     }
 
     /* Client School ID */
@@ -63,12 +66,15 @@ public class TherapySessionResponse {
     private String caseManagerProfilePicture;
     private String caseManagerFullName;
     private String caseManagerPosition;
-    private LocalDate caseManagerAssignedAt;
+    private AssignmentRole caseManagerRole;
 
-    private String therapistId;
-    private String therapistProfilePicture;
-    private String therapistFullName;
-    private String therapistPosition;
+    private String behavioralTherapistId;
+    private String behavioralTherapistProfilePicture;
+    private String behavioralTherapistFullName;
+    private String behavioralTherapistPosition;
+    private AssignmentRole behavioralTherapistRole;
+
+    private LocalDate assignedAt;
 
     List<AssignmentHistoryResponse> history;
 
@@ -81,8 +87,13 @@ public class TherapySessionResponse {
 
         private String description;
         private AssignmentHistoryAction action;
-        private String assigneeFullName;
-        private AssignmentRole assignmentRole;
+
+        private String caseManagerFullName;
+        private AssignmentRole caseManagerRole;
+
+        private String behavioralTherapistFullName;
+        private AssignmentRole behavioralTherapistRole;
+
         private AssignmentStatus assignmentStatus;
         private String assignedByFullName;
         private LocalDateTime eventDateTime;

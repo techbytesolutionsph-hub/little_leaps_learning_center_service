@@ -12,6 +12,7 @@ import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.SessionFrequency;
+import ph.com.lllc.enums.TherapyScheduleStatus;
 
 import java.util.List;
 
@@ -39,11 +40,11 @@ public class ClientTherapySchedule {
     private SessionFrequency frequency;
 
     /**
-     * Schedule status - SCHEDULED, COMPLETED, CANCELLED, PENDING
+     * Therapy Schedule status - ACTIVE, COMPLETED, CANCELLED, INACTIVE
      */
     @Enumerated(EnumType.STRING)
-    private ScheduleStatus status;
-
+    @Column(name = "status", nullable = false)
+    private TherapyScheduleStatus status;
     /**
      * Notes/Remarks for client/kid
      */

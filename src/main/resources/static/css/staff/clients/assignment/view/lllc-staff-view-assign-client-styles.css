@@ -89,6 +89,14 @@ body {
     border: 1px solid #dfe7ec;
 }
 
+.therapist-avatar, .case-manager-avatar{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #dfe7ec;
+}
+
 /* ================================================================
    CLIENT INFORMATION
    ================================================================ */
@@ -186,6 +194,7 @@ body {
     min-width: 0;
     max-width: 100%;
     overflow: hidden;
+    margin-left: 10px;
 }
 
 .summary-stat-label {
@@ -567,7 +576,7 @@ body {
    ================================================================ */
 
 .timeline-container {
-    height: 200px;
+    max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: thin;

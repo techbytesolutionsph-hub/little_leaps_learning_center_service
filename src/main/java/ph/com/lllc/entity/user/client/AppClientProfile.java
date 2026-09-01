@@ -16,7 +16,6 @@ import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSched
 import ph.com.lllc.entity.user.client.pricing.AppClientServicePricing;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.common.AppUser;
-import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.enums.DiagnosisConcern;
 import ph.com.lllc.enums.EnrollmentStatus;
 import ph.com.lllc.enums.Gender;
@@ -79,10 +78,6 @@ public class AppClientProfile implements Serializable {
     @Column(name = "program_type")
     private String programType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "assignment_status")
-    private AssignmentStatus assignmentStatus;
-
     @Column(name = "branch")
     private String branch;
 
@@ -92,6 +87,9 @@ public class AppClientProfile implements Serializable {
 
     @Column(name = "is_active")
     private boolean isActive = true;
+
+    @Column(name = "is_account_registered", nullable = false)
+    private boolean accountRegistered = false;
 
     @Column(name = "profile_image_url")
     private String profileImageUrl;

@@ -70,6 +70,78 @@ function initializeMaxTodayDatePicker(id, placeholder) {
     });
 }
 
+function initializeDatePicker2(id, placeholder) {
+    flatpickr(id, {
+        enableTime: false,
+        altInput: true,
+        altFormat: "Y-m-d",
+        dateFormat: "Y-m-d",
+        altInputClass: "form-control assessment-form-control",
+        onReady: function (selectedDates, dateStr, instance) {
+            instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
+        position: "auto"
+    });
+}
+
+function initializeTimePicker2(id, placeholder) {
+    flatpickr(id, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        altInput: true,
+        altFormat: "h:i K",
+        altInputClass: "form-control assessment-form-control",
+        time_24hr: false,
+        onReady: function (selectedDates, dateStr, instance) {
+            instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
+        position: "auto"
+    });
+}
+
+function initializeMaxTodayDatePicker2(id, placeholder) {
+    flatpickr(id, {
+        enableTime: false,
+        altInput: true,
+        altFormat: "Y-m-d",
+        dateFormat: "Y-m-d",
+        maxDate: "today",
+        altInputClass: "form-control assessment-form-control",
+        onReady: function (selectedDates, dateStr, instance) {
+            instance.altInput.setAttribute("placeholder", placeholder);
+        },
+        onChange: function (selectedDates, dateStr, instance) {
+            if (dateStr) {
+                // Remove validation from original input
+                $(instance.input).removeClass("is-invalid");
+
+                // Remove validation from visible Flatpickr input
+                $(instance.altInput).removeClass("is-invalid");
+            }
+        },
+        position: "auto"
+    });
+}
+
 function initializeMinTodayDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,

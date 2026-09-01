@@ -228,20 +228,59 @@ function populateAssignedClientDetails(client) {
     $("#clientContact").text(client.guardianContactNo || "-");
 
     /* Client Summary */
-    $('.employee-avatar').attr('src', client.assigneeProfilePicture || '/img/base/default-profile.png');
-    $(".employee-name").text(client.assigneeFullName|| "-");
-    $(".employee-position").text(client.assigneePosition|| "-");
-    $("#employee-id").text(client.employeeId|| "-");
+    $('#case-manager-avatar').attr('src', client.caseManagerProfilePicture || '/img/base/default-profile.png');
+    $("#case-manager-name").text(client.caseManagerFullName|| "-");
+    $("#case-manager-position").text(client.caseManagerPosition|| "-");
+    $("#case-manager-id").text(client.caseManagerId|| "-");
+    $("#case-manager-role").text(formatEnumValue(client.caseManagerRole) || "-");
 
-    $("#assignee-role").text(formatEnumValue(client.assignmentRole) || "-");
+    $('#behavioral-therapist-avatar').attr('src', client.behavioralTherapistProfilePicture || '/img/base/default-profile.png');
+    $("#behavioral-therapist-name").text(client.behavioralTherapistFullName|| "-");
+    $("#behavioral-therapist-position").text(client.behavioralTherapistPosition|| "-");
+    $("#behavioral-therapist-id").text(client.behavioralTherapistId|| "-");
+    $("#behavioral-therapist-role").text(formatEnumValue(client.behavioralTherapistRole) || "-");
+
+    const diagnosisConcerns = client.diagnosisConcerns;
+
+    $("#diagnosisConcerns").text(
+        diagnosisConcerns?.length
+            ? diagnosisConcerns
+                .map(value => value
+                    .toLowerCase()
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, char => char.toUpperCase())
+                )
+                .join(", ")
+            : "-"
+    );
+
     $("#assigned-at").text(formatDate(client.assignedAt));
     $("#assigned-branch").text(client.branch || "-");
+
+    const $therapist = $("#therapy-session-behavioral-therapist");
+    const therapistId = String(client.behavioralTherapistId);
+
+    if ($therapist.find(`option[value="${therapistId}"]`).length) {
+        $therapist.val(therapistId).trigger("change").focus();
+    }
+
+    $("#therapy-session-role")
+        .val(client.behavioralTherapistRole)
+        .trigger("change");
+
+    function formatRole(role) {
+        return role
+            .toLowerCase()
+            .split("_")
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    }
 
     /* Profile Link */
     if (client.clientId) {
         $("#clientProfileLink").attr(
             "href",
-            "/app/portal/client-management/profile/" +
+            "/app/portal/client-management/registry/view-client?id=" +
             encodeURIComponent(client.clientId)
         );
     } else {

@@ -33,7 +33,7 @@ public class ClientRegistrationResponse {
     private LocalDate dateEnrolled;
     private Set<DiagnosisConcern> diagnosisConcerns;
     private String programType;
-    private AssignmentStatus assignmentStatus;
+    private boolean accountRegistered;
     private String branch;
     private EnrollmentStatus enrollmentStatus;
 

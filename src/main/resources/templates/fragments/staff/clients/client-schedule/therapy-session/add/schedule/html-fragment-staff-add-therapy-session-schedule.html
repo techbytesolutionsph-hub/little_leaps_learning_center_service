@@ -1,0 +1,460 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-add-therapy-session-schedule(caseManagers, therapy)">
+        <!-- Add Therapy Session Schedule - START -->
+        <!-- CLIENT SUMMARY CARD -->
+        <section class="client-summary-card">
+            <!-- Client Avatar -->
+            <div class="client-avatar-wrapper">
+                <img th:src="${therapy.clientProfilePicture != null ? therapy.clientProfilePicture : '/img/base/default-profile.png'}"
+                     alt="Zoe Garcia" class="client-avatar">
+            </div>
+
+            <!-- Client Information -->
+            <div class="client-information">
+                <div class="client-name-row">
+                    <h2 class="client-name" th:text="${therapy.clientFullName}">
+                        Zoe Garcia
+                    </h2>
+                </div>
+
+                <div class="client-info-row">
+                    <i class="fa-solid fa-id-card"></i>
+                    Therapy Session ID:&nbsp;<span class="client-id-badge" th:text="${therapy.therapySessionId}">
+                        IA-2026-00001
+                    </span>
+                </div>
+
+                <div class="client-info-row">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    DOB:&nbsp;<span th:text="${#temporals.format(therapy.clientBirthDate, 'MMMM dd, yyyy')}">2018-05-12</span>
+                </div>
+
+                <div class="client-info-row">
+                    <i class="fas fa-venus-mars"></i>
+                    Gender:&nbsp;<span th:text="${#strings.capitalize(therapy.clientGender.name().toLowerCase())}">Male</span>
+                </div>
+
+                <div class="client-info-row">
+                    <i class="fa-regular fa-calendar"></i>
+                    Enrollment Date:&nbsp;<span th:text="${#temporals.format(therapy.dateEnrolled, 'MMMM dd, yyyy')}">2026-07-28</span>
+                </div>
+
+                <div class="client-info-row">
+                    <i class="fa-regular fa-user"></i>
+                    Guardian:&nbsp;<span th:text="${therapy.guardianFullName}">Maria Garcia</span>
+                </div>
+
+                <div class="client-info-row">
+                    <i class="fa-solid fa-phone"></i>
+                    Contact No.:&nbsp;<span th:text="${therapy.guardianContactNo}">09171234567</span>
+                </div>
+            </div>
+
+            <!-- Case Manager -->
+            <div class="summary-stat case-manager-stat">
+                <div class="summary-stat-icon manager-icon">
+                    <img th:src="${therapy.behavioralTherapistProfilePicture != null ? therapy.behavioralTherapistProfilePicture : '/img/base/default-profile.png'}"
+                         alt="Zoe Garcia" class="therapist-avatar" style="">
+                </div>
+                <div class="summary-stat-content">
+                    <div class="summary-stat-label">
+                        Behavioral Therapist
+                    </div>
+                    <div class="manager-name" th:text="${therapy.behavioralTherapistFullName}">
+                        John Cruz
+                    </div>
+                    <div class="summary-stat-subtext" th:text="${therapy.behavioralTherapistPosition}">
+                        Behavioral Therapist
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Program -->
+            <div class="summary-stat">
+                <div class="summary-stat-icon program-icon">
+                    <i class="fa-regular fa-calendar-days"></i>
+                </div>
+
+                <div class="summary-stat-content">
+                    <div class="summary-stat-label">
+                        Program
+                    </div>
+                    <div class="program-name" th:text="${therapy.programType}">
+                        Speech Therapy
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Manager -->
+            <div class="summary-stat case-manager-stat">
+                <div class="summary-stat-icon manager-icon">
+                    <img th:src="${therapy.caseManagerProfilePicture != null ? therapy.caseManagerProfilePicture : '/img/base/default-profile.png'}"
+                         alt="Zoe Garcia" class="case-manager-avatar" style="">
+                </div>
+                <div class="summary-stat-content">
+                    <div class="summary-stat-label">
+                        Case Manager
+                    </div>
+                    <div class="manager-name" th:text="${therapy.caseManagerFullName}">
+                        John Cruz
+                    </div>
+                    <div class="summary-stat-subtext" th:text="${therapy.caseManagerPosition}">
+                        Case Manager
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="dashboard-card">
+            <div class="calendar-main-header">
+                <div class="section-header">
+                    <div class="section-header-content">
+                        <div class="section-title">Add Therapy Session Schedule</div>
+                        <div class="section-description">
+                            Select a date and time to add therapy session schedule.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar-actions-left">
+                    <button id="todayButton" class="today-button"> Today </button>
+
+                    <button id="previousWeek" class="nav-button">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+
+                    <button id="nextWeek" class="nav-button">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
+
+                    <div id="currentWeek" class="current-week"></div>
+
+                    <div class="view-switch">
+                        <button id="weekViewButton" class="active"> Week </button>
+                        <button id="dayViewButton"> Day </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="calendar-layout">
+                <!-- LEFT -->
+                <div class="calendar-sidebar">
+                    <button id="addScheduleButton" class="add-schedule-button">
+                        <i class="bi bi-plus-lg"></i> Add Schedule
+                    </button>
+
+                    <div class="calendar-helper-text mt-2">
+                        Click on a time slot in the calendar or click “Add Schedule” to create a new session.
+                    </div>
+
+                    <div class="legend">
+                        <div class="legend-item">
+                            <div class="legend-dot legend-scheduled"></div>
+                            Scheduled
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-dot legend-completed"></div>
+                            Completed
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-dot legend-cancelled"></div>
+                            Cancelled
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-dot legend-rescheduled"></div>
+                            Rescheduled
+                        </div>
+
+                        <div class="legend-item">
+                            <div class="legend-dot legend-missed"></div>
+                            Missed
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CALENDAR -->
+                <div class="calendar-wrapper">
+
+                    <div id="calendar" class="calendar"></div>
+
+                    <div class="tip-box">
+                        <i class="bi bi-info-circle"></i>
+                        <span> Tip: Click on any “+” slot in the calendar to quickly add a new therapy session. </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="editAssessmentScheduleModal" tabindex="-1"
+             aria-labelledby="editAssessmentScheduleModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content assessment-schedule-modal">
+                    <!-- Modal Header -->
+                    <div class="modal-header assessment-modal-header">
+                        <div>
+                            <h5 class="modal-title" id="editAssessmentScheduleModalLabel">
+                                Edit Assessment Schedule
+                            </h5>
+
+                            <p class="assessment-modal-subtitle">
+                                Edit assessment schedule for the selected client.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body assessment-modal-body">
+                        <form id="editAssessmentScheduleForm">
+                            <input type="hidden" id="edit-assessment-id" name="id">
+                            <div class="row g-3">
+                                <!-- Therapist -->
+                                <div class="col-12">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-therapist" class="assessment-form-label"> Therapist </label>
+                                        <input type="text" id="edit-assessment-therapist" name="day" class="form-control assessment-form-control"
+                                               placeholder="Day" th:value="${therapy.behavioralTherapistFullName}" readonly required>
+                                    </div>
+                                </div>
+
+                                <!-- Frequency -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-frequency" class="assessment-form-label"> Frequency </label>
+                                        <input type="text" id="edit-assessment-frequency" name="day" class="form-control assessment-form-control"
+                                               placeholder="Day" th:value="${#strings.capitalize(therapy.frequency.name().toLowerCase())}" readonly required>
+                                    </div>
+                                </div>
+
+                                <!-- Schedule Status -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-status" class="assessment-form-label"> Schedule Status <span class="required">*</span> </label>
+                                        <select class="form-control assessment-form-control" id="edit-assessment-status" name="status" required>
+                                            <option value="" selected disabled>Select status</option>
+                                            <option value="SCHEDULED">Scheduled</option>
+                                            <option value="COMPLETED">Completed</option>
+                                            <option value="CANCELLED">Cancelled</option>
+                                            <option value="RESCHEDULED">Rescheduled</option>
+                                            <option value="MISSED">Missed</option>
+                                        </select>
+                                        <div class="field-error">Status is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Therapy Date -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-therapy-date" class="assessment-form-label"> Therapy Date <span class="required">*</span> </label>
+                                        <div class="date-input-wrapper">
+                                            <input type="date" id="edit-assessment-therapy-date" name="therapyDate" class="form-control assessment-form-control" required>
+                                            <i class="bi bi-calendar-event calendar-icon"></i>
+                                        </div>
+                                        <div class="field-error">Therapy date is required.</div>
+                                    </div>
+                                </div>
+                                <!-- Day -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-day" class="assessment-form-label"> Day <span class="required">*</span> </label>
+                                        <input type="text" id="edit-assessment-day" name="day" class="form-control assessment-form-control" placeholder="Day" readonly required>
+                                        <div class="field-error">Therapy day is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Start Time -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-start-time" class="assessment-form-label"> Start Time <span class="required">*</span> </label>
+                                        <div class="date-input-wrapper">
+                                            <input type="time" id="edit-assessment-start-time" name="startTime" class="form-control assessment-form-control" required>
+                                            <i class="bi bi-calendar-event calendar-icon"></i>
+                                        </div>
+                                        <div class="field-error">Start time is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- End Time -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-end-time" class="assessment-form-label"> End Time <span class="required">*</span> </label>
+                                        <div class="date-input-wrapper">
+                                            <input type="time" id="edit-assessment-end-time" name="endTime" class="form-control assessment-form-control" required>
+                                            <i class="bi bi-calendar-event calendar-icon"></i>
+                                        </div>
+                                        <div class="field-error">End time is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Notes -->
+                                <div class="col-12">
+                                    <div class="assessment-form-group">
+                                        <label for="edit-assessment-notes" class="assessment-form-label"> Notes <span style="font-weight:400;">(Optional)</span></label>
+
+                                        <textarea id="edit-assessment-notes" name="notes" maxlength="500" class="form-control assessment-form-control"
+                                                  placeholder="Add notes or special instructions..." rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer assessment-modal-footer">
+                        <button type="button" class="btn assessment-btn-cancel" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle-fill text-m font-bold mr-1"></i> Cancel
+                        </button>
+                        <button type="submit" form="editAssessmentScheduleForm" class="btn assessment-btn-update" id="update-therapy-slot-btn">
+                            <i class="bi bi-calendar-plus-fill text-m font-bold mr-1"></i> Update Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addAssessmentScheduleModal" tabindex="-1"
+             aria-labelledby="addAssessmentScheduleModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content assessment-schedule-modal">
+                    <!-- Modal Header -->
+                    <div class="modal-header assessment-modal-header">
+                        <div>
+                            <h5 class="modal-title" id="addAssessmentScheduleModalLabel">
+                                Add Assessment Schedule
+                            </h5>
+
+                            <p class="assessment-modal-subtitle">
+                                Create a new assessment schedule for the selected client.
+                            </p>
+                        </div>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                    </div>
+
+                    <!-- Modal Body -->
+                    <div class="modal-body assessment-modal-body">
+                        <form id="addAssessmentScheduleForm">
+                            <div class="row g-3">
+                                <!-- Therapist -->
+                                <div class="col-12">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-therapist" class="assessment-form-label"> Therapist </label>
+                                        <input type="text" id="assessment-therapist" name="day" class="form-control assessment-form-control"
+                                               placeholder="Day" th:value="${therapy.behavioralTherapistFullName}" readonly required>
+                                        <div class="field-error">Therapist is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Frequency -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-frequency" class="assessment-form-label"> Frequency </label>
+                                        <input type="text" id="assessment-frequency" name="day" class="form-control assessment-form-control"
+                                               placeholder="Day" th:value="${#strings.capitalize(therapy.frequency.name().toLowerCase())}" readonly required>
+                                    </div>
+                                </div>
+
+                                <!-- Schedule Status -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-status" class="assessment-form-label"> Schedule Status </label>
+                                        <select class="form-control assessment-form-control" id="assessment-status">
+                                            <option value="" selected disabled>Select status</option>
+                                            <option value="SCHEDULED">Scheduled</option>
+                                            <option value="COMPLETED">Completed</option>
+                                            <option value="CANCELLED">Cancelled</option>
+                                            <option value="RESCHEDULED">Rescheduled</option>
+                                            <option value="MISSED">Missed</option>
+                                        </select>
+                                        <div class="field-error">Status is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Therapy Date -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-therapy-date" class="assessment-form-label"> Therapy Date <span class="required">*</span> </label>
+                                        <div class="date-input-wrapper">
+                                            <input type="date" id="assessment-therapy-date" name="therapyDate" class="form-control assessment-form-control" required>
+                                            <i class="bi bi-calendar-event calendar-icon"></i>
+                                        </div>
+                                        <div class="field-error">Therapy date is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Day -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-day" class="assessment-form-label"> Day <span class="required">*</span> </label>
+                                        <input type="text" id="assessment-day" name="day" class="form-control assessment-form-control" placeholder="Day" disabled required>
+                                        <div class="field-error">Therapy day is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Start Time -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-start-time" class="assessment-form-label"> Start Time <span class="required">*</span> </label>
+                                        <div class="date-input-wrapper">
+                                            <input type="time" id="assessment-start-time" name="startTime" class="form-control assessment-form-control" required>
+                                            <i class="bi bi-calendar-event calendar-icon"></i>
+                                        </div>
+                                        <div class="field-error">Start time is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- End Time -->
+                                <div class="col-12 col-md-6">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-end-time" class="assessment-form-label"> End Time <span class="required">*</span> </label>
+                                        <div class="date-input-wrapper">
+                                            <input type="time" id="assessment-end-time" name="endTime" class="form-control assessment-form-control" required>
+                                            <i class="bi bi-calendar-event calendar-icon"></i>
+                                        </div>
+                                        <div class="field-error">End time is required.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Notes -->
+                                <div class="col-12">
+                                    <div class="assessment-form-group">
+                                        <label for="assessment-notes" class="assessment-form-label"> Notes <span style="font-weight:400;">(Optional)</span></label>
+
+                                        <textarea id="assessment-notes" name="notes" maxlength="500" class="form-control assessment-form-control"
+                                                  placeholder="Add notes or special instructions..." rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer assessment-modal-footer">
+                        <button type="button" class="btn assessment-btn-cancel" data-bs-dismiss="modal">
+                            <i class="bi bi-x-circle-fill text-m font-bold mr-1"></i> Cancel
+                        </button>
+                        <button type="submit" form="addAssessmentScheduleForm" class="btn assessment-btn-save">
+                            <i class="bi bi-calendar-plus-fill text-m font-bold mr-1"></i> Save Schedule
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Add Therapy Session Schedule - - END -->
+    </div>
+</html>

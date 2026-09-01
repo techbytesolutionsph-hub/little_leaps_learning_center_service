@@ -3,7 +3,7 @@ const originalHtml = $button.html();
 
 $(document).ready(function () {
 
-    initializeMaxTodayDatePicker("#assign-client-initial-assessment-date", "Select initial assessment date");
+    initializeDatePicker("#assign-client-initial-assessment-date", "Select initial assessment date");
     initializeTimePicker("#assign-client-assessment-start-time", "Select assessment start time");
     initializeTimePicker("#assign-client-assessment-end-time", "Select assessment end time");
 
@@ -53,6 +53,11 @@ $(document).ready(function () {
         }
     });
 
+    $("#clientProfileLink").attr(
+        "href",
+        "/app/portal/client-management/registry/view-client?id=" + clientId
+    );
+
     $('#next-btn').on('click', function (e) {
         if (!validateForm()) {
             showErrorPopup("Required Field", "Please complete the required fields.");
@@ -89,7 +94,7 @@ $(document).ready(function () {
 
         const assessment = getAssignmentData();
 
-        console.log("Confirmed assessment:", assessment);
+        console.log("Updated assessment:", assessment);
 
         /* Update Initial Assessment */
         updateInitialAssessment(assessment);
@@ -113,7 +118,7 @@ function getAssignmentData() {
     return {
         initialAssessmentId: $("#initial-assessment-id").val(),
         clientId: $("#clientIdValue").text(),
-        employeeId: $("#employee-id").val(),
+        employeeId: $("#case-manager-id").val(),
         scheduleStatus: $("#assign-client-status").val(),
         assessmentDate: $("#assign-client-initial-assessment-date").val(),
         notes: $.trim($("#assign-client-notes").val()) || null,
@@ -256,25 +261,48 @@ function populateAssignedClientDetails(client) {
     $("#clientContact").text(client.guardianContactNo || "-");
 
     /* Client Summary */
-    $('.employee-avatar').attr('src', client.assigneeProfilePicture || '/img/base/default-profile.png');
-    $(".employee-name").text(client.assigneeFullName|| "-");
-    $(".employee-position").text(client.assigneePosition|| "-");
-    $("#employee-id").text(client.employeeId|| "-");
+    $("#case-manager-avatar").attr('src', client.caseManagerProfilePicture || '/img/base/default-profile.png');
+    $("#case-manager-name").text(client.caseManagerFullName|| "-");
+    $("#case-manager-position").text(client.caseManagerPosition|| "-");
+    $("#case-manager-id").text(client.caseManagerId|| "-");
+    $("#case-manager-role").text(formatEnumValue(client.caseManagerRole) || "-");
 
-    $("#assignee-role").text(formatEnumValue(client.assignmentRole) || "-");
+    /* Client Summary */
+    $('#behavioral-therapist-avatar').attr('src', client.behavioralTherapistProfilePicture || '/img/base/default-profile.png');
+    $("#behavioral-therapist-name").text(client.behavioralTherapistFullName|| "-");
+    $("#behavioral-therapist-position").text(client.behavioralTherapistPosition|| "-");
+    $("#behavioral-therapist-id").text(client.behavioralTherapistId|| "-");
+    $("#behavioral-therapist-role").text(formatEnumValue(client.behavioralTherapistRole) || "-");
+
+    $("#assignee-role").text(formatEnumValue(client.caseManagerRole) || "-");
+
+    const diagnosisConcerns = client.diagnosisConcerns;
+    console.log(diagnosisConcerns);
+
+    $("#diagnosisConcerns").text(
+        diagnosisConcerns?.length
+            ? diagnosisConcerns
+                .map(value => value
+                    .toLowerCase()
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, char => char.toUpperCase())
+                )
+                .join(", ")
+            : "-"
+    );
     $("#assigned-at").text(formatDate(client.assignedAt));
     $("#assigned-branch").text(client.branch || "-");
 
     $("#assign-client-to")
-        .append(new Option(client.assigneeFullName, client.employeeId))
-        .val(client.employeeId);
+        .append(new Option(client.caseManagerFullName, client.caseManagerId))
+        .val(client.caseManagerId);
 
 
     /* Profile Link */
     if (client.clientId) {
         $("#clientProfileLink").attr(
             "href",
-            "/app/portal/client-management/profile/" +
+            "/app/portal/client-management/registry/view-client?id=" +
             encodeURIComponent(client.clientId)
         );
     } else {

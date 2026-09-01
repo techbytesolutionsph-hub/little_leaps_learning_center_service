@@ -195,7 +195,7 @@
                                 <td data-label="Assigned Case Manager">
                                     <div class="d-flex align-items-center">
                                         <!-- Profile Image -->
-                                        <img th:src="${assessment.assigneeProfilePicture != null ? assessment.assigneeProfilePicture : '/img/base/default-profile.png'}"
+                                        <img th:src="${assessment.caseManagerProfilePicture != null ? assessment.caseManagerProfilePicture : '/img/base/default-profile.png'}"
                                              class="rounded-circle me-2"
                                              style="width:45px;height:45px;object-fit:cover;"
                                              alt="Profile">
@@ -203,12 +203,12 @@
                                         <!-- Employee Details -->
                                         <div>
                                             <div class="fw-bold text-dark"
-                                                 th:text="${assessment.assigneeFullName}">
+                                                 th:text="${assessment.caseManagerFullName}">
                                                 Maria Santos
                                             </div>
 
                                             <div class="text-muted small"
-                                                 th:text="${assessment.assigneePosition}">
+                                                 th:text="${assessment.caseManagerPosition}">
                                                 Case Manager
                                             </div>
                                         </div>
@@ -323,7 +323,7 @@
                                 <td data-label="Assigned Behavioral Therapist">
                                     <div class="d-flex align-items-center">
                                         <!-- Profile Image -->
-                                        <img th:src="${therapy.therapistProfilePicture != null ? therapy.therapistProfilePicture : '/img/base/default-profile.png'}"
+                                        <img th:src="${therapy.behavioralTherapistProfilePicture != null ? therapy.behavioralTherapistProfilePicture : '/img/base/default-profile.png'}"
                                              class="rounded-circle me-2"
                                              style="width:45px;height:45px;object-fit:cover;"
                                              alt="Profile">
@@ -331,12 +331,12 @@
                                         <!-- Employee Details -->
                                         <div>
                                             <div class="fw-bold text-dark"
-                                                 th:text="${therapy.therapistFullName}">
+                                                 th:text="${therapy.behavioralTherapistFullName}">
                                                 Maria Santos
                                             </div>
 
                                             <div class="text-muted small"
-                                                 th:text="${therapy.therapistPosition}">
+                                                 th:text="${therapy.behavioralTherapistPosition}">
                                                 Case Manager
                                             </div>
                                         </div>
@@ -345,14 +345,14 @@
                                 <td data-label="Status">
                                     <!-- Scheduled -->
                                     <span class="status-badge badge-active"
-                                          th:if="${therapy.status != null and therapy.status.name() == 'SCHEDULED'}">
-                                        <i class="bi bi-check-circle-fill mr-1"></i> Scheduled
+                                          th:if="${therapy.status != null and therapy.status.name() == 'ACTIVE'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Active
                                     </span>
 
                                     <!-- Pending -->
                                     <span class="status-badge badge-warning"
-                                          th:if="${therapy.status != null and therapy.status.name() == 'PENDING'}">
-                                        <i class="bi bi-clock-fill mr-1"></i> Pending
+                                          th:if="${therapy.status != null and therapy.status.name() == 'INACTIVE'}">
+                                        <i class="bi bi-clock-fill mr-1"></i> Inactive
                                     </span>
 
                                     <!-- Completed -->

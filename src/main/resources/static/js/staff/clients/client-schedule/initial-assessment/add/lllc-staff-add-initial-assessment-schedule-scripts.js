@@ -3,7 +3,7 @@ const originalHtml = $button.html();
 
 $(document).ready(function () {
 
-    initializeMaxTodayDatePicker("#assign-client-initial-assessment-date", "Select initial assessment date");
+    initializeDatePicker("#assign-client-initial-assessment-date", "Select initial assessment date");
     initializeTimePicker("#assign-client-assessment-start-time", "Select assessment start time");
     initializeTimePicker("#assign-client-assessment-end-time", "Select assessment end time");
 
@@ -112,7 +112,7 @@ $(document).ready(function () {
 function getAssignmentData() {
     return {
         clientId: $("#clientIdValue").text(),
-        employeeId: $("#employee-id").text(),
+        employeeId: $("#case-manager-id").text(),
         scheduleStatus: $("#assign-client-status").val(),
         assessmentDate: $("#assign-client-initial-assessment-date").val(),
         notes: $.trim($("#assign-client-notes").val()) || null,
@@ -129,7 +129,7 @@ function loadReview() {
     $("#reviewAssignee").text(
         getSelectedText("assign-client-to")
     );
-    $("#reviewAssigneeRole").text($("#assignee-role").text() || "—");
+    $("#reviewAssigneeRole").text($("#case-manager-role").text() || "—");
 
     $("#reviewScheduleStatus").text(getSelectedText("assign-client-status"));
     $("#reviewInitialAssessmentDate").text($("#assign-client-initial-assessment-date").val() || "—");
@@ -255,25 +255,46 @@ function populateAssignedClientDetails(client) {
     $("#clientContact").text(client.guardianContactNo || "-");
 
     /* Client Summary */
-    $('.employee-avatar').attr('src', client.assigneeProfilePicture || '/img/base/default-profile.png');
-    $(".employee-name").text(client.assigneeFullName|| "-");
-    $(".employee-position").text(client.assigneePosition|| "-");
-    $("#employee-id").text(client.employeeId|| "-");
+    $("#case-manager-avatar").attr('src', client.caseManagerProfilePicture || '/img/base/default-profile.png');
+    $("#case-manager-name").text(client.caseManagerFullName|| "-");
+    $("#case-manager-position").text(client.caseManagerPosition|| "-");
+    $("#case-manager-id").text(client.caseManagerId|| "-");
+    $("#case-manager-role").text(formatEnumValue(client.caseManagerRole) || "-");
 
-    $("#assignee-role").text(formatEnumValue(client.assignmentRole) || "-");
+    /* Client Summary */
+    $('#behavioral-therapist-avatar').attr('src', client.behavioralTherapistProfilePicture || '/img/base/default-profile.png');
+    $("#behavioral-therapist-name").text(client.behavioralTherapistFullName|| "-");
+    $("#behavioral-therapist-position").text(client.behavioralTherapistPosition|| "-");
+    $("#behavioral-therapist-id").text(client.behavioralTherapistId|| "-");
+    $("#behavioral-therapist-role").text(formatEnumValue(client.behavioralTherapistRole) || "-");
+
     $("#assigned-at").text(formatDate(client.assignedAt));
     $("#assigned-branch").text(client.branch || "-");
 
     $("#assign-client-to")
-        .append(new Option(client.assigneeFullName, client.employeeId))
-        .val(client.employeeId);
+        .append(new Option(client.caseManagerFullName, client.caseManagerId))
+        .val(client.caseManagerId);
+
+    const diagnosisConcerns = client.diagnosisConcerns;
+
+    $("#diagnosisConcerns").text(
+        diagnosisConcerns?.length
+            ? diagnosisConcerns
+                .map(value => value
+                    .toLowerCase()
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, char => char.toUpperCase())
+                )
+                .join(", ")
+            : "-"
+    );
 
 
     /* Profile Link */
     if (client.clientId) {
         $("#clientProfileLink").attr(
             "href",
-            "/app/portal/client-management/profile/" +
+            "/app/portal/client-management/registry/view-client?id=" +
             encodeURIComponent(client.clientId)
         );
     } else {

@@ -6,8 +6,8 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-assign-client(caseManager, therapist)">
-        <!-- Assign Client - START -->
+    <div th:fragment="staff-add-therapy-session-assignee(therapists)">
+        <!-- Add Therapy Session Assignee - START -->
         <div class="assignment-page">
             <div class="stepper-card">
                 <div class="stepper">
@@ -26,8 +26,8 @@
                         <div class="step-number">2</div>
 
                         <div class="step-text">
-                            <span class="step-title">Assignment Details</span>
-                            <span class="step-subtitle">Select assignee & details</span>
+                            <span class="step-title">Therapy Session Details</span>
+                            <span class="step-subtitle">Select the therapy session details</span>
                         </div>
                     </div>
 
@@ -44,7 +44,6 @@
                 </div>
             </div>
 
-
             <div id="assignmentForm">
                 <div class="assignment-grid">
                     <!-- Step 1 - Select Client -->
@@ -56,13 +55,13 @@
                             </h2>
 
                             <p class="card-description">
-                                Search and select the client you want to assign.
+                                Select a client for initial assessment.
                             </p>
                         </div>
 
                         <div class="search-row">
                             <div class="input-group">
-                                <input type="text" class="form-control text-sm" id="client-id" placeholder="Enter Client ID">
+                                <input type="text" class="form-control text-sm" id="client-id" placeholder="Enter Assignment ID e.g. CA-2026-00001">
                                 <button class="btn btn-outline-primary" type="button" id="search-client-btn">
                                     <i class="bi bi-search"></i>
                                 </button>
@@ -116,16 +115,84 @@
                         <div class="summary-card" id="clientSummary" style="display: none;">
 
                             <div class="summary-title">
-                                Client Summary
+                                <i class="fas fa-users mr-2"></i>
+                                <span>Assignment Details</span>
                             </div>
 
                             <div class="summary-row">
                                 <div class="summary-label">
                                     <i class="fa-solid fa-user-doctor"></i>
-                                    Program Type
+                                    Case Manager
                                 </div>
 
-                                <div class="summary-value" id="programType"></div>
+                                <div class="summary-value">
+                                    <div class="employee-summary">
+                                        <img src="" alt="Sarah Dela Cruz" class="employee-avatar" id="case-manager-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" id="case-manager-name">
+                                                Mark Andrie Alcantara
+                                            </div>
+
+                                            <div class="employee-position" id="case-manager-position">
+                                                Case Manager
+                                            </div>
+
+                                            <input type="hidden" id="case-manager-id" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Case Manager Role
+                                </div>
+
+                                <div class="summary-value">
+                                    <span class="assignment-type-badge" id="case-manager-role">
+                                        Primary Case Manager
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    Behavioral Therapist
+                                </div>
+
+                                <div class="summary-value">
+                                    <div class="employee-summary">
+                                        <img src="" alt="Sarah Dela Cruz" class="employee-avatar" id="behavioral-therapist-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" id="behavioral-therapist-name">
+                                                Heero Yuy
+                                            </div>
+
+                                            <div class="employee-position" id="behavioral-therapist-position">
+                                                Behavioral Therapist
+                                            </div>
+
+                                            <input type="hidden" id="behavioral-therapist-id" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Behavioral Therapist Role
+                                </div>
+
+                                <div class="summary-value">
+                                    <span class="assignment-type-badge" id="behavioral-therapist-role">
+                                        Primary Behavioral Therapist
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="summary-row">
@@ -139,21 +206,13 @@
 
                             <div class="summary-row">
                                 <div class="summary-label">
-                                    <i class="fa-regular fa-calendar"></i>
-                                    Date Enrolled
-                                </div>
-
-                                <div class="summary-value" id="summaryDateEnrolled"></div>
-                            </div>
-
-                            <div class="summary-row">
-                                <div class="summary-label">
                                     <i class="fa-solid fa-users"></i>
-                                    Enrollment Status
+                                    Assigned At
                                 </div>
 
-                                <div class="summary-value" id="summaryStatus"></div>
+                                <div class="summary-value" id="assigned-at"></div>
                             </div>
+
 
                             <div class="summary-row">
                                 <div class="summary-label">
@@ -161,74 +220,49 @@
                                     Branch
                                 </div>
 
-                                <div class="summary-value" id="summaryBranch"></div>
+                                <div class="summary-value" id="assigned-branch"></div>
                             </div>
 
                             <a href="#" class="profile-link" id="clientProfileLink">
-                                View full client profile
+                                View full assignment details
                                 <i class="fa-solid fa-chevron-right"></i>
                             </a>
                         </div>
                     </div>
 
-                    <!-- Step 2 - Assignment Details -->
+                    <!-- Step 2 - Therapy Session Details -->
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title">
-                                <i class="fa-solid fa-users"></i>
-                                2. Assignment Details
+                                <i class="fa-solid fas fa-calendar-alt"></i>
+                                2. Therapy Session Details
                             </h2>
 
                             <p class="card-description">
-                                Select the assignee and provide assignment information.
+                                Select the therapy session details
                             </p>
                         </div>
 
+                        <!-- Assign To -->
                         <div class="form-grid">
-                            <!-- Case Manager -->
                             <div class="form-group">
-                                <label for="assign-client-case-manager" class="form-label">Case Manager<span class="required">*</span></label>
+                                <label for="therapy-session-behavioral-therapist" class="form-label">Behavioral Therapist<span class="required">*</span></label>
                                 <div class="select-wrapper">
-                                    <select class="form-select required-field" id="assign-client-case-manager">
-                                        <option value="" selected disabled>Select case manager</option>
-                                        <option th:each="employee : ${caseManager}"
-                                                th:value="${employee.key}"
-                                                th:text="${employee.value}">
-                                        </option>
-                                    </select>
-                                </div>
-                                <div class="field-error">Please select case manager.</div>
-                            </div>
-                            <!-- Case Manager Role -->
-                            <div class="form-group">
-                                <label for="assign-client-case-manager-role" class="form-label">Case Manager Role<span class="required">*</span></label>
-                                <div class="select-wrapper">
-                                    <select class="form-select required-field" id="assign-client-case-manager-role">
-                                        <option value="" selected disabled>Select role</option>
-                                        <option value="PRIMARY_CASE_MANAGER">Primary Case Manager</option>
-                                    </select>
-                                </div>
-                                <div class="field-error">Please select a role.</div>
-                            </div>
-                            <!-- Behavioral Therapist -->
-                            <div class="form-group">
-                                <label for="assign-client-behavioral-therapist" class="form-label">Behavioral Therapist<span class="required">*</span></label>
-                                <div class="select-wrapper">
-                                    <select class="form-select required-field" id="assign-client-behavioral-therapist">
-                                        <option value="" selected disabled>Select behavioral therapist</option>
-                                        <option th:each="employee : ${therapist}"
-                                                th:value="${employee.key}"
-                                                th:text="${employee.value}">
+                                    <select class="form-select required-field" id="therapy-session-behavioral-therapist" disabled>
+                                        <option value="" selected disabled>Select therapist</option>
+                                        <option th:each="therapist : ${therapists}"
+                                                th:value="${therapist.key}"
+                                                th:text="${therapist.value}">
                                         </option>
                                     </select>
                                 </div>
                                 <div class="field-error">Please select behavioral therapist.</div>
                             </div>
-                            <!-- Behavioral Therapist Role -->
+
                             <div class="form-group">
-                                <label for="assign-client-behavioral-therapist-role" class="form-label">Behavioral Therapist Role<span class="required">*</span></label>
+                                <label for="therapy-session-role" class="form-label">Role<span class="required">*</span></label>
                                 <div class="select-wrapper">
-                                    <select class="form-select required-field" id="assign-client-behavioral-therapist-role">
+                                    <select class="form-select required-field" id="therapy-session-role" disabled>
                                         <option value="" selected disabled>Select role</option>
                                         <option value="PRIMARY_BEHAVIORAL_THERAPIST">Primary Behavioral Therapist</option>
                                         <option value="SECONDARY_BEHAVIORAL_THERAPIST">Secondary Behavioral Therapist</option>
@@ -236,11 +270,43 @@
                                 </div>
                                 <div class="field-error">Please select a role.</div>
                             </div>
+
+                            <!-- Session Frequency -->
+                            <div class="form-group">
+                                <label for="therapy-session-frequency" class="form-label">Session Frequency<span class="required">*</span></label>
+                                <div class="select-wrapper">
+
+                                    <select class="form-select required-field" id="therapy-session-frequency">
+                                        <option value="" selected disabled>Select frequency</option>
+                                        <option value="ONCE">Once</option>
+                                        <option value="TWICE">Twice</option>
+                                        <option value="THRICE">Thrice</option>
+                                        <option value="DAILY">Daily</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a session frequency.</div>
+                            </div>
+
+                            <!-- Schedule Status -->
+                            <div class="form-group">
+                                <label for="therapy-session-status" class="form-label">Schedule Status<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="therapy-session-status">
+                                        <option value="" selected disabled>Select status</option>
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="INACTIVE">Inactive</option>
+                                        <option value="COMPLETED">Completed</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a schedule status.</div>
+                            </div>
+
                             <!-- Notes -->
                             <div class="form-group full">
-                                <label for="assign-client-notes" class="form-label">Notes <span style="font-weight:400;">(Optional)</span></label>
+                                <label for="therapy-session-notes" class="form-label">Notes <span style="font-weight:400;">(Optional)</span></label>
                                 <div class="notes-wrapper">
-                                    <textarea id="assign-client-notes" class="form-control" maxlength="500"
+                                    <textarea id="therapy-session-notes" class="form-control" maxlength="500"
                                               placeholder="Add notes or special instructions..."></textarea>
                                     <span class="char-counter">
                                         <span id="charCount">0</span> / 500
@@ -275,39 +341,41 @@
                     </h2>
 
                     <p class="card-description">
-                        Please review the assignment details before confirming.
+                        Please review the therapy session details before confirming.
                     </p>
 
                     <div class="review-item">
                         <span class="review-label">Client</span>
-                        <span class="review-value" id="reviewClient">Cotton Anduiza</span>
-                    </div>
-
-                    <div class="review-item">
-                        <span class="review-label">Case Manager</span>
-                        <span class="review-value" id="reviewCaseManager">
-                            Therapist Sarah Dela Cruz
-                        </span>
-                    </div>
-
-                    <div class="review-item">
-                        <span class="review-label">Case Manager Role</span>
-                        <span class="review-value" id="reviewCaseManagerRole">
-                            Primary Case Manager
+                        <span class="review-value" id="clientFullName">
+                            —
                         </span>
                     </div>
 
                     <div class="review-item">
                         <span class="review-label">Behavioral Therapist</span>
                         <span class="review-value" id="reviewBehavioralTherapist">
-                            Therapist Sarah Dela Cruz
+                            —
                         </span>
                     </div>
 
                     <div class="review-item">
-                        <span class="review-label">Behavioral Therapist Role</span>
-                        <span class="review-value" id="reviewBehavioralTherapistRole">
-                            Primary Behavioral Therapist
+                        <span class="review-label">Role</span>
+                        <span class="review-value" id="reviewRole">
+                             —
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Session Frequency</span>
+                        <span class="review-value" id="reviewSessionFrequency">
+                            —
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Schedule Status</span>
+                        <span class="review-value" id="reviewScheduleStatus">
+                            —
                         </span>
                     </div>
 
@@ -334,6 +402,6 @@
                 </div>
             </div>
         </div>
-        <!-- Assign Client - END -->
+        <!-- Add Therapy Session Assignee - - END -->
     </div>
 </html>

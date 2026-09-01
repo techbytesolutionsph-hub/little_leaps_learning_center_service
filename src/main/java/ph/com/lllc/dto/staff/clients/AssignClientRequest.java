@@ -19,11 +19,11 @@ public class AssignClientRequest {
 
     private String assignmentId;
     private String clientId;
-    private String employeeId;
-    private AssignmentRole role;
-    private Set<DiagnosisConcern> diagnosisConcerns;
+    private String caseManagerId;
+    private AssignmentRole caseManagerRole;
+    private String behavioralTherapistId;
+    private AssignmentRole behavioralTherapistRole;
     private AssignmentStatus assignStatus;
     private LocalDate assignedDate;
-    private String assignBranch;
     private String notes;
 }

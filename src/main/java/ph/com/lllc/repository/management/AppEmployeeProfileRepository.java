@@ -15,5 +15,6 @@ public interface AppEmployeeProfileRepository extends JpaRepository<AppEmployeeP
     boolean existsByAppUser(AppUser appUser);
     Optional<AppEmployeeProfile> findByEmployeeId(String employeeId);
     List<AppEmployeeProfile> findByEmploymentInformation_PositionIn(List<String> positions);
+    List<AppEmployeeProfile> findByEmploymentInformation_Position(String position);
     long countByEmploymentInformation_EmploymentStatus(EmploymentStatus employmentStatus);
 }

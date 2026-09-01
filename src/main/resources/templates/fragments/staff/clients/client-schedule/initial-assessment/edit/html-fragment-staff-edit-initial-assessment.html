@@ -118,29 +118,29 @@
 
                             <div class="summary-title">
                                 <i class="fas fa-users mr-2"></i>
-                                <span>Assignee Details</span>
+                                <span>Assignment Details</span>
                             </div>
 
                             <div class="summary-row">
                                 <div class="summary-label">
                                     <i class="fa-solid fa-user-doctor"></i>
-                                    Assign To
+                                    Case Manager
                                 </div>
 
                                 <div class="summary-value">
                                     <div class="employee-summary">
-                                        <img th:src="${assessment.assigneeProfilePicture}"  alt="Sarah Dela Cruz" class="employee-avatar">
+                                        <img th:src="${assessment.caseManagerProfilePicture}"  alt="Sarah Dela Cruz" class="employee-avatar">
 
                                         <div class="employee-information">
-                                            <div class="employee-name" th:text="${assessment.assigneeFullName}">
+                                            <div class="employee-name" th:text="${assessment.caseManagerFullName}">
                                                 Mark Andrie Alcantara
                                             </div>
 
-                                            <div class="employee-position" th:text="${assessment.assigneePosition}">
+                                            <div class="employee-position" th:text="${assessment.caseManagerPosition}">
                                                 Case Manager
                                             </div>
 
-                                            <input type="hidden" id="employee-id" class="form-control" th:value="${assessment.employeeId}">
+                                            <input type="hidden" id="case-manager-id" class="form-control" th:value="${assessment.caseManagerId}">
                                         </div>
                                     </div>
                                 </div>
@@ -149,13 +149,66 @@
                             <div class="summary-row">
                                 <div class="summary-label">
                                     <i class="fa-regular fa-calendar"></i>
-                                    Assignee Role
+                                    Case Manager Role
                                 </div>
 
                                 <div class="summary-value">
                                     <span class="assignment-type-badge" id="assignee-role"
-                                          th:text="${#strings.capitalize(assessment.assignmentRole.name().toLowerCase().replace('_', ' '))}">
+                                          th:text="${#strings.capitalize(assessment.caseManagerRole.name().toLowerCase().replace('_', ' '))}">
                                         Primary Case Manager
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-user-doctor"></i>
+                                    Behavioral Therapist
+                                </div>
+                                <div class="summary-value">
+                                    <div class="employee-summary">
+                                        <img th:src="${assessment.behavioralTherapistProfilePicture}"  alt="Sarah Dela Cruz" class="employee-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" th:text="${assessment.behavioralTherapistFullName}">
+                                                Mark Andrie Alcantara
+                                            </div>
+
+                                            <div class="employee-position" th:text="${assessment.behavioralTherapistPosition}">
+                                                Case Manager
+                                            </div>
+
+                                            <input type="hidden" id="behavioral-therapist-id" class="form-control" th:value="${assessment.behavioralTherapistId}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-regular fa-calendar"></i>
+                                    Behavioral Therapist Role
+                                </div>
+
+                                <div class="summary-value">
+                                    <span class="assignment-type-badge" id="behavioral-therapist-role"
+                                          th:text="${#strings.capitalize(assessment.behavioralTherapistRole.name().toLowerCase().replace('_', ' '))}">
+                                        Primary Behavioral Therapist
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="summary-row">
+                                <div class="summary-label">
+                                    <i class="fa-solid fa-clipboard-list"></i>
+                                    Diagnosis Concerns
+                                </div>
+
+                                <div class="summary-value" id="diagnosisConcerns">
+                                    <span th:if="${#lists.isEmpty(assessment.diagnosisConcerns)}">-</span>
+
+                                    <span th:each="concern, stat : ${assessment.diagnosisConcerns}">
+                                        <span th:text="${#strings.capitalizeWords(#strings.toLowerCase(#strings.replace(concern.name(), '_', ' ')))}"></span><span th:if="${!stat.last}">, </span>
                                     </span>
                                 </div>
                             </div>
@@ -212,7 +265,7 @@
                                         <option th:each="employee : ${caseManagers}"
                                                 th:value="${employee.key}"
                                                 th:text="${employee.value}"
-                                                th:selected="${employee.key == assessment.employeeId}">
+                                                th:selected="${employee.key == assessment.caseManagerId}">
                                         </option>
                                     </select>
                                 </div>

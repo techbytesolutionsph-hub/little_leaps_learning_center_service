@@ -25,8 +25,12 @@ import java.time.LocalDateTime;
                         columnList = "client_student_id"
                 ),
                 @Index(
-                        name = "idx_assignment_history_assignee",
-                        columnList = "assignee_id"
+                        name = "idx_assignment_history_case_manager",
+                        columnList = "case_manager_id"
+                ),
+                @Index(
+                        name = "idx_assignment_history_behavioral_therapist",
+                        columnList = "behavioral_therapist_id"
                 ),
                 @Index(
                         name = "idx_assignment_history_event_date",
@@ -56,17 +60,27 @@ public class AssignmentHistory {
     private String description;
 
     /**
-     * Assignee (Case Manager or Behavioral Therapist)
-     *
+     * Assigned Case Manager
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee_id")
-    private AppEmployeeProfile assignee;
+    @JoinColumn(name = "case_manager_id")
+    private AppEmployeeProfile caseManager;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "case_manager_role", nullable = false, length = 50)
+    private AssignmentRole caseManagerRole;
+
+    /**
+     * Assigned Behavioral Therapist
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "behavioral_therapist_id")
+    private AppEmployeeProfile behavioralTherapist;
 
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "assignment_role", nullable = false, length = 50)
-    private AssignmentRole assignmentRole;
+    @Column(name = "behavioral_therapist_role", nullable = false, length = 50)
+    private AssignmentRole behavioralTherapistRole;
 
     /**
      * Assignment status.

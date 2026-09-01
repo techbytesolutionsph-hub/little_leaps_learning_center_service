@@ -55,12 +55,19 @@ public class InitialAssessmentResponse {
     private String guardianEmail;
     private String guardianContactNo;
 
-    private String employeeId;
-    private String assigneeProfilePicture;
-    private String assigneeFullName;
-    private String assigneePosition;
+    private String caseManagerId;
+    private String caseManagerProfilePicture;
+    private String caseManagerFullName;
+    private String caseManagerPosition;
+    private AssignmentRole caseManagerRole;
+
+    private String behavioralTherapistId;
+    private String behavioralTherapistProfilePicture;
+    private String behavioralTherapistFullName;
+    private String behavioralTherapistPosition;
+    private AssignmentRole behavioralTherapistRole;
+
     private LocalDate assignedAt;
-    private AssignmentRole assignmentRole;
 
     List<AssignmentHistoryResponse> history;
 
@@ -73,8 +80,13 @@ public class InitialAssessmentResponse {
 
         private String description;
         private AssignmentHistoryAction action;
-        private String assigneeFullName;
-        private AssignmentRole assignmentRole;
+
+        private String caseManagerFullName;
+        private AssignmentRole caseManagerRole;
+
+        private String behavioralTherapistFullName;
+        private AssignmentRole behavioralTherapistRole;
+
         private AssignmentStatus assignmentStatus;
         private String assignedByFullName;
         private LocalDateTime eventDateTime;

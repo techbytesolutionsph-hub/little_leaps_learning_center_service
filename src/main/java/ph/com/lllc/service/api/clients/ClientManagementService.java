@@ -72,11 +72,11 @@ public class ClientManagementService {
         clientProfile.setDateEnrolled(request.getDateEnrolled());
         clientProfile.setDiagnosisConcerns(request.getDiagnosisConcerns());
         clientProfile.setProgramType(request.getProgramType());
-        clientProfile.setAssignmentStatus(AssignmentStatus.INACTIVE);
         clientProfile.setBranch(request.getBranch());
         clientProfile.setEnrollmentStatus(request.getEnrollmentStatus());
         clientProfile.setProfileImageUrl(request.getProfileImageUrl());
-        clientProfile.setActive(true);
+        clientProfile.setActive(Boolean.TRUE);
+        clientProfile.setAccountRegistered(Boolean.FALSE);
 
         if (request.getParents() != null && !request.getParents().isEmpty()) {
 
@@ -121,6 +121,8 @@ public class ClientManagementService {
                 loggingService.error(uuid, getClass().getName(), "Client profile already exists for username: " + username, HttpStatus.CONFLICT.value());
                 throw new ServiceException(HttpStatus.CONFLICT.value(), "Client profile already exists for username: " + username);
             }
+
+            clientProfile.setAccountRegistered(Boolean.TRUE);
 
             /*
              * Link AppUser <-> Client Profile
@@ -171,7 +173,6 @@ public class ClientManagementService {
         clientProfile.setDateEnrolled(request.getDateEnrolled());
         clientProfile.setDiagnosisConcerns(request.getDiagnosisConcerns());
         clientProfile.setProgramType(request.getProgramType());
-        clientProfile.setAssignmentStatus(AssignmentStatus.INACTIVE);
         clientProfile.setBranch(request.getBranch());
         clientProfile.setEnrollmentStatus(request.getEnrollmentStatus());
 
@@ -258,12 +259,7 @@ public class ClientManagementService {
                 .build();
     }
 
-    public Map<String, String> mapCaseManagerBehavioralTherapist() {
-
-        List<String> positions = Arrays.stream(jobPositions.split(","))
-                .map(String::trim)
-                .filter(position -> !position.isBlank())
-                .toList();
+    public Map<String, String> mapEmployeesByPositionIn(List<String> positions) {
 
         List<AppEmployeeProfile> employees = appEmployeeProfileRepository.findByEmploymentInformation_PositionIn(positions);
 
@@ -273,7 +269,6 @@ public class ClientManagementService {
 
             String fullName = Stream.of(
                             employee.getFirstName(),
-                            employee.getMiddleName(),
                             employee.getLastName()
                     )
                     .filter(Objects::nonNull)
@@ -312,7 +307,8 @@ public class ClientManagementService {
     public CommonResponse assignClient(String uuid, AssignClientRequest request, HttpServletRequest httpRequest) throws ServiceException {
 
         AppClientProfile clientProfile = this.findAppClientProfileByClientId(uuid, request.getClientId());
-        AppEmployeeProfile appEmployeeProfile = this.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
+        AppEmployeeProfile appCaseManager = this.findAppEmployeeProfileByEmployeeId(uuid, request.getCaseManagerId());
+        AppEmployeeProfile appBehavioralTherapist = this.findAppEmployeeProfileByEmployeeId(uuid, request.getBehavioralTherapistId());
 
         String year = String.valueOf(request.getAssignedDate().getYear());
         long nextUserSeq = sequenceGeneratorService.getAssignmentIdNextSequence();
@@ -323,17 +319,18 @@ public class ClientManagementService {
          */
         AppClientAssignment clientAssignment = new AppClientAssignment();
         clientAssignment.setAssignmentId(assignmentId);
-        clientAssignment.setAssignmentRole(request.getRole());
-        clientAssignment.setDiagnosisConcerns(request.getDiagnosisConcerns());
-        clientAssignment.setStatus(request.getAssignStatus());
-        clientAssignment.setBranch(request.getAssignBranch());
+        clientAssignment.setStatus(AssignmentStatus.ACTIVE);
         clientAssignment.setAssignedAt(request.getAssignedDate());
         clientAssignment.setNotes(request.getNotes());
 
         /*
          * Update assigned employee if applicable
          */
-        clientAssignment.setAssignee(appEmployeeProfile);
+        clientAssignment.setCaseManager(appCaseManager);
+        clientAssignment.setCaseManagerRole(request.getCaseManagerRole());
+
+        clientAssignment.setBehavioralTherapist(appBehavioralTherapist);
+        clientAssignment.setBehavioralTherapistRole(request.getBehavioralTherapistRole());
 
         clientAssignment.setAppClientProfile(clientProfile);
 
@@ -346,17 +343,16 @@ public class ClientManagementService {
 
         clientProfile.getAssignments().add(clientAssignment);
 
-        /* Update Assignment Status to ACTIVE */
-        clientProfile.setAssignmentStatus(AssignmentStatus.ACTIVE);
-
         /*
          * Create assignment history
          */
         AssignmentHistory history = new AssignmentHistory();
         history.setAction(AssignmentHistoryAction.ASSIGNED);
-        history.setDescription(this.createDescription(appEmployeeProfile, request));
-        history.setAssignee(appEmployeeProfile);
-        history.setAssignmentRole(request.getRole());
+        history.setDescription(this.createDescription(appCaseManager, appBehavioralTherapist, request));
+        history.setCaseManager(appCaseManager);
+        history.setCaseManagerRole(request.getCaseManagerRole());
+        history.setBehavioralTherapist(appBehavioralTherapist);
+        history.setBehavioralTherapistRole(request.getBehavioralTherapistRole());
         history.setAssignmentStatus(request.getAssignStatus());
         history.setChangedBy(userAccountService.getLoggedInEmployee(httpRequest));
         history.setAppClientProfile(clientProfile);
@@ -396,7 +392,8 @@ public class ClientManagementService {
 
         AppClientProfile clientProfile = this.findAppClientProfileByClientId(uuid, request.getClientId());
 
-        AppEmployeeProfile appEmployeeProfile = this.findAppEmployeeProfileByEmployeeId(uuid, request.getEmployeeId());
+        AppEmployeeProfile appCaseManager = this.findAppEmployeeProfileByEmployeeId(uuid, request.getCaseManagerId());
+        AppEmployeeProfile appBehavioralTherapist = this.findAppEmployeeProfileByEmployeeId(uuid, request.getBehavioralTherapistId());
 
         /*
          * Find existing assignment
@@ -411,31 +408,29 @@ public class ClientManagementService {
         /*
          * Update assignment
          */
-        clientAssignment.setAssignmentRole(request.getRole());
-        clientAssignment.setDiagnosisConcerns(request.getDiagnosisConcerns());
-        clientAssignment.setStatus(request.getAssignStatus());
-        clientAssignment.setBranch(request.getAssignBranch());
+        clientAssignment.setCaseManagerRole(request.getCaseManagerRole());
         clientAssignment.setAssignedAt(request.getAssignedDate());
         clientAssignment.setNotes(request.getNotes());
 
         /*
          * Update assigned employee if applicable
          */
-        clientAssignment.setAssignee(appEmployeeProfile);
+        clientAssignment.setCaseManager(appCaseManager);
+        clientAssignment.setCaseManagerRole(request.getCaseManagerRole());
 
-        /*
-         * Update client assignment status
-         */
-        clientProfile.setAssignmentStatus(AssignmentStatus.ACTIVE);
+        clientAssignment.setBehavioralTherapist(appBehavioralTherapist);
+        clientAssignment.setBehavioralTherapistRole(request.getBehavioralTherapistRole());
 
         /*
          * Create assignment history
          */
         AssignmentHistory history = new AssignmentHistory();
         history.setAction(AssignmentHistoryAction.UPDATED);
-        history.setDescription(this.createDescription(appEmployeeProfile, request));
-        history.setAssignee(appEmployeeProfile);
-        history.setAssignmentRole(request.getRole());
+        history.setDescription(this.createUpdateDescription(appCaseManager, appBehavioralTherapist, request));
+        history.setCaseManager(appCaseManager);
+        history.setCaseManagerRole(request.getCaseManagerRole());
+        history.setBehavioralTherapist(appBehavioralTherapist);
+        history.setBehavioralTherapistRole(request.getBehavioralTherapistRole());
         history.setAssignmentStatus(request.getAssignStatus());
         history.setChangedBy(userAccountService.getLoggedInEmployee(httpRequest));
         history.setAppClientProfile(clientProfile);
@@ -475,44 +470,17 @@ public class ClientManagementService {
         AppClientProfile client = response.getAppClientProfile();
         List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
 
-        AssignmentHistory currentAssignmentHistory = assigmentHistory.stream()
-                .filter(history ->
-                        history.getAssignmentRole() == response.getAssignmentRole()
-                )
-                .filter(history ->
-                        history.getAssignmentStatus() == response.getStatus()
-                )
-                .findFirst()
-                .orElse(null);
-
-
-        AssignmentHistory caseManager = assigmentHistory.stream()
-                .filter(history ->
-                        history.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER
-                )
-                .findFirst()
-                .orElse(null);
-
-        AppEmployeeProfile assignee = currentAssignmentHistory != null
-                ? currentAssignmentHistory.getAssignee()
-                : null;
+        AppEmployeeProfile caseManager = response.getCaseManager();
+        AppEmployeeProfile behavioralTherapist = response.getBehavioralTherapist();
 
         List<AppClientAssignment> assignments = client.getAssignments();
 
         long activeCount = assignments.stream()
-                .filter(assignment -> assignment.getStatus() == AssignmentStatus.ASSIGNED)
-                .filter(assignment ->
-                        assignment.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER
-                                || assignment.getAssignmentRole() == AssignmentRole.PRIMARY_BEHAVIORAL_THERAPIST
-                                || assignment.getAssignmentRole() == AssignmentRole.SECONDARY_BEHAVIORAL_THERAPIST)
+                .filter(assignment -> assignment.getStatus() == AssignmentStatus.ACTIVE)
                 .count();
 
         long endedCount = assignments.stream()
                 .filter(assignment -> assignment.getStatus() == AssignmentStatus.INACTIVE)
-                .filter(assignment ->
-                        assignment.getAssignmentRole() == AssignmentRole.PRIMARY_CASE_MANAGER
-                                || assignment.getAssignmentRole() == AssignmentRole.PRIMARY_BEHAVIORAL_THERAPIST
-                                || assignment.getAssignmentRole() == AssignmentRole.SECONDARY_BEHAVIORAL_THERAPIST)
                 .count();
 
         return AssignedClientResponse.builder()
@@ -527,6 +495,14 @@ public class ClientManagementService {
                 .clientGender(response.getAppClientProfile().getGender())
                 .dateEnrolled(response.getAppClientProfile().getDateEnrolled())
 
+                .diagnosisConcerns(client.getDiagnosisConcerns())
+                .programType(client.getProgramType())
+                .status(response.getStatus())
+                .branch(client.getBranch())
+                .notes(response.getNotes())
+                .assignedAt(response.getAssignedAt())
+                .unassignedAt(response.getUnassignedAt())
+
                 .guardianFullName(guardian.getFirstName() + " " + guardian.getMiddleName() + " " + guardian.getLastName())
                 .guardianEmail(guardian.getEmail())
                 .guardianContactNo(guardian.getContactNumber())
@@ -535,47 +511,48 @@ public class ClientManagementService {
                 .currentActiveCount(Math.toIntExact(activeCount))
                 .currentEndedCount(Math.toIntExact(endedCount))
 
+                /* Case Manager */
+                .caseManagerId(caseManager != null ? caseManager.getEmployeeId()
+                        : "-")
+                .caseManagerProfilePicture(
+                        caseManager != null
+                                ? caseManager.getProfileImageUrl()
+                                : "/img/base/default-profile.png"
+                )
                 .caseManagerFullName(
-                        caseManager != null && caseManager.getAssignee() != null
-                                ? caseManager.getAssignee().getFirstName() + " "
-                                + caseManager.getAssignee().getLastName()
+                        caseManager != null ? caseManager.getFirstName() + " "
+                                + caseManager.getLastName()
                                 : "-"
                 )
                 .caseManagerPosition(
-                        caseManager != null && caseManager.getAssignee() != null
-                                ? caseManager.getAssignee().getEmploymentInformation().getPosition()
+                        caseManager != null ? caseManager.getEmploymentInformation().getPosition()
                                 : "-"
                 )
+                .caseManagerRole(response.getCaseManagerRole())
 
-                .diagnosisConcerns(response.getDiagnosisConcerns())
-                .programType(client.getProgramType())
-                .status(response.getStatus())
-                .branch(response.getBranch())
-                .notes(response.getNotes())
-                .assignedAt(response.getAssignedAt())
-                .unassignedAt(response.getUnassignedAt())
-
-                .employeeId(
-                        assignee != null
-                                ? assignee.getEmploymentInformation().getEmployeeId()
+                /* Behavioral Therapist */
+                .behavioralTherapistId(
+                        behavioralTherapist != null
+                                ? behavioralTherapist.getEmploymentInformation().getEmployeeId()
                                 : null
                 )
-                .assigneeProfilePicture(
-                        assignee != null
-                                ? assignee.getProfileImageUrl()
+                .behavioralTherapistProfilePicture(
+                        behavioralTherapist != null
+                                ? behavioralTherapist.getProfileImageUrl()
                                 : "/img/base/default-profile.png"
                 )
-                .assigneeFullName(
-                        assignee != null
-                                ? assignee.getFirstName() + " " + assignee.getLastName()
+                .behavioralTherapistFullName(
+                        behavioralTherapist != null
+                                ? behavioralTherapist.getFirstName() + " " + behavioralTherapist.getLastName()
                                 : "-"
                 )
-                .assigneePosition(
-                        assignee != null
-                                ? assignee.getEmploymentInformation().getPosition()
+                .behavioralTherapistPosition(
+                        behavioralTherapist != null
+                                ? behavioralTherapist.getEmploymentInformation().getPosition()
                                 : "-"
                 )
-                .assignmentRole(response.getAssignmentRole())
+                .behavioralTherapistRole(response.getBehavioralTherapistRole())
+
                 .history(buildAssignmentHistories(assigmentHistory))
                 .build();
     }
@@ -589,13 +566,22 @@ public class ClientManagementService {
                 .map(item -> AssignedClientResponse.AssignmentHistoryResponse.builder()
                         .description(item.getDescription())
                         .action(item.getAction())
-                        .assigneeFullName(
-                                item.getAssignee() != null
-                                        ? item.getAssignee().getFirstName() + " "
-                                        + item.getAssignee().getLastName()
+                        .caseManagerFullName(
+                                item.getCaseManager() != null
+                                        ? item.getCaseManager().getFirstName() + " "
+                                        + item.getCaseManager().getLastName()
                                         : "-"
                         )
-                        .assignmentRole(item.getAssignmentRole())
+                        .caseManagerRole(item.getCaseManagerRole())
+
+                        .behavioralTherapistFullName(
+                                item.getCaseManager() != null
+                                        ? item.getBehavioralTherapist().getFirstName() + " "
+                                        + item.getBehavioralTherapist().getLastName()
+                                        : "-"
+                        )
+                        .behavioralTherapistRole(item.getBehavioralTherapistRole())
+
                         .assignmentStatus(item.getAssignmentStatus())
                         .assignedByFullName(
                                 item.getChangedBy() != null
@@ -650,7 +636,7 @@ public class ClientManagementService {
                 .dateEnrolled(client.getDateEnrolled())
                 .diagnosisConcerns(client.getDiagnosisConcerns())
                 .programType(client.getProgramType())
-                .assignmentStatus(client.getAssignmentStatus())
+                .accountRegistered(client.isAccountRegistered())
                 .branch(client.getBranch())
                 .enrollmentStatus(client.getEnrollmentStatus())
                 .profileImageUrl(client.getProfileImageUrl())
@@ -682,13 +668,40 @@ public class ClientManagementService {
                 .toList();
     }
 
-    public String createDescription(AppEmployeeProfile appEmployeeProfile, AssignClientRequest request){
+    public String createDescription(AppEmployeeProfile caseManager,
+            AppEmployeeProfile behavioralTherapist, AssignClientRequest request) {
+
         return "Client assigned to "
-                + appEmployeeProfile.getFirstName()
+                + caseManager.getFirstName()
                 + " "
-                + appEmployeeProfile.getLastName()
+                + caseManager.getLastName()
                 + " as "
-                + request.getRole().getDisplayName()
+                + request.getCaseManagerRole().getDisplayName()
+                + " and "
+                + behavioralTherapist.getFirstName()
+                + " "
+                + behavioralTherapist.getLastName()
+                + " as "
+                + request.getBehavioralTherapistRole().getDisplayName()
+                + ".";
+    }
+
+    public String createUpdateDescription(AppEmployeeProfile caseManager,
+            AppEmployeeProfile behavioralTherapist,
+            AssignClientRequest request) {
+
+        return "Client assignment updated: "
+                + caseManager.getFirstName()
+                + " "
+                + caseManager.getLastName()
+                + " as "
+                + request.getCaseManagerRole().getDisplayName()
+                + " and "
+                + behavioralTherapist.getFirstName()
+                + " "
+                + behavioralTherapist.getLastName()
+                + " as "
+                + request.getBehavioralTherapistRole().getDisplayName()
                 + ".";
     }
 

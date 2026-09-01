@@ -3,8 +3,6 @@ const originalHtml = $button.html();
 
 $(document).ready(function () {
 
-    initializeMaxTodayDatePicker("#assign-client-assign-date", "Select assigned date");
-
     $("#search-client-btn").on("click", function (e) {
         e.stopPropagation();
 
@@ -24,87 +22,16 @@ $(document).ready(function () {
         getClientByClientID(clientId);
     });
 
-    const $wrapper = $('#diagnosis-concern-wrapper');
-    const $button = $('#assign-client-diagnosis-concern');
-    const $dropdown = $('#diagnosis-concern-dropdown');
-
-    $button.on('click', function (e) {
-        e.stopPropagation();
-
-        $wrapper.toggleClass('open');
-    });
-
-    $dropdown.on('change', 'input[type="checkbox"]', function () {
-        updateDiagnosisConcernText();
-    });
-
-    $(document).on('click', function (e) {
-        if (!$(e.target).closest('#diagnosis-concern-wrapper').length) {
-            $wrapper.removeClass('open');
-        }
-    });
-
-    function updateDiagnosisConcernText() {
-
-        const selected = [];
-
-        $dropdown
-            .find('input[type="checkbox"]:checked')
-            .each(function () {
-                selected.push(
-                    $(this)
-                        .siblings('span')
-                        .text()
-                        .trim()
-                );
-            });
-
-        const $placeholder =
-            $button.find('.multi-select-placeholder');
-
-        if (selected.length === 0) {
-            $placeholder.text('Select diagnosis concern');
-        } else if (selected.length <= 2) {
-            $placeholder.text(selected.join(', '));
-        } else {
-            $placeholder.text(selected.length + ' concerns selected');
-        }
-    }
-
-    function getSelectedDiagnosisConcerns() {
-        return $dropdown
-            .find('input[name="diagnosisConcerns"]:checked')
-            .map(function () {
-                return $(this).val();
-            })
-            .get();
-    }
-
-    $dropdown.on('change', 'input[name="diagnosisConcerns"]', function () {
-        updateDiagnosisConcernText();
-
-        const selected = getSelectedDiagnosisConcerns();
-        const $diagnosisError = $wrapper.siblings(".field-error");
-
-        if (selected.length > 0) {
-            $button.removeClass("is-invalid");
-            $diagnosisError.removeClass("show");
-        } else {
-            $button.addClass("is-invalid");
-            $diagnosisError.addClass("show");
-        }
-    });
-
     $("#assign-client-notes").on("input", function () {
         $("#charCount").text($(this).val().length);
     });
 
-    // Client selection
+    /* Client selection */
     $("#clientCard").on("click", function () {
         $(this).toggleClass("selected");
     });
 
-    // Validation
+    /* Validation */
     function validateForm() {
         let valid = true;
 
@@ -122,19 +49,6 @@ $(document).ready(function () {
             }
         });
 
-        // Validate Diagnosis Concern
-        const selectedDiagnosisConcerns = getSelectedDiagnosisConcerns();
-        const $diagnosisError = $wrapper.siblings(".field-error");
-
-        if (selectedDiagnosisConcerns.length === 0) {
-            $button.addClass("is-invalid");
-            $diagnosisError.addClass("show");
-            valid = false;
-        } else {
-            $button.removeClass("is-invalid");
-            $diagnosisError.removeClass("show");
-        }
-
         return valid;
     }
 
@@ -150,18 +64,10 @@ $(document).ready(function () {
     /* Load review */
     function loadReview() {
         $("#reviewClient").text($("#clientName").text() || "—");
-        $("#reviewAssignee").text(getSelectedText("assign-client-to"));
-        $("#reviewRole").text(getSelectedText("assign-client-role"));
-
-        const diagnosisConcerns = $('#diagnosis-concern-dropdown input[name="diagnosisConcerns"]:checked')
-            .map(function () {
-                return $(this).siblings("span").text().trim();
-            }).get();
-
-        $("#reviewDiagnosisConcern").text(diagnosisConcerns.length > 0 ? diagnosisConcerns.join(", ") : "—");
-        $("#assignStatus").text(getSelectedText("assign-client-assign-status"));
-        $("#assignedDate").text($("#assign-client-assign-date").val() || "—");
-        $("#assignBranch").text(getSelectedText("assign-client-assign-branch"));
+        $("#reviewCaseManager").text(getSelectedText("assign-client-case-manager"));
+        $("#reviewCaseManagerRole").text(getSelectedText("assign-client-case-manager-role"));
+        $("#reviewBehavioralTherapist").text(getSelectedText("assign-client-behavioral-therapist"));
+        $("#reviewBehavioralTherapistRole").text(getSelectedText("assign-client-behavioral-therapist-role"));
         $("#reviewNotes").text($.trim($("#assign-client-notes").val()) || "—");
     }
 
@@ -211,7 +117,6 @@ $(document).ready(function () {
         e.preventDefault();
 
         const assignment = getAssignmentData();
-
         console.log("Confirmed assignment:", assignment);
 
         /* Save Assign Client */
@@ -230,18 +135,28 @@ $(document).ready(function () {
         );
     });
 
-    // Get assignment data
+    /* Get assignment data */
     function getAssignmentData() {
         return {
             clientId: $("#selected-client-id").val(),
-            employeeId: $("#assign-client-to").val(),
-            role: $("#assign-client-role").val(),
-            diagnosisConcerns: getSelectedDiagnosisConcerns(),
-            assignStatus: $("#assign-client-status").val(),
-            assignedDate: $("#assign-client-assign-date").val(),
-            assignBranch: $("#assign-client-assign-branch").val(),
+            caseManagerId: $("#assign-client-case-manager").val(),
+            caseManagerRole: $("#assign-client-case-manager-role").val(),
+            behavioralTherapistId: $("#assign-client-behavioral-therapist").val(),
+            behavioralTherapistRole: $("#assign-client-behavioral-therapist-role").val(),
+            assignStatus: "ASSIGNED",
+            assignedDate: getLocalDateNow(),
             notes: $.trim($("#assign-client-notes").val()) || null
         };
+    }
+
+    function getLocalDateNow() {
+        const today = new Date();
+
+        return [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, "0"),
+            String(today.getDate()).padStart(2, "0")
+        ].join("-");
     }
 });
 
@@ -283,9 +198,7 @@ function assignClient(request) {
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify(request),
-
         success: function(response) {
-
             showSuccessThenRedirectPopup(
                 "Success",
                 response.returnMessage,
@@ -297,9 +210,7 @@ function assignClient(request) {
         },
         error: function(xhr, status, error) {
             let message = "Unable to register client.";
-
             if (xhr.responseJSON) {
-
                 if (xhr.responseJSON.message) {
                     message = xhr.responseJSON.message;
                 } else if (xhr.responseJSON.returnMessage) {
@@ -328,6 +239,7 @@ function populateClientDetails(client) {
         : "-";
 
     /* Client Details Card */
+    $("#selected-client-id").val(client.clientId);
     $("#clientAvatar")
         .attr("src", client.profileImageUrl || "/images/default-avatar.png")
         .attr("alt", fullName || "Client");
@@ -343,16 +255,28 @@ function populateClientDetails(client) {
 
     /* Client Summary */
     $("#programType").text(client.programType || "-");
-    $("#summaryDateEnrolled").text(formatDate(client.dateEnrolled));
-    $("#summaryStatus").text(formatEnumValue(client.assignmentStatus));
-    $("#summaryBranch").text(client.branch || "-");
+    const diagnosisConcerns = client.diagnosisConcerns;
 
+    $("#diagnosisConcerns").text(
+        diagnosisConcerns?.length
+            ? diagnosisConcerns
+                .map(value => value
+                    .toLowerCase()
+                    .replace(/_/g, " ")
+                    .replace(/\b\w/g, char => char.toUpperCase())
+                )
+                .join(", ")
+            : "-"
+    );
+    $("#summaryDateEnrolled").text(formatDate(client.dateEnrolled));
+    $("#summaryStatus").text(formatEnumValue(client.enrollmentStatus));
+    $("#summaryBranch").text(client.branch || "-");
 
     /* Profile Link */
     if (client.clientId) {
         $("#clientProfileLink").attr(
             "href",
-            "/app/portal/client-management/profile/" +
+            "/app/portal/client-management/registry/view-client?id=" +
             encodeURIComponent(client.clientId)
         );
     } else {

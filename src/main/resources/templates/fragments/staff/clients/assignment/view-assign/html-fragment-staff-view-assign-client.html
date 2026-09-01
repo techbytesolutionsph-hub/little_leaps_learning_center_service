@@ -152,23 +152,23 @@
                                 </div>
                             </div>
 
-                            <!-- Assign To -->
+                            <!-- Case Manager -->
                             <div class="details-row">
                                 <div class="details-label">
-                                    Assign To
+                                    Case Manager
                                 </div>
 
                                 <div class="details-value">
                                     <div class="employee-summary">
-                                        <img  th:src="${assignment.assigneeProfilePicture != null ? assignment.assigneeProfilePicture : '/img/base/default-profile.png'}"
+                                        <img  th:src="${assignment.caseManagerProfilePicture != null ? assignment.caseManagerProfilePicture : '/img/base/default-profile.png'}"
                                               alt="Sarah Dela Cruz" class="employee-avatar">
 
                                         <div class="employee-information">
-                                            <div class="employee-name" th:text="${assignment.assigneeFullName}">
+                                            <div class="employee-name" th:text="${assignment.caseManagerFullName}">
                                                 Mark Andrie Alcantara
                                             </div>
 
-                                            <div class="employee-position" th:text="${assignment.assigneePosition}">
+                                            <div class="employee-position" th:text="${assignment.caseManagerPosition}">
                                                 Case Manager
                                             </div>
                                         </div>
@@ -176,15 +176,52 @@
                                 </div>
                             </div>
 
-                            <!-- Assignment Type -->
+                            <!-- Case Manager Role -->
                             <div class="details-row">
                                 <div class="details-label">
-                                    Assignee Role
+                                    Case Manager Role
                                 </div>
 
                                 <div class="details-value">
-                                    <span class="assignment-type-badge" th:text="${assignment.assignmentRole.getDisplayName()}">
+                                    <span class="assignment-type-badge" th:text="${assignment.caseManagerRole.getDisplayName()}">
                                         Primary Case Manager
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Behavioral Therapist -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Behavioral Therapist
+                                </div>
+
+                                <div class="details-value">
+                                    <div class="employee-summary">
+                                        <img th:src="${assignment.behavioralTherapistProfilePicture != null ? assignment.behavioralTherapistProfilePicture : '/img/base/default-profile.png'}"
+                                              alt="Sarah Dela Cruz" class="employee-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" th:text="${assignment.behavioralTherapistFullName}">
+                                                Heero Yuy
+                                            </div>
+
+                                            <div class="employee-position" th:text="${assignment.behavioralTherapistPosition}">
+                                                Behavioral Therapist
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Behavioral Therapist Role -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Behavioral Therapist Role
+                                </div>
+
+                                <div class="details-value">
+                                    <span class="assignment-type-badge" th:text="${assignment.behavioralTherapistRole.getDisplayName()}">
+                                        Primary Behavioral Therapist
                                     </span>
                                 </div>
                             </div>

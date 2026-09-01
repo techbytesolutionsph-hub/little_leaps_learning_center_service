@@ -124,8 +124,8 @@ public class PortalFrontService {
         return clientManagementService.getClientProfileByClientId(uuid);
     }
 
-    public Map<String, String> mapCaseManagerBehavioralTherapist() {
-        return clientManagementService.mapCaseManagerBehavioralTherapist();
+    public Map<String, String> mapEmployeesByPositionIn(List<String> positions) {
+        return clientManagementService.mapEmployeesByPositionIn(positions);
     }
 
     public Map<String, String> mapCaseManagers() {

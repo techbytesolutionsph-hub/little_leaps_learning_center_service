@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.response.CommonResponse;
-import ph.com.lllc.dto.staff.clients.InitialAssessmentRequest;
-import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
-import ph.com.lllc.dto.staff.clients.TherapySessionRequest;
-import ph.com.lllc.dto.staff.clients.TherapySessionResponse;
+import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.clients.AssessmentScheduleService;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -72,5 +69,21 @@ public class AssessmentScheduleController {
     @GetMapping("/get-therapy-session-details")
     public ResponseEntity<List<TherapySessionResponse>> getTherapySessionDetails() {
         return ResponseEntity.ok(assessmentScheduleService.getTherapySessionResponse());
+    }
+
+    @Operation(summary = "Add Therapy Slot")
+    @PostMapping("/save-therapy-slot")
+    public ResponseEntity<CommonResponse> saveTherapySlot(@Valid @RequestBody TherapySlotRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "TherapySessionRequest : " + request.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(assessmentScheduleService.saveTherapySlot(uuid, request));
+    }
+
+    @Operation(summary = "Update Therapy Slot")
+    @PutMapping("/update-therapy-slot")
+    public ResponseEntity<CommonResponse> updateTherapySlot(@Valid @RequestBody TherapySlotRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "TherapySessionRequest : " + request.toString());
+        return ResponseEntity.ok(assessmentScheduleService.updateTherapySlot(uuid, request));
     }
 }
