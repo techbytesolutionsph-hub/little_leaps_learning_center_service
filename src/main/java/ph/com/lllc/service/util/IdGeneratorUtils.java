@@ -12,6 +12,7 @@ public class IdGeneratorUtils {
     private static final String ASSIGNMENT_ID_PREFIX = "CA";
     private static final String INITIAL_ASSESSMENT_ID_PREFIX = "IA";
     private static final String ASSESSMENT_ID_PREFIX = "ASCH";
+    private static final String UPGRADING_PROGRAM_ID_PREFIX = "UPCH";
 
     private IdGeneratorUtils() {
     }
@@ -100,6 +101,24 @@ public class IdGeneratorUtils {
         return String.format(
                 "%s-%s-%05d",
                 ASSESSMENT_ID_PREFIX,
+                assignYear,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * CLIENT ID FORMAT
+     * =========================================================
+     * UPCH-2026-00001
+     * UPCH-2026-00002
+     * UPCH-2026-00003
+     */
+    public String generateUpgradingProgramId(String assignYear, long runningCode) {
+
+        return String.format(
+                "%s-%s-%05d",
+                UPGRADING_PROGRAM_ID_PREFIX,
                 assignYear,
                 runningCode
         );

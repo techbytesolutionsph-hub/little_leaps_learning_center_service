@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-add-therapy-session-assignee(therapists)">
+    <div th:fragment="staff-add-upgrading-program-assignee(caseManagers)">
         <!-- Add Therapy Session Assignee - START -->
         <div class="assignment-page">
             <div class="stepper-card">
@@ -26,8 +26,8 @@
                         <div class="step-number">2</div>
 
                         <div class="step-text">
-                            <span class="step-title">Therapy Session Details</span>
-                            <span class="step-subtitle">Select the therapy session details</span>
+                            <span class="step-title">Upgrading Program Details</span>
+                            <span class="step-subtitle">Select the upgrading program details</span>
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@
                             </h2>
 
                             <p class="card-description">
-                                Select a client for therapy session.
+                                Select a client for upgrading program.
                             </p>
                         </div>
 
@@ -235,28 +235,28 @@
                         <div class="card-header">
                             <h2 class="card-title">
                                 <i class="fa-solid fas fa-calendar-alt"></i>
-                                2. Therapy Session Details
+                                2. Upgrading Program Details
                             </h2>
 
                             <p class="card-description">
-                                Select the therapy session details
+                                Select the upgrading program details
                             </p>
                         </div>
 
                         <!-- Assign To -->
                         <div class="form-grid">
-                            <div class="form-group">
-                                <label for="therapy-session-behavioral-therapist" class="form-label">Behavioral Therapist<span class="required">*</span></label>
+                            <div class="form-group full">
+                                <label for="therapy-session-behavioral-therapist" class="form-label">Case Manager<span class="required">*</span></label>
                                 <div class="select-wrapper">
                                     <select class="form-select required-field" id="therapy-session-behavioral-therapist" disabled>
-                                        <option value="" selected disabled>Select therapist</option>
-                                        <option th:each="therapist : ${therapists}"
-                                                th:value="${therapist.key}"
-                                                th:text="${therapist.value}">
+                                        <option value="" selected disabled>Select case manager</option>
+                                        <option th:each="caseManager : ${caseManagers}"
+                                                th:value="${caseManager.key}"
+                                                th:text="${caseManager.value}">
                                         </option>
                                     </select>
                                 </div>
-                                <div class="field-error">Please select behavioral therapist.</div>
+                                <div class="field-error">Please select case manager.</div>
                             </div>
 
                             <div class="form-group">
@@ -264,27 +264,10 @@
                                 <div class="select-wrapper">
                                     <select class="form-select required-field" id="therapy-session-role" disabled>
                                         <option value="" selected disabled>Select role</option>
-                                        <option value="PRIMARY_BEHAVIORAL_THERAPIST">Primary Behavioral Therapist</option>
-                                        <option value="SECONDARY_BEHAVIORAL_THERAPIST">Secondary Behavioral Therapist</option>
+                                        <option value="PRIMARY_CASE_MANAGER">Primary Case Manager</option>
                                     </select>
                                 </div>
                                 <div class="field-error">Please select a role.</div>
-                            </div>
-
-                            <!-- Session Frequency -->
-                            <div class="form-group">
-                                <label for="therapy-session-frequency" class="form-label">Session Frequency<span class="required">*</span></label>
-                                <div class="select-wrapper">
-
-                                    <select class="form-select required-field" id="therapy-session-frequency">
-                                        <option value="" selected disabled>Select frequency</option>
-                                        <option value="ONCE">Once</option>
-                                        <option value="TWICE">Twice</option>
-                                        <option value="THRICE">Thrice</option>
-                                        <option value="DAILY">Daily</option>
-                                    </select>
-                                </div>
-                                <div class="field-error">Please select a session frequency.</div>
                             </div>
 
                             <!-- Schedule Status -->
@@ -362,13 +345,6 @@
                         <span class="review-label">Role</span>
                         <span class="review-value" id="reviewRole">
                              —
-                        </span>
-                    </div>
-
-                    <div class="review-item">
-                        <span class="review-label">Session Frequency</span>
-                        <span class="review-value" id="reviewSessionFrequency">
-                            —
                         </span>
                     </div>
 

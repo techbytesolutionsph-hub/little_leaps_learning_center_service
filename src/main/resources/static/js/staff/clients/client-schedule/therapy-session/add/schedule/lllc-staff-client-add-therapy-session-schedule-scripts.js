@@ -4,6 +4,7 @@ const HOUR_HEIGHT = 43;
 let currentWeekStart = getMonday(new Date());
 let currentView = "week";
 let schedules = [];
+let selectedDate = getToday();
 
 $(document).ready(function() {
     initializeDatePicker2("#assessment-therapy-date", "Select therapy date");
@@ -16,6 +17,12 @@ $(document).ready(function() {
 
     $("#clientIdInput").on("input", function() {
         $(this).removeClass("is-invalid");
+    });
+
+    $("#editAssessmentScheduleModal").on("hide.bs.modal", function () {
+        if (document.activeElement) {
+            document.activeElement.blur();
+        }
     });
 
     /* RENDER CALENDAR */
@@ -129,7 +136,7 @@ $(document).ready(function() {
 
     /* DAY CALENDAR */
     function renderDayCalendar() {
-        const day = getToday();
+        const day = selectedDate || getToday();
 
         const times = [
             "08:00",
@@ -274,7 +281,7 @@ $(document).ready(function() {
                         schedule.status.trim().toLowerCase();
                 }).prop("selected", true);
 
-                $("#edit-assessment-day").val(getDayFromDate(schedule.date));
+                $("#edit-assessment-day").val(getDayFromDate(schedule.day));
                 $("#edit-assessment-therapy-date")[0]._flatpickr.setDate(schedule.date, true);
                 $("#edit-assessment-start-time")[0]._flatpickr.setDate(schedule.start, true);
                 $("#edit-assessment-end-time")[0]._flatpickr.setDate(schedule.end, true);
@@ -301,14 +308,30 @@ $(document).ready(function() {
 
     /* WEEK NAVIGATION */
     $("#previousWeek").on("click", function() {
-        currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+        currentWeekStart = addDays(currentWeekStart, -7);
+
+        if (currentView === "day") {
+            selectedDate = addDays(selectedDate, -7);
+        }
+
         renderCalendar();
     });
 
-    $("#nextWeek").on("click", function() {
-        currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+    $("#nextWeek").on("click", function () {
+        currentWeekStart = addDays(currentWeekStart, 7);
+
+        if (currentView === "day") {
+            selectedDate = addDays(selectedDate, 7);
+        }
+
         renderCalendar();
     });
+
+    function addDays(date, days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
 
     $("#todayButton").on("click", function() {
         currentWeekStart = getMonday(new Date());
@@ -390,10 +413,11 @@ $(document).ready(function() {
             return [];
         }
 
-        return response.scheduleSlots.map((slot, index) => ({
-            id: index + 1,
+        return response.scheduleSlots.map((slot) => ({
+            id: slot.id,
             therapist: response.behavioralTherapistFullName || "",
             date: slot.therapyDate,
+            day: slot.day,
             start: slot.startTime.substring(0, 5),
             end: slot.endTime.substring(0, 5),
             status: slot.status
@@ -752,14 +776,39 @@ function getWeekDates() {
 }
 
 function getDayFromDate(dateString) {
+    console.log("Day : " + dateString);
+
     if (!dateString) {
         return "";
     }
 
-    return new Date(dateString + "T00:00:00")
-        .toLocaleDateString("en-US", {
-            weekday: "long"
-        });
+    const days = [
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATURDAY"
+    ];
+
+    // Already a day name
+    if (days.includes(dateString.toUpperCase())) {
+        return dateString.charAt(0).toUpperCase() + dateString.slice(1).toLowerCase();
+    }
+
+    // Otherwise, treat it as a date
+    const date = new Date(dateString + "T00:00:00");
+
+    if (isNaN(date.getTime())) {
+        return "";
+    }
+
+    const day = date.toLocaleDateString("en-US", {
+        weekday: "long"
+    });
+
+    return day.charAt(0).toUpperCase() + day.slice(1).toLowerCase();
 }
 
 /* TIME UTILITIES */
@@ -812,7 +861,7 @@ function updateCurrentWeekText() {
     const start = weekDates[0];
     const end = weekDates[6];
 
-    $("#currentWeek").text(
-        `${formatShortDate(start)} - ${formatShortDate(end)}, ${end.getFullYear()}`,
+    $("#currentWeek").html(
+        `<i class="bi bi-calendar3"></i> ${formatShortDate(start)} - ${formatShortDate(end)}, ${end.getFullYear()}`
     );
 }

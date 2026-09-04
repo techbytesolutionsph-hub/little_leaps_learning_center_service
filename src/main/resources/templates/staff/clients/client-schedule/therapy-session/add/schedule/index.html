@@ -35,7 +35,7 @@
 
                         <!-- Add Therapy Session Schedule - Start -->
                         <th:block th:insert="~{fragments/staff/clients/client-schedule/therapy-session/add/schedule/html-fragment-staff-add-therapy-session-schedule
-                                :: staff-add-therapy-session-schedule(${caseManagers}, ${therapy})}"></th:block>
+                                :: staff-add-therapy-session-schedule(${therapy})}"></th:block>
                         <!-- Add Therapy Session Schedule - End -->
                     </div>
                 </div>
@@ -48,6 +48,6 @@
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
         <script th:inline="javascript">const therapy = /*[[${therapy}]]*/ '';</script>
-        <script th:src="@{/js/staff/clients/client-schedule/lllc-staff-client-assessment-schedule-scripts.js}" type="text/javascript"></script>
+        <script th:src="@{/js/staff/clients/client-schedule/therapy-session/add/schedule/lllc-staff-client-add-therapy-session-schedule-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

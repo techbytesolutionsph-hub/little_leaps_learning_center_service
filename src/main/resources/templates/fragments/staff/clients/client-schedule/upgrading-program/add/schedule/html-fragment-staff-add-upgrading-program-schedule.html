@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-add-therapy-session-schedule(therapy)">
+    <div th:fragment="staff-add-upgrading-program-schedule(therapy)">
         <!-- Add Therapy Session Schedule - START -->
         <!-- CLIENT SUMMARY CARD -->
         <section class="client-summary-card">
@@ -26,7 +26,7 @@
 
                 <div class="client-info-row">
                     <i class="fa-solid fa-id-card"></i>
-                    Therapy Session ID:&nbsp;<span class="client-id-badge" th:text="${therapy.therapySessionId}">
+                    Program ID:&nbsp;<span class="client-id-badge" th:text="${therapy.upgradingProgramId}">
                         IA-2026-00001
                     </span>
                 </div>
@@ -118,9 +118,9 @@
             <div class="calendar-main-header">
                 <div class="section-header">
                     <div class="section-header-content">
-                        <div class="section-title">Add Therapy Session Schedule</div>
+                        <div class="section-title">Add Upgrading Program Schedule</div>
                         <div class="section-description">
-                            Select a date and time to add therapy session schedule.
+                            Select a date and time to add upgrading program schedule.
                         </div>
                     </div>
                 </div>
@@ -204,11 +204,11 @@
                     <div class="modal-header assessment-modal-header">
                         <div>
                             <h5 class="modal-title" id="editAssessmentScheduleModalLabel">
-                                Edit Assessment Schedule
+                                Edit Upgrading Program Schedule
                             </h5>
 
                             <p class="assessment-modal-subtitle">
-                                Edit assessment schedule for the selected client.
+                                Edit upgrading program schedule for the selected client.
                             </p>
                         </div>
 
@@ -223,23 +223,15 @@
                                 <!-- Therapist -->
                                 <div class="col-12">
                                     <div class="assessment-form-group">
-                                        <label for="edit-assessment-therapist" class="assessment-form-label"> Therapist </label>
+                                        <label for="edit-assessment-therapist" class="assessment-form-label"> Case Manager </label>
                                         <input type="text" id="edit-assessment-therapist" name="day" class="form-control assessment-form-control"
-                                               placeholder="Day" th:value="${therapy.behavioralTherapistFullName}" readonly required>
-                                    </div>
-                                </div>
-
-                                <!-- Frequency -->
-                                <div class="col-12 col-md-6">
-                                    <div class="assessment-form-group">
-                                        <label for="edit-assessment-frequency" class="assessment-form-label"> Frequency </label>
-                                        <input type="text" id="edit-assessment-frequency" name="day" class="form-control assessment-form-control"
-                                               placeholder="Day" th:value="${#strings.capitalize(therapy.frequency.name().toLowerCase())}" readonly required>
+                                               placeholder="Day" th:value="${therapy.caseManagerFullName}" readonly required>
+                                        <div class="field-error">Case manager is required.</div>
                                     </div>
                                 </div>
 
                                 <!-- Schedule Status -->
-                                <div class="col-12 col-md-6">
+                                <div class="col-12">
                                     <div class="assessment-form-group">
                                         <label for="edit-assessment-status" class="assessment-form-label"> Schedule Status <span class="required">*</span> </label>
                                         <select class="form-control assessment-form-control" id="edit-assessment-status" name="status" required>
@@ -333,11 +325,11 @@
                     <div class="modal-header assessment-modal-header">
                         <div>
                             <h5 class="modal-title" id="addAssessmentScheduleModalLabel">
-                                Add Assessment Schedule
+                                Add Upgrading Program Schedule
                             </h5>
 
                             <p class="assessment-modal-subtitle">
-                                Create a new assessment schedule for the selected client.
+                                Create a new upgrading program schedule for the selected client.
                             </p>
                         </div>
 
@@ -351,24 +343,15 @@
                                 <!-- Therapist -->
                                 <div class="col-12">
                                     <div class="assessment-form-group">
-                                        <label for="assessment-therapist" class="assessment-form-label"> Therapist </label>
+                                        <label for="assessment-therapist" class="assessment-form-label"> Case Manager </label>
                                         <input type="text" id="assessment-therapist" name="day" class="form-control assessment-form-control"
-                                               placeholder="Day" th:value="${therapy.behavioralTherapistFullName}" readonly required>
-                                        <div class="field-error">Therapist is required.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Frequency -->
-                                <div class="col-12 col-md-6">
-                                    <div class="assessment-form-group">
-                                        <label for="assessment-frequency" class="assessment-form-label"> Frequency </label>
-                                        <input type="text" id="assessment-frequency" name="day" class="form-control assessment-form-control"
-                                               placeholder="Day" th:value="${#strings.capitalize(therapy.frequency.name().toLowerCase())}" readonly required>
+                                               placeholder="Day" th:value="${therapy.caseManagerFullName}" readonly required>
+                                        <div class="field-error">Case manager is required.</div>
                                     </div>
                                 </div>
 
                                 <!-- Schedule Status -->
-                                <div class="col-12 col-md-6">
+                                <div class="col-12">
                                     <div class="assessment-form-group">
                                         <label for="assessment-status" class="assessment-form-label"> Schedule Status </label>
                                         <select class="form-control assessment-form-control" id="assessment-status">

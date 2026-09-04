@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
-import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
-import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
-import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
-import ph.com.lllc.dto.staff.clients.TherapySessionResponse;
+import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
@@ -155,6 +152,9 @@ public class PortalViewController {
         List<TherapySessionResponse> therapies = portalFrontService.getTherapySessionResponse();
         model.addAttribute("therapies", therapies);
 
+        List<UpgradingProgramResponse> upgradePrograms = portalFrontService.getUpgradingProgramResponse();
+        model.addAttribute("upgradePrograms", upgradePrograms);
+
         return "staff/clients/client-schedule/index";
     }
 
@@ -201,18 +201,36 @@ public class PortalViewController {
         return "staff/clients/client-schedule/therapy-session/add/assignee/index";
     }
 
+    @GetMapping(value = "/client-management/client-schedule/add-upgrading-program-assignee")
+    public String addUpgradingProgramAssigneePage(Model model) {
+        this.setupPage(model, "clients", "Add Upgrading Program Assignee");
+
+        Map<String, String> caseManagers = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager"));
+        model.addAttribute("caseManagers", caseManagers);
+
+        return "staff/clients/client-schedule/upgrading-program/add/assignee/index";
+    }
+
     @GetMapping(value = "/client-management/client-schedule/add-therapy-session-schedule")
     public String addTherapySessionSchedulePage(Model model, @RequestParam("id") String therapySessionId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "clients", "Add Therapy Session Schedule");
 
-        Map<String, String> caseManagers = portalFrontService.mapCaseManagers();
-        model.addAttribute("caseManagers", caseManagers);
-
         TherapySessionResponse therapy = portalFrontService.findByTherapySessionId(uuid, therapySessionId);
         model.addAttribute("therapy", therapy);
 
         return "staff/clients/client-schedule/therapy-session/add/schedule/index";
+    }
+
+    @GetMapping(value = "/client-management/client-schedule/add-upgrading-program-schedule")
+    public String addUpgradeProgramSchedulePage(Model model, @RequestParam("id") String upgradingProgramId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "Add Upgrading Program Schedule");
+
+        UpgradingProgramResponse upgradeProgram = portalFrontService.findByUpgradingProgramId(uuid, upgradingProgramId);
+        model.addAttribute("upgradeProgram", upgradeProgram);
+
+        return "staff/clients/client-schedule/upgrading-program/add/schedule/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

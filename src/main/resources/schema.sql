@@ -20,6 +20,10 @@ CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.assessment_id_seq
     START WITH 1
     INCREMENT BY 1;
 
+CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.upgrading_program_id_seq
+    START WITH 1
+    INCREMENT BY 1;
+
 CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.payroll_id_seq
     START WITH 1
     INCREMENT BY 1;

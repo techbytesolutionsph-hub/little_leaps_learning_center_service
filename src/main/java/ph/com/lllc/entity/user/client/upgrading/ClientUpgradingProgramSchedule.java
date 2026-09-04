@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.SessionFrequency;
+import ph.com.lllc.enums.TherapyScheduleStatus;
 
 import java.util.List;
 
@@ -24,26 +26,32 @@ public class ClientUpgradingProgramSchedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "upgrading_program_id")
+    @Column(name = "program_id")
     private Long id;
 
-    /**
-     * ONCE / TWICE / THRICE
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "frequency")
-    private SessionFrequency frequency;
+    @Column(name = "upgrading_program_id")
+    private String upgradingProgramId;
 
     /**
-     * Schedule status - SCHEDULED, COMPLETED, CANCELLED, PENDING
+     * Therapy Schedule status - ACTIVE, COMPLETED, CANCELLED, INACTIVE
      */
     @Enumerated(EnumType.STRING)
-    private ScheduleStatus status;
+    @Column(name = "status", nullable = false)
+    private TherapyScheduleStatus status;
+    /**
+     * Notes/Remarks for client/kid
+     */
+    @Column(name = "notes", length = 1000)
+    private String notes;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "assignment_role", nullable = false)
+    private AssignmentRole assignmentRole;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "therapist_id")
-    private AppEmployeeProfile therapist;
+    @JoinColumn(name = "case_manager_id")
+    private AppEmployeeProfile caseManager;
 
     /**
      * Dynamic schedules

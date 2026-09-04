@@ -1,0 +1,293 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
+        <title>Assessment Schedule - Little Leaps Learning Center</title>
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
+        <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/clients/client-schedule/lllc-staff-client-assessment-schedule-styles.css}" rel="stylesheet" type="text/css">
+    </head>
+    <body class="container-fluid p-0" id="page-top">
+        <div id="wrapper">
+            <!-- Sidebar - Start -->
+            <th:block th:insert="~{fragments/staff/common/html-fragment-staff-sidebar :: staff-common-sidebar(${nav})}"></th:block>
+            <!-- Sidebar - End -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+
+                    <!-- Main Navigation Bar - Start -->
+                    <th:block th:insert="~{fragments/staff/common/html-fragment-staff-main-navbar :: staff-common-main-navbar}"></th:block>
+                    <!-- Main Navigation Bar - End -->
+
+                    <div class="container-fluid">
+
+                        <!-- Page Heading and Breadcrumbs - Start -->
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <!-- Page Heading and Breadcrumbs - End -->
+
+                        <!-- Assessment Schedule - Start -->
+<!--                        <th:block th:insert="~{fragments/staff/clients/assignment/assign/html-fragment-staff-assign-client :: staff-assign-client(${staff})}"></th:block>-->
+                        <!-- Assessment Schedule - End -->
+                        <div class="app">
+                            <main class="main">
+                                <section class="content">
+                                    <div class="client-card">
+                                        <div class="client-info">
+
+                                            <div class="client-avatar">
+                                                <img src="https://i.pravatar.cc/150?img=47" alt="Client">
+                                            </div>
+
+                                            <div class="client-details">
+                                                <div class="client-name-row">
+                                                    <h2>Cotton Trampe Anduiza</h2>
+                                                    <span class="status-badge active">
+                                                        Active
+                                                    </span>
+                                                </div>
+
+                                                <div class="client-meta">
+                                                    <span>
+                                                        Client ID:
+                                                        <strong>CLI-000001</strong>
+                                                    </span>
+
+                                                    <span>
+                                                        Program Type:
+                                                        <strong>ABA</strong>
+                                                    </span>
+
+                                                    <span>
+                                                        Branch:
+                                                        <strong>Catanuan Quezon</strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button class="btn btn-outline">
+                                            <i class="fa-solid fa-user"></i>
+                                            View Client Profile
+                                        </button>
+                                    </div>
+
+                                    <!-- =========================
+                                         SCHEDULE CARD
+                                    ========================== -->
+                                    <div class="schedule-card">
+                                        <div class="schedule-header">
+                                            <div>
+                                                <h2>
+                                                    <i class="fa-regular fa-calendar-days"></i>
+                                                    Assessment Schedules
+                                                </h2>
+
+                                                <p>
+                                                    Manage and view assessment schedules
+                                                </p>
+                                            </div>
+
+                                            <div class="schedule-actions">
+<!--                                                <div class="view-switch">-->
+<!--                                                    <button id="weeklyViewBtn" class="view-btn active">-->
+<!--                                                        Weekly View-->
+<!--                                                    </button>-->
+
+<!--                                                    <button id="monthlyViewBtn" class="view-btn">-->
+<!--                                                        Monthly View-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+
+                                                <div class="week-navigation">
+                                                    <button id="previousWeek">
+                                                        <i class="fa-solid fa-chevron-left"></i>
+                                                    </button>
+
+                                                    <div id="weekLabel">
+                                                        Aug 11 - Aug 17, 2026
+                                                    </div>
+
+                                                    <button id="nextWeek">
+                                                        <i class="fa-solid fa-chevron-right"></i>
+                                                    </button>
+                                                </div>
+
+                                                <button id="openScheduleModal" class="btn btn-primary">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                    Add Schedule
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- =========================
+                                             CALENDAR
+                                        ========================== -->
+                                        <div class="calendar-container">
+                                            <div id="calendar"></div>
+                                        </div>
+
+                                        <!-- ADD THERAPIST -->
+                                        <button id="addTherapist" class="add-therapist">
+                                            <i class="fa-solid fa-plus"></i>
+                                            Add Another Therapist
+                                        </button>
+
+                                        <!-- LEGEND -->
+                                        <div class="legend">
+                                            <div>
+                                                <span class="legend-title">
+                                                    Legend
+                                                </span>
+
+                                                <span class="legend-item">
+                                                    <span class="legend-color scheduled"></span>
+                                                    Scheduled
+                                                </span>
+
+                                                <span class="legend-item">
+                                                    <span class="legend-color pending"></span>
+                                                    Pending
+                                                </span>
+
+                                                <span class="legend-item">
+                                                    <span class="legend-color cancelled"></span>
+                                                    Cancelled
+                                                </span>
+
+                                                <span class="legend-item">
+                                                    <span class="legend-color completed"></span>
+                                                    Completed
+                                                </span>
+                                            </div>
+
+                                            <div class="timezone">
+                                                <i class="fa-regular fa-clock"></i>
+                                                All times are displayed in local time
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </main>
+                        </div>
+
+
+                        <!-- =========================
+                             ADD / EDIT SCHEDULE MODAL
+                        ========================== -->
+
+<!--                        <div id="scheduleModal" class="modal-overlay">-->
+<!--                            <div class="modal">-->
+<!--                                <div class="modal-header">-->
+<!--                                    <div>-->
+<!--                                        <h2 id="modalTitle">-->
+<!--                                            Add Assessment Schedule-->
+<!--                                        </h2>-->
+
+<!--                                        <p>-->
+<!--                                            Create a schedule for the selected Case Manager/Behavioral Therapist.-->
+<!--                                        </p>-->
+<!--                                    </div>-->
+
+<!--                                    <button id="closeModal" class="modal-close">-->
+<!--                                        <i class="fa-solid fa-xmark"></i>-->
+<!--                                    </button>-->
+<!--                                </div>-->
+
+<!--                                <form id="scheduleForm">-->
+<!--                                    <input type="hidden" id="scheduleId">-->
+
+<!--                                    &lt;!&ndash; THERAPIST &ndash;&gt;-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Therapist<span>*</span></label>-->
+
+<!--                                        <select id="therapistSelect" required>-->
+<!--                                            <option value="">-->
+<!--                                                Select therapist-->
+<!--                                            </option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+
+<!--                                    &lt;!&ndash; DAY &ndash;&gt;-->
+<!--                                    <div class="form-row">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Day<span>*</span></label>-->
+<!--                                            <select id="daySelect" required>-->
+<!--                                                <option value="" selected disabled>Select a day</option>-->
+<!--                                                <option value="Monday">Monday</option>-->
+<!--                                                <option value="Tuesday">Tuesday</option>-->
+<!--                                                <option value="Wednesday">Wednesday</option>-->
+<!--                                                <option value="Thursday">Thursday</option>-->
+<!--                                                <option value="Friday">Friday</option>-->
+<!--                                                <option value="Saturday">Saturday</option>-->
+<!--                                                <option value="Sunday">Sunday</option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+
+<!--                                        &lt;!&ndash; STATUS &ndash;&gt;-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Status<span>*</span></label>-->
+<!--                                            <select id="statusSelect" required>-->
+<!--                                                <option value="" selected disabled>Select a status</option>-->
+<!--                                                <option value="SCHEDULED">Scheduled</option>-->
+<!--                                                <option value="PENDING">Pending</option>-->
+<!--                                                <option value="CANCELLED">Cancelled</option>-->
+<!--                                                <option value="COMPLETED">Completed</option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+
+<!--                                    &lt;!&ndash; TIME &ndash;&gt;-->
+<!--                                    <div class="form-row">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>Start Time<span>*</span></label>-->
+<!--                                            <input type="time" id="startTime" required>-->
+<!--                                        </div>-->
+
+<!--                                        <div class="form-group">-->
+<!--                                            <label>End Time<span>*</span></label>-->
+<!--                                            <input type="time" id="endTime" required>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+
+<!--                                    &lt;!&ndash; NOTES &ndash;&gt;-->
+<!--                                    <div class="form-group">-->
+<!--                                        <label>Notes</label>-->
+<!--                                        <textarea id="scheduleNotes" rows="3" placeholder="Add notes or special instructions..."></textarea>-->
+<!--                                    </div>-->
+
+<!--                                    &lt;!&ndash; ACTIONS &ndash;&gt;-->
+<!--                                    <div class="modal-footer">-->
+<!--                                        <button type="button" id="cancelModal" class="btn btn-secondary">-->
+<!--                                            Cancel-->
+<!--                                        </button>-->
+
+<!--                                        <button type="submit" class="btn btn-primary">-->
+<!--                                            <i class="fa-solid fa-check"></i>-->
+<!--                                            Save Schedule-->
+<!--                                        </button>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+
+                <!-- Footer - Start -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-footer :: staff-common-footer}"></th:block>
+                <!-- Footer - End -->
+            </div>
+        </div>
+
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
+        <script th:src="@{/js/staff/clients/client-schedule/lllc-staff-client-add-upgrading-program-schedule-scripts.js}" type="text/javascript"></script>
+    </body>
+</html>

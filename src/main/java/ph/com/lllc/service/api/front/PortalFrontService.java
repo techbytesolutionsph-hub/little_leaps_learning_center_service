@@ -6,10 +6,7 @@ import ph.com.lllc.dto.admin.AppUserResponse;
 import ph.com.lllc.dto.response.DashboardCardResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
-import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
-import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
-import ph.com.lllc.dto.staff.clients.InitialAssessmentResponse;
-import ph.com.lllc.dto.staff.clients.TherapySessionResponse;
+import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.admin.UserAccountService;
@@ -96,7 +93,7 @@ public class PortalFrontService {
                 .message("Total Scheduled")
                 .build();
 
-        long upgradingPrograms = 0L;
+        long upgradingPrograms = assessmentScheduleService.findAllUpgradingProgramSchedules();
         DashboardCardResponse totalUpgradingPrograms = DashboardCardResponse.builder()
                 .value(String.valueOf(upgradingPrograms))
                 .message("Total Scheduled")
@@ -154,5 +151,13 @@ public class PortalFrontService {
 
     public List<TherapySessionResponse> getTherapySessionResponse() {
         return assessmentScheduleService.getTherapySessionResponse();
+    }
+
+    public List<UpgradingProgramResponse> getUpgradingProgramResponse() {
+        return assessmentScheduleService.getUpgradingProgramResponse();
+    }
+
+    public UpgradingProgramResponse findByUpgradingProgramId(String uuid, String upgradingProgramId) throws ServiceException {
+        return assessmentScheduleService.findByUpgradingProgramId(uuid, upgradingProgramId);
     }
 }

@@ -15,6 +15,7 @@ import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
 import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
 import ph.com.lllc.entity.user.client.pricing.AppClientServicePricing;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
+import ph.com.lllc.entity.user.client.upgrading.ClientUpgradingProgramSchedule;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.enums.DiagnosisConcern;
 import ph.com.lllc.enums.EnrollmentStatus;
@@ -121,6 +122,10 @@ public class AppClientProfile implements Serializable {
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ClientTherapySchedule> sessionSchedules;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ClientUpgradingProgramSchedule> upgradingProgramSchedules;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)

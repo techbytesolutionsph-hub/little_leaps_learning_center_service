@@ -1,7 +1,7 @@
 $(document).ready(function () {
     /* Initialized Date Pickers */
     initializeMaxTodayDatePicker("#client-birth-date", "Select birth date");
-    initializeMaxTodayDatePicker("#client-date-enrolled", "Select date enrolled");
+    initializeDatePicker("#client-date-enrolled", "Select date enrolled");
 
     initializeClientPhotoUpload();
 

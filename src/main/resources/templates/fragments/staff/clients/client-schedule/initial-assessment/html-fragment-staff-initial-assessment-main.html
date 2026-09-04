@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-initial-assessment-main(kpi, assessments, therapies)">
+    <div th:fragment="staff-initial-assessment-main(kpi, assessments, therapies, upgradePrograms)">
         <!-- Assessment Main - START -->
         <div class="row">
             <!-- Total Employees count -->
@@ -425,7 +425,7 @@
                 <h6 class="m-0 font-weight-bold">
                     <i class="fa fa-angle-double-up mr-2"></i> Upgrading Program Records
                 </h6>
-                <a th:href="@{/app/portal/client-management/client-schedule/add-therapy-session}"
+                <a th:href="@{/app/portal/client-management/client-schedule/add-upgrading-program-assignee}"
                    class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
                    id="add-upgrading-program-schedule-btn" style="text-decoration: none">
 
@@ -439,14 +439,103 @@
                         <tr>
                             <th>ID</th>
                             <th>Client Info</th>
-                            <th>Assessment Date</th>
                             <th>Assigned Case Manager</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
+                            <tr th:each="upgradeProgram : ${upgradePrograms}">
+                                <td data-label="ID" th:text="${upgradeProgram.upgradingProgramId}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${upgradeProgram.clientProfilePicture != null ? upgradeProgram.clientProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
 
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${upgradeProgram.clientFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${upgradeProgram.guardianEmail}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${upgradeProgram.guardianContactNo}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assigned Behavioral Therapist">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${upgradeProgram.caseManagerProfilePicture != null ? upgradeProgram.caseManagerProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${upgradeProgram.caseManagerFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${upgradeProgram.caseManagerPosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <!-- Scheduled -->
+                                    <span class="status-badge badge-active"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'ACTIVE'}">
+                                            <i class="bi bi-check-circle-fill mr-1"></i> Active
+                                        </span>
+
+                                    <!-- Pending -->
+                                    <span class="status-badge badge-warning"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'INACTIVE'}">
+                                            <i class="bi bi-clock-fill mr-1"></i> Inactive
+                                        </span>
+
+                                    <!-- Completed -->
+                                    <span class="status-badge badge-success"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'COMPLETED'}">
+                                            <i class="bi bi-check-circle-fill mr-1"></i> Completed
+                                        </span>
+
+                                    <!-- Cancelled -->
+                                    <span class="status-badge badge-danger"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'CANCELLED'}">
+                                            <i class="bi bi-x-circle-fill mr-1"></i> Cancelled
+                                        </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${upgradeProgram.status == null}">
+                                            <i class="bi bi-question-circle-fill mr-1"></i> Unassigned
+                                        </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/client-management/client-schedule/add-upgrading-program-schedule?id=${upgradeProgram.upgradingProgramId}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-calendar-plus-fill mr-1"></i> Add Schedule
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

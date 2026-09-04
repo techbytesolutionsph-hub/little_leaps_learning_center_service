@@ -86,4 +86,29 @@ public class AssessmentScheduleController {
         loggingService.info(uuid, this.getClass().getName(), "", "TherapySessionRequest : " + request.toString());
         return ResponseEntity.ok(assessmentScheduleService.updateTherapySlot(uuid, request));
     }
+
+    @Operation(summary = "Save Upgrading Program Details")
+    @PostMapping("/save-upgrading-program-details")
+    public ResponseEntity<CommonResponse> saveUpgradingProgramDetails(@Valid @RequestBody UpgradingProgramRequest request, HttpServletRequest httpRequest) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "UpgradingProgramRequest : " + request.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(assessmentScheduleService.saveUpgradingProgramDetails(uuid, request, httpRequest));
+    }
+
+    @Operation(summary = "Add Upgrading Program Slot")
+    @PostMapping("/save-upgrading-program-slot")
+    public ResponseEntity<CommonResponse> saveUpgradingProgramSlot(@Valid @RequestBody UpgradingProgramSlotRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "UpgradingProgramSlotRequest : " + request.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(assessmentScheduleService.saveUpgradingProgramSlot(uuid, request));
+    }
+
+    @Operation(summary = "Update Upgrading Program Slot")
+    @PutMapping("/update-upgrading-program-slot")
+    public ResponseEntity<CommonResponse> updateUpgradingProgramSlot(@Valid @RequestBody UpgradingProgramSlotRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "UpgradingProgramSlotRequest : " + request.toString());
+        return ResponseEntity.ok(assessmentScheduleService.updateUpgradingProgramSlot(uuid, request));
+    }
+
 }

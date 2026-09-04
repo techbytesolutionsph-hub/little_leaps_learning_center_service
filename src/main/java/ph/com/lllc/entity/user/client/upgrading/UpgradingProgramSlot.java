@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ph.com.lllc.enums.TherapySlotStatus;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -22,6 +24,12 @@ public class UpgradingProgramSlot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "upgrading_program_slot_id")
     private Long id;
+
+    /**
+     * Assessment Date
+     */
+    @Column(name = "therapy_date")
+    private LocalDate therapyDate;
 
     /**
      * MONDAY / WEDNESDAY / FRIDAY
@@ -41,6 +49,16 @@ public class UpgradingProgramSlot {
      */
     @Column(name = "end_time")
     private LocalTime endTime;
+
+    /**
+     * Slot status
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private TherapySlotStatus status;
+
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
 
     /**
      * Parent schedule
