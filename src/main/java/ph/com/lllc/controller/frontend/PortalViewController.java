@@ -140,7 +140,7 @@ public class PortalViewController {
     }
 
     @GetMapping(value = "/client-management/client-schedule")
-    public String clientAssessmentSchedulePage(Model model) {
+    public String clientAssessmentSchedulePage(Model model) throws ServiceException {
         this.setupPage(model, "clients", "Client Schedule");
 
         DashboardMetricsResponse kpi = portalFrontService.clientSchedulesKPIs();
@@ -154,6 +154,9 @@ public class PortalViewController {
 
         List<UpgradingProgramResponse> upgradePrograms = portalFrontService.getUpgradingProgramResponse();
         model.addAttribute("upgradePrograms", upgradePrograms);
+
+        List<NeurodevAssessmentResponse> neurodevAssessments = portalFrontService.getNeurodevAssessments();
+        model.addAttribute("neurodevAssessments", neurodevAssessments);
 
         return "staff/clients/client-schedule/index";
     }
@@ -231,6 +234,13 @@ public class PortalViewController {
         model.addAttribute("upgradeProgram", upgradeProgram);
 
         return "staff/clients/client-schedule/upgrading-program/add/schedule/index";
+    }
+
+    @GetMapping(value = "/client-management/client-schedule/add-neurodev-assessment")
+    public String addNeurodevAssessmentSchedulePage(Model model) {
+        this.setupPage(model, "clients", "Add Neurodev Assessment Schedule");
+
+        return "staff/clients/client-schedule/neurodev-assessment/add/index";
     }
 
     @GetMapping(value = "/attendance/my-attendance")

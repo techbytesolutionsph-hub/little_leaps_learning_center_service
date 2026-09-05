@@ -129,7 +129,7 @@ public class AppClientProfile implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NeurodevelopmentalAssessmentSchedule> assessments;
+    private List<NeurodevelopmentalAssessmentSchedule> neurodevAssessments;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "appClientProfile", cascade = CascadeType.ALL, orphanRemoval = true)

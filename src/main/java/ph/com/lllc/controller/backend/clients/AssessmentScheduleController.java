@@ -111,4 +111,25 @@ public class AssessmentScheduleController {
         return ResponseEntity.ok(assessmentScheduleService.updateUpgradingProgramSlot(uuid, request));
     }
 
+    @Operation(summary = "Save Neurodev Assessment Schedule")
+    @PostMapping("/save-neurodev-assessment")
+    public ResponseEntity<CommonResponse> saveNeurodevAssessment(@Valid @RequestBody NeurodevAssessmentRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "NeurodevAssessmentRequest : " + request.toString());
+        return ResponseEntity.status(HttpStatus.CREATED).body(assessmentScheduleService.saveNeurodevAssessment(uuid, request));
+    }
+
+    @Operation(summary = "Get Neurodev Assessments")
+    @GetMapping("/get-neurodev-assessments")
+    public ResponseEntity<List<NeurodevAssessmentResponse>> getNeurodevAssessments() throws ServiceException {
+        return ResponseEntity.ok(assessmentScheduleService.getNeurodevAssessments());
+    }
+
+    @Operation(summary = "Get Neurodev Assessment")
+    @GetMapping("/get-neurodev-assessment")
+    public ResponseEntity<NeurodevAssessmentResponse> getNeurodevAssessment(@RequestParam("id") Long id) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "Neurodev Assessment ID : " + id);
+        return ResponseEntity.ok(assessmentScheduleService.getNeurodevAssessments(uuid,id));
+    }
 }

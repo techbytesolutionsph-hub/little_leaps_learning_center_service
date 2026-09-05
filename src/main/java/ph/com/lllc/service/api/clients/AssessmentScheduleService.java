@@ -3,6 +3,7 @@ package ph.com.lllc.service.api.clients;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ph.com.lllc.dto.response.CommonResponse;
@@ -13,6 +14,7 @@ import ph.com.lllc.entity.user.client.assessment.AssessmentSlot;
 import ph.com.lllc.entity.user.client.assessment.ClientInitialAssessmentSchedule;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
+import ph.com.lllc.entity.user.client.neurodev.NeurodevelopmentalAssessmentSchedule;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.client.schedule.TherapySlot;
 import ph.com.lllc.entity.user.client.upgrading.ClientUpgradingProgramSchedule;
@@ -25,6 +27,7 @@ import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.db.SequenceGeneratorService;
 import ph.com.lllc.service.util.IdGeneratorUtils;
 import ph.com.lllc.service.util.logging.LoggingService;
+import ph.com.lllc.util.ObjectUtils;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -53,6 +56,7 @@ public class AssessmentScheduleService {
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+    private final AppClientAssignmentRepository appClientAssignmentRepository;
 
     @Transactional
     public CommonResponse saveInitialAssessmentSchedule(String uuid, InitialAssessmentRequest request, HttpServletRequest httpRequest) throws ServiceException {
@@ -550,6 +554,56 @@ public class AssessmentScheduleService {
                 .returnCode(HttpStatus.OK.value())
                 .returnMessage("Upgrading program updated successfully!")
                 .build();
+    }
+
+    @Transactional
+    public CommonResponse saveNeurodevAssessment(String uuid, NeurodevAssessmentRequest request) throws ServiceException {
+
+        NeurodevelopmentalAssessmentSchedule assessment =
+                NeurodevelopmentalAssessmentSchedule.builder()
+                        .clientName(request.getClientName())
+                        .age(request.getAge())
+                        .gender(request.getGender())
+                        .parentGuardian(request.getParentGuardian())
+                        .contactNumber(request.getContactNumber())
+                        .status(request.getStatus())
+                        .assessmentDate(request.getAssessmentDate())
+                        .neurodevFee(request.getNeurodevFee())
+                        .paymentStatus(request.getPaymentStatus())
+                        .notes(request.getNotes())
+                        .build();
+
+        neurodevelopmentalAssessmentRepository.save(assessment);
+
+        loggingService.info(uuid, this.getClass().getName(), "", "Neurodev assessment schedule saved successfully!");
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Neurodev assessment schedule saved successfully!")
+                .build();
+    }
+
+    public List<NeurodevAssessmentResponse> getNeurodevAssessments() throws ServiceException {
+        List<NeurodevelopmentalAssessmentSchedule> neurodevAssessments = neurodevelopmentalAssessmentRepository.findAll(
+                Sort.by(Sort.Direction.DESC, "assessmentDate")
+        );
+        return ObjectUtils.copyListAs(neurodevAssessments, NeurodevAssessmentResponse.class);
+    }
+
+    public long findAllNeurodevAssessments() throws ServiceException {
+        List<NeurodevelopmentalAssessmentSchedule> neurodevAssessments = neurodevelopmentalAssessmentRepository.findAll(
+                Sort.by(Sort.Direction.DESC, "assessmentDate")
+        );
+        return ObjectUtils.copyListAs(neurodevAssessments, NeurodevAssessmentResponse.class).size();
+    }
+
+    public NeurodevAssessmentResponse getNeurodevAssessments(String uuid, Long id) throws ServiceException {
+        NeurodevelopmentalAssessmentSchedule neurodevAssessment = neurodevelopmentalAssessmentRepository.findById(id)
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(), "Neurodev assessment not found with ID: " + id, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Neurodev assessment not found with ID: " + id);
+                });
+        return ObjectUtils.copyAs(neurodevAssessment, NeurodevAssessmentResponse.class);
     }
 
     private TherapySessionResponse buildTherapySessionResponse(ClientTherapySchedule response, int num){

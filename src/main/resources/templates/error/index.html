@@ -54,8 +54,8 @@
                 margin-top: 25px;
                 display: inline-block;
                 padding: 12px 22px;
-                background: #f9bf29;
-                color: #000;
+                background: rgb(0, 151, 157) !important;
+                color: #fff;
                 text-decoration: none;
                 border-radius: 8px;
                 font-weight: 600;
@@ -63,7 +63,7 @@
             }
 
             .btn:hover {
-                background: #e0a622;
+                background: rgb(0, 151, 157) !important;
             }
 
             svg {
@@ -125,73 +125,179 @@
             </div>
 
             <!-- Gray Chibi Cat SVG with Both Raised Paws and Wagging Tail -->
-            <svg viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
-                <rect width="260" height="300" fill="none"/>
-
-                <!-- Tail -->
-                <path class="tail" d="M180 210 C230 210, 230 260, 170 250"
-                      fill="#a0a0a0" stroke="#222" stroke-width="4" stroke-linecap="round"/>
-
-                <!-- Body -->
-                <ellipse cx="130" cy="200" rx="70" ry="60"
-                         fill="#b0b0b0" stroke="#222" stroke-width="4"/>
-
-                <!-- Belly -->
-                <ellipse cx="130" cy="215" rx="40" ry="35"
-                         fill="#d0d0d0" stroke="#222" stroke-width="3"/>
-
-                <!-- Head -->
-                <circle cx="130" cy="110" r="80"
-                        fill="#b0b0b0" stroke="#222" stroke-width="4"/>
-
-                <!-- Ears -->
-                <path d="M70 60 L95 20 L120 65 Z"
-                      fill="#b0b0b0" stroke="#222" stroke-width="4"/>
-                <path d="M140 65 L165 20 L190 60 Z"
-                      fill="#b0b0b0" stroke="#222" stroke-width="4"/>
-
-                <!-- Inner ears -->
-                <path d="M80 60 L95 32 L110 60 Z"
-                      fill="#d0d0d0" stroke="#222" stroke-width="2"/>
-                <path d="M150 60 L165 32 L180 60 Z"
-                      fill="#d0d0d0" stroke="#222" stroke-width="2"/>
-
-                <!-- Eyes -->
-                <circle cx="100" cy="110" r="12" fill="#222"/>
-                <circle cx="160" cy="110" r="12" fill="#222"/>
-
-                <!-- Blush -->
-                <ellipse cx="85" cy="135" rx="12" ry="7" fill="#f2a3a3" opacity="0.7"/>
-                <ellipse cx="175" cy="135" rx="12" ry="7" fill="#f2a3a3" opacity="0.7"/>
-
-                <!-- Nose -->
-                <path d="M120 140 L140 140 L130 150 Z" fill="#222"/>
-
-                <!-- Mouth -->
-                <path d="M130 150 Q130 160 120 165" stroke="#222" stroke-width="3" fill="none"/>
-                <path d="M130 150 Q130 160 140 165" stroke="#222" stroke-width="3" fill="none"/>
-
-                <!-- Whiskers -->
-                <line x1="55" y1="135" x2="95" y2="133" stroke="#222" stroke-width="3" stroke-linecap="round"/>
-                <line x1="55" y1="145" x2="95" y2="147" stroke="#222" stroke-width="3" stroke-linecap="round"/>
-                <line x1="205" y1="135" x2="165" y2="133" stroke="#222" stroke-width="3" stroke-linecap="round"/>
-                <line x1="205" y1="145" x2="165" y2="147" stroke="#222" stroke-width="3" stroke-linecap="round"/>
-
-                <!-- Left paw (raised chibi paw) -->
-                <ellipse cx="95" cy="190" rx="12" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
-                <circle cx="88" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
-                <circle cx="95" cy="178" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
-                <circle cx="102" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
-
-                <!-- Right paw (raised chibi paw) -->
-                <ellipse cx="165" cy="190" rx="12" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
-                <circle cx="158" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
-                <circle cx="165" cy="178" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
-                <circle cx="172" cy="180" r="4" fill="#b0b0b0" stroke="#222" stroke-width="2"/>
-
-                <!-- Back feet -->
-                <ellipse cx="105" cy="265" rx="18" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
-                <ellipse cx="155" cy="265" rx="18" ry="12" fill="#b0b0b0" stroke="#222" stroke-width="3"/>
+            <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" width="320" height="320">
+                <!-- Background -->
+                <circle cx="160" cy="160" r="135" fill="#F5FBFB" />
+                <!-- Floating decorations -->
+                <g fill="#00979D" opacity="0.35">
+                    <circle cx="55" cy="90" r="4">
+                        <animate attributeName="cy" values="90;82;90" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="265" cy="80" r="5">
+                        <animate attributeName="cy" values="80;70;80" dur="3.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="270" cy="215" r="4">
+                        <animate attributeName="cy" values="215;205;215" dur="2.8s" repeatCount="indefinite" />
+                    </circle>
+                </g>
+                <!-- Floating Puzzle -->
+                <g>
+                    <path d="
+                        M215 75
+                        H235
+                        C235 60 255 60 255 75
+                        H275
+                        V95
+                        C290 95 290 115 275 115
+                        V135
+                        H255
+                        C255 150 235 150 235 135
+                        H215
+                        Z" fill="#00979D" stroke="#222" stroke-width="4" stroke-linejoin="round">
+                        <animateTransform attributeName="transform" type="rotate" values="-4 245 105;4 245 105;-4 245 105" dur="3s" repeatCount="indefinite" />
+                    </path>
+                    <path d="M228 88 L240 77" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.6" />
+                </g>
+                <!-- ================= CHILD ================= -->
+                <g>
+                    <!-- Gentle floating animation -->
+                    <animateTransform attributeName="transform" type="translate" values="0 0;0 -4;0 0" dur="3s" repeatCount="indefinite" />
+                    <!-- ================= HAIR ================= -->
+                    <path d="
+                        M82 120
+                        C78 75 108 45 150 45
+                        C192 45 222 75 218 120
+                        C200 94 178 84 150 84
+                        C122 84 100 95 82 120
+                        Z" fill="#4A4A4A" stroke="#222" stroke-width="4" />
+                    <!-- ================= FACE ================= -->
+                    <circle cx="150" cy="125" r="65" fill="#FFD7B5" stroke="#222" stroke-width="4" />
+                    <!-- ================= HAIR FRINGE ================= -->
+                    <path d="
+                        M88 105
+                        C102 75 130 70 153 78
+                        C175 84 195 98 210 115
+                        C190 103 174 104 157 98
+                        C135 91 110 95 88 105
+                        Z" fill="#4A4A4A" />
+                    <!-- ================= SAD LEFT EYEBROW ================= -->
+                    <path d="M113 110 Q125 101 137 108" fill="none" stroke="#222" stroke-width="5" stroke-linecap="round" />
+                    <!-- ================= SAD RIGHT EYEBROW ================= -->
+                    <path d="M163 108 Q175 101 187 110" fill="none" stroke="#222" stroke-width="5" stroke-linecap="round" />
+                    <!-- ================= LEFT EYE ================= -->
+                    <ellipse cx="125" cy="125" rx="8" ry="11" fill="#222">
+                        <!-- Blink -->
+                        <animate attributeName="ry" values="11;11;1;11;11" keyTimes="0;0.94;0.96;0.98;1" dur="4s" repeatCount="indefinite" />
+                    </ellipse>
+                    <!-- ================= RIGHT EYE ================= -->
+                    <ellipse cx="175" cy="125" rx="8" ry="11" fill="#222">
+                        <!-- Blink -->
+                        <animate attributeName="ry" values="11;11;1;11;11" keyTimes="0;0.94;0.96;0.98;1" dur="4s" repeatCount="indefinite" />
+                    </ellipse>
+                    <!-- ================= EYE HIGHLIGHTS ================= -->
+                    <circle cx="122" cy="121" r="2.5" fill="#FFFFFF" />
+                    <circle cx="172" cy="121" r="2.5" fill="#FFFFFF" />
+                    <!-- ================= LEFT TEAR ================= -->
+                    <path d="
+                    M125 137
+                    C121 143 119 147 125 151
+                    C131 147 129 142 125 137
+                    Z" fill="#5EC8E5" opacity="0.9">
+                        <animate attributeName="opacity" values="0;1;1;0" dur="2.5s" repeatCount="indefinite" />
+                        <animateTransform attributeName="transform" type="translate" values="0 0;0 8;0 12" dur="2.5s" repeatCount="indefinite" />
+                    </path>
+                    <!-- ================= RIGHT TEAR ================= -->
+                    <path d="
+                        M175 137
+                        C171 143 169 147 175 151
+                        C181 147 179 142 175 137
+                        Z" fill="#5EC8E5" opacity="0.9">
+                        <animate attributeName="opacity" values="0;1;1;0" dur="2.8s" begin="0.8s" repeatCount="indefinite" />
+                        <animateTransform attributeName="transform" type="translate" values="0 0;0 8;0 12" dur="2.8s" begin="0.8s" repeatCount="indefinite" />
+                    </path>
+                    <!-- ================= TEAR SHINE ================= -->
+                    <circle cx="123" cy="142" r="1.5" fill="#FFFFFF" opacity="0.8">
+                        <animate attributeName="opacity" values="0;1;0" dur="2.5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="173" cy="142" r="1.5" fill="#FFFFFF" opacity="0.8">
+                        <animate attributeName="opacity" values="0;1;0" dur="2.8s" begin="0.8s" repeatCount="indefinite" />
+                    </circle>
+                    <!-- ================= BLUSH ================= -->
+                    <ellipse cx="108" cy="150" rx="12" ry="6" fill="#F3A6A6" opacity="0.45" />
+                    <ellipse cx="192" cy="150" rx="12" ry="6" fill="#F3A6A6" opacity="0.45" />
+                    <!-- ================= NOSE ================= -->
+                    <circle cx="150" cy="143" r="3" fill="#D88B75" />
+                    <!-- ================= SAD MOUTH ================= -->
+                    <path d="M138 160 Q150 150 162 160" fill="none" stroke="#222" stroke-width="4" stroke-linecap="round" />
+                    <!-- ================= LOWER LIP ================= -->
+                    <path d="M145 164 Q150 167 155 164" fill="none" stroke="#D88B75" stroke-width="2" stroke-linecap="round" opacity="0.7" />
+                    <!-- ================= NECK ================= -->
+                    <rect x="137" y="180" width="26" height="20" rx="8" fill="#FFD7B5" />
+                    <!-- ================= SHIRT ================= -->
+                    <path d="
+                        M105 195
+                        Q150 180 195 195
+                        L215 265
+                        H85
+                        Z" fill="#00979D" stroke="#222" stroke-width="4" />
+                    <!-- ================= SHIRT HEART ================= -->
+                    <path d="
+                        M150 218
+                        C140 205 124 218 150 239
+                        C176 218 160 205 150 218
+                        Z" fill="#FFFFFF" opacity="0.9" />
+                    <!-- ================= LEFT ARM ================= -->
+                    <path d="
+                        M105 205
+                        C82 215 70 235 63 253" fill="none" stroke="#FFD7B5" stroke-width="19" stroke-linecap="round" />
+                    <!-- LEFT HAND -->
+                    <circle cx="62" cy="255" r="12" fill="#FFD7B5" stroke="#222" stroke-width="3" />
+                    <!-- ================= RIGHT ARM ================= -->
+                    <g>
+                        <animateTransform attributeName="transform" type="rotate" values="-8 195 205;5 195 205;-8 195 205" dur="2s" repeatCount="indefinite" />
+                        <!-- Arm -->
+                        <path d="
+                        M195 205
+                        C215 190 220 170 218 150" fill="none" stroke="#FFD7B5" stroke-width="19" stroke-linecap="round" />
+                        <!-- Hand -->
+                        <circle cx="218" cy="143" r="13" fill="#FFD7B5" stroke="#222" stroke-width="3" />
+                        <!-- Fingers -->
+                        <line x1="212" y1="139" x2="207" y2="129" stroke="#FFD7B5" stroke-width="7" stroke-linecap="round" />
+                        <line x1="218" y1="138" x2="217" y2="126" stroke="#FFD7B5" stroke-width="7" stroke-linecap="round" />
+                        <line x1="224" y1="139" x2="228" y2="128" stroke="#FFD7B5" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                    <!-- ================= PANTS ================= -->
+                    <path d="
+                        M90 265
+                        H210
+                        L200 290
+                        H165
+                        L150 270
+                        L135 290
+                        H100
+                        Z" fill="#555555" stroke="#222" stroke-width="4" />
+                    <!-- ================= LEFT SHOE ================= -->
+                    <ellipse cx="110" cy="292" rx="28" ry="10" fill="#333333" />
+                    <!-- ================= RIGHT SHOE ================= -->
+                    <ellipse cx="190" cy="292" rx="28" ry="10" fill="#333333" />
+                </g>
+                <!-- ================= SMALL FLOATING PUZZLE ================= -->
+                <g opacity="0.35">
+                    <path d="
+                        M45 175
+                        H60
+                        C60 165 72 165 72 175
+                        H87
+                        V190
+                        C97 190 97 202 87 202
+                        V217
+                        H72
+                        C72 227 60 227 60 217
+                        H45
+                        Z" fill="none" stroke="#00979D" stroke-width="3">
+                        <animateTransform attributeName="transform" type="translate" values="0 0;0 -8;0 0" dur="4s" repeatCount="indefinite" />
+                    </path>
+                </g>
             </svg>
         </div>
     </body>
@@ -200,17 +306,12 @@
     <script>
         $(document).ready(function() {
             $("#back-to-home-btn").on("click", function(e) {
-                e.preventDefault(); // prevent default <a> behavior
+                e.preventDefault();
 
-                // Get the token from localStorage (or replace with f_getStoreValue if defined)
-                const accessToken = localStorage.getItem("accessToken");
-
-                // Call logout API
                 $.ajax({
                     url: "/api/v1/auth/portal/logout",
                     type: "POST",
                     headers: {
-                        "Authorization": "Bearer " + accessToken,
                         "Content-Type": "application/json"
                     },
                     success: function() {
@@ -220,11 +321,6 @@
                         console.error("Logout failed");
                     },
                     complete: function() {
-                        // Clear stored values
-                        localStorage.removeItem("accessToken");
-                        localStorage.removeItem("refreshToken");
-
-                        // Redirect to home
                         window.location.href = "/app/portal/login";
                     }
                 });

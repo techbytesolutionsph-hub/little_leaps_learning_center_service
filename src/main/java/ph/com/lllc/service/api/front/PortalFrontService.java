@@ -80,7 +80,7 @@ public class PortalFrontService {
                 .build();
     }
 
-    public DashboardMetricsResponse clientSchedulesKPIs(){
+    public DashboardMetricsResponse clientSchedulesKPIs() throws ServiceException {
         long initialAssessments = assessmentScheduleService.findAllScheduledInitialAssessments();
         DashboardCardResponse totalInitialAssessments = DashboardCardResponse.builder()
                 .value(String.valueOf(initialAssessments))
@@ -99,7 +99,7 @@ public class PortalFrontService {
                 .message("Total Scheduled")
                 .build();
 
-        long neurodevAssessments = 0L;
+        long neurodevAssessments = assessmentScheduleService.findAllNeurodevAssessments();
         DashboardCardResponse totalNeurodevAssessments = DashboardCardResponse.builder()
                 .value(String.valueOf(neurodevAssessments))
                 .message("Total Scheduled")
@@ -159,5 +159,9 @@ public class PortalFrontService {
 
     public UpgradingProgramResponse findByUpgradingProgramId(String uuid, String upgradingProgramId) throws ServiceException {
         return assessmentScheduleService.findByUpgradingProgramId(uuid, upgradingProgramId);
+    }
+
+    public List<NeurodevAssessmentResponse> getNeurodevAssessments() throws ServiceException {
+        return assessmentScheduleService.getNeurodevAssessments();
     }
 }

@@ -1,9 +1,7 @@
 package ph.com.lllc.enums;
 
 public enum AssessmentStatus {
-    PENDING,
+    PAID,
     CONFIRMED,
-    CANCELLED,
-    DONE,
-    RESCHEDULED
+    CANCELLED
 }

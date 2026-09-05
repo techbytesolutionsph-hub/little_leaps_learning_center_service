@@ -6,7 +6,7 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-initial-assessment-main(kpi, assessments, therapies, upgradePrograms)">
+    <div th:fragment="staff-initial-assessment-main(kpi, assessments, therapies, upgradePrograms, neurodevAssessments)">
         <!-- Assessment Main - START -->
         <div class="row">
             <!-- Total Employees count -->
@@ -117,7 +117,7 @@
                             <!-- Text -->
                             <div class="col">
                                 <div class="kpi-header text-xs font-weight-bolder mb-2">
-                                    Neurodev Assessment Scheduled
+                                    Neurodev Assessments
                                 </div>
                                 <div class="kpi-count h5 mb-0 text-gray-700" th:text="${kpi.totalScheduledNeurodevAssessments.value}">
                                     2
@@ -547,7 +547,7 @@
                 <h6 class="m-0 font-weight-bold">
                     <i class="fa-solid fa-brain mr-2"></i> Neurodev Assessment Records
                 </h6>
-                <a th:href="@{/app/portal/client-management/registry/add-client}"
+                <a th:href="@{/app/portal/client-management/client-schedule/add-neurodev-assessment}"
                    class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
                    id="add-neurodev-assessment-schedule-btn" style="text-decoration: none">
 
@@ -558,17 +558,90 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="neurodevAssessmentTable">
                         <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Client Info</th>
-                            <th>Assessment Date</th>
-                            <th>Assigned Case Manager</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client Info</th>
+                                <th>Assessment Date</th>
+                                <th>Payment Status</th>
+                                <th>Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
+                            <tr th:each="neurodev : ${neurodevAssessments}">
+                                <td data-label="ID" th:text="${neurodev.id}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${neurodev.gender != null and neurodev.gender.name() == 'MALE'
+                                            ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+                                            : 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
 
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${neurodev.clientName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${neurodev.contactNumber}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assessment Date"
+                                    th:text="${#temporals.format(neurodev.assessmentDate, 'MMMM dd, yyyy')}">
+                                </td>
+                                <td data-label="Payment Status">
+                                    <!-- Paid -->
+                                    <span class="status-badge badge-success"
+                                          th:if="${neurodev.paymentStatus != null and neurodev.paymentStatus.name() == 'PAID'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i>
+                                        Paid
+                                    </span>
+
+                                    <!-- Unpaid -->
+                                    <span class="status-badge badge-danger"
+                                          th:if="${neurodev.paymentStatus != null and neurodev.paymentStatus.name() == 'UNPAID'}">
+                                        <i class="bi bi-exclamation-circle-fill mr-1"></i>
+                                        Unpaid
+                                    </span>
+
+                                    <!-- Partial -->
+                                    <span class="status-badge badge-warning"
+                                          th:if="${neurodev.paymentStatus != null and neurodev.paymentStatus.name() == 'PARTIAL'}">
+                                        <i class="bi bi-hourglass-split mr-1"></i>
+                                        Partial
+                                    </span>
+
+                                    <!-- Refunded -->
+                                    <span class="status-badge badge-info"
+                                          th:if="${neurodev.paymentStatus != null and neurodev.paymentStatus.name() == 'REFUNDED'}">
+                                        <i class="bi bi-arrow-counterclockwise mr-1"></i>
+                                        Refunded
+                                    </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${neurodev.paymentStatus == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i>
+                                        Unassigned
+                                    </span>
+
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/client-management/client-schedule/view-neurodev-assessment?id=${neurodev.id}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-calendar-plus-fill mr-1"></i> View Assessment
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

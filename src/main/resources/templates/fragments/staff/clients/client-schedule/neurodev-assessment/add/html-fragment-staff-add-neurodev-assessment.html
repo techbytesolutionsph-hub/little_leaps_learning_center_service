@@ -1,0 +1,294 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-add-neurodev-assessment">
+        <!-- Assign Client - START -->
+        <div class="assignment-page">
+            <div class="stepper-card">
+                <div class="stepper">
+                    <div class="step active" id="step1">
+                        <div class="step-number">1</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Client Information</span>
+                            <span class="step-subtitle">Enter client information details</span>
+                        </div>
+                    </div>
+
+                    <div class="step-line"></div>
+
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Neurodev Assessment Information</span>
+                            <span class="step-subtitle">Enter neurodevelopmental assessment information</span>
+                        </div>
+                    </div>
+
+                    <div class="step-line"></div>
+
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+
+                        <div class="step-text">
+                            <span class="step-title">Review & Confirm</span>
+                            <span class="step-subtitle">Review and confirm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="assignmentForm">
+                <div class="assignment-grid">
+                    <!-- Step 1 - Select Client -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-circle-user"></i>
+                                1. Client Information
+                            </h2>
+
+                            <p class="card-description">
+                                Review the client's basic information.
+                            </p>
+                        </div>
+
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label for="neurodev-client-full-name" class="form-label">Client Full Name<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="neurodev-client-full-name" name="clientFullName" placeholder="Enter client full name">
+                                <div class="field-error">Please enter the client's full name.</div>
+                            </div>
+
+                            <!-- Assignment Status -->
+                            <div class="form-group">
+                                <label for="neurodev-client-gender" class="form-label">Gender<span class="required">*</span></label>
+                                <div class="select-wrapper">
+
+                                    <select class="form-select required-field" id="neurodev-client-gender">
+                                        <option value="" selected disabled>Select gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a client's gender.</div>
+                            </div>
+
+                            <!-- Initial Assessment Date -->
+                            <div class="form-group">
+                                <label for="neurodev-client-age" class="form-label">Age<span class="required">*</span></label>
+                                <input type="number" class="form-control required-field" id="neurodev-client-age" name="clientAge" placeholder="Enter client age">
+                                <div class="field-error">Please enter the client's age.</div>
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="neurodev-client-parent-guardian" class="form-label">Parent/Guardian<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="neurodev-client-parent-guardian" name="clientParentGuardian" placeholder="Enter parent/guardian full name">
+                                <div class="field-error">Please enter the client's parent/guardian.</div>
+                            </div>
+
+                            <div class="form-group full">
+                                <label for="neurodev-parent-guardian-contact-no" class="form-label">Contact No.<span class="required">*</span></label>
+                                <input type="text" class="form-control required-field" id="neurodev-parent-guardian-contact-no" name="parentGuardianContactNo" placeholder="Enter contact no.">
+                                <div class="field-error">Please enter the parent's/guardian's contact number</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 - Assignment Details -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fas fa-calendar-alt"></i>
+                                2. Neurodev Assessment Information
+                            </h2>
+
+                            <p class="card-description">
+                                Provide the details and schedule for the client's neurodevelopmental assessment.
+                            </p>
+                        </div>
+
+                        <!-- Assign To -->
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="neurodev-client-assessment-status" class="form-label">Assessment Status<span class="required">*</span></label>
+                                <div class="select-wrapper">
+
+                                    <select class="form-select required-field" id="neurodev-client-assessment-status">
+                                        <option value="" selected disabled>Select assessment status</option>
+                                        <option value="CONFIRMED">Confirmed</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a client's gender.</div>
+                            </div>
+
+                            <!-- Initial Assessment Date -->
+                            <div class="form-group">
+                                <label for="neurodev-client-initial-assessment-date" class="form-label">Assessment Date<span class="required">*</span></label>
+                                <div class="date-input-wrapper">
+                                    <input type="date" class="form-control required-field" id="neurodev-client-initial-assessment-date">
+                                    <i class="bi bi-calendar-event calendar-icon"></i>
+                                </div>
+                                <div class="field-error">Please select an assessment date.</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="neurodev-client-neurodev-fee" class="form-label">Neurodev Fee<span class="required">*</span></label>
+                                <input type="number" class="form-control required-field" id="neurodev-client-neurodev-fee" name="clientNeurodevFee" placeholder="Enter neurodev fee">
+                                <div class="field-error">Please enter neurodev fee.</div>
+                            </div>
+
+                            <!-- Assignment Status -->
+                            <div class="form-group">
+                                <label for="neurodev-client-payment-status" class="form-label">Payment Status<span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <select class="form-select required-field" id="neurodev-client-payment-status">
+                                        <option value="" selected disabled>Select payment status</option>
+                                        <option value="PAID">Paid</option>
+                                        <option value="UNPAID">Unpaid</option>
+                                        <option value="PARTIAL">Partial</option>
+                                        <option value="REFUNDED">Refunded</option>
+                                    </select>
+                                </div>
+                                <div class="field-error">Please select a payment status.</div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="form-group full">
+                                <label for="neurodev-client-notes" class="form-label">Notes <span style="font-weight:400;">(Optional)</span></label>
+                                <div class="notes-wrapper">
+                                    <textarea id="neurodev-client-notes" class="form-control" maxlength="500"
+                                              placeholder="Add notes or special instructions..."></textarea>
+                                    <span class="char-counter">
+                                        <span id="charCount">0</span> / 500
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="action-btn btn-cancel" id="cancel-btn">
+                        <i class="fa-solid fa-xmark"></i>
+                        Cancel
+                    </button>
+
+                    <div class="action-right">
+                        <button type="button" class="action-btn btn-next" id="next-btn">
+                            Next: Review
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-section" id="reviewSection">
+                <div class="review-card">
+
+                    <h2 class="card-title">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        3. Review & Confirm
+                    </h2>
+
+                    <p class="card-description">
+                        Please review the assignment details before confirming.
+                    </p>
+
+                    <div class="review-item">
+                        <span class="review-label">Client</span>
+                        <span class="review-value" id="clientFullName">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Gender</span>
+                        <span class="review-value" id="reviewClientGender">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Age</span>
+                        <span class="review-value" id="reviewClientAge">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Parent/Guardian</span>
+                        <span class="review-value" id="reviewClientParentGuardian">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Contact No.</span>
+                        <span class="review-value" id="reviewClientContactNo">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Assessment Status</span>
+                        <span class="review-value" id="reviewAssessmentStatus">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Neurodev Assessment Date</span>
+                        <span class="review-value" id="reviewNeurodevAssessmentDate">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Neurodev Fee</span>
+                        <span class="review-value" id="reviewNeurodevFee">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Payment Status</span>
+                        <span class="review-value" id="reviewPaymentStatus">
+                            -
+                        </span>
+                    </div>
+
+                    <div class="review-item">
+                        <span class="review-label">Notes</span>
+                        <span class="review-value" id="reviewNotes">
+                            —
+                        </span>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <button type="button" class="action-btn btn-cancel" id="back-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </button>
+
+                    <div class="action-right">
+                        <button type="button" class="action-btn btn-next" id="confirm-btn">
+                            Confirm Assignment
+                            <i class="fa-solid fa-check"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Assign Client - END -->
+    </div>
+</html>
