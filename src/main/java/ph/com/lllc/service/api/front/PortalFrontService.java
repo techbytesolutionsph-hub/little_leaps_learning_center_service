@@ -164,4 +164,8 @@ public class PortalFrontService {
     public List<NeurodevAssessmentResponse> getNeurodevAssessments() throws ServiceException {
         return assessmentScheduleService.getNeurodevAssessments();
     }
+
+    public NeurodevAssessmentResponse getNeurodevAssessments(String uuid, Long id) throws ServiceException {
+        return assessmentScheduleService.getNeurodevAssessments(uuid, id);
+    }
 }

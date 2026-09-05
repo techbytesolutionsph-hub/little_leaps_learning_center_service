@@ -1,0 +1,298 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-view-neurodev-assessment(assessment)">
+        <!-- View Neurodev Assessment - START -->
+        <div class="assignment-page">
+            <section class="client-summary-card">
+                <!-- Client Avatar -->
+                <div class="client-avatar-wrapper">
+                    <img th:src="${assessment.gender != null and assessment.gender.name() == 'MALE'
+                        ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+                        : 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png'}"
+                         alt="Zoe Garcia" class="client-avatar">
+                </div>
+
+                <!-- Client Information -->
+                <div class="client-information">
+                    <div class="client-name-row">
+                        <h2 class="client-name" th:text="${assessment.clientName}">
+                            Zoe Garcia
+                        </h2>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-regular fa-calendar-days"></i>
+                        Age :&nbsp;<span th:text="${assessment.age}">10</span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fas fa-venus-mars"></i>
+                        Gender:&nbsp;<span th:text="${#strings.capitalize(assessment.gender.name().toLowerCase())}">
+                                    Male
+                                </span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-regular fa-user"></i>
+                        Guardian:&nbsp;<span th:text="${assessment.parentGuardian}">John Doe</span>
+                    </div>
+
+                    <div class="client-info-row">
+                        <i class="fa-solid fa-phone"></i>
+                        Contact No.:&nbsp;<span th:text="${assessment.contactNumber}">09171234567</span>
+                    </div>
+                </div>
+
+                <!-- Assessment Date and Time -->
+                <div class="summary-stat">
+                    <div class="summary-stat-icon assignment-icon">
+                        <i class="fa-regular fa-calendar-days"></i>
+                    </div>
+
+                    <div class="summary-stat-content">
+                        <div class="summary-stat-label">
+                            Assessment Date
+                        </div>
+                        <div class="program-name">
+                            <span th:text="${#temporals.format(assessment.assessmentDate, 'MMMM dd, yyyy')}">
+                                August 24, 2026
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assessment Date and Time -->
+                <div class="summary-stat">
+                    <div class="summary-stat-icon manager-icon">
+                        <i class="fa-solid fa-peso-sign"></i>
+                    </div>
+                    <div class="summary-stat-content">
+                        <div class="summary-stat-label">
+                            Neurodev Fee
+                        </div>
+                        <div class="program-name">
+                            <span th:text="${'₱' + #numbers.formatDecimal(assessment.neurodevFee, 1, 'COMMA', 2, 'POINT')}">
+                                ₱5,400.00
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assessment Date and Time -->
+                <div class="summary-stat">
+                    <div class="summary-stat-icon program-icon">
+                        <i class="fa-solid fa-money-bill-wave"></i>
+                    </div>
+                    <div class="summary-stat-content">
+                        <div class="summary-stat-label">
+                            Payment Status
+                        </div>
+                        <div class="program-name">
+                            <!-- Paid -->
+                            <span class="status-badge assignment-type-badge"
+                                  th:if="${assessment.paymentStatus != null and assessment.paymentStatus.name() == 'PAID'}">
+                                <i class="bi bi-check-circle-fill mr-1"></i>
+                                Paid
+                            </span>
+
+                            <!-- Unpaid -->
+                            <span class="status-badge assignment-type-badge"
+                                  th:if="${assessment.paymentStatus != null and assessment.paymentStatus.name() == 'UNPAID'}">
+                                <i class="bi bi-exclamation-circle-fill mr-1"></i>
+                                Unpaid
+                            </span>
+
+                            <!-- Partial -->
+                            <span class="status-badge assignment-type-badge"
+                                  th:if="${assessment.paymentStatus != null and assessment.paymentStatus.name() == 'PARTIAL'}">
+                                <i class="bi bi-hourglass-split mr-1"></i>
+                                Partial
+                            </span>
+
+                            <!-- Refunded -->
+                            <span class="status-badge assignment-type-badge"
+                                  th:if="${assessment.paymentStatus != null and assessment.paymentStatus.name() == 'REFUNDED'}">
+                                <i class="bi bi-arrow-counterclockwise mr-1"></i>
+                                Refunded
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MAIN CONTENT -->
+            <div class="assignment-content">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <!-- CLIENT DETAILS  -->
+                    <section class="content-card assignment-details-card">
+                        <div class="card-title">
+                            <i class="fas fa-users"></i>
+                            <span>Client Details</span>
+                        </div>
+
+                        <div class="details-table">
+                            <!-- Client name -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Client name
+                                </div>
+
+                                <div class="details-value">
+                                    <div class="employee-summary">
+                                        <img th:src="${assessment.gender != null and assessment.gender.name() == 'MALE'
+                                            ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'
+                                            : 'https://cdn-icons-png.flaticon.com/512/6997/6997662.png'}"
+                                             alt="Sarah Dela Cruz" class="employee-avatar">
+
+                                        <div class="employee-information">
+                                            <div class="employee-name" th:text="${assessment.clientName}">
+                                                Mark Andrie Alcantara
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Age -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Age
+                                </div>
+
+                                <div class="details-value" th:text="${assessment.age} + ' years old'">
+                                    10
+                                </div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Gender
+                                </div>
+
+                                <div class="details-value">
+                                    <div th:text="${#strings.capitalize(assessment.gender.name().toLowerCase())}">
+                                        Male
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Parent/Guardian -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Parent/Guardian
+                                </div>
+
+                                <div class="details-value" th:text="${assessment.parentGuardian}">
+                                    John Doe
+                                </div>
+                            </div>
+
+                            <!-- Contact No. -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Contact No.
+                                </div>
+
+                                <div class="details-value" th:text="${assessment.contactNumber}">
+                                    09106121529
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="right-column">
+                    <!-- NEURODEV ASSESSMENT DETAILS -->
+                    <section class="content-card timeline-card">
+                        <div class="card-title">
+                            <i class="fa-regular fa-clock"></i>
+                            <span>Neurodev Assessment Details</span>
+                        </div>
+
+                        <div class="details-table">
+                            <!-- Assessment Status -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Assessment Status
+                                </div>
+
+                                <div class="details-value">
+                                    <div th:text="${#strings.capitalize(assessment.status.name().toLowerCase())}" style="font-weight: 700">
+                                        Male
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Assessment Date -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Assessment Date
+                                </div>
+
+                                <div class="details-value" th:text="${#temporals.format(assessment.assessmentDate, 'MMMM dd, yyyy')}">
+                                    -
+                                </div>
+                            </div>
+
+                            <!-- Neurodev Fee -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Neurodev Fee
+                                </div>
+
+                                <div class="details-value"
+                                     th:text="${'₱' + #numbers.formatDecimal(assessment.neurodevFee, 1, 'COMMA', 2, 'POINT')}">
+                                </div>
+                            </div>
+
+                            <!-- Payment Status -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Payment Status
+                                </div>
+
+                                <div class="details-value">
+                                    <span class="assignment-type-badge" th:text="${#strings.capitalize(assessment.paymentStatus.name().toLowerCase())}">
+                                        Paid
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="details-row">
+                                <div class="details-label">
+                                    Notes
+                                </div>
+
+                                <div class="details-value" th:text="${assessment.notes}">
+                                    -
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="client-section-footer mb-4">
+                <div class="d-flex justify-content-end align-items-center w-100">
+                    <button type="button" class="btn btn-back fw-semibold"
+                            id="back-client-btn"
+                            onclick="history.back()">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        Back
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- View Neurodev Assessment - END -->
+    </div>
+</html>

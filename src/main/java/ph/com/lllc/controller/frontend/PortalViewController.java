@@ -243,6 +243,17 @@ public class PortalViewController {
         return "staff/clients/client-schedule/neurodev-assessment/add/index";
     }
 
+    @GetMapping(value = "/client-management/client-schedule/view-neurodev-assessment")
+    public String viewNeurodevAssessmentSchedulePage(Model model, @RequestParam("id") Long id) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "View Neurodev Assessment Schedule");
+
+        NeurodevAssessmentResponse assessment = portalFrontService.getNeurodevAssessments(uuid, id);
+        model.addAttribute("assessment", assessment);
+
+        return "staff/clients/client-schedule/neurodev-assessment/view/index";
+    }
+
     @GetMapping(value = "/attendance/my-attendance")
     public String employeeAttendancePage(Model model, Authentication authentication) throws ServiceException {
         this.setupPage(model, "attendance", "My Timesheet");
