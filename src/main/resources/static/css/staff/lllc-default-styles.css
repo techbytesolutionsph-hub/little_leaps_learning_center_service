@@ -3726,23 +3726,10 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 .card-deck .card{
     margin-bottom:.75rem
 }
-@media (max-width: 576px) {
-    .card-header.d-flex {
-        display: block !important;
-    }
 
+@media (max-width: 576px) {
     .card-header h6 {
         font-size: 14px !important;
-        display: block !important;
-        width: 100% !important;
-        margin: 0 0 15px 0 !important;
-    }
-
-    .card-header #add-client-btn {
-        display: flex !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        margin: 0 !important;
     }
 }
 @media (min-width:576px){

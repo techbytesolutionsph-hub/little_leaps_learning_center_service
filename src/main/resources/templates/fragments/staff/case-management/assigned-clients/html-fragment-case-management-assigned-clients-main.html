@@ -1,0 +1,397 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-case-management-assigned-clients-main(assessments, therapies, upgradePrograms)">
+        <!-- Assessment Main - START -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-file-lines mr-2"></i> Initial Assessment Records
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="initialAssessmentTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client Info</th>
+                                <th>Assessment Date</th>
+                                <th>Assigned Case Manager</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="assessment : ${assessments}">
+                                <td data-label="ID" th:text="${assessment.initialAssessmentId}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${assessment.clientProfilePicture != null ? assessment.clientProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${assessment.clientFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assessment.guardianEmail}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assessment.guardianContactNo}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assessment Date"
+                                    th:text="${#temporals.format(assessment.assessmentDate, 'MMMM dd, yyyy')}">
+                                </td>
+                                <td data-label="Assigned Case Manager">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${assessment.caseManagerProfilePicture != null ? assessment.caseManagerProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${assessment.caseManagerFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${assessment.caseManagerPosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <!-- Scheduled -->
+                                    <span class="status-badge badge-active"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'SCHEDULED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Scheduled
+                                    </span>
+
+                                    <!-- Pending -->
+                                    <span class="status-badge badge-warning"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'PENDING'}">
+                                        <i class="bi bi-clock-fill mr-1"></i> Pending
+                                    </span>
+
+                                    <!-- Completed -->
+                                    <span class="status-badge badge-success"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'COMPLETED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Completed
+                                    </span>
+
+                                    <!-- Cancelled -->
+                                    <span class="status-badge badge-danger"
+                                      th:if="${assessment.scheduleStatus != null and assessment.scheduleStatus.name() == 'CANCELLED'}">
+                                        <i class="bi bi-x-circle-fill mr-1"></i> Cancelled
+                                    </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                      th:if="${assessment.scheduleStatus == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i> Unassigned
+                                    </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/case-management/assigned-clients/view-initial-assessment?id=${assessment.initialAssessmentId}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-eye mr-1"></i> View Assessment
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-calendar-alt mr-2"></i> Therapy Session Records
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="regularAssessmentTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Client Info</th>
+                                <th>Assigned Behavioral Therapist</th>
+                                <th>Status</th>
+                                <th>Frequency</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="therapy : ${therapies}">
+                                <td data-label="ID" th:text="${therapy.therapySessionId}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${therapy.clientProfilePicture != null ? therapy.clientProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${therapy.clientFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${therapy.guardianEmail}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${therapy.guardianContactNo}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assigned Behavioral Therapist">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${therapy.behavioralTherapistProfilePicture != null ? therapy.behavioralTherapistProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${therapy.behavioralTherapistFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${therapy.behavioralTherapistPosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <!-- Scheduled -->
+                                    <span class="status-badge badge-active"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'ACTIVE'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Active
+                                    </span>
+
+                                    <!-- Pending -->
+                                    <span class="status-badge badge-warning"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'INACTIVE'}">
+                                        <i class="bi bi-clock-fill mr-1"></i> Inactive
+                                    </span>
+
+                                    <!-- Completed -->
+                                    <span class="status-badge badge-success"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'COMPLETED'}">
+                                        <i class="bi bi-check-circle-fill mr-1"></i> Completed
+                                    </span>
+
+                                    <!-- Cancelled -->
+                                    <span class="status-badge badge-danger"
+                                          th:if="${therapy.status != null and therapy.status.name() == 'CANCELLED'}">
+                                        <i class="bi bi-x-circle-fill mr-1"></i> Cancelled
+                                    </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${therapy.status == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i> Unassigned
+                                    </span>
+                                </td>
+                                <td data-label="Frequency">
+
+                                    <!-- Once -->
+                                    <span class="status-badge badge-info"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'ONCE'}">
+                                        <i class="bi bi-calendar-event-fill mr-1"></i> Once
+                                    </span>
+
+                                    <!-- Twice -->
+                                    <span class="status-badge badge-primary"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'TWICE'}">
+                                        <i class="bi bi-calendar2-week-fill mr-1"></i> Twice
+                                    </span>
+
+                                    <!-- Thrice -->
+                                    <span class="status-badge badge-purple"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'THRICE'}">
+                                        <i class="bi bi-calendar3-fill mr-1"></i> Thrice
+                                    </span>
+
+                                    <!-- Daily -->
+                                    <span class="status-badge badge-teal"
+                                          th:if="${therapy.frequency != null and therapy.frequency.name() == 'DAILY'}">
+                                        <i class="bi bi-calendar-check-fill mr-1"></i> Daily
+                                    </span>
+
+                                    <!-- No Frequency -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${therapy.frequency == null}">
+                                        <i class="bi bi-question-circle-fill mr-1"></i> Undetermined
+                                    </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/case-management/assigned-clients/view-therapy-session-schedule?id=${therapy.therapySessionId}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-eye mr-1"></i> View Schedule
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fa fa-angle-double-up mr-2"></i> Upgrading Program Records
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="upgradingProgramTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client Info</th>
+                            <th>Assigned Case Manager</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="upgradeProgram : ${upgradePrograms}">
+                                <td data-label="ID" th:text="${upgradeProgram.upgradingProgramId}"></td>
+                                <td data-label="Client Info">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${upgradeProgram.clientProfilePicture != null ? upgradeProgram.clientProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${upgradeProgram.clientFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${upgradeProgram.guardianEmail}">
+                                                maria.santos@littleleaps.com
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${upgradeProgram.guardianContactNo}">
+                                                0917-123-4567
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Assigned Behavioral Therapist">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Profile Image -->
+                                        <img th:src="${upgradeProgram.caseManagerProfilePicture != null ? upgradeProgram.caseManagerProfilePicture : '/img/base/default-profile.png'}"
+                                             class="rounded-circle me-2"
+                                             style="width:45px;height:45px;object-fit:cover;"
+                                             alt="Profile">
+
+                                        <!-- Employee Details -->
+                                        <div>
+                                            <div class="fw-bold text-dark"
+                                                 th:text="${upgradeProgram.caseManagerFullName}">
+                                                Maria Santos
+                                            </div>
+
+                                            <div class="text-muted small"
+                                                 th:text="${upgradeProgram.caseManagerPosition}">
+                                                Case Manager
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-label="Status">
+                                    <!-- Scheduled -->
+                                    <span class="status-badge badge-active"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'ACTIVE'}">
+                                            <i class="bi bi-check-circle-fill mr-1"></i> Active
+                                        </span>
+
+                                    <!-- Pending -->
+                                    <span class="status-badge badge-warning"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'INACTIVE'}">
+                                            <i class="bi bi-clock-fill mr-1"></i> Inactive
+                                        </span>
+
+                                    <!-- Completed -->
+                                    <span class="status-badge badge-success"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'COMPLETED'}">
+                                            <i class="bi bi-check-circle-fill mr-1"></i> Completed
+                                        </span>
+
+                                    <!-- Cancelled -->
+                                    <span class="status-badge badge-danger"
+                                          th:if="${upgradeProgram.status != null and upgradeProgram.status.name() == 'CANCELLED'}">
+                                            <i class="bi bi-x-circle-fill mr-1"></i> Cancelled
+                                        </span>
+
+                                    <!-- No Status -->
+                                    <span class="status-badge badge-secondary"
+                                          th:if="${upgradeProgram.status == null}">
+                                            <i class="bi bi-question-circle-fill mr-1"></i> Unassigned
+                                        </span>
+                                </td>
+                                <td data-label="Actions" >
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                        <a th:href="@{|/app/portal/case-management/assigned-clients/view-upgrading-program-schedule?id=${upgradeProgram.upgradingProgramId}|}"
+                                           class="btn-glossy-teal action-btn d-flex align-items-center">
+                                            <i class="bi bi-eye mr-1"></i> View Schedule
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Assessment Main - END -->
+    </div>
+</html>

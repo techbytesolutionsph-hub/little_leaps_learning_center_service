@@ -103,7 +103,8 @@
                 <!-- Case Manager -->
                 <div class="summary-stat case-manager-stat">
                     <div class="summary-stat-icon manager-icon">
-                        <i class="fa-solid fa-user"></i>
+                        <img th:src="${assessment.caseManagerProfilePicture != null ? assessment.caseManagerProfilePicture : '/img/base/default-profile.png'}"
+                             alt="Zoe Garcia" class="case-manager-avatar" style="">
                     </div>
                     <div class="summary-stat-content">
                         <div class="summary-stat-label">

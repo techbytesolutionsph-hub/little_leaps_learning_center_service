@@ -168,4 +168,16 @@ public class PortalFrontService {
     public NeurodevAssessmentResponse getNeurodevAssessments(String uuid, Long id) throws ServiceException {
         return assessmentScheduleService.getNeurodevAssessments(uuid, id);
     }
+
+    public List<InitialAssessmentResponse> findAllClientInitialAssessmentScheduleByEmployeeId(String employeeId) {
+        return assessmentScheduleService.findAllClientInitialAssessmentScheduleByEmployeeId(employeeId);
+    }
+
+    public List<TherapySessionResponse> findAllClientTherapyScheduleByEmployeeId(String employeeId) throws ServiceException {
+        return assessmentScheduleService.findAllClientTherapyScheduleByEmployeeId(employeeId);
+    }
+
+    public List<UpgradingProgramResponse> findAllClientUpgradingProgramScheduleByEmployeeId(String employeeId) throws ServiceException {
+        return assessmentScheduleService.findAllClientUpgradingProgramScheduleByEmployeeId(employeeId);
+    }
 }

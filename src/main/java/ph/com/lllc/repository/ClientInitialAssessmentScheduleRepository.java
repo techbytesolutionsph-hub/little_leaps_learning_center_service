@@ -13,4 +13,5 @@ public interface ClientInitialAssessmentScheduleRepository extends JpaRepository
 
     Optional<ClientInitialAssessmentSchedule> findByInitialAssessmentId(String initialAssessmentId);
     List<ClientInitialAssessmentSchedule> findByStatus(ScheduleStatus scheduleStatus);
+    List<ClientInitialAssessmentSchedule> findByCaseManagerEmployeeId(String employeeId);
 }

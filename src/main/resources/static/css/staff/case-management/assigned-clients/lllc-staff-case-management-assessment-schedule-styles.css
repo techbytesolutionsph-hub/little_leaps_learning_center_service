@@ -1343,22 +1343,3 @@ select.assessment-form-control {
 #assessment-therapy-date::placeholder {
     font-size: 10px !important;
 }
-
-@media (max-width: 576px) {
-    .card-header.d-flex {
-        display: block !important;
-    }
-
-    .card-header h6 {
-        display: block !important;
-        width: 100% !important;
-        margin: 0 0 15px 0 !important;
-    }
-
-    .card-header #add-client-btn {
-        display: flex !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-        margin: 0 !important;
-    }
-}

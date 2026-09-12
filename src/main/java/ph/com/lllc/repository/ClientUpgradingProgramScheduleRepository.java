@@ -14,4 +14,5 @@ public interface ClientUpgradingProgramScheduleRepository extends JpaRepository<
 
     List<ClientUpgradingProgramSchedule> findByStatus(ScheduleStatus scheduleStatus);
     Optional<ClientUpgradingProgramSchedule> findByUpgradingProgramId(String upgradingProgramId);
+    List<ClientUpgradingProgramSchedule> findByCaseManagerEmployeeId(String employeeId);
 }

@@ -50,6 +50,7 @@ public class AssessmentScheduleService {
     private final ClientUpgradingProgramScheduleRepository clientUpgradingProgramScheduleRepository;
     private final UpgradingProgramSlotRepository upgradingProgramSlotRepository;
     private final NeurodevelopmentalAssessmentRepository neurodevelopmentalAssessmentRepository;
+    private final AppClientAssignmentRepository appClientAssignmentRepository;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final IdGeneratorUtils idGeneratorUtils;
     private final LoggingService loggingService;
@@ -605,6 +606,42 @@ public class AssessmentScheduleService {
         return ObjectUtils.copyAs(neurodevAssessment, NeurodevAssessmentResponse.class);
     }
 
+    public List<InitialAssessmentResponse> findAllClientInitialAssessmentScheduleByEmployeeId(String employeeId) {
+        List<InitialAssessmentResponse> responses = new ArrayList<>();
+        List<ClientInitialAssessmentSchedule> schedules = clientInitialAssessmentScheduleRepository.findByCaseManagerEmployeeId(employeeId);
+
+        for (ClientInitialAssessmentSchedule schedule : schedules) {
+            InitialAssessmentResponse response = this.buildInitialAssessmentResponse(schedule);
+            responses.add(response);
+        }
+
+        return responses;
+    }
+
+    public List<TherapySessionResponse> findAllClientTherapyScheduleByEmployeeId(String employeeId) throws ServiceException {
+        List<TherapySessionResponse> responses = new ArrayList<>();
+        List<ClientTherapySchedule> schedules = clientTherapyScheduleRepository.findByTherapistEmployeeId(employeeId);
+
+        for (ClientTherapySchedule schedule : schedules) {
+            TherapySessionResponse response = this.buildCMTherapySessionResponse(schedule, employeeId);
+            responses.add(response);
+        }
+
+        return responses;
+    }
+
+    public List<UpgradingProgramResponse> findAllClientUpgradingProgramScheduleByEmployeeId(String employeeId) throws ServiceException {
+        List<UpgradingProgramResponse> responses = new ArrayList<>();
+        List<ClientUpgradingProgramSchedule> schedules = clientUpgradingProgramScheduleRepository.findByCaseManagerEmployeeId(employeeId);
+
+        for (ClientUpgradingProgramSchedule schedule : schedules) {
+            UpgradingProgramResponse response = this.buildCMUpgradingProgramResponse(schedule, employeeId);
+            responses.add(response);
+        }
+
+        return responses;
+    }
+
     private TherapySessionResponse buildTherapySessionResponse(ClientTherapySchedule response, int num){
 
         AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
@@ -623,6 +660,80 @@ public class AssessmentScheduleService {
                         .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
                         .orElse(null);
 
+        return this.populateTherapySessionResponse(response, client, guardian, updatedHistory, caseManager, therapist, assignment, assigmentHistory);
+    }
+
+    private TherapySessionResponse buildCMTherapySessionResponse(ClientTherapySchedule response, String employeeId) throws ServiceException {
+
+        AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
+        AppClientProfile client = response.getAppClientProfile();
+        List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
+
+        AppClientAssignment assignment = appClientAssignmentRepository.findByBehavioralTherapistEmployeeId(employeeId)
+                .orElseThrow(() ->  new ServiceException(HttpStatus.NOT_FOUND.value(), "Therapy session not found with employee ID: " + employeeId));
+
+        AppEmployeeProfile caseManager = assignment.getCaseManager();
+        AppEmployeeProfile therapist = assignment.getBehavioralTherapist();
+
+        AssignmentHistory updatedHistory =
+                response.getAppClientProfile()
+                        .getAssignmentHistories()
+                        .stream()
+                        .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ASSIGNED)
+                        .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
+                        .orElse(null);
+
+        return this.populateTherapySessionResponse(response, client, guardian, updatedHistory, caseManager, therapist, assignment, assigmentHistory);
+    }
+
+    private UpgradingProgramResponse buildUpgradingProgramResponse(ClientUpgradingProgramSchedule response, int num){
+
+        AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
+        AppClientProfile client = response.getAppClientProfile();
+        List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
+
+        AppClientAssignment assignment = client.getAssignments().get(num);
+        AppEmployeeProfile caseManager = assignment.getCaseManager();
+        AppEmployeeProfile therapist = assignment.getBehavioralTherapist();
+
+        AssignmentHistory updatedHistory =
+                response.getAppClientProfile()
+                        .getAssignmentHistories()
+                        .stream()
+                        .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ASSIGNED)
+                        .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
+                        .orElse(null);
+
+        return this.popupateUpgradingProgramResponse(response, client, guardian, updatedHistory, caseManager, therapist, assignment, assigmentHistory);
+    }
+
+    private UpgradingProgramResponse buildCMUpgradingProgramResponse(ClientUpgradingProgramSchedule response, String employeeId) throws ServiceException {
+
+        AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
+        AppClientProfile client = response.getAppClientProfile();
+        List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
+
+        AppClientAssignment assignment = appClientAssignmentRepository.findByBehavioralTherapistEmployeeId(employeeId)
+                .orElseThrow(() ->  new ServiceException(HttpStatus.NOT_FOUND.value(), "Therapy session not found with employee ID: " + employeeId));
+
+        AppEmployeeProfile caseManager = assignment.getCaseManager();
+        AppEmployeeProfile therapist = assignment.getBehavioralTherapist();
+
+        AssignmentHistory updatedHistory =
+                response.getAppClientProfile()
+                        .getAssignmentHistories()
+                        .stream()
+                        .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ASSIGNED)
+                        .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
+                        .orElse(null);
+
+        return this.popupateUpgradingProgramResponse(response, client, guardian, updatedHistory, caseManager, therapist, assignment, assigmentHistory);
+    }
+
+    private TherapySessionResponse populateTherapySessionResponse(ClientTherapySchedule response, AppClientProfile client,
+                                                                  AppParentGuardian guardian, AssignmentHistory updatedHistory,
+                                                                  AppEmployeeProfile caseManager, AppEmployeeProfile therapist,
+                                                                  AppClientAssignment assignment, List<AssignmentHistory> assigmentHistory){
         return TherapySessionResponse.builder()
                 .therapySessionId(response.getTherapySessionId())
                 .assignmentRole(response.getAssignmentRole())
@@ -707,24 +818,10 @@ public class AssessmentScheduleService {
                 .build();
     }
 
-    private UpgradingProgramResponse buildUpgradingProgramResponse(ClientUpgradingProgramSchedule response, int num){
-
-        AppParentGuardian guardian = response.getAppClientProfile().getAppParentGuardian().get(0);
-        AppClientProfile client = response.getAppClientProfile();
-        List<AssignmentHistory> assigmentHistory = response.getAppClientProfile().getAssignmentHistories();
-
-        AppClientAssignment assignment = client.getAssignments().get(num);
-        AppEmployeeProfile caseManager = assignment.getCaseManager();
-        AppEmployeeProfile therapist = assignment.getBehavioralTherapist();
-
-        AssignmentHistory updatedHistory =
-                response.getAppClientProfile()
-                        .getAssignmentHistories()
-                        .stream()
-                        .filter(history -> history.getAssignmentStatus() == AssignmentStatus.ASSIGNED)
-                        .max(Comparator.comparing(AssignmentHistory::getEventDateTime))
-                        .orElse(null);
-
+    private UpgradingProgramResponse popupateUpgradingProgramResponse(ClientUpgradingProgramSchedule response, AppClientProfile client,
+                                                                      AppParentGuardian guardian, AssignmentHistory updatedHistory,
+                                                                      AppEmployeeProfile caseManager, AppEmployeeProfile therapist,
+                                                                      AppClientAssignment assignment, List<AssignmentHistory> assigmentHistory){
         return UpgradingProgramResponse.builder()
                 .upgradingProgramId(response.getUpgradingProgramId())
                 .assignmentRole(response.getAssignmentRole())

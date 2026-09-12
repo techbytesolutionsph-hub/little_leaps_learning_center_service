@@ -267,7 +267,51 @@ public class PortalViewController {
         String employeeId = userDetails.getEmployeeId();
         loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
 
-        return "staff/case-manager/assigned-clients/index";
+        List<InitialAssessmentResponse> assessments = portalFrontService.findAllClientInitialAssessmentScheduleByEmployeeId(employeeId);
+        model.addAttribute("assessments", assessments);
+        loggingService.info(uuid, this.getClass().getName(), "", "aessessments : " + assessments);
+
+        List<TherapySessionResponse> therapies = portalFrontService.findAllClientTherapyScheduleByEmployeeId(employeeId);
+        model.addAttribute("therapies", therapies);
+        loggingService.info(uuid, this.getClass().getName(), "", "therapies : " + therapies);
+
+        List<UpgradingProgramResponse> upgradePrograms = portalFrontService.findAllClientUpgradingProgramScheduleByEmployeeId(employeeId);
+        model.addAttribute("upgradePrograms", upgradePrograms);
+        loggingService.info(uuid, this.getClass().getName(), "", "upgradePrograms : " + upgradePrograms);
+
+        return "staff/case-management/assigned-clients/index";
+    }
+
+    @GetMapping(value = "/case-management/assigned-clients/view-initial-assessment")
+    public String viewCMInitialAssessmentSchedulePage(Model model, @RequestParam("id") String initialAssessmentId) throws ServiceException {
+        this.setupPage(model, "clients", "View Initial Assessment Schedule");
+
+        InitialAssessmentResponse assessment = portalFrontService.findByInitialAssessmentId("", initialAssessmentId);
+        model.addAttribute("assessment", assessment);
+
+        return "staff/case-management/assigned-clients/initial-assessment/index";
+    }
+
+    @GetMapping(value = "/case-management/assigned-clients/view-therapy-session-schedule")
+    public String viewCMTherapySessionSchedulePage(Model model, @RequestParam("id") String therapySessionId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "View Therapy Session Schedule");
+
+        TherapySessionResponse therapy = portalFrontService.findByTherapySessionId(uuid, therapySessionId);
+        model.addAttribute("therapy", therapy);
+
+        return "staff/case-management/assigned-clients/therapy-session/index";
+    }
+
+    @GetMapping(value = "/case-management/assigned-clients/view-upgrading-program-schedule")
+    public String viewCMUpgradeProgramSchedulePage(Model model, @RequestParam("id") String upgradingProgramId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "View Upgrading Program Schedule");
+
+        UpgradingProgramResponse upgradeProgram = portalFrontService.findByUpgradingProgramId(uuid, upgradingProgramId);
+        model.addAttribute("upgradeProgram", upgradeProgram);
+
+        return "staff/case-management/assigned-clients/upgrading-program/index";
     }
     /* CASE MANAGER VIEW ENDPOINTS - END */
 

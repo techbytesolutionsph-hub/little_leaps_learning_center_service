@@ -41,6 +41,12 @@ public class AssessmentScheduleController {
         return ResponseEntity.ok(assessmentScheduleService.getInitialAssessmentSchedules());
     }
 
+    @Operation(summary = "Get Initial Assessments by Employee ID")
+    @GetMapping("/get-initial-assessments-by-employee-id")
+    public ResponseEntity<List<InitialAssessmentResponse>> getAssignedClientsByEmployeeId(@RequestParam("id") String employeeId) {
+        return ResponseEntity.ok(assessmentScheduleService.findAllClientInitialAssessmentScheduleByEmployeeId(employeeId));
+    }
+
     @Operation(summary = "Get Initial Assessment")
     @GetMapping("/get-initial-assessment")
     public ResponseEntity<InitialAssessmentResponse> getAssignedClient(@RequestParam("id") String initialAssessmentId) throws ServiceException {
@@ -69,6 +75,12 @@ public class AssessmentScheduleController {
     @GetMapping("/get-therapy-session-details")
     public ResponseEntity<List<TherapySessionResponse>> getTherapySessionDetails() {
         return ResponseEntity.ok(assessmentScheduleService.getTherapySessionResponse());
+    }
+
+    @Operation(summary = "Get All Therapy Session Details")
+    @GetMapping("/get-therapy-session-details-by-employee-id")
+    public ResponseEntity<List<TherapySessionResponse>> getTherapySessionDetailsByEmployeeId(@RequestParam("id") String employeeId) throws ServiceException {
+        return ResponseEntity.ok(assessmentScheduleService.findAllClientTherapyScheduleByEmployeeId(employeeId));
     }
 
     @Operation(summary = "Add Therapy Slot")

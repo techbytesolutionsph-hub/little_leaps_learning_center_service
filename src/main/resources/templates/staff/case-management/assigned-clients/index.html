@@ -11,7 +11,7 @@
         <title>Assigned Clients - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/clients/client-schedule/neurodev-assessment/view/lllc-staff-view-neurodev-assessment-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/case-management/assigned-clients/lllc-staff-case-management-assessment-schedule-styles.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -29,11 +29,12 @@
                     <div class="container-fluid">
 
                         <!-- Page Heading and Breadcrumbs - Start -->
-                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
                         <!-- Assigned Clients - Start -->
-<!--                        <th:block th:insert="~{fragments/staff/clients/client-schedule/neurodev-assessment/view/html-fragment-staff-view-neurodev-assessment :: staff-view-neurodev-assessment(${assessment})}"></th:block>-->
+                        <th:block th:insert="~{fragments/staff/case-management/assigned-clients/html-fragment-case-management-assigned-clients-main
+                                :: staff-case-management-assigned-clients-main(${assessments}, ${therapies}, ${upgradePrograms})}"></th:block>
                         <!-- Assigned Clients - End -->
                     </div>
                 </div>
@@ -45,6 +46,5 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-        <script th:inline="javascript">const employeeId = /*[[${#authentication.principal.employeeId}]]*/ null;</script>
     </body>
 </html>

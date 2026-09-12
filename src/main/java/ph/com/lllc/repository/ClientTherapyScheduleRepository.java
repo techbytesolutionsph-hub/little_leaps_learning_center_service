@@ -14,4 +14,5 @@ public interface ClientTherapyScheduleRepository extends JpaRepository<ClientThe
 
     Optional<ClientTherapySchedule> findByTherapySessionId(String therapySessionId);
     List<ClientTherapySchedule> findByStatus(TherapyScheduleStatus scheduleStatus);
+    List<ClientTherapySchedule> findByTherapistEmployeeId(String employeeId);
 }

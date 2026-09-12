@@ -13,4 +13,5 @@ public interface AppClientAssignmentRepository extends JpaRepository<AppClientAs
 
     Optional<AppClientAssignment> findFirstByAppClientProfileAndStatusOrderByAssignedAtDesc(AppClientProfile appClientProfile, AssignmentStatus status);
     Optional<AppClientAssignment> findByAssignmentId(String assignmentId);
+    Optional<AppClientAssignment> findByBehavioralTherapistEmployeeId(String employeeId);
 }
