@@ -56,7 +56,6 @@ public class AssessmentScheduleService {
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
-    private final AppClientAssignmentRepository appClientAssignmentRepository;
 
     @Transactional
     public CommonResponse saveInitialAssessmentSchedule(String uuid, InitialAssessmentRequest request, HttpServletRequest httpRequest) throws ServiceException {
@@ -704,7 +703,7 @@ public class AssessmentScheduleService {
                 .behavioralTherapistRole(assignment.getBehavioralTherapistRole())
 
                 .assignedAt(assignment.getAssignedAt())
-                .history(this.buildTSAssignmentHistories(assigmentHistory))
+                .history(this.buildAssignmentHistory(assigmentHistory))
                 .build();
     }
 
@@ -805,7 +804,7 @@ public class AssessmentScheduleService {
                 .behavioralTherapistRole(assignment.getBehavioralTherapistRole())
 
                 .assignedAt(assignment.getAssignedAt())
-                .history(this.buildUPAssignmentHistories(assigmentHistory))
+                .history(this.buildAssignmentHistory(assigmentHistory))
                 .build();
     }
 
@@ -903,93 +902,16 @@ public class AssessmentScheduleService {
 
                 .assignedAt(assignment.getAssignedAt())
 
-                .history(this.buildAssignmentHistories(assigmentHistory))
+                .history(this.buildAssignmentHistory(assigmentHistory))
                 .build();
     }
-
-    public List<InitialAssessmentResponse.AssignmentHistoryResponse> buildAssignmentHistories(List<AssignmentHistory> assigmentHistory){
+    public List<AssignmentHistoryResponse> buildAssignmentHistory(List<AssignmentHistory> assigmentHistory){
         return assigmentHistory.stream()
                 .sorted(Comparator.comparing(
                         AssignmentHistory::getEventDateTime,
                         Comparator.nullsLast(Comparator.reverseOrder())
                 ))
-                .map(item -> InitialAssessmentResponse.AssignmentHistoryResponse.builder()
-                        .description(item.getDescription())
-                        .action(item.getAction())
-                        .caseManagerFullName(
-                                item.getCaseManager() != null
-                                        ? item.getCaseManager().getFirstName() + " "
-                                        + item.getCaseManager().getLastName()
-                                        : "-"
-                        )
-                        .caseManagerRole(item.getCaseManagerRole())
-
-                        .behavioralTherapistFullName(
-                                item.getCaseManager() != null
-                                        ? item.getBehavioralTherapist().getFirstName() + " "
-                                        + item.getBehavioralTherapist().getLastName()
-                                        : "-"
-                        )
-                        .behavioralTherapistRole(item.getBehavioralTherapistRole())
-
-                        .assignmentStatus(item.getAssignmentStatus())
-                        .assignedByFullName(
-                                item.getChangedBy() != null
-                                        ? item.getChangedBy().getFirstName() + " "
-                                        + item.getChangedBy().getLastName()
-                                        : "-"
-                        )
-                        .eventDateTime(item.getEventDateTime())
-                        .build()
-                )
-                .toList();
-    }
-
-    public List<TherapySessionResponse.AssignmentHistoryResponse> buildTSAssignmentHistories(List<AssignmentHistory> assigmentHistory){
-        return assigmentHistory.stream()
-                .sorted(Comparator.comparing(
-                        AssignmentHistory::getEventDateTime,
-                        Comparator.nullsLast(Comparator.reverseOrder())
-                ))
-                .map(item -> TherapySessionResponse.AssignmentHistoryResponse.builder()
-                        .description(item.getDescription())
-                        .action(item.getAction())
-                        .caseManagerFullName(
-                                item.getCaseManager() != null
-                                        ? item.getCaseManager().getFirstName() + " "
-                                        + item.getCaseManager().getLastName()
-                                        : "-"
-                        )
-                        .caseManagerRole(item.getCaseManagerRole())
-
-                        .behavioralTherapistFullName(
-                                item.getCaseManager() != null
-                                        ? item.getBehavioralTherapist().getFirstName() + " "
-                                        + item.getBehavioralTherapist().getLastName()
-                                        : "-"
-                        )
-                        .behavioralTherapistRole(item.getBehavioralTherapistRole())
-
-                        .assignmentStatus(item.getAssignmentStatus())
-                        .assignedByFullName(
-                                item.getChangedBy() != null
-                                        ? item.getChangedBy().getFirstName() + " "
-                                        + item.getChangedBy().getLastName()
-                                        : "-"
-                        )
-                        .eventDateTime(item.getEventDateTime())
-                        .build()
-                )
-                .toList();
-    }
-
-    public List<UpgradingProgramResponse.AssignmentHistoryResponse> buildUPAssignmentHistories(List<AssignmentHistory> assigmentHistory){
-        return assigmentHistory.stream()
-                .sorted(Comparator.comparing(
-                        AssignmentHistory::getEventDateTime,
-                        Comparator.nullsLast(Comparator.reverseOrder())
-                ))
-                .map(item -> UpgradingProgramResponse.AssignmentHistoryResponse.builder()
+                .map(item -> AssignmentHistoryResponse.builder()
                         .description(item.getDescription())
                         .action(item.getAction())
                         .caseManagerFullName(

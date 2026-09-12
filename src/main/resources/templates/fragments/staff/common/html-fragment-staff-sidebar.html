@@ -51,21 +51,21 @@
                 </div>
             </li>
 
-            <li class="nav-item"  th:classappend="${nav == 'calendar'} ? ' active'">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarScheduling"
-                   aria-expanded="true" aria-controls="calendarScheduling">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Client Calendar</span>
-                </a>
-                <div id="calendarScheduling" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Calendar Management:</h6>
-                        <a class="collapse-item" th:href="@{/app/portal/calendar/assessment-calendar}">Assessment Calendar</a>
-                        <a class="collapse-item" th:href="@{/app/portal/calendar/session-schedule}">Session Schedule</a>
-                        <a class="collapse-item" th:href="@{/app/portal/calendar/client-attendance}">Client Attendance</a>
-                    </div>
-                </div>
-            </li>
+<!--            <li class="nav-item"  th:classappend="${nav == 'calendar'} ? ' active'">-->
+<!--                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#calendarScheduling"-->
+<!--                   aria-expanded="true" aria-controls="calendarScheduling">-->
+<!--                    <i class="fas fa-calendar-alt"></i>-->
+<!--                    <span>Client Calendar</span>-->
+<!--                </a>-->
+<!--                <div id="calendarScheduling" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">-->
+<!--                    <div class="bg-white py-2 collapse-inner rounded">-->
+<!--                        <h6 class="collapse-header">Calendar Management:</h6>-->
+<!--                        <a class="collapse-item" th:href="@{/app/portal/calendar/assessment-calendar}">Assessment Calendar</a>-->
+<!--                        <a class="collapse-item" th:href="@{/app/portal/calendar/session-schedule}">Session Schedule</a>-->
+<!--                        <a class="collapse-item" th:href="@{/app/portal/calendar/client-attendance}">Client Attendance</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </li>-->
 
             <li class="nav-item"  th:classappend="${nav == 'caseManager'} ? ' active'" sec:authorize="@permission.has('VIEW_CASE_MANAGEMENT')">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#caseManagement"
@@ -76,7 +76,7 @@
                 <div id="caseManagement" class="collapse" aria-labelledby="headingFinance" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Case Management:</h6>
-                        <a class="collapse-item" th:href="@{/app/portal/case-management/assign-client}">Assigned Clients</a>
+                        <a class="collapse-item" th:href="@{/app/portal/case-management/assigned-clients}">Assigned Clients</a>
                         <a class="collapse-item" th:href="@{/app/portal/case-management/progress-report}">Progress Report</a>
                     </div>
                 </div>

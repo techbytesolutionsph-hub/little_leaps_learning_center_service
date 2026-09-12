@@ -273,6 +273,19 @@ $(document).ready(function() {
 
             if (schedule) {
                 console.log(schedule);
+
+                /* This feature can only be updated if its therapy date is in the current week */
+                // const canUpdate = isDateInCurrentWeek(schedule.date);
+                //
+                // $("#update-therapy-slot-btn")
+                //     .prop("disabled", !canUpdate)
+                //     .attr(
+                //         "title",
+                //         canUpdate
+                //             ? "Update therapy schedule"
+                //             : "Schedules from previous weeks cannot be updated."
+                //     );
+
                 $("#editAssessmentScheduleModal").modal("show");
                 $("#edit-assessment-id").val(schedule.id);
 
@@ -288,6 +301,22 @@ $(document).ready(function() {
                 $("#edit-assessment-notes").val(schedule.notes || "");
             }
         });
+
+        function isDateInCurrentWeek(dateString) {
+            if (!dateString) {
+                return false;
+            }
+
+            const scheduleDate = new Date(dateString + "T00:00:00");
+            const today = new Date();
+
+            const weekStart = getMonday(today);
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekEnd.getDate() + 6);
+            weekEnd.setHours(23, 59, 59, 999);
+
+            return scheduleDate >= weekStart && scheduleDate <= weekEnd;
+        }
     }
 
     /* ADD SCHEDULE BUTTON */
@@ -378,7 +407,7 @@ $(document).ready(function() {
         if (!validateEditAssessmentScheduleForm()) { return; }
 
         const request = buildEditTherapySlotRequest();
-        console.log("Request:", request);
+        console.log("Updated Request:", request);
 
         updateTherapySlot(request);
     });
@@ -524,17 +553,18 @@ $(document).ready(function() {
         const selectedDate = $(this).val();
 
         if (!selectedDate) {
-            $day.val("");
+            $editTherapyDay.val("");
             return;
         }
 
         const [year, month, day] = selectedDate.split("-").map(Number);
         const date = new Date(year, month - 1, day);
+
         const dayName = date.toLocaleDateString("en-US", {
-            weekday: "long",
+            weekday: "long"
         });
 
-        $day.val(dayName);
+        $editTherapyDay.val(dayName);
     });
 
     /* VALIDATE TIME */

@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,8 @@ import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
+import ph.com.lllc.service.security.staff.PortalUserDetails;
+import ph.com.lllc.service.util.logging.LoggingService;
 import ph.com.lllc.service.util.uuid.GenerateUUIDService;
 
 import java.util.List;
@@ -30,6 +33,7 @@ public class PortalViewController {
 
     private final PortalFrontService portalFrontService;
     private final GenerateUUIDService generateUUIDService;
+    private final LoggingService loggingService;
 
     @GetMapping(value = "/login")
     public String loginPage(HttpSession session, Model model){
@@ -253,6 +257,19 @@ public class PortalViewController {
 
         return "staff/clients/client-schedule/neurodev-assessment/view/index";
     }
+
+    /* CASE MANAGER VIEW ENDPOINTS - START */
+    @GetMapping(value = "/case-management/assigned-clients")
+    public String viewCaseManagerAssignedClientsPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "Assigned Clients");
+
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        return "staff/case-manager/assigned-clients/index";
+    }
+    /* CASE MANAGER VIEW ENDPOINTS - END */
 
     @GetMapping(value = "/attendance/my-attendance")
     public String employeeAttendancePage(Model model, Authentication authentication) throws ServiceException {

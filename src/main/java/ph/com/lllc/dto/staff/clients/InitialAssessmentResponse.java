@@ -4,7 +4,6 @@ import lombok.*;
 import ph.com.lllc.enums.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
@@ -70,25 +69,4 @@ public class InitialAssessmentResponse {
     private LocalDate assignedAt;
 
     List<AssignmentHistoryResponse> history;
-
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AssignmentHistoryResponse{
-
-        private String description;
-        private AssignmentHistoryAction action;
-
-        private String caseManagerFullName;
-        private AssignmentRole caseManagerRole;
-
-        private String behavioralTherapistFullName;
-        private AssignmentRole behavioralTherapistRole;
-
-        private AssignmentStatus assignmentStatus;
-        private String assignedByFullName;
-        private LocalDateTime eventDateTime;
-    }
 }
