@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import ph.com.lllc.entity.user.client.schedule.ClientTherapySchedule;
 import ph.com.lllc.entity.user.client.upgrading.ClientUpgradingProgramSchedule;
 import ph.com.lllc.enums.ScheduleStatus;
+import ph.com.lllc.enums.TherapyScheduleStatus;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface ClientUpgradingProgramScheduleRepository extends JpaRepository<ClientUpgradingProgramSchedule, Long> {
 
-    List<ClientUpgradingProgramSchedule> findByStatus(ScheduleStatus scheduleStatus);
+    List<ClientUpgradingProgramSchedule> findByStatus(TherapyScheduleStatus scheduleStatus);
     Optional<ClientUpgradingProgramSchedule> findByUpgradingProgramId(String upgradingProgramId);
     List<ClientUpgradingProgramSchedule> findByCaseManagerEmployeeId(String employeeId);
 }

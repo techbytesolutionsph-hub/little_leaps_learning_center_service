@@ -8634,11 +8634,13 @@ a:focus{
 .sidebar .nav-item .collapse .collapse-inner .collapse-item,.sidebar .nav-item .collapsing .collapse-inner .collapse-item{
     padding:.5rem 1rem;
     margin:0 .5rem;
+    font-size: 11px;
+    font-weight: 600;
     display:block;
-    color:#3a3b45;
+    color: #40424f;
     text-decoration:none;
     border-radius:.35rem;
-    white-space:nowrap
+    white-space:nowrap;
 }
 .sidebar .nav-item .collapse .collapse-inner .collapse-item:hover,.sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover{
     background-color:#eaecf4

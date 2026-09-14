@@ -449,10 +449,37 @@
     background: #e8e1f8;
 }
 
+.legend-pending {
+    border: 1px solid #9b86d4;
+    background: #e8e1f8;
+}
+
 /* Missed */
 .legend-missed {
     border: 1px solid #c89b9b;
     background: #f1e1e1;
+}
+
+/* Scheduled */
+.schedule-item.appointment-scheduled {
+    border: 1px solid #91d3a0;
+    background: #def4e4;
+}
+
+/* Completed */
+.schedule-item.appointment-completed {
+    border: 1px solid #e8c15b;
+    background: #fff0c7;
+}
+
+.schedule-item.appointment-pending {
+    border: 1px solid #9b86d4;
+    background: #e8e1f8;
+}
+
+.schedule-item.appointment-cancelled {
+    border: 1px solid #e6a1a1;
+    background: #ffdddd;
 }
 
 /* =========================================================

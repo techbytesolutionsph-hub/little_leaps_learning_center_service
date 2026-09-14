@@ -33,10 +33,9 @@
                         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
-                        <!-- Add Therapy Session Schedule - Start -->
-                        <th:block th:insert="~{fragments/staff/case-management/assigned-clients/upgrading-program/html-fragment-staff-view-upgrading-program-schedule
-                                :: staff-view-upgrading-program-schedule(${upgradeProgram})}"></th:block>
-                        <!-- Add Therapy Session Schedule - End -->
+                        <!-- Upgrade Program Calendar - Start -->
+                        <th:block th:insert="~{fragments/staff/case-management/assigned-clients/upgrading-program/html-fragment-staff-view-upgrading-program-schedule :: staff-view-upgrading-program-schedule}"></th:block>
+                        <!-- Upgrade Program Calendar - End -->
                     </div>
                 </div>
 
@@ -48,6 +47,7 @@
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
         <script th:inline="javascript">const upgradeProgram = /*[[${upgradeProgram}]]*/ '';</script>
+        <script th:inline="javascript">const calendar = /*[[${calendar}]]*/ '';</script>
         <script th:src="@{/js/staff/case-management/assigned-clients/upgrading-program/lllc-staff-client-view-upgrading-program-schedule-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

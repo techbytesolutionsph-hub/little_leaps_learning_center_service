@@ -6,119 +6,13 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-view-upgrading-program-schedule(therapy)">
-        <!-- View Therapy Session Schedule - START -->
-        <!-- CLIENT SUMMARY CARD -->
-        <section class="client-summary-card">
-            <!-- Client Avatar -->
-            <div class="client-avatar-wrapper">
-                <img th:src="${therapy.clientProfilePicture != null ? therapy.clientProfilePicture : '/img/base/default-profile.png'}"
-                     alt="Zoe Garcia" class="client-avatar">
-            </div>
-
-            <!-- Client Information -->
-            <div class="client-information">
-                <div class="client-name-row">
-                    <h2 class="client-name" th:text="${therapy.clientFullName}">
-                        Zoe Garcia
-                    </h2>
-                </div>
-
-                <div class="client-info-row">
-                    <i class="fa-solid fa-id-card"></i>
-                    Program ID:&nbsp;<span class="client-id-badge" th:text="${therapy.upgradingProgramId}">
-                        IA-2026-00001
-                    </span>
-                </div>
-
-                <div class="client-info-row">
-                    <i class="fa-regular fa-calendar-days"></i>
-                    DOB:&nbsp;<span th:text="${#temporals.format(therapy.clientBirthDate, 'MMMM dd, yyyy')}">2018-05-12</span>
-                </div>
-
-                <div class="client-info-row">
-                    <i class="fas fa-venus-mars"></i>
-                    Gender:&nbsp;<span th:text="${#strings.capitalize(therapy.clientGender.name().toLowerCase())}">Male</span>
-                </div>
-
-                <div class="client-info-row">
-                    <i class="fa-regular fa-calendar"></i>
-                    Enrollment Date:&nbsp;<span th:text="${#temporals.format(therapy.dateEnrolled, 'MMMM dd, yyyy')}">2026-07-28</span>
-                </div>
-
-                <div class="client-info-row">
-                    <i class="fa-regular fa-user"></i>
-                    Guardian:&nbsp;<span th:text="${therapy.guardianFullName}">Maria Garcia</span>
-                </div>
-
-                <div class="client-info-row">
-                    <i class="fa-solid fa-phone"></i>
-                    Contact No.:&nbsp;<span th:text="${therapy.guardianContactNo}">09171234567</span>
-                </div>
-            </div>
-
-            <!-- Case Manager -->
-            <div class="summary-stat case-manager-stat">
-                <div class="summary-stat-icon manager-icon">
-                    <img th:src="${therapy.behavioralTherapistProfilePicture != null ? therapy.behavioralTherapistProfilePicture : '/img/base/default-profile.png'}"
-                         alt="Zoe Garcia" class="therapist-avatar" style="">
-                </div>
-                <div class="summary-stat-content">
-                    <div class="summary-stat-label">
-                        Behavioral Therapist
-                    </div>
-                    <div class="manager-name" th:text="${therapy.behavioralTherapistFullName}">
-                        John Cruz
-                    </div>
-                    <div class="summary-stat-subtext" th:text="${therapy.behavioralTherapistPosition}">
-                        Behavioral Therapist
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Program -->
-            <div class="summary-stat">
-                <div class="summary-stat-icon program-icon">
-                    <i class="fa-regular fa-calendar-days"></i>
-                </div>
-
-                <div class="summary-stat-content">
-                    <div class="summary-stat-label">
-                        Program
-                    </div>
-                    <div class="program-name" th:text="${therapy.programType}">
-                        Speech Therapy
-                    </div>
-                </div>
-            </div>
-
-            <!-- Case Manager -->
-            <div class="summary-stat case-manager-stat">
-                <div class="summary-stat-icon manager-icon">
-                    <img th:src="${therapy.caseManagerProfilePicture != null ? therapy.caseManagerProfilePicture : '/img/base/default-profile.png'}"
-                         alt="Zoe Garcia" class="case-manager-avatar" style="">
-                </div>
-                <div class="summary-stat-content">
-                    <div class="summary-stat-label">
-                        Case Manager
-                    </div>
-                    <div class="manager-name" th:text="${therapy.caseManagerFullName}">
-                        John Cruz
-                    </div>
-                    <div class="summary-stat-subtext" th:text="${therapy.caseManagerPosition}">
-                        Case Manager
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
+    <div th:fragment="staff-view-upgrading-program-schedule">
+        <!-- View Upgrading Program Schedule - START -->
         <section class="dashboard-card">
             <div class="calendar-main-header">
                 <div class="section-header">
                     <div class="section-header-content">
-                        <div class="section-title">View Upgrading Program Schedule</div>
+                        <div class="section-title">View Schedules</div>
                         <div class="section-description">
                             View the scheduled programs, including their dates and times.
                         </div>
@@ -204,7 +98,7 @@
                             </h5>
 
                             <p class="assessment-modal-subtitle">
-                                Update the upgrading program schedule for the selected client.
+                                Update the upgrading program status for the selected client.
                             </p>
                         </div>
 
@@ -214,14 +108,14 @@
                     <!-- Modal Body -->
                     <div class="modal-body assessment-modal-body">
                         <form id="editAssessmentScheduleForm">
-                            <input type="hidden" id="edit-updating-program-id" name="id">
+                            <input type="hidden" id="edit-assessment-id" name="id">
+                            <input type="hidden" id="edit-upgrading-program-id" name="id">
                             <div class="row g-3">
                                 <!-- Therapist -->
                                 <div class="col-12">
                                     <div class="assessment-form-group">
-                                        <label for="edit-assessment-therapist" class="assessment-form-label"> Case Manager </label>
-                                        <input type="text" id="edit-assessment-therapist" name="day" class="form-control assessment-form-control"
-                                               placeholder="Day" th:value="${therapy.caseManagerFullName}" disabled>
+                                        <label for="edit-assessment-case-manager" class="assessment-form-label"> Case Manager </label>
+                                        <input type="text" id="edit-assessment-case-manager" name="day" class="form-control assessment-form-control" placeholder="Day" disabled>
                                         <div class="field-error">Case manager is required.</div>
                                     </div>
                                 </div>
@@ -311,6 +205,6 @@
                 </div>
             </div>
         </div>
-        <!-- Add Therapy Session Schedule - - END -->
+        <!-- View Upgrading Program Schedule - END -->
     </div>
 </html>

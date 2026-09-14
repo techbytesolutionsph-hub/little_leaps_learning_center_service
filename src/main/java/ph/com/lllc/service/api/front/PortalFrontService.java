@@ -177,6 +177,18 @@ public class PortalFrontService {
         return assessmentScheduleService.findAllClientTherapyScheduleByEmployeeId(employeeId);
     }
 
+    public List<CalendarResponse> findAllClientInitialAssessmentSlotByEmployeeId(String employeeId) {
+        return assessmentScheduleService.findAllClientInitialAssessmentSlotByEmployeeId(employeeId);
+    }
+
+    public List<CalendarResponse> findAllTherapySlotsByEmployeeId(String employeeId) {
+        return assessmentScheduleService.findAllTherapySlotsByEmployeeId(employeeId);
+    }
+
+    public List<CalendarResponse> findAllUpgradingProgramSlotsByEmployeeId(String employeeId) {
+        return assessmentScheduleService.findAllUpgradingProgramSlotsByEmployeeId(employeeId);
+    }
+
     public List<UpgradingProgramResponse> findAllClientUpgradingProgramScheduleByEmployeeId(String employeeId) throws ServiceException {
         return assessmentScheduleService.findAllClientUpgradingProgramScheduleByEmployeeId(employeeId);
     }

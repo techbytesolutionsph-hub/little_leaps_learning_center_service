@@ -6,15 +6,15 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-view-therapy-session-schedule">
-        <!-- View Therapy Session Schedule - START -->
+    <div th:fragment="staff-view-initial-assessment-schedule">
+        <!-- View Initial Assessment Schedule - START -->
         <section class="dashboard-card">
             <div class="calendar-main-header">
                 <div class="section-header">
                     <div class="section-header-content">
                         <div class="section-title">View Schedules</div>
                         <div class="section-description">
-                            View the scheduled therapy sessions, including their dates and times.
+                            View the scheduled initial assessments, including their dates and times.
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                 <!-- LEFT -->
                 <div class="calendar-sidebar">
                     <div class="calendar-helper-text mt-2">
-                        Click on a scheduled session to view its details.
+                        Click on a scheduled initial assessment to view its details.
                     </div>
 
                     <div class="legend">
@@ -56,18 +56,13 @@
                         </div>
 
                         <div class="legend-item">
+                            <div class="legend-dot legend-pending"></div>
+                            Pending
+                        </div>
+
+                        <div class="legend-item">
                             <div class="legend-dot legend-cancelled"></div>
                             Cancelled
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-dot legend-rescheduled"></div>
-                            Rescheduled
-                        </div>
-
-                        <div class="legend-item">
-                            <div class="legend-dot legend-missed"></div>
-                            Missed
                         </div>
                     </div>
                 </div>
@@ -79,7 +74,7 @@
 
                     <div class="tip-box">
                         <i class="bi bi-info-circle"></i>
-                        <span> Tip: Click on a scheduled therapy session to view its details.</span>
+                        <span> Tip: Click on a scheduled initial assessment to view its details.</span>
                     </div>
                 </div>
             </div>
@@ -94,11 +89,11 @@
                     <div class="modal-header assessment-modal-header">
                         <div>
                             <h5 class="modal-title" id="editAssessmentScheduleModalLabel">
-                                Update Therapy Session Status
+                                Update Initial Assessment Status
                             </h5>
 
                             <p class="assessment-modal-subtitle">
-                                Update the assessment status for the selected client.
+                                Update the scheduled status for the selected client.
                             </p>
                         </div>
 
@@ -109,42 +104,35 @@
                     <div class="modal-body assessment-modal-body">
                         <form id="editAssessmentScheduleForm">
                             <input type="hidden" id="edit-assessment-id" name="id">
-                            <input type="hidden" id="edit-therapy-session-id" name="id">
+                            <input type="hidden" id="edit-client-id" name="id">
+                            <input type="hidden" id="edit-case-manager-id" name="id">
+                            <input type="hidden" id="edit-initial-assessment-id" name="id">
                             <div class="row g-3">
                                 <!-- Therapist -->
                                 <div class="col-12">
                                     <div class="assessment-form-group">
-                                        <label for="edit-assessment-therapist" class="assessment-form-label"> Therapist </label>
-                                        <input type="text" id="edit-assessment-therapist" name="therapist" class="form-control assessment-form-control" placeholder="Therapist" disabled>
-                                    </div>
-                                </div>
-
-                                <!-- Frequency -->
-                                <div class="col-12 col-md-6">
-                                    <div class="assessment-form-group">
-                                        <label for="edit-assessment-frequency" class="assessment-form-label"> Frequency </label>
-                                        <input type="text" id="edit-assessment-frequency" name="frequency" class="form-control assessment-form-control" placeholder="Frequency" disabled>
+                                        <label for="edit-assessment-case-manager" class="assessment-form-label"> Case Manager </label>
+                                        <input type="text" id="edit-assessment-case-manager" name="therapist" class="form-control assessment-form-control" placeholder="Case manager" disabled>
                                     </div>
                                 </div>
 
                                 <!-- Schedule Status -->
-                                <div class="col-12 col-md-6">
+                                <div class="col-12">
                                     <div class="assessment-form-group">
                                         <label for="edit-assessment-status" class="assessment-form-label"> Schedule Status <span class="required">*</span> </label>
                                         <select class="form-control assessment-form-control" id="edit-assessment-status" name="status" required>
                                             <option value="" selected disabled>Select status</option>
                                             <option value="SCHEDULED">Scheduled</option>
                                             <option value="COMPLETED">Completed</option>
+                                            <option value="PENDING">Pending</option>
                                             <option value="CANCELLED">Cancelled</option>
-                                            <option value="RESCHEDULED">Rescheduled</option>
-                                            <option value="MISSED">Missed</option>
                                         </select>
                                         <div class="field-error">Status is required.</div>
                                     </div>
                                 </div>
 
                                 <!-- Therapy Date -->
-                                <div class="col-12 col-md-6">
+                                <div class="col-12">
                                     <div class="assessment-form-group">
                                         <label for="edit-assessment-therapy-date" class="assessment-form-label"> Therapy Date <span class="required">*</span> </label>
                                         <div class="date-input-wrapper">
@@ -152,14 +140,6 @@
                                             <i class="bi bi-calendar-event calendar-icon"></i>
                                         </div>
                                         <div class="field-error">Therapy date is required.</div>
-                                    </div>
-                                </div>
-                                <!-- Day -->
-                                <div class="col-12 col-md-6">
-                                    <div class="assessment-form-group">
-                                        <label for="edit-assessment-day" class="assessment-form-label"> Day <span class="required">*</span> </label>
-                                        <input type="text" id="edit-assessment-day" name="day" class="form-control assessment-form-control" placeholder="Day" disabled>
-                                        <div class="field-error">Therapy day is required.</div>
                                     </div>
                                 </div>
 
@@ -212,6 +192,6 @@
                 </div>
             </div>
         </div>
-        <!-- Add Therapy Session Schedule - - END -->
+        <!-- View Initial Assessment Schedule - - END -->
     </div>
 </html>

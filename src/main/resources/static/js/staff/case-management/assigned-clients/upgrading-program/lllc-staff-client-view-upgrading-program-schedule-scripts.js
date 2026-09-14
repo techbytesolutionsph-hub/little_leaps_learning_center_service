@@ -229,12 +229,23 @@ $(document).ready(function() {
             <div class=" schedule-item appointment-${escapeHtml(schedule.status)}" data-id="${schedule.id}"
                 data-date="${schedule.date}" style=" top: ${top}px; height: ${height}px;">
 
-                <div class="appointment-title">
-                    ${formatTime(schedule.start)} - ${formatTime(schedule.end)}
+                <div class="appointment-title fw-bold">
+                    ${schedule.title}
                 </div>
                 
                 <div class="appointment-therapist">
-                    ${escapeHtml(schedule.therapist)}
+                     <i class="bi bi-clock fw-bold"></i>
+                     ${formatTime(schedule.start)} - ${formatTime(schedule.end)}
+                </div>
+                
+                <div class="appointment-therapist">
+                     <i class="bi bi-person-fill me-1"></i>
+                     ${escapeHtml(schedule.client)}
+                </div>
+                
+                <div class="appointment-therapist">
+                    <i class="bi bi-person-badge-fill me-1"></i>
+                     ${escapeHtml(schedule.caseManager)}
                 </div>
 
                 <div class="appointment-menu">
@@ -259,7 +270,11 @@ $(document).ready(function() {
             if (schedule) {
                 console.log(schedule);
                 $("#editAssessmentScheduleModal").modal("show");
-                $("#edit-updating-program-id").val(schedule.id);
+
+
+                $("#edit-assessment-id").val(schedule.id);
+                $("#edit-upgrading-program-id").val(schedule.upgradingProgramId);
+                $("#edit-assessment-case-manager").val(schedule.caseManager);
 
                 $("#edit-assessment-status option").filter(function() {
                     return $(this).text().trim().toLowerCase() ===
@@ -343,8 +358,8 @@ $(document).ready(function() {
 
     function buildEditUpgradingProgramSlotRequest() {
         return {
-            id: $("#edit-updating-program-id").val(),
-            upgradingProgramId: upgradeProgram.upgradingProgramId,
+            id: $("#edit-assessment-id").val(),
+            upgradingProgramId: $("#edit-upgrading-program-id").val(),
             therapyDate: $("#edit-assessment-therapy-date").val(),
             day: $("#edit-assessment-day").val().toUpperCase(),
             startTime: $("#edit-assessment-start-time").val(),
@@ -355,17 +370,23 @@ $(document).ready(function() {
     }
 
     function convertTherapySessionToSchedules(response) {
-        if (!response || !Array.isArray(response.upgradingProgramSlots)) {
+        if (!response || !Array.isArray(response)) {
             return [];
         }
 
-        return response.upgradingProgramSlots.map((slot) => ({
+        return response.map((slot) => ({
             id: slot.id,
-            therapist: response.caseManagerFullName || "",
-            date: slot.therapyDate,
+            upgradingProgramId: slot.upgradingProgramId,
+            title: slot.title,
+            client: slot.client,
+            caseManager: slot.caseManager || "",
+            frequency: slot.frequency
+                ? slot.frequency.charAt(0).toUpperCase() + slot.frequency.slice(1).toLowerCase()
+                : '',
+            date: slot.date,
             day: slot.day,
-            start: slot.startTime.substring(0, 5),
-            end: slot.endTime.substring(0, 5),
+            start: slot.start.substring(0, 5),
+            end: slot.end.substring(0, 5),
             status: slot.status
                 ? slot.status.toLowerCase()
                 : "",
@@ -399,7 +420,8 @@ $(document).ready(function() {
     }
 
     /* INITIAL DEMO DATA */
-    schedules = convertTherapySessionToSchedules(upgradeProgram);
+    schedules = convertTherapySessionToSchedules(calendar);
+    console.log(schedules);
 
     /* INITIALIZE */
     currentWeekStart = getMonday(new Date());
@@ -409,14 +431,10 @@ $(document).ready(function() {
     /* FORM */
 
     const $form = $("#addAssessmentScheduleForm");
-    const $therapist = $("#assessment-therapist");
     const $therapyDate = $("#assessment-therapy-date");
     const $day = $("#assessment-day");
-    const $startTime = $("#assessment-start-time");
-    const $endTime = $("#assessment-end-time");
-    const $status = $("#assessment-status");
 
-    const $editTherapist = $("#edit-assessment-therapist");
+    const $editCaseManager = $("#edit-assessment-case-manager");
     const $editTherapyDate = $("#edit-assessment-therapy-date");
     const $editTherapyDay = $("#edit-assessment-day");
     const $editTherapyStartTime = $("#edit-assessment-start-time");
@@ -483,8 +501,8 @@ $(document).ready(function() {
 
         let isValid = true;
 
-        if (!$editTherapist.val()) {
-            setFieldError($("#edit-assessment-therapist"), "Therapist is required.");
+        if (!$editCaseManager.val()) {
+            setFieldError($("#edit-assessment-case-manager"), "Case manager is required.");
             isValid = false;
         }
 

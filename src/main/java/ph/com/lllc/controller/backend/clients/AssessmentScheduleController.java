@@ -83,6 +83,12 @@ public class AssessmentScheduleController {
         return ResponseEntity.ok(assessmentScheduleService.findAllClientTherapyScheduleByEmployeeId(employeeId));
     }
 
+    @Operation(summary = "Get All Therapy Slots by Employee ID")
+    @GetMapping("/get-therapy-slots-by-employee-id")
+    public ResponseEntity<List<CalendarResponse>> getCalendarResponseByEmployeeId(@RequestParam("id") String employeeId) throws ServiceException {
+        return ResponseEntity.ok(assessmentScheduleService.findAllTherapySlotsByEmployeeId(employeeId));
+    }
+
     @Operation(summary = "Add Therapy Slot")
     @PostMapping("/save-therapy-slot")
     public ResponseEntity<CommonResponse> saveTherapySlot(@Valid @RequestBody TherapySlotRequest request) throws ServiceException {

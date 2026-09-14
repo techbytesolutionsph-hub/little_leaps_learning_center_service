@@ -449,6 +449,11 @@
     background: #e8e1f8;
 }
 
+.legend-pending {
+    border: 1px solid #9b86d4;
+    background: #e8e1f8;
+}
+
 /* Missed */
 .legend-missed {
     border: 1px solid #c89b9b;

@@ -292,24 +292,44 @@ public class PortalViewController {
         return "staff/case-management/assigned-clients/initial-assessment/index";
     }
 
-    @GetMapping(value = "/case-management/assigned-clients/view-therapy-session-schedule")
-    public String viewCMTherapySessionSchedulePage(Model model, @RequestParam("id") String therapySessionId) throws ServiceException {
+    @GetMapping(value = "/case-management/initial-assessment-calendar")
+    public String viewCMInitialAssessmentCalendarPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) {
         String uuid = generateUUIDService.generateUUID();
-        this.setupPage(model, "clients", "View Therapy Session Schedule");
+        this.setupPage(model, "clients", "Initial Assessment Calendar");
 
-        TherapySessionResponse therapy = portalFrontService.findByTherapySessionId(uuid, therapySessionId);
-        model.addAttribute("therapy", therapy);
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        List<CalendarResponse> calendar = portalFrontService.findAllClientInitialAssessmentSlotByEmployeeId(employeeId);
+        model.addAttribute("calendar", calendar);
+
+        return "staff/case-management/assigned-clients/initial-assessment/index";
+    }
+
+    @GetMapping(value = "/case-management/therapy-session-calendar")
+    public String viewCMTherapySessionCalendarPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "clients", "Therapy Session Calendar");
+
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        List<CalendarResponse> calendar = portalFrontService.findAllTherapySlotsByEmployeeId(employeeId);
+        model.addAttribute("calendar", calendar);
 
         return "staff/case-management/assigned-clients/therapy-session/index";
     }
 
-    @GetMapping(value = "/case-management/assigned-clients/view-upgrading-program-schedule")
-    public String viewCMUpgradeProgramSchedulePage(Model model, @RequestParam("id") String upgradingProgramId) throws ServiceException {
+    @GetMapping(value = "/case-management/upgrading-program-calendar")
+    public String viewCMUpgradingProgramCalendarPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
-        this.setupPage(model, "clients", "View Upgrading Program Schedule");
+        this.setupPage(model, "clients", "Upgrading Program Calendar");
 
-        UpgradingProgramResponse upgradeProgram = portalFrontService.findByUpgradingProgramId(uuid, upgradingProgramId);
-        model.addAttribute("upgradeProgram", upgradeProgram);
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        List<CalendarResponse> calendar = portalFrontService.findAllUpgradingProgramSlotsByEmployeeId(employeeId);
+        model.addAttribute("calendar", calendar);
 
         return "staff/case-management/assigned-clients/upgrading-program/index";
     }

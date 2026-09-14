@@ -245,7 +245,7 @@ $(document).ready(function() {
                 
                 <div class="appointment-therapist">
                     <i class="bi bi-person-badge-fill me-1"></i>
-                     ${escapeHtml(schedule.therapist)}
+                     ${escapeHtml(schedule.caseManager)}
                 </div>
 
                 <div class="appointment-menu">
@@ -271,9 +271,11 @@ $(document).ready(function() {
                 console.log(schedule);
                 $("#editAssessmentScheduleModal").modal("show");
                 $("#edit-assessment-id").val(schedule.id);
-                $("#edit-therapy-session-id").val(schedule.therapySessionId);
+                $("#edit-client-id").val(schedule.clientId);
+                $("#edit-case-manager-id").val(schedule.employeeId);
+                $("#edit-initial-assessment-id").val(schedule.initialAssessmentId);
 
-                $("#edit-assessment-therapist").val(schedule.therapist);
+                $("#edit-assessment-case-manager").val(schedule.caseManager);
                 $("#edit-assessment-frequency").val(schedule.frequency);
                 $("#edit-assessment-status option").filter(function() {
                     return $(this).text().trim().toLowerCase() ===
@@ -360,19 +362,22 @@ $(document).ready(function() {
         const request = buildEditTherapySlotRequest();
         console.log("Updated Request:", request);
 
-        updateTherapySlot(request);
+        /* Update Initial Assessment */
+        updateInitialAssessment(request);
     });
 
     function buildEditTherapySlotRequest() {
         return {
-            id: $("#edit-assessment-id").val(),
-            therapySessionId: $("#edit-therapy-session-id").val(),
-            therapyDate: $("#edit-assessment-therapy-date").val(),
-            day: $("#edit-assessment-day").val().toUpperCase(),
-            startTime: $("#edit-assessment-start-time").val(),
-            endTime: $("#edit-assessment-end-time").val(),
-            status: $("#edit-assessment-status").val(),
-            notes: $("#edit-assessment-notes").val()
+            initialAssessmentId: $("#edit-initial-assessment-id").val(),
+            clientId: $("#edit-client-id").val(),
+            employeeId: $("#edit-case-manager-id").val(),
+            scheduleStatus: $("#edit-assessment-status").val(),
+            assessmentDate: $("#edit-assessment-therapy-date").val(),
+            notes: $("#edit-assessment-notes").val(),
+            slots: [{
+                startTime: $("#edit-assessment-start-time").val(),
+                endTime: $("#edit-assessment-end-time").val()
+            }],
         };
     }
 
@@ -384,42 +389,40 @@ $(document).ready(function() {
 
         return response.map((slot) => ({
             id: slot.id,
-            therapySessionId: slot.therapySessionId,
+            clientId: slot.clientId,
+            employeeId: slot.employeeId,
+            initialAssessmentId: slot.initialAssessmentId,
             title: slot.title,
             client: slot.client,
-            therapist: slot.therapist || "",
-            frequency: slot.frequency
-                ? slot.frequency.charAt(0).toUpperCase() + slot.frequency.slice(1).toLowerCase()
-                : '',
+            caseManager: slot.caseManager || "",
             date: slot.date,
             day: slot.day,
             start: slot.start.substring(0, 5),
             end: slot.end.substring(0, 5),
-            status: slot.status
-                ? slot.status.toLowerCase()
+            status: slot.scheduleStatus
+                ? slot.scheduleStatus.toLowerCase()
                 : "",
             notes: slot.notes
         }));
     }
 
-    function updateTherapySlot(request) {
+    function updateInitialAssessment(request) {
 
         $.ajax({
-            url: "/api/v1/assessment/update-therapy-slot",
+            url: "/api/v1/assessment/update-initial-assessment",
             type: "PUT",
             contentType: "application/json",
-            dataType: "json",
             data: JSON.stringify(request),
+
             success: function(response) {
-                console.log("Therapy slot saved successfully:", response);
-                $("#addAssessmentScheduleModal").modal("hide");
+                console.log("Initial assessment slot saved successfully:", response);
+                $("#editAssessmentScheduleModal").modal("hide");
                 resetAssessmentScheduleForm();
 
                 location.reload();
             },
-
-            error: function(xhr) {
-                console.error("Failed to save therapy slot:", xhr);
+            error: function(xhr, status, error) {
+                console.error("Failed to save initial assessment slot:", xhr);
                 if (xhr.responseJSON) {
                     console.error("Error response:", xhr.responseJSON);
                 }
@@ -442,7 +445,7 @@ $(document).ready(function() {
     const $therapyDate = $("#assessment-therapy-date");
     const $day = $("#assessment-day");
 
-    const $editTherapist = $("#edit-assessment-therapist");
+    const $editCaseManager = $("#edit-assessment-case-manager");
     const $editTherapyDate = $("#edit-assessment-therapy-date");
     const $editTherapyDay = $("#edit-assessment-day");
     const $editTherapyStartTime = $("#edit-assessment-start-time");
@@ -510,20 +513,14 @@ $(document).ready(function() {
 
         let isValid = true;
 
-        if (!$editTherapist.val()) {
-            setFieldError($("#edit-assessment-therapist"), "Therapist is required.");
+        if (!$editCaseManager.val()) {
+            setFieldError($("#edit-assessment-case-manager"), "Case manager is required.");
             isValid = false;
         }
 
         /* Therapy date */
         if (!$editTherapyDate.val()) {
             setFieldError($therapyDate, "Therapy date is required.");
-            isValid = false;
-        }
-
-        /* Therapy day */
-        if (!$editTherapyDay.val()) {
-            setFieldError($("#edit-assessment-day"), "Therapist day is required.");
             isValid = false;
         }
 
