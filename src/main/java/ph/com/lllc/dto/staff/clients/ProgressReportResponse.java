@@ -30,5 +30,6 @@ public class ProgressReportResponse {
     private String clientProfileImageUrl;
     private String clientFullName;
     private String clientContactNumber;
+    private String createdBy;
     private LocalDateTime creationDate;
 }

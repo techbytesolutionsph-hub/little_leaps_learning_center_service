@@ -1,0 +1,533 @@
+:root {
+    --lllc-primary: #00979d;
+    --lllc-primary-dark: #00858a;
+    --lllc-primary-light: #e9fafa;
+    --text-dark: #344f72;
+    --text-medium: #557397;
+    --text-light: #7890ad;
+    --border: #d8e4ef;
+    --background: #f4f9fd;
+    --white: #fff;
+    --success-bg: #dff8df;
+    --success-text: #19a463;
+    --reviewed-bg: #e2f1ff;
+    --reviewed-text: #1688e8;
+    --draft-bg: #fff0d5;
+    --draft-text: #ed9a13;
+    --shadow: 0 5px 22px #3a5b7c14;
+}
+
+.progress-report-details-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 25px 26px 20px;
+    box-shadow: 0 4px 20px #1f2d3d0f;
+}
+
+.progress-report-details-header {
+    margin-bottom: 23px;
+}
+
+.progress-report-details-title {
+    align-items: center;
+    gap: 13px;
+    display: flex;
+}
+
+.progress-report-details-title h2 {
+    color: var(--lllc-primary);
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.progress-report-details-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--lllc-primary);
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    display: flex;
+}
+
+.progress-report-info-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 27px 35px;
+    display: grid;
+}
+
+.progress-report-info-item {
+    min-width: 0;
+}
+
+.progress-report-info-item:first-child {
+    grid-area: 1 / 1;
+}
+
+.progress-report-info-item:nth-child(2) {
+    grid-area: 1 / 2;
+}
+
+.progress-report-info-item:nth-child(3) {
+    grid-area: 1 / 3;
+}
+
+.progress-report-info-item:nth-child(4) {
+    grid-area: 2 / 1;
+}
+
+.progress-report-info-item:nth-child(5) {
+    grid-area: 2 / 2;
+}
+
+.progress-report-info-item:nth-child(6) {
+    grid-area: 2 / 3;
+}
+
+.progress-report-notes {
+    border-left: 1px solid #e8eef3;
+    grid-area: 1 / 4 / 3;
+    min-width: 0;
+    padding-left: 28px;
+}
+
+.progress-report-notes .progress-report-info-label {
+    color: #70839a;
+    align-items: center;
+    gap: 9px;
+    display: flex;
+}
+
+.progress-report-notes .progress-report-info-label i {
+    color: var(--lllc-primary);
+    font-size: 14px;
+}
+
+.progress-report-notes-text {
+    color: #52657b;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    width: 100%;
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.progress-report-info-label {
+    color: #70839a;
+    letter-spacing: .1px;
+    margin-bottom: 9px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.progress-report-info-value {
+    color: #4b5d73;
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    font-size: 13px;
+    display: flex;
+}
+
+.progress-report-info-value i {
+    width: 18px;
+    color: var(--lllc-primary);
+    text-align: center;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.progress-report-client {
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    display: flex;
+}
+
+.progress-report-client-image {
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+}
+
+.progress-report-client > div {
+    min-width: 0;
+}
+
+.progress-report-client-name {
+    color: #34495e;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.progress-report-client-id {
+    color: #7c8da1;
+    margin-top: 3px;
+    font-size: 11px;
+}
+
+.progress-report-user {
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    display: flex;
+}
+
+.progress-report-user-image {
+    object-fit: cover;
+    border-radius: 50%;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+}
+
+.progress-report-user > div {
+    min-width: 0;
+}
+
+.progress-report-user-name {
+    color: #34495e;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.progress-report-user-role {
+    color: #7c8da1;
+    margin-top: 3px;
+    font-size: 11px;
+}
+
+.progress-report-divider {
+    background: #e7edf2;
+    width: 100%;
+    height: 1px;
+    margin: 25px 0 17px;
+}
+
+.progress-report-file-row {
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 0 8px 17px;
+    display: flex;
+}
+
+.progress-report-file-info {
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    display: flex;
+}
+
+.progress-report-file-icon {
+    color: #fff;
+    background: var(--lllc-primary);
+    border-radius: 6px;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
+    display: flex;
+}
+
+.progress-report-file-info > div:nth-child(2) {
+    min-width: 0;
+}
+
+.progress-report-file-name {
+    color: #34495e;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    overflow: hidden;
+}
+
+.progress-report-file-meta {
+    color: #7d8ea3;
+    white-space: nowrap;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 11px;
+    display: flex;
+}
+
+.progress-report-file-type {
+    color: var(--lllc-primary);
+    background: #e5f9fa;
+    border-radius: 20px;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    display: inline-flex;
+}
+
+.progress-report-file-actions {
+    flex-shrink: 0;
+    align-items: center;
+    gap: 13px;
+    display: flex;
+}
+
+.progress-report-action-btn {
+    min-width: 145px;
+    color: var(--lllc-primary);
+    border: 1.5px solid var(--lllc-primary);
+    background: #fff;
+    border-radius: 7px;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 17px;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, color .2s, box-shadow .2s;
+    display: inline-flex;
+}
+
+.progress-report-action-btn i {
+    margin-right: 8px;
+    font-size: 13px;
+}
+
+.progress-report-action-btn:hover {
+    color: #fff;
+    background: var(--lllc-primary);
+    text-decoration: none;
+    box-shadow: 0 4px 10px #00979d2e;
+}
+
+.progress-report-viewer {
+    background: #303030;
+    border-radius: 8px;
+    width: 100%;
+    height: 700px;
+    overflow: hidden;
+}
+
+.progress-report-pdf-viewer {
+    border: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* BOTTOM ACTIONS */
+.action-bar {
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 17px 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.action-right {
+    display: flex;
+    align-items: center;
+}
+
+.action-btn {
+    height: 38px;
+    border-radius: 6px;
+    padding: 0 16px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-cancel {
+    background: #fff;
+    border: 1px solid #0097a3;
+    color: #008e99 !important;
+}
+
+.btn-cancel:hover {
+    background: #008e99 !important;
+    color: #fff !important;
+    border: 1px solid #0097a3;
+}
+
+@media (width <= 1200px) {
+    .progress-report-info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 25px 30px;
+    }
+
+    .progress-report-info-item:nth-child(1),
+    .progress-report-info-item:nth-child(2),
+    .progress-report-info-item:nth-child(3),
+    .progress-report-info-item:nth-child(4),
+    .progress-report-info-item:nth-child(5),
+    .progress-report-info-item:nth-child(6) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .progress-report-info-item:nth-child(6) {
+        grid-column: 1 / -1;
+    }
+
+    .progress-report-info-item:nth-child(6) .progress-report-info-value {
+        align-items: flex-start;
+    }
+}
+
+@media (width <= 992px) {
+    .progress-report-file-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .progress-report-file-actions {
+        width: 100%;
+    }
+
+    .progress-report-action-btn {
+        flex: 1;
+    }
+}
+
+@media (width <= 768px) {
+    .progress-report-details-card {
+        padding: 20px 17px;
+    }
+
+    .progress-report-info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .progress-report-info-item:nth-child(1),
+    .progress-report-info-item:nth-child(2),
+    .progress-report-info-item:nth-child(3),
+    .progress-report-info-item:nth-child(4),
+    .progress-report-info-item:nth-child(5),
+    .progress-report-info-item:nth-child(6) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .progress-report-info-item:nth-child(6) {
+        padding-top: 18px;
+        border-top: 1px solid #e8eef3;
+    }
+
+    .progress-report-file-info {
+        width: 100%;
+    }
+
+    .progress-report-file-name {
+        max-width: 220px;
+    }
+
+    .progress-report-viewer {
+        height: 550px;
+    }
+
+    .action-bar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .action-right {
+        width: 100%;
+    }
+
+    #back-btn {
+        width: 100%;
+    }            }
+
+@media (width <= 576px) {
+    .progress-report-page-header h1 {
+        font-size: 20px;
+    }
+
+    .progress-report-details-card {
+        border-radius: 12px;
+        padding: 17px 14px;
+    }
+
+    .progress-report-details-title {
+        gap: 10px;
+    }
+
+    .progress-report-details-title h2 {
+        font-size: 15px;
+    }
+
+    .progress-report-details-icon {
+        width: 27px;
+        height: 27px;
+        font-size: 22px;
+    }
+
+    .progress-report-file-row {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .progress-report-file-info {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .progress-report-file-type {
+        margin-left: 5px;
+    }
+
+    .progress-report-file-meta {
+        white-space: normal;
+        flex-wrap: wrap;
+    }
+
+    .progress-report-file-actions {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .progress-report-action-btn {
+        flex: none;
+        width: 100%;
+    }
+
+    .progress-report-viewer {
+        height: 500px;
+    }
+
+    .action-bar {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .action-right {
+        width: 100%;
+    }
+
+    #back-btn {
+        width: 100%;
+    }
+}

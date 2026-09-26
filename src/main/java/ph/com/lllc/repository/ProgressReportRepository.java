@@ -8,5 +8,6 @@ import java.util.List;
 public interface ProgressReportRepository extends JpaRepository<ProgressReport, Long> {
 
     List<ProgressReport> findByAssigneeId(String employeeId);
+    ProgressReport findByProgressReportId(String progressReportId);
     ProgressReport findByAssigneeIdAndClientId(String employeeId, String clientId);
 }

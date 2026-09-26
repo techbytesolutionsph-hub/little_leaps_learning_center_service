@@ -1132,8 +1132,11 @@ body {
         gap: 12px;
     }
 
-    .action-bar > .btn-cancel,
     .action-right {
+        width: 100%;
+    }
+
+    #back-btn {
         width: 100%;
     }
 }

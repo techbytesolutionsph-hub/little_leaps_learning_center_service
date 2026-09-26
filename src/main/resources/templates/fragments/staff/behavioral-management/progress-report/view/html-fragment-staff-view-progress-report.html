@@ -1,0 +1,191 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-view-progress-report(report)">
+        <!-- View Progress Report - START -->
+        <div class="progress-report-details-card">
+            <!-- Card Header -->
+            <div class="progress-report-details-header">
+                <div class="progress-report-details-title">
+                    <div class="progress-report-details-icon">
+                        <i class="fa-solid fa-file-circle-check"></i>
+                    </div>
+                    <h2>Progress Report Details</h2>
+                </div>
+            </div>
+
+            <!-- Report Information -->
+            <div class="progress-report-info-grid">
+                <!--Client -->
+                <div class="progress-report-info-item">
+                    <div class="progress-report-info-label">
+                        Client Name
+                    </div>
+                    <div class="progress-report-client">
+                        <img th:src="${report.clientProfileImageUrl != null ? report.clientProfileImageUrl : '/img/default-profile.png'}"
+                             alt="Client" class="progress-report-client-image">
+                        <div>
+                            <div class="progress-report-client-name" th:text="${report.clientFullName}">
+                                Kung Fu Cat Waaaaaahhh
+                            </div>
+                            <div class="progress-report-client-id" th:text="'(' + ${report.clientId} + ')'">
+                                (CLI-000123)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assignee -->
+                <div class="progress-report-info-item">
+                    <div class="progress-report-info-label">
+                        Assignee
+                    </div>
+                    <div class="progress-report-user">
+                        <img th:src="${report.assigneeProfileImageUrl != null ? report.assigneeProfileImageUrl : '/img/default-profile.png'}"
+                             alt="Assignee" class="progress-report-user-image">
+                        <div>
+                            <div class="progress-report-user-name" th:text="${report.assigneeFullName}">
+                                Mark Andruiza
+                            </div>
+                            <div class="progress-report-user-role">
+                                Case Manager
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reporting Period -->
+                <div class="progress-report-info-item">
+                    <div class="progress-report-info-label">
+                        Reporting Period
+                    </div>
+
+                    <div class="progress-report-info-value">
+                        <i class="fa-regular fa-calendar"></i>
+
+                        <span>
+                            <span th:text="${#temporals.format(report.reportingPeriodFrom, 'MMM dd, yyyy')}">
+                                Sep 01, 2026
+                            </span>
+                            <span class="progress-report-date-separator">–</span>
+                            <span th:text="${#temporals.format(report.reportingPeriodTo, 'MMM dd, yyyy')}">
+                                Sep 30, 2026
+                            </span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Created By -->
+                <div class="progress-report-info-item">
+                    <div class="progress-report-info-label">
+                        Created By
+                    </div>
+
+                    <div class="progress-report-info-value">
+                        <i class="fa-solid fa-user"></i>
+
+                        <span th:text="${report.createdBy}">
+                            Glen Mark Anduiza
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Creation Date -->
+                <div class="progress-report-info-item">
+                    <div class="progress-report-info-label">
+                        Creation Date
+                    </div>
+
+                    <div class="progress-report-info-value">
+                        <i class="fa-regular fa-calendar"></i>
+                        <span th:text="${#temporals.format(report.creationDate, 'MMM dd, yyyy hh:mm a')}">
+                            Sep 23, 2026 10:24 AM
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Notes -->
+                <div class="progress-report-info-item">
+                    <div class="progress-report-info-label">
+                        Notes
+                    </div>
+
+                    <div class="progress-report-info-value">
+                        <i class="fa-solid fa-note-sticky"></i>
+                        <span th:text="${report.notes != null && !report.notes.isBlank() ? report.notes : 'No notes provided.'}">
+                            Progress report for the 3rd week of September.
+                            Client showed improvement in social interaction
+                            and communication skills.
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="progress-report-divider mb-4"></div>
+
+            <!-- Uploaded File -->
+            <div class="progress-report-file-row mb-4">
+                <div class="progress-report-file-info">
+                    <div class="progress-report-file-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+
+                    <div>
+                        <div class="progress-report-file-name" th:text="${report.fileName}">
+                            Anduiza, Glen Mark_Admin Conference.pdf
+                        </div>
+
+                        <div class="progress-report-file-meta">
+                            <span th:text="${report.fileSize + ' MB'}">
+                                0.14 MB
+                            </span>
+                            <span>•</span>
+                            <span> Uploaded on </span>
+                            <span th:text="${#temporals.format(report.creationDate, 'MMM dd, yyyy hh:mm a')}">
+                                Sep 23, 2026 10:24 AM
+                            </span>
+                        </div>
+                    </div>
+
+                    <span class="progress-report-file-type">
+                        PDF
+                    </span>
+                </div>
+
+                <!-- File Actions -->
+                <div class="progress-report-file-actions">
+                    <a th:href="${report.fileUrl}" download class="progress-report-action-btn">
+                        <i class="fa-solid fa-download"></i>
+                        Download
+                    </a>
+
+                    <a th:href="${report.fileUrl}" target="_blank" rel="noopener noreferrer" class="progress-report-action-btn">
+                        <i class="fa-regular fa-eye"></i>
+                        Open in New Tab
+                    </a>
+                </div>
+            </div>
+
+            <!-- Document Viewer -->
+            <div class="progress-report-viewer mb-4">
+                <iframe th:src="${report.fileUrl}" title="Progress Report Document" class="progress-report-pdf-viewer"></iframe>
+            </div>
+        </div>
+
+        <div class="action-bar mb-lg-4">
+            <div class="action-right">
+                <button type="button" class="action-btn btn-cancel" id="back-btn" onclick="history.back()">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back
+                </button>
+            </div>
+        </div>
+        <!-- View Progress Report - END -->
+    </div>
+</html>

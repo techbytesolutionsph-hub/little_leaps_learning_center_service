@@ -197,6 +197,10 @@ public class PortalFrontService {
         return clientManagementService.getProgressReportsByEmployeeId(uuid, employeeId);
     }
 
+    public ProgressReportResponse findByProgressReportsId(String uuid, String progressReportId) throws ServiceException {
+        return clientManagementService.findByProgressReportsId(uuid, progressReportId);
+    }
+
     public List<ClientDetailsResponse> getClientDetails(String employeeId) throws ServiceException {
         return clientManagementService.getClientDetails(employeeId);
     }

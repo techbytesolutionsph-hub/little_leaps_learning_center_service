@@ -11,10 +11,7 @@
         <title>View Progress Report - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-<!--        <link th:href="@{/css/staff/behavioral-management/progress-report/lllc-staff-client-progress-report-styles.css}" rel="stylesheet" type="text/css">-->
-        <style>
-
-        </style>
+        <link th:href="@{/css/staff/behavioral-management/progress-report/view/lllc-staff-client-view-progress-report-styles.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -35,9 +32,9 @@
                         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
-                        <!-- Progress Report - Start -->
-<!--                        <th:block th:insert="~{fragments/staff/case-management/progress-report/html-fragment-staff-view-progress-report :: staff-view-progress-report(${reports}, ${clients})}"></th:block>-->
-                        <!-- Progress Report - End -->
+                        <!-- Progress Report Details Card - Start -->
+                        <th:block th:insert="~{fragments/staff/behavioral-management/progress-report/view/html-fragment-staff-view-progress-report :: staff-view-progress-report(${report})}"></th:block>
+                        <!-- Progress Report Details Card - End -->
                     </div>
                 </div>
 

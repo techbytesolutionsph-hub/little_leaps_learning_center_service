@@ -358,6 +358,10 @@ public class PortalViewController {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "behavioralTherapy", "View Progress Report");
 
+        ProgressReportResponse report = portalFrontService.findByProgressReportsId(uuid, progressReportId);
+        loggingService.info(uuid, this.getClass().getName(), "", "report : " + report);
+        model.addAttribute("report", report);
+
         return "staff/case-management/progress-report/view/index";
     }
     /* CASE MANAGER VIEW ENDPOINTS - END */
@@ -400,6 +404,10 @@ public class PortalViewController {
     public String viewUploadedBTProgressReportPage(Model model, @RequestParam("id") String progressReportId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "behavioralTherapy", "View Progress Report");
+
+        ProgressReportResponse report = portalFrontService.findByProgressReportsId(uuid, progressReportId);
+        loggingService.info(uuid, this.getClass().getName(), "", "report : " + report);
+        model.addAttribute("report", report);
 
         return "staff/behavioral-management/progress-report/view/index";
     }

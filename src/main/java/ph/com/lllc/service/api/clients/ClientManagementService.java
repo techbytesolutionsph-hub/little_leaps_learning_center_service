@@ -507,7 +507,7 @@ public class ClientManagementService {
             AppClientProfile client = clientProfileRepository.findByClientId(report.getClientId())
                     .orElseThrow(() -> {
                         loggingService.error(uuid, getClass().getName(),
-                                "Client not found: " + employeeId, HttpStatus.NOT_FOUND.value());
+                                "Client not found: " + report.getClientId(), HttpStatus.NOT_FOUND.value());
                         return new ServiceException(HttpStatus.NOT_FOUND.value(), "Client not found: " + report.getClientId());
                     });
             response.setClientProfileImageUrl(client.getProfileImageUrl());
@@ -516,6 +516,32 @@ public class ClientManagementService {
             responses.add(response);
         }
         return responses;
+    }
+
+    public ProgressReportResponse findByProgressReportsId(String uuid, String progressReportsId) throws ServiceException {
+        ProgressReport report = progressReportRepository.findByProgressReportId(progressReportsId);
+        ProgressReportResponse response = ObjectUtils.copyAs(report, ProgressReportResponse.class);
+
+        AppEmployeeProfile employee = appEmployeeProfileRepository.findByEmployeeId(response.getAssigneeId())
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(),
+                            "Employee not found: " + response.getAssigneeId(), HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found: " + response.getAssigneeId());
+                });
+        response.setAssigneeProfileImageUrl(employee.getProfileImageUrl());
+        response.setAssigneeFullName(employee.getFirstName() + " " + employee.getLastName());
+        response.setAssigneePosition(employee.getEmploymentInformation().getPosition());
+
+        AppClientProfile client = clientProfileRepository.findByClientId(report.getClientId())
+                .orElseThrow(() -> {
+                    loggingService.error(uuid, getClass().getName(),
+                            "Client not found: " + report.getClientId(), HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Client not found: " + report.getClientId());
+                });
+        response.setClientProfileImageUrl(client.getProfileImageUrl());
+        response.setClientFullName(client.getFirstName() + " " + client.getLastName());
+        response.setClientContactNumber(client.getAppParentGuardian().get(0).getContactNumber());
+        return response;
     }
 
     public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
