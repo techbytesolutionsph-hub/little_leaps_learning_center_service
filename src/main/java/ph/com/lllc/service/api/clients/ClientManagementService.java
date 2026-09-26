@@ -9,14 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import ph.com.lllc.dto.response.CommonResponse;
-import ph.com.lllc.dto.staff.clients.AssignClientRequest;
-import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
-import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
-import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
+import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.client.AppClientProfile;
 import ph.com.lllc.entity.user.client.AppParentGuardian;
 import ph.com.lllc.entity.user.client.assignment.AppClientAssignment;
 import ph.com.lllc.entity.user.client.assignment.AssignmentHistory;
+import ph.com.lllc.entity.user.client.progressreport.ProgressReport;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentHistoryAction;
@@ -26,11 +24,13 @@ import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppClientAssignmentRepository;
 import ph.com.lllc.repository.AppUserRepository;
 import ph.com.lllc.repository.ClientProfileRepository;
+import ph.com.lllc.repository.ProgressReportRepository;
 import ph.com.lllc.repository.management.AppEmployeeProfileRepository;
 import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.db.SequenceGeneratorService;
 import ph.com.lllc.service.util.IdGeneratorUtils;
 import ph.com.lllc.service.util.logging.LoggingService;
+import ph.com.lllc.util.ObjectUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -44,6 +44,7 @@ public class ClientManagementService {
     private final AppClientAssignmentRepository appClientAssignmentRepository;
     private final AppEmployeeProfileRepository appEmployeeProfileRepository;
     private final AppUserRepository appUserRepository;
+    private final ProgressReportRepository progressReportRepository;
     private final UserAccountService userAccountService;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final IdGeneratorUtils idGeneratorUtils;
@@ -455,6 +456,68 @@ public class ClientManagementService {
                 .build();
     }
 
+    @Transactional
+    public CommonResponse saveProgressReport(ProgressReportRequest request) throws ServiceException {
+
+        ProgressReport progressReport = new ProgressReport();
+
+        long nextUserSeq = sequenceGeneratorService.getProgressReportIdNextSequence();
+        String progressReportId =  idGeneratorUtils.generateProgressReportId(nextUserSeq);
+
+        /* Client / Assignee */
+        progressReport.setAssigneeId(request.getAssigneeId());
+        progressReport.setClientId(request.getClientId());
+
+        progressReport.setProgressReportId(progressReportId);
+
+        /* Progress Report Details */
+        progressReport.setReportingPeriodFrom(request.getReportingPeriodFrom());
+        progressReport.setReportingPeriodTo(request.getReportingPeriodTo());
+        progressReport.setNotes(request.getNotes());
+
+        /* Cloudinary */
+        progressReport.setFileUrl(request.getFileUrl());
+        progressReport.setFileName(request.getFileName());
+        progressReport.setFileSize(request.getFileSize());
+
+        progressReportRepository.save(progressReport);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Progress report uploaded and created successfully!")
+                .build();
+    }
+
+    public List<ProgressReportResponse> getProgressReportsByEmployeeId(String uuid, String employeeId) throws ServiceException {
+        List<ProgressReportResponse> responses = new ArrayList<>();
+        List<ProgressReport> reports = progressReportRepository.findByAssigneeId(employeeId);
+        for (ProgressReport report : reports) {
+            ProgressReportResponse response = ObjectUtils.copyAs(report, ProgressReportResponse.class);
+
+            AppEmployeeProfile employee = appEmployeeProfileRepository.findByEmployeeId(response.getAssigneeId())
+                    .orElseThrow(() -> {
+                        loggingService.error(uuid, getClass().getName(),
+                                "Employee not found: " + response.getAssigneeId(), HttpStatus.NOT_FOUND.value());
+                        return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found: " + response.getAssigneeId());
+                    });
+            response.setAssigneeProfileImageUrl(employee.getProfileImageUrl());
+            response.setAssigneeFullName(employee.getFirstName() + " " + employee.getLastName());
+            response.setAssigneePosition(employee.getEmploymentInformation().getPosition());
+
+            AppClientProfile client = clientProfileRepository.findByClientId(report.getClientId())
+                    .orElseThrow(() -> {
+                        loggingService.error(uuid, getClass().getName(),
+                                "Client not found: " + employeeId, HttpStatus.NOT_FOUND.value());
+                        return new ServiceException(HttpStatus.NOT_FOUND.value(), "Client not found: " + report.getClientId());
+                    });
+            response.setClientProfileImageUrl(client.getProfileImageUrl());
+            response.setClientFullName(client.getFirstName() + " " + client.getLastName());
+            response.setClientContactNumber(client.getAppParentGuardian().get(0).getContactNumber());
+            responses.add(response);
+        }
+        return responses;
+    }
+
     public AssignedClientResponse findByAssignmentId(String uuid, String assignmentId) throws ServiceException {
             AppClientAssignment assignment = appClientAssignmentRepository.findByAssignmentId(assignmentId)
                 .orElseThrow(() -> {
@@ -462,6 +525,28 @@ public class ClientManagementService {
                     return new ServiceException(HttpStatus.NOT_FOUND.value(), "Client assignment not found with ID: " + assignmentId);
                 });
         return buildAssignedClientResponse(assignment);
+    }
+
+    public List<ClientDetailsResponse> getClientDetails(String employeeId) throws ServiceException {
+
+        AppEmployeeProfile employee = appEmployeeProfileRepository.findByEmployeeId(employeeId)
+                .orElseThrow(() -> {
+                    loggingService.error("", getClass().getName(),
+                            "Employee not found: " + employeeId, HttpStatus.NOT_FOUND.value());
+                    return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found: " + employeeId);
+                });
+
+        List<ClientDetailsResponse> responses = new ArrayList<>();
+        List<AppClientProfile> clients = clientProfileRepository
+                .findDistinctByAssignments_CaseManagerOrAssignments_BehavioralTherapist(employee, employee);
+
+        for (AppClientProfile client : clients) {
+            responses.add(ClientDetailsResponse.builder()
+                    .clientId(client.getClientId())
+                    .clientFullName(client.getFirstName() + " " + client.getLastName())
+                    .build());
+        }
+        return responses;
     }
 
     private AssignedClientResponse buildAssignedClientResponse(AppClientAssignment response){

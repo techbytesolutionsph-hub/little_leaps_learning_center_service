@@ -107,7 +107,7 @@ function showInfoPopup(title, message) {
             </div>
 
             <div class="modern-popup-title">${title}</div>
-            <div class="modern-popup-message" style="max-height: 300px; overflow-y: auto;">${message}</div>
+            <div class="modern-popup-message" style="max-height: 300px; overflow-y: hidden;">${message}</div>
 
             <div class="modern-popup-actions">
                 <button class="popup-btn popup-btn-ok">

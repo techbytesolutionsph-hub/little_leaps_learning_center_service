@@ -13,6 +13,7 @@ public class IdGeneratorUtils {
     private static final String INITIAL_ASSESSMENT_ID_PREFIX = "IA";
     private static final String ASSESSMENT_ID_PREFIX = "ASCH";
     private static final String UPGRADING_PROGRAM_ID_PREFIX = "UPCH";
+    private static final String PROGRESS_ID_PREFIX = "PR";
 
     private IdGeneratorUtils() {
     }
@@ -120,6 +121,23 @@ public class IdGeneratorUtils {
                 "%s-%s-%05d",
                 UPGRADING_PROGRAM_ID_PREFIX,
                 assignYear,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * CLIENT ID FORMAT
+     * =========================================================
+     * PR-00001
+     * PR-00002
+     * PR-00003
+     */
+    public String generateProgressReportId(long runningCode) {
+
+        return String.format(
+                "%s-%06d",
+                PROGRESS_ID_PREFIX,
                 runningCode
         );
     }

@@ -333,7 +333,77 @@ public class PortalViewController {
 
         return "staff/case-management/assigned-clients/upgrading-program/index";
     }
+
+    @GetMapping(value = "/case-management/progress-report")
+    public String viewCMProgressReportPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "behavioralTherapy", "Progress Report");
+
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        List<ProgressReportResponse> reports = portalFrontService.getProgressReportsByEmployeeId(uuid, employeeId);
+        loggingService.info(uuid, this.getClass().getName(), "", "reports : " + reports);
+        model.addAttribute("reports", reports);
+
+        List<ClientDetailsResponse> clients = portalFrontService.getClientDetails(employeeId);
+        loggingService.info(uuid, this.getClass().getName(), "", "clients : " + clients);
+        model.addAttribute("clients", clients);
+
+        return "staff/case-management/progress-report/index";
+    }
+
+    @GetMapping(value = "/case-management/progress-report/view-progress-report")
+    public String viewUploadedCMProgressReportPage(Model model, @RequestParam("id") String progressReportId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "behavioralTherapy", "View Progress Report");
+
+        return "staff/case-management/progress-report/view/index";
+    }
     /* CASE MANAGER VIEW ENDPOINTS - END */
+
+    /* BEHAVIORAL MANAGEMENT VIEW ENDPOINTS - START */
+    @GetMapping(value = "/behavioral-therapy/therapy-session-calendar")
+    public String viewBTTherapySessionCalendarPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "behavioralTherapy", "Therapy Session Calendar");
+
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        List<CalendarResponse> calendar = portalFrontService.findAllTherapySlotsByEmployeeId(employeeId);
+        model.addAttribute("calendar", calendar);
+
+        return "staff/behavioral-management/therapy-session/index";
+    }
+
+    @GetMapping(value = "/behavioral-therapy/progress-report")
+    public String viewBTProgressReportPage(Model model, @AuthenticationPrincipal PortalUserDetails userDetails) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "behavioralTherapy", "Progress Report");
+
+        String employeeId = userDetails.getEmployeeId();
+        loggingService.info(uuid, this.getClass().getName(), "", "employeeId : " + employeeId);
+
+        List<ProgressReportResponse> reports = portalFrontService.getProgressReportsByEmployeeId(uuid, employeeId);
+        loggingService.info(uuid, this.getClass().getName(), "", "reports : " + reports);
+        model.addAttribute("reports", reports);
+
+        List<ClientDetailsResponse> clients = portalFrontService.getClientDetails(employeeId);
+        loggingService.info(uuid, this.getClass().getName(), "", "clients : " + clients);
+        model.addAttribute("clients", clients);
+
+        return "staff/behavioral-management/progress-report/index";
+    }
+
+    @GetMapping(value = "/behavioral-therapy/progress-report/view-progress-report")
+    public String viewUploadedBTProgressReportPage(Model model, @RequestParam("id") String progressReportId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        this.setupPage(model, "behavioralTherapy", "View Progress Report");
+
+        return "staff/behavioral-management/progress-report/view/index";
+    }
+    /* BEHAVIORAL MANAGEMENT VIEW ENDPOINTS - END */
 
     @GetMapping(value = "/attendance/my-attendance")
     public String employeeAttendancePage(Model model, Authentication authentication) throws ServiceException {

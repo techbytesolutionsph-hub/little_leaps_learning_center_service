@@ -192,4 +192,12 @@ public class PortalFrontService {
     public List<UpgradingProgramResponse> findAllClientUpgradingProgramScheduleByEmployeeId(String employeeId) throws ServiceException {
         return assessmentScheduleService.findAllClientUpgradingProgramScheduleByEmployeeId(employeeId);
     }
+
+    public List<ProgressReportResponse> getProgressReportsByEmployeeId(String uuid, String employeeId) throws ServiceException {
+        return clientManagementService.getProgressReportsByEmployeeId(uuid, employeeId);
+    }
+
+    public List<ClientDetailsResponse> getClientDetails(String employeeId) throws ServiceException {
+        return clientManagementService.getClientDetails(employeeId);
+    }
 }

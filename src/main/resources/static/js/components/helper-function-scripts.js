@@ -50,7 +50,7 @@ async function uploadToCloudinary(file) {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "littleleapslearningcenter");
+    formData.append("upload_preset", "lllcdocumentuploads");
 
     try {
         const response = await fetch(
@@ -240,7 +240,7 @@ function initializeClientPhotoUpload() {
         const formData = new FormData();
         formData.append('file', file);
 
-        formData.append('upload_preset', 'littleleapslearningcenter');
+        formData.append('upload_preset', 'lllcimageuploads');
 
         try {
 

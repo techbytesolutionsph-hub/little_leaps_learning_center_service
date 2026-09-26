@@ -1,0 +1,217 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-view-progress-report(reports, clients)">
+        <!-- View Progress Report - START -->
+        <div class="progress-report-page">
+            <section class="progress-card upload-progress-card">
+                <span id="currentEmployeeId" th:text="${#authentication.principal.employeeId}" style="display: none;"></span>
+                <div class="section-title mb-2">
+                    <div class="section-title-icon">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <div>
+                        <h2>Upload Client Progress Report</h2>
+                        <p>Upload a PDF or Microsoft Word copy of the signed progress report.</p>
+                    </div>
+                </div>
+
+                <div class="upload-content">
+                    <div class="file-upload-column">
+                        <div id="fileDropZone" class="file-drop-zone">
+                            <input type="file" id="progressReportFile" class="file-input" accept=".pdf,.doc,.docx">
+                            <div id="uploadPlaceholder" class="upload-placeholder">
+                                <div class="upload-cloud-icon">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                </div>
+
+                                <div class="upload-main-text">
+                                    Drag and drop your file here
+                                </div>
+
+                                <div class="upload-or">or</div>
+
+                                <button type="button" id="chooseFileBtn" class="choose-file-btn">
+                                    Choose File
+                                </button>
+
+                                <div class="upload-info">
+                                    Accepted formats: PDF, DOC, DOCX
+                                </div>
+                            </div>
+
+                            <!-- Selected File -->
+                            <div id="selectedFileContainer" class="selected-file-container" style="display: none;">
+                                <div class="selected-file-icon">
+                                    <i class="fa-regular fa-file-lines"></i>
+                                </div>
+
+                                <div class="selected-file-details">
+                                    <div id="selectedFileName" class="selected-file-name"> </div>
+                                    <div id="selectedFileSize" class="selected-file-size"></div>
+                                </div>
+
+                                <button type="button" id="removeFileBtn" class="remove-file-btn" title="Remove file">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-form">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="assessment-form-group">
+                                    <label for="report-select-client" class="assessment-form-label"> Select Client <span class="required">*</span> </label>
+                                    <select class="form-control assessment-form-control" id="report-select-client" name="status" required>
+                                        <option value="" selected disabled> Select Client </option>
+                                        <option th:each="client : ${clients}"
+                                                th:value="${client.clientId}" th:text="${client.clientFullName}">
+                                        </option>
+                                    </select>
+                                    <div class="field-error">Client is required.</div>
+                                </div>
+                            </div>
+
+                            <!-- Therapy Date -->
+                            <div class="col-12 col-md-6">
+                                <div class="assessment-form-group">
+                                    <label for="report-date-start" class="assessment-form-label"> Reporting Period From <span class="required">*</span> </label>
+                                    <div class="date-input-wrapper">
+                                        <input type="date" id="report-date-start" name="therapyDate" class="form-control assessment-form-control">
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                    </div>
+                                    <div class="field-error">Therapy date is required.</div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="assessment-form-group">
+                                    <label for="report-date-end" class="assessment-form-label"> Reporting Period To <span class="required">*</span> </label>
+                                    <div class="date-input-wrapper">
+                                        <input type="date" id="report-date-end" name="therapyDate" class="form-control assessment-form-control">
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                    </div>
+                                    <div class="field-error">Therapy date is required.</div>
+                                </div>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="col-12">
+                                <div class="assessment-form-group">
+                                    <label for="report-notes" class="assessment-form-label"> Notes <span style="font-weight:400;">(Optional)</span></label>
+                                    <textarea id="report-notes" name="notes" maxlength="500" class="form-control assessment-form-control"
+                                              placeholder="Add notes or special instructions..." rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="form-actions">
+                            <button type="button" id="report-submit-btn" class="progress-report-btn progress-report-btn-submit">
+                                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                <span>Upload &amp; Submit</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="progress-card recent-reports-card">
+                <div class="recent-reports-header mb-2">
+                    <div class="section-title">
+                        <div class="section-title-icon">
+                            <i class="bi bi-file-earmark-check-fill"></i>
+                        </div>
+                        <div>
+                            <h2>Recent Progress Reports</h2>
+                            <p>View and review recently uploaded client progress reports.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reports-table-wrapper">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="clientTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Client Name</th>
+                                    <th>Uploaded By</th>
+                                    <th>Date Uploaded</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="report : ${reports}">
+                                    <td data-label="ID" th:text="${report.progressReportId}"></td>
+                                    <td data-label="Client Name">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Profile Image -->
+                                            <img th:src="${report.clientProfileImageUrl != null ? report.clientProfileImageUrl : '/images/default-profile.png'}"
+                                                 class="rounded-circle me-2"
+                                                 style="width:45px;height:45px;object-fit:cover;"
+                                                 alt="Profile">
+
+                                            <!-- Employee Details -->
+                                            <div>
+                                                <div class="fw-bold text-dark"
+                                                     th:text="${report.clientFullName}">
+                                                    Maria Santos
+                                                </div>
+
+                                                <div class="text-muted small"
+                                                     th:text="${report.clientContactNumber}">
+                                                    0917-123-4567
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-label="Uploaded By">
+                                        <div class="d-flex align-items-center">
+                                            <!-- Profile Image -->
+                                            <img th:src="${report.assigneeProfileImageUrl != null ? report.assigneeProfileImageUrl : '/images/default-profile.png'}"
+                                                 class="rounded-circle me-2"
+                                                 style="width:45px;height:45px;object-fit:cover;"
+                                                 alt="Profile">
+
+                                            <!-- Employee Details -->
+                                            <div>
+                                                <div class="fw-bold text-dark"
+                                                     th:text="${report.assigneeFullName}">
+                                                    Maria Santos
+                                                </div>
+
+                                                <div class="text-muted small"
+                                                     th:text="${report.assigneePosition}">
+                                                    Behavioral Therapist
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td data-label="Date Uploaded"
+                                        th:text="${#temporals.format(report.creationDate, 'MMM dd, yyyy')}">
+                                    </td>
+                                    <td data-label="Actions" >
+                                        <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                            <a th:href="@{|/app/portal/behavioral-therapy/progress-report/view-progress-report?id=${report.progressReportId}|}"
+                                               class="btn-glossy-teal action-btn d-flex align-items-center">
+                                                <i class="bi bi-eye mr-1"></i> View Report
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- View Progress Report - END -->
+    </div>
+</html>

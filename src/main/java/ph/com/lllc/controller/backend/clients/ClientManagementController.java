@@ -9,10 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.response.CommonResponse;
-import ph.com.lllc.dto.staff.clients.AssignClientRequest;
-import ph.com.lllc.dto.staff.clients.AssignedClientResponse;
-import ph.com.lllc.dto.staff.clients.ClientRegistrationRequest;
-import ph.com.lllc.dto.staff.clients.ClientRegistrationResponse;
+import ph.com.lllc.dto.staff.clients.*;
+import ph.com.lllc.entity.user.client.progressreport.ProgressReport;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.util.logging.LoggingService;
@@ -86,5 +84,19 @@ public class ClientManagementController {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "AssignClientRequest : " + request.toString());
         return ResponseEntity.ok(clientManagementService.updateAssignClient(uuid, request, httpRequest));
+    }
+
+    @Operation(summary = "Create Progress Report")
+    @PostMapping("/progress-report")
+    public ResponseEntity<CommonResponse> createProgressReport(@RequestBody ProgressReportRequest request) throws ServiceException {
+        return ResponseEntity.status(HttpStatus.CREATED).body(clientManagementService.saveProgressReport(request));
+    }
+
+    @Operation(summary = "Get Progress Reports by Employee ID")
+    @GetMapping("/get-progress-reports")
+    public ResponseEntity<List<ProgressReportResponse>> getProgressReportsByEmployeeId(@RequestParam("id") String employeeId) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "Employee ID : " + employeeId);
+        return new ResponseEntity<>(clientManagementService.getProgressReportsByEmployeeId(uuid, employeeId), HttpStatus.OK);
     }
 }
