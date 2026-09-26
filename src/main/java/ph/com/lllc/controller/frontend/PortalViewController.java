@@ -424,6 +424,7 @@ public class PortalViewController {
         return "staff/common-util/index";
     }
 
+    /* HUMAN RESOURCES INFORMATION SYSTEM - START */
     @GetMapping(value = "/hr-management/employee-registry")
     public String employeeManagementPage(Model model) {
         this.setupPage(model, "management", "Employee Registry");
@@ -465,6 +466,8 @@ public class PortalViewController {
 
         return "staff/management/registry/edit-employee/index";
     }
+
+    /* HUMAN RESOURCES INFORMATION SYSTEM - END */
 
     @GetMapping(value = "/admin/user-account")
     public String administrationPage(Model model) {

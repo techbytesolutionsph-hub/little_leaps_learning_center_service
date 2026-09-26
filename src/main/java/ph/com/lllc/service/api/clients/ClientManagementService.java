@@ -3,7 +3,6 @@ package ph.com.lllc.service.api.clients;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,6 @@ import ph.com.lllc.entity.user.client.progressreport.ProgressReport;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentHistoryAction;
-import ph.com.lllc.enums.AssignmentRole;
 import ph.com.lllc.enums.AssignmentStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppClientAssignmentRepository;
@@ -49,9 +47,6 @@ public class ClientManagementService {
     private final SequenceGeneratorService sequenceGeneratorService;
     private final IdGeneratorUtils idGeneratorUtils;
     private final LoggingService loggingService;
-
-    @Value("${app.lllc.job-positions}")
-    private String jobPositions;
 
     @Transactional
     public CommonResponse registerClient(String uuid, ClientRegistrationRequest request) throws ServiceException {
