@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.enums.EmploymentStatus;
 import ph.com.lllc.enums.EmploymentType;
 import ph.com.lllc.enums.StaffType;

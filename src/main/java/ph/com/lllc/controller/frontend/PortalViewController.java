@@ -9,7 +9,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ph.com.lllc.dto.admin.AppUserResponse;
@@ -421,7 +420,18 @@ public class PortalViewController {
         Map<String, Object> userInfo = portalFrontService.getUserInfo(username);
         model.addAttribute("userInfo", userInfo);
 
-        return "staff/common-util/index";
+        return "staff/time-attendance/timesheet/index";
+    }
+
+    @GetMapping(value = "/attendance/leave-request")
+    public String employeeLeaveRequestPage(Model model, Authentication authentication) throws ServiceException {
+        this.setupPage(model, "attendance", "Leave Request");
+        String username = authentication.getName();
+
+        Map<String, Object> userInfo = portalFrontService.getUserInfo(username);
+        model.addAttribute("userInfo", userInfo);
+
+        return "staff/time-attendance/leave-request/index";
     }
 
     /* HUMAN RESOURCES INFORMATION SYSTEM - START */
@@ -445,8 +455,8 @@ public class PortalViewController {
         return "staff/management/registry/add-employee/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-registry/view-employee/{employeeId}")
-    public String viewEmployeePage(Model model, @PathVariable("employeeId") String employeeId) throws ServiceException {
+    @GetMapping(value = "/hr-management/employee-registry/view-employee")
+    public String viewEmployeePage(Model model, @RequestParam("id") String employeeId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "management", "Employee Details");
 
@@ -456,8 +466,8 @@ public class PortalViewController {
         return "staff/management/registry/view-employee/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-registry/edit-employee/{employeeId}")
-    public String editEmployeePage(Model model, @PathVariable("employeeId") String employeeId) throws ServiceException {
+    @GetMapping(value = "/hr-management/employee-registry/edit-employee")
+    public String editEmployeePage(Model model, @RequestParam("id") String employeeId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "management", "Edit Employee");
 
@@ -486,8 +496,8 @@ public class PortalViewController {
         return "staff/admin/add-user/index";
     }
 
-    @GetMapping(value = "/admin/user-account/view-user/{username}")
-    public String adminViewUserPage(Model model, @PathVariable("username") String username) throws ServiceException {
+    @GetMapping(value = "/admin/user-account/view-user")
+    public String adminViewUserPage(Model model, @RequestParam("id") String username) throws ServiceException {
         this.setupPage(model, "admin", "View User");
 
         AppUserResponse user = portalFrontService.findByUsername(username);
@@ -496,8 +506,8 @@ public class PortalViewController {
         return "staff/admin/view-user/index";
     }
 
-    @GetMapping(value = "/admin/user-account/edit-user/{username}")
-    public String adminUpdateUserPage(Model model, @PathVariable("username") String username) throws ServiceException {
+    @GetMapping(value = "/admin/user-account/edit-user")
+    public String adminUpdateUserPage(Model model, @RequestParam("id") String username) throws ServiceException {
         this.setupPage(model, "admin", "Update User");
 
         AppUserResponse user = portalFrontService.findByUsername(username);

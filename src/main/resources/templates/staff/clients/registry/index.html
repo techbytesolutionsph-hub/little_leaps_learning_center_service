@@ -8,7 +8,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
-        <title>Client Management - Little Leaps Learning Center</title>
+        <title>Client Registry - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
     </head>
@@ -31,9 +31,9 @@
                         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
-                        <!-- Client Management Main - Start -->
+                        <!-- Client Registry - Start -->
                         <th:block th:insert="~{fragments/staff/clients/registry/html-fragment-staff-client-registry-main :: staff-client-registry-main(${clients})}"></th:block>
-                        <!-- Client Management Main - End -->
+                        <!-- Client Registry - End -->
                     </div>
                 </div>
 

@@ -8,13 +8,19 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <div th:fragment="common-staff-employee-attendance(userInfo)">
         <!-- Employee Attendance - START -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold mb-3 mb-md-0">
-                    <i class="fa-solid fa-calendar-week mr-2"></i> Timesheet
-                </h6>
+        <section class="default-card css-default-card">
+            <div class="css-default-card-header mb-2">
+                <div class="section-title">
+                    <div class="section-title-icon">
+                        <i class="fa-solid fa-calendar-week mr-2"></i>
+                    </div>
+                    <div>
+                        <h2>Timesheet</h2>
+                        <p>View, manage, and review your work hours and attendance records.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
+            <div class="reports-table-wrapper">
                 <div class="timesheet-container">
 
                     <!-- Week Ending -->
@@ -149,7 +155,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
         <!-- Employee Attendance - END -->
     </div>
 </html>

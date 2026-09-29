@@ -134,12 +134,17 @@
             </div>
         </div>
 
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between">
-
-                <h6 class="m-0 font-weight-bold mb-3 mb-md-0">
-                    <i class="fa-solid fa-id-card mr-2"></i> Employee Records
-                </h6>
+        <section class="default-card css-default-card">
+            <div class="css-default-card-header mb-2">
+                <div class="section-title">
+                    <div class="section-title-icon">
+                        <i class="fa-solid fa-id-card mr-2"></i>
+                    </div>
+                    <div>
+                        <h2>Employee Records</h2>
+                        <p>View, manage, and review client records.</p>
+                    </div>
+                </div>
 
                 <div class="d-flex flex-wrap align-items-center ml-md-auto">
                     <a th:href="@{/app/portal/employee-management/export}"
@@ -163,9 +168,8 @@
                         <i class="fa-solid fa-user-plus mr-2"></i> Add Employee
                     </a>
                 </div>
-
             </div>
-            <div class="card-body">
+            <div class="reports-table-wrapper">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="clientTable">
                         <thead>
@@ -213,54 +217,54 @@
                                 <td data-label="Employment Status">
                                     <!-- Active -->
                                     <span class="status-badge badge-active"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'ACTIVE'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'ACTIVE'}">
                                         <i class="bi bi-check-circle-fill mr-1"></i> Active
                                     </span>
 
                                     <!-- On Leave -->
                                     <span class="status-badge badge-warning"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'ON_LEAVE'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'ON_LEAVE'}">
                                         <i class="bi bi-calendar-x-fill mr-1"></i> On Leave
                                     </span>
 
                                     <!-- Suspended -->
                                     <span class="status-badge badge-danger"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'SUSPENDED'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'SUSPENDED'}">
                                         <i class="bi bi-pause-circle-fill mr-1"></i> Suspended
                                     </span>
 
                                     <!-- Resigned -->
                                     <span class="status-badge badge-secondary"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'RESIGNED'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'RESIGNED'}">
                                         <i class="bi bi-box-arrow-right mr-1"></i> Resigned
                                     </span>
 
                                     <!-- Terminated -->
                                     <span class="status-badge badge-dark"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'TERMINATED'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'TERMINATED'}">
                                         <i class="bi bi-x-circle-fill mr-1"></i> Terminated
                                     </span>
 
                                     <!-- Retired -->
                                     <span class="status-badge badge-purple"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'RETIRED'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'RETIRED'}">
                                         <i class="bi bi-award-fill mr-1"></i> Retired
                                     </span>
 
                                     <!-- Deceased -->
                                     <span class="status-badge badge-black"
-                                          th:if="${employee.employmentInformation.employmentStatus.name() == 'DECEASED'}">
+                                      th:if="${employee.employmentInformation.employmentStatus.name() == 'DECEASED'}">
                                         <i class="bi bi-heartbreak-fill mr-1"></i> Deceased
                                     </span>
 
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
-                                        <a th:href="@{|/app/portal/hr-management/employee-registry/view-employee/${employee.employeeId}|}"
+                                        <a th:href="@{|/app/portal/hr-management/employee-registry/view-employee?id=${employee.employeeId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
-                                        <a th:href="@{|/app/portal/hr-management/employee-registry/edit-employee/${employee.employeeId}|}"
+                                        <a th:href="@{|/app/portal/hr-management/employee-registry/edit-employee?id=${employee.employeeId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-pen mr-1"></i> Edit
                                         </a>
@@ -271,7 +275,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </section>
         <!-- Employment Registry - END -->
     </div>
 </html>

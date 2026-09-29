@@ -14,8 +14,17 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <div sec:authorize="isAuthenticated()">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small font-weight-bold" sec:authentication="principal.staffFirstName"></span>
+                <div sec:authorize="isAuthenticated()"
+                     class="text-center d-none d-lg-block mr-3">
+                    <div class="font-weight-bolder text-gray-700 small"
+                         style="line-height: 1.2;">
+                        <span sec:authentication="principal.staffFirstName"></span>
+                    </div>
+
+                    <div class="text-gray-600"
+                         style="font-size: 9px; line-height: 0.8; margin-top: 4px;"
+                         sec:authentication="principal.position">
+                    </div>
                 </div>
                 <img class="img-profile rounded-circle" th:src="@{${#authentication.principal.profileImageUrl}}" />
             </a>

@@ -18,8 +18,10 @@ import java.util.Set;
 public class PortalUserDetails implements UserDetails {
     private final AppUser user;
     private final String staffFirstName;
+    private final String staffFullName;
     private final String employeeId;
     private final String profileImageUrl;
+    private String position;
 
     public PortalUserDetails(AppUser user) {
         this.user = user;
@@ -34,8 +36,17 @@ public class PortalUserDetails implements UserDetails {
                 : user.getUserRole().stream().anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN)
                 ? "Super Admin" : "Staff";
 
+        this.staffFullName = (staff != null)
+                ? staff.getFirstName() + " " + staff.getLastName()
+                : user.getUserRole().stream().anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN)
+                ? "Super Admin" : "Staff";
+
         this.employeeId = (staff != null)
                 ? staff.getEmployeeId()
+                : null;
+
+        this.position = (staff != null)
+                ? staff.getEmploymentInformation().getPosition()
                 : null;
 
         this.profileImageUrl = this.resolveProfileImage(staff);
@@ -136,11 +147,19 @@ public class PortalUserDetails implements UserDetails {
         return staffFirstName;
     }
 
+    public String getStaffFullName() {
+        return staffFullName;
+    }
+
     public String getProfileImageUrl() {
         return profileImageUrl;
     }
 
     public String getEmployeeId() {
         return employeeId;
+    }
+
+    public String getPosition() {
+        return position;
     }
 }

@@ -8,19 +8,25 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
     <div th:fragment="staff-client-registry-main(clients)">
         <!-- Client Management - START -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold">
-                    <img src="/img/lordicon/little-leap-kids-icon.svg" width="24" height="24" class="mr-2" alt="Homepage"> Client Records
-                </h6>
+        <section class="default-card css-default-card">
+            <div class="css-default-card-header mb-2">
+                <div class="section-title">
+                    <div class="section-title-icon">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <div>
+                        <h2>Client Registry</h2>
+                        <p>View, manage, and review client records.</p>
+                    </div>
+                </div>
+
                 <a th:href="@{/app/portal/client-management/registry/add-client}"
                    class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
                    id="add-client-btn" style="text-decoration: none">
-
                     <i class="fa-solid fa-user-plus mr-2"></i> Add Client
                 </a>
             </div>
-            <div class="card-body">
+            <div class="reports-table-wrapper">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="clientTable">
                         <thead>
@@ -79,19 +85,19 @@
                                     </span>
 
                                     <span class="status-badge badge-danger"
-                                          th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'CANCELLED'}">
+                                      th:if="${client.enrollmentStatus != null and client.enrollmentStatus.name() == 'CANCELLED'}">
                                         <i class="bi bi-pause-circle-fill mr-1"></i> Cancelled
                                     </span>
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
                                         <a th:href="@{|/app/portal/client-management/registry/view-client?id=${client.clientId}|}"
-                                           class="btn-glossy-teal action-btn d-flex align-items-center">
-                                            <i class="bi bi-eye mr-1"></i> View
+                                           class="btn-glossy-teal action-btn d-flex align-items-center" data-tooltip="View Client">
+                                            <i class="bi bi-eye"></i>
                                         </a>
                                         <a th:href="@{|/app/portal/client-management/registry/edit-client?id=${client.clientId}|}"
-                                           class="btn-glossy-teal action-btn d-flex align-items-center">
-                                            <i class="bi bi-pen mr-1"></i> Edit
+                                           class="btn-glossy-teal action-btn d-flex align-items-center" data-tooltip="Edit Client">
+                                            <i class="bi bi-pen"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -100,7 +106,7 @@
                     </table>
                 </div>
             </div>
-        </div>
+        </section>
         <!-- Client Management - END -->
     </div>
 </html>
