@@ -1,0 +1,142 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-employee-leave-request(userInfo)">
+        <!-- Employee Leave Request - START -->
+        <section class="default-card css-default-card">
+            <div class="css-default-card-header mb-2">
+                <div class="section-title">
+                    <div class="section-title-icon">
+                        <i class="fas fa-calendar-minus"></i>
+                    </div>
+                    <div>
+                        <h2>Request Time Off</h2>
+                        <p>View, manage, and track your time-off requests and leave records.</p>
+                    </div>
+                </div>
+
+                <button class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
+                        id="submit-leave" style="text-decoration: none">
+                    <i class="fa-solid fa-paper-plane mr-2"></i> Submit Request
+                </button>
+            </div>
+            <div class="reports-table-wrapper">
+                <input type="hidden" id="employee-id" th:value="${userInfo['employeeId']}">
+                <div class="row px-2">
+                    <div class="col-12 col-md-8 mt-2 mb-2">
+                        <label for="leave-type" class="form-label">Leave Type<span class="required">*</span></label>
+                        <div class="select-wrapper">
+                            <select class="form-select required-field" id="leave-type">
+                                <option value="" selected disabled>Select leave type</option>
+                                <option value="VACATION">Vacation Leave</option>
+                                <option value="SICK">Sick Leave</option>
+                                <option value="EMERGENCY">Emergency Leave</option>
+                                <option value="MATERNITY">Maternity Leave</option>
+                                <option value="PATERNITY">Paternity Leave</option>
+                                <option value="UNPAID_PERSONAL">Unpaid Personal Leave</option>
+                                <option value="SSS_SICKNESS_AND_DISABILITY">SSS Sickness and Disability</option>
+                            </select>
+                        </div>
+                        <div class="field-error">Leave type is required.</div>
+                    </div>
+                    <div class="col-12 col-md-4 mt-2 mb-2">
+                        <label for="available-balance" class="form-label">Available Balance</label>
+                        <div class="date-input-wrapper">
+                            <input type="text" class="form-control" id="available-balance" placeholder="0 days" disabled>
+                            <i class="bi bi-calendar-event icon-left"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="col-12 col-md-8 mt-2 mb-2">
+                    <label for="absence-duration" class="form-label">Absence Duration <span class="required">*</span></label>
+                    <div class="select-wrapper">
+                        <select class="form-select required-field" id="absence-duration">
+                            <option value="" selected disabled>Select an absence duration</option>
+                            <option value="FULL_DAY">Full Day</option>
+                            <option value="HALF_DAY_MORNING">Half Day - Morning</option>
+                            <option value="HALF_DAY_AFTERNOON">Half Day - Afternoon</option>
+                        </select>
+                    </div>
+                    <div class="field-error">Absence duration is required.</div>
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="col-12 col-md-4 mt-2 mb-2">
+                    <label for="leave-start-date" class="form-label">Start Date<span class="required">*</span></label>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="form-control required-field" id="leave-start-date" placeholder="Select start date" required>
+                        <i class="bi bi-calendar-event calendar-icon"></i>
+                    </div>
+                    <div class="field-error"> Start date is required.</div>
+                </div>
+
+                <div class="col-12 col-md-4 mt-2 mb-2">
+                    <label for="leave-end-date" class="form-label">End Date<span class="required">*</span></label>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="form-control required-field" id="leave-end-date" placeholder="Select end date" required>
+                        <i class="bi bi-calendar-event calendar-icon"></i>
+                    </div>
+                    <div class="field-error"> End date is required.</div>
+                </div>
+            </div>
+
+            <div class="row px-2" id="half-day-time-fields" style="display: none;">
+                <div class="col-12 col-md-4 mt-2 mb-2">
+                    <label for="leave-start-time" class="form-label">Start Time</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="form-control" id="leave-start-time" disabled>
+                        <i class="bi bi-clock-fill icon-left"></i>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 mt-2 mb-2">
+                    <label for="leave-end-time" class="form-label">End Time</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="form-control" id="leave-end-time" disabled>
+                        <i class="bi bi-clock-fill icon-left"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="col-12 col-md-4 mt-2 mb-2">
+                    <label for="requesting-leave" class="form-label">Requesting</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="form-control" id="requesting-leave" placeholder="0 days" disabled>
+                        <i class="bi bi-clock-fill icon-left"></i>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4 mt-2 mb-2">
+                    <label for="returning-to-work-on" class="form-label">Returning to Work On</label>
+                    <div class="date-input-wrapper">
+                        <input type="text" class="form-control" id="returning-to-work-on" disabled>
+                        <i class="bi bi-calendar-event icon-left"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row px-2">
+                <div class="col-12 col-md-12 mt-2 mb-2">
+                    <label for="leave-comment" class="form-label">Comment <span style="font-weight:400;">(Optional)</span></label>
+                    <div class="notes-wrapper">
+                        <textarea id="leave-comment" class="form-control" maxlength="500" placeholder="Add notes or special instructions..."></textarea>
+                        <span class="char-counter">
+                            <span id="charCount">0</span> / 500
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Employment Registry - END -->
+    </div>
+</html>

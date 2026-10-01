@@ -14,6 +14,8 @@ import ph.com.lllc.service.api.management.LeaveRequestService;
 import ph.com.lllc.service.util.logging.LoggingService;
 import ph.com.lllc.service.util.uuid.GenerateUUIDService;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @Tag(name = "Leave Request Controller")
@@ -38,5 +40,15 @@ public class LeaveRequestController {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "Employee ID : " + employeeId + " Leave Type : " + leaveType.name());
         return ResponseEntity.ok(leaveRequestService.getAvailableLeaveBalance(uuid, employeeId, leaveType));
+    }
+
+    @PostMapping("/check-overlapping-leave-dates")
+    @Operation(summary = "Check overlapping leave dates")
+    public ResponseEntity<Boolean> hasOverlappingLeave(@RequestParam String employeeId,
+                                                            @RequestParam LocalDate startDate,
+                                                            @RequestParam LocalDate endDate) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "Employee ID : " + employeeId);
+        return ResponseEntity.ok(leaveRequestService.hasOverlappingLeave(uuid, employeeId, startDate, endDate));
     }
 }

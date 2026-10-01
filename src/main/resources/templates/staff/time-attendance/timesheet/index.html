@@ -11,7 +11,7 @@
         <title>My Attendance - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/management/attendance/lllc-staff-common-employee-attendance-styles.css}" rel="stylesheet" type="text/css"/>
+        <link th:href="@{/css/staff/time-attendance/timesheet/lllc-staff-common-employee-attendance-styles.css}" rel="stylesheet" type="text/css"/>
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -33,7 +33,7 @@
                         <!-- Page Heading and Breadcrumbs - End -->
 
                         <!-- Employee Attendance - Start -->
-                        <th:block th:insert="~{fragments/staff/common-util/attendance/html-fragment-common-staff-employee-attendance
+                        <th:block th:insert="~{fragments/staff/time-attendance/timesheet/html-fragment-common-staff-employee-attendance
                                  :: common-staff-employee-attendance(${userInfo})}"></th:block>
                         <!-- Employee Attendance - End -->
 
@@ -47,6 +47,6 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-        <script th:src="@{/js/staff/management/attendance/lllc-staff-common-employee-attendance-scripts.js}" type="text/javascript"></script>
+        <script th:src="@{/js/staff/time-attendance/timesheet/lllc-staff-common-employee-attendance-scripts.js}" type="text/javascript"></script>
     </body>
 </html>

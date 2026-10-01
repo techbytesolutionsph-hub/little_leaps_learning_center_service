@@ -9,6 +9,7 @@ import ph.com.lllc.entity.user.staff.leave.AppLeaveRequest;
 import ph.com.lllc.enums.LeaveRequestStatus;
 import ph.com.lllc.enums.LeaveType;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -21,11 +22,15 @@ public interface AppLeaveRequestRepository extends JpaRepository<AppLeaveRequest
         FROM AppLeaveRequest l
         WHERE l.employee = :employee
           AND l.leaveType = :leaveType
-          AND l.status = :status
     """)
     Double getUsedLeaveDays(
             @Param("employee") AppEmployeeProfile employee,
-            @Param("leaveType") LeaveType leaveType,
-            @Param("status") LeaveRequestStatus status
+            @Param("leaveType") LeaveType leaveType
+    );
+
+    boolean existsByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            AppEmployeeProfile employee,
+            LocalDate endDate,
+            LocalDate startDate
     );
 }

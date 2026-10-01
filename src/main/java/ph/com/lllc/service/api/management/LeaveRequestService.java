@@ -16,6 +16,7 @@ import ph.com.lllc.repository.management.AppLeaveRequestRepository;
 import ph.com.lllc.service.util.logging.LoggingService;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +66,7 @@ public class LeaveRequestService {
 
     public Double getAvailableLeaveBalance(AppEmployeeProfile employee, LeaveType leaveType) {
         BigDecimal entitlement = getLeaveEntitlement(employee, leaveType);
-        Double used = appLeaveRequestRepository.getUsedLeaveDays(employee, leaveType, LeaveRequestStatus.APPROVED);
+        Double used = appLeaveRequestRepository.getUsedLeaveDays(employee, leaveType);
 
         double entitlementValue = entitlement != null
                 ? entitlement.doubleValue()
@@ -105,5 +106,12 @@ public class LeaveRequestService {
                             "Employee not found: " + employeeId, HttpStatus.NOT_FOUND.value());
                     return new ServiceException(HttpStatus.NOT_FOUND.value(), "Employee not found: " + employeeId);
                 });
+    }
+
+    public boolean hasOverlappingLeave(String uuid, String employeeId, LocalDate startDate, LocalDate endDate) throws ServiceException {
+
+        AppEmployeeProfile employee = this.findEmployeeByEmployeeId(uuid, employeeId);
+        return appLeaveRequestRepository.existsByEmployeeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+                        employee, endDate, startDate);
     }
 }

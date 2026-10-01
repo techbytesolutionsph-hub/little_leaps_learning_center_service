@@ -1,0 +1,49 @@
+textarea.form-control {
+    height: 76px;
+    resize: vertical;
+    padding: 10px 12px;
+}
+
+.notes-wrapper {
+    position: relative;
+}
+
+.char-counter {
+    position: absolute;
+    right: 8px;
+    bottom: 5px;
+    font-size: 10px;
+    color: #7f8997;
+}
+
+/* icon positioning */
+.icon-left {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(0, 151, 157);
+    font-size: 12px !important;
+    pointer-events: none;
+}
+
+#available-balance,
+#requesting-leave,
+#returning-to-work-on,
+#leave-start-time,
+#leave-end-time {
+    padding-left: 36px;
+}
+
+.form-label {
+    font-size: 12px;
+}
+
+.form-control,
+.form-select {
+    font-size: 11px !important;
+}
+
+.field-error {
+    font-size: 11px;
+}
