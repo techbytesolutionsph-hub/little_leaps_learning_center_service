@@ -70,7 +70,7 @@ public class EmployeeRequest {
 
     @Data
     public static class EmploymentInformationDTO {
-        private String position;
+        private EmployeePosition position;
         private String employeeIdNumber;
         private LocalDate dateHired;
         private LocalDate regularDateStart;

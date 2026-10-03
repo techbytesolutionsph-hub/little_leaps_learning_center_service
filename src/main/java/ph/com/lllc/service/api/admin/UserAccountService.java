@@ -189,6 +189,7 @@ public class UserAccountService {
         appUser.setPassword(encoder.encodePassword(request.getPassword()));
         appUser.setLastPassword(request.getPassword());
         appUser.setStatus(request.getStatus());
+        appUser.setProfileImageUrl(request.getProfileImageUrl());
 
         /* Get current role */
         AppUserRole appUserRole = appUser.getUserRole()

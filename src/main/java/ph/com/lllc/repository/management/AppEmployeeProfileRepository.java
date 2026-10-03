@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.enums.EmploymentStatus;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public interface AppEmployeeProfileRepository extends JpaRepository<AppEmployeeP
 
     boolean existsByAppUser(AppUser appUser);
     Optional<AppEmployeeProfile> findByEmployeeId(String employeeId);
-    List<AppEmployeeProfile> findByEmploymentInformation_PositionIn(List<String> positions);
-    Double findByEmploymentInformation_Position_AndEmployeeId(String position, String employeeId);
+    List<AppEmployeeProfile> findByEmploymentInformation_PositionIn(List<EmployeePosition> positions);
+    Double findByEmploymentInformation_Position_AndEmployeeId(EmployeePosition position, String employeeId);
     long countByEmploymentInformation_EmploymentStatus(EmploymentStatus employmentStatus);
 }

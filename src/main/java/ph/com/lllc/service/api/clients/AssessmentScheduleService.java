@@ -807,7 +807,7 @@ public class AssessmentScheduleService {
                 )
                 .caseManagerPosition(
                         caseManager != null ? caseManager.getEmploymentInformation()
-                                .getPosition()
+                                .getPosition().getDisplayPosition()
                                 : "-"
                 )
                 .caseManagerRole(assignment.getCaseManagerRole())
@@ -817,7 +817,7 @@ public class AssessmentScheduleService {
                 .behavioralTherapistFullName(therapist.getFirstName() + " " + therapist.getLastName())
                 .behavioralTherapistPosition(therapist.getEmploymentInformation() != null
                         ? therapist.getEmploymentInformation()
-                        .getPosition()
+                        .getPosition().getDisplayPosition()
                         : "-")
                 .behavioralTherapistRole(assignment.getBehavioralTherapistRole())
 
@@ -905,7 +905,7 @@ public class AssessmentScheduleService {
                 )
                 .caseManagerPosition(
                         caseManager != null ? caseManager.getEmploymentInformation()
-                                .getPosition()
+                                .getPosition().getDisplayPosition()
                                 : "-"
                 )
                 .caseManagerRole(assignment.getCaseManagerRole())
@@ -915,7 +915,7 @@ public class AssessmentScheduleService {
                 .behavioralTherapistFullName(therapist.getFirstName() + " " + therapist.getLastName())
                 .behavioralTherapistPosition(therapist.getEmploymentInformation() != null
                         ? therapist.getEmploymentInformation()
-                        .getPosition()
+                        .getPosition().getDisplayPosition()
                         : "-")
                 .behavioralTherapistRole(assignment.getBehavioralTherapistRole())
 
@@ -1002,7 +1002,7 @@ public class AssessmentScheduleService {
                 )
                 .caseManagerPosition(
                         caseManager != null ? caseManager.getEmploymentInformation()
-                                .getPosition()
+                                .getPosition().getDisplayPosition()
                                 : "-"
                 )
                 .caseManagerRole(assignment.getCaseManagerRole())
@@ -1012,7 +1012,7 @@ public class AssessmentScheduleService {
                 .behavioralTherapistFullName(therapist.getFirstName() + " " + therapist.getLastName())
                 .behavioralTherapistPosition(therapist.getEmploymentInformation() != null
                         ? therapist.getEmploymentInformation()
-                        .getPosition()
+                        .getPosition().getDisplayPosition()
                         : "-")
                 .behavioralTherapistRole(assignment.getBehavioralTherapistRole())
 

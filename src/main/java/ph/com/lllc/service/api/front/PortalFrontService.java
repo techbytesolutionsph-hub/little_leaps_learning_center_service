@@ -8,6 +8,7 @@ import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.api.clients.AssessmentScheduleService;
@@ -121,7 +122,7 @@ public class PortalFrontService {
         return clientManagementService.getClientProfileByClientId(uuid);
     }
 
-    public Map<String, String> mapEmployeesByPositionIn(List<String> positions) {
+    public Map<String, String> mapEmployeesByPositionIn(List<EmployeePosition> positions) {
         return clientManagementService.mapEmployeesByPositionIn(positions);
     }
 

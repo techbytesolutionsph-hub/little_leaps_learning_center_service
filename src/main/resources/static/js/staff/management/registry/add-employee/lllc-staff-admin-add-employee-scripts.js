@@ -133,7 +133,8 @@ $(document).ready(function () {
         }
 
         const employeePayload = getEmployeeFormData();
-        createEmployee(employeePayload);
+        console.log(employeePayload);
+        // createEmployee(employeePayload);
     });
 
     /* Remove invalid state when user types/selects */

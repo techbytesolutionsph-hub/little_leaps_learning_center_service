@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     /* Initialized Image Upload */
-    initializeImageUpload();
+    initializeClientPhotoUpload();
 
     $('#generate-password-btn').on('click', function () {
         $.get('/api/v1/account/admin/generate-temp-password', function (response) {
@@ -11,17 +11,35 @@ $(document).ready(function () {
 
     $("#add-user-btn").on("click", function () {
 
+        const form = document.getElementById("add-client-form");
+
+        if (!form.checkValidity()) {
+            form.classList.add("was-validated");
+            return;
+        }
+
+        const password = $("#user-password").val().trim();
+
+        if (!password) {
+            $("#user-password").addClass("is-invalid");
+            return;
+        }
+
+        $("#user-password").removeClass("is-invalid");
+
         let request = {
             username: $("#user-username").val(),
             password: $("#user-password").val(),
             email: $("#user-email").val(),
             role: $("#user-role").val(),
             status: $("#user-status").val(),
-            profileImageUrl: $(".image-preview").attr("src") || ""
+            profileImageUrl: $("#clientPhotoPreview").attr("src") || "",
         }
 
-        console.log(request);
+        addUserAccount(request);
+    });
 
+    function addUserAccount(request){
         $.ajax({
             url: "/api/v1/account/admin/create",
             type: "POST",
@@ -32,9 +50,7 @@ $(document).ready(function () {
                     .prop("disabled", true)
                     .html('<span class="spinner-border spinner-border-sm me-2"></span> Creating...');
             },
-
             success: function (response) {
-
                 showSuccessThenRedirectPopup(
                     "Success",
                     response.returnMessage,
@@ -43,26 +59,20 @@ $(document).ready(function () {
                     }
                 );
             },
-
             error: function (xhr) {
-
                 let message = "Unable to create user.";
-
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     message = xhr.responseJSON.message;
                 }
-
                 showErrorPopup("Error", message);
             },
-
             complete: function () {
                 $("#add-user-btn")
                     .prop("disabled", false)
                     .html('<i class="fa-solid fa-user-plus mr-2"></i> Add User');
             }
         });
-
-    });
+    }
 
     $('#back-btn').on('click', function (e) {
         e.preventDefault();

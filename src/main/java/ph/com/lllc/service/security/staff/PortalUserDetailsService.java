@@ -30,12 +30,17 @@ public class PortalUserDetailsService implements UserDetailsService {
                 .stream()
                 .anyMatch(r ->
                         r.getUserRole().name().equals(UserRole.SUPER_ADMIN.name())
+                                || r.getUserRole().name().equals(UserRole.CHIEF_OPERATING_OFFICER.name())
                                 || r.getUserRole().name().equals(UserRole.CASE_MANAGER.name())
-                                || r.getUserRole().name().equals(UserRole.THERAPIST.name())
-                                || r.getUserRole().name().equals(UserRole.ACCOUNTING.name())
+                                || r.getUserRole().name().equals(UserRole.IT_ADMINISTRATOR.name())
+                                || r.getUserRole().name().equals(UserRole.BEHAVIORAL_THERAPIST.name())
+                                || r.getUserRole().name().equals(UserRole.ACCOUNTING_OFFICER.name())
                                 || r.getUserRole().name().equals(UserRole.SECRETARY.name())
-                                || r.getUserRole().name().equals(UserRole.HR.name())
-                                || r.getUserRole().name().equals(UserRole.EMPLOYEE.name())
+                                || r.getUserRole().name().equals(UserRole.HUMAN_RESOURCE_MANAGER.name())
+                                || r.getUserRole().name().equals(UserRole.MAINTENANCE_STAFF.name())
+                                || r.getUserRole().name().equals(UserRole.PSYCHOLOGIST.name())
+                                || r.getUserRole().name().equals(UserRole.SPEECH_LANGUAGE_PATHOLOGIST.name())
+                                || r.getUserRole().name().equals(UserRole.OCCUPATIONAL_THERAPIST.name())
                 );
 
         if (!isStaff) {

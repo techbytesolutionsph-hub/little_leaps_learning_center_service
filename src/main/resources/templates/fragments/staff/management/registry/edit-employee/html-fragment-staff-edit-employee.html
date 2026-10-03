@@ -291,12 +291,18 @@
                                                     <label for="employee-position" class="form-label text-sm fw-bold text-gray-800">Position</label>
                                                     <select class="form-control text-sm variation-discount-type" id="employee-position" th:field="*{employee.employmentInformation.position}" required>
                                                         <option value="" selected disabled>Select a position</option>
-                                                        <option value="IT Administrator">IT Administrator</option>
-                                                        <option value="HR Admin">HR Admin</option>
-                                                        <option value="Secretary">Secretary</option>
-                                                        <option value="Accounting">Accounting</option>
-                                                        <option value="Behavioral Therapist">Behavioral Therapist</option>
-                                                        <option value="Case Manager">Case Manager</option>
+                                                        <option value="SUPER_ADMIN" th:selected="${employee.employmentInformation.position.name() == 'SUPER_ADMIN'}">Super Admin</option>
+                                                        <option value="IT_ADMINISTRATOR" th:selected="${employee.employmentInformation.position.name() == 'IT_ADMINISTRATOR'}">IT Administrator</option>
+                                                        <option value="CHIEF_OPERATING_OFFICER" th:selected="${employee.employmentInformation.position.name() == 'CHIEF_OPERATING_OFFICER'}">Chief Operating Officer</option>
+                                                        <option value="HUMAN_RESOURCE_MANAGER" th:selected="${employee.employmentInformation.position.name() == 'HUMAN_RESOURCE_MANAGER'}">Human Resource Manager</option>
+                                                        <option value="CASE_MANAGER" th:selected="${employee.employmentInformation.position.name() == 'CASE_MANAGER'}">Case Manager</option>
+                                                        <option value="BEHAVIORAL_THERAPIST" th:selected="${employee.employmentInformation.position.name() == 'BEHAVIORAL_THERAPIST'}">Behavioral Therapist</option>
+                                                        <option value="SECRETARY" th:selected="${employee.employmentInformation.position.name() == 'SECRETARY'}">Secretary</option>
+                                                        <option value="ACCOUNTING_OFFICER" th:selected="${employee.employmentInformation.position.name() == 'ACCOUNTING_OFFICER'}">Accounting Officer</option>
+                                                        <option value="MAINTENANCE_STAFF" th:selected="${employee.employmentInformation.position.name() == 'MAINTENANCE_STAFF'}">Maintenance Staff</option>
+                                                        <option value="PSYCHOLOGIST" th:selected="${employee.employmentInformation.position.name() == 'PSYCHOLOGIST'}">Psychologist</option>
+                                                        <option value="SPEECH_LANGUAGE_PATHOLOGIST" th:selected="${employee.employmentInformation.position.name() == 'SPEECH_LANGUAGE_PATHOLOGIST'}">Speech-Language Pathologist</option>
+                                                        <option value="OCCUPATIONAL_THERAPIST" th:selected="${employee.employmentInformation.position.name() == 'OCCUPATIONAL_THERAPIST'}">Occupational Therapist</option>
                                                     </select>
                                                 </div>
 

@@ -16,6 +16,7 @@ import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
 import ph.com.lllc.service.security.staff.PortalUserDetails;
@@ -117,10 +118,10 @@ public class PortalViewController {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "clients", "Edit Assign Client");
 
-        Map<String, String> caseManager = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager"));
+        Map<String, String> caseManager = portalFrontService.mapEmployeesByPositionIn(List.of(EmployeePosition.CASE_MANAGER));
         model.addAttribute("caseManager", caseManager);
 
-        Map<String, String> therapist = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager", "Behavioral Therapist"));
+        Map<String, String> therapist = portalFrontService.mapEmployeesByPositionIn(List.of(EmployeePosition.CASE_MANAGER, EmployeePosition.BEHAVIORAL_THERAPIST));
         model.addAttribute("therapist", therapist);
 
         AssignedClientResponse assignment = portalFrontService.findByAssignmentId(uuid, assignmentId);
@@ -133,10 +134,10 @@ public class PortalViewController {
     public String assignClientPage(Model model) {
         this.setupPage(model, "clients", "Assign Client");
 
-        Map<String, String> caseManager = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager"));
+        Map<String, String> caseManager = portalFrontService.mapEmployeesByPositionIn(List.of(EmployeePosition.CASE_MANAGER));
         model.addAttribute("caseManager", caseManager);
 
-        Map<String, String> therapist = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager", "Behavioral Therapist"));
+        Map<String, String> therapist = portalFrontService.mapEmployeesByPositionIn(List.of(EmployeePosition.CASE_MANAGER, EmployeePosition.BEHAVIORAL_THERAPIST));
         model.addAttribute("therapist", therapist);
 
         return "staff/clients/assignment/assign/index";
@@ -201,7 +202,7 @@ public class PortalViewController {
     public String addTherapySessionAssigneePage(Model model) {
         this.setupPage(model, "clients", "Add Therapy Session Assignee");
 
-        Map<String, String> therapists = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager", "Behavioral Therapist"));
+        Map<String, String> therapists = portalFrontService.mapEmployeesByPositionIn(List.of(EmployeePosition.CASE_MANAGER, EmployeePosition.BEHAVIORAL_THERAPIST));
         model.addAttribute("therapists", therapists);
 
         return "staff/clients/client-schedule/therapy-session/add/assignee/index";
@@ -211,7 +212,7 @@ public class PortalViewController {
     public String addUpgradingProgramAssigneePage(Model model) {
         this.setupPage(model, "clients", "Add Upgrading Program Assignee");
 
-        Map<String, String> caseManagers = portalFrontService.mapEmployeesByPositionIn(List.of("Case Manager"));
+        Map<String, String> caseManagers = portalFrontService.mapEmployeesByPositionIn(List.of(EmployeePosition.CASE_MANAGER));
         model.addAttribute("caseManagers", caseManagers);
 
         return "staff/clients/client-schedule/upgrading-program/add/assignee/index";
@@ -489,16 +490,16 @@ public class PortalViewController {
         return "staff/admin/index";
     }
 
-    @GetMapping(value = "/admin/user-account/add-user")
+    @GetMapping(value = "/admin/user-account/add-user-account")
     public String adminAddUserPage(Model model) {
-        this.setupPage(model, "admin", "Add User");
+        this.setupPage(model, "admin", "Add User Account");
 
         return "staff/admin/add-user/index";
     }
 
-    @GetMapping(value = "/admin/user-account/view-user")
+    @GetMapping(value = "/admin/user-account/view-user-account")
     public String adminViewUserPage(Model model, @RequestParam("id") String username) throws ServiceException {
-        this.setupPage(model, "admin", "View User");
+        this.setupPage(model, "admin", "View User Account");
 
         AppUserResponse user = portalFrontService.findByUsername(username);
         model.addAttribute("user", user);
@@ -506,9 +507,9 @@ public class PortalViewController {
         return "staff/admin/view-user/index";
     }
 
-    @GetMapping(value = "/admin/user-account/edit-user")
+    @GetMapping(value = "/admin/user-account/edit-user-account")
     public String adminUpdateUserPage(Model model, @RequestParam("id") String username) throws ServiceException {
-        this.setupPage(model, "admin", "Update User");
+        this.setupPage(model, "admin", "Update User Account");
 
         AppUserResponse user = portalFrontService.findByUsername(username);
         model.addAttribute("user", user);

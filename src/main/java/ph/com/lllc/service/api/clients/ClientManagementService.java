@@ -18,6 +18,7 @@ import ph.com.lllc.entity.user.common.AppUser;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.AssignmentHistoryAction;
 import ph.com.lllc.enums.AssignmentStatus;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.AppClientAssignmentRepository;
 import ph.com.lllc.repository.AppUserRepository;
@@ -255,7 +256,7 @@ public class ClientManagementService {
                 .build();
     }
 
-    public Map<String, String> mapEmployeesByPositionIn(List<String> positions) {
+    public Map<String, String> mapEmployeesByPositionIn(List<EmployeePosition> positions) {
 
         List<AppEmployeeProfile> employees = appEmployeeProfileRepository.findByEmploymentInformation_PositionIn(positions);
 
@@ -278,7 +279,7 @@ public class ClientManagementService {
     }
 
     public Map<String, String> mapCaseManagers() {
-        List<AppEmployeeProfile> employees = appEmployeeProfileRepository.findByEmploymentInformation_PositionIn(List.of("Case Manager"));
+        List<AppEmployeeProfile> employees = appEmployeeProfileRepository.findByEmploymentInformation_PositionIn(List.of(EmployeePosition.CASE_MANAGER));
 
         Map<String, String> employeeMap = new LinkedHashMap<>();
 
@@ -497,7 +498,7 @@ public class ClientManagementService {
                     });
             response.setAssigneeProfileImageUrl(employee.getProfileImageUrl());
             response.setAssigneeFullName(employee.getFirstName() + " " + employee.getLastName());
-            response.setAssigneePosition(employee.getEmploymentInformation().getPosition());
+            response.setAssigneePosition(employee.getEmploymentInformation().getPosition().getDisplayPosition());
 
             AppClientProfile client = clientProfileRepository.findByClientId(report.getClientId())
                     .orElseThrow(() -> {
@@ -525,7 +526,7 @@ public class ClientManagementService {
                 });
         response.setAssigneeProfileImageUrl(employee.getProfileImageUrl());
         response.setAssigneeFullName(employee.getFirstName() + " " + employee.getLastName());
-        response.setAssigneePosition(employee.getEmploymentInformation().getPosition());
+        response.setAssigneePosition(employee.getEmploymentInformation().getPosition().getDisplayPosition());
 
         AppClientProfile client = clientProfileRepository.findByClientId(report.getClientId())
                 .orElseThrow(() -> {
@@ -631,7 +632,7 @@ public class ClientManagementService {
                                 : "-"
                 )
                 .caseManagerPosition(
-                        caseManager != null ? caseManager.getEmploymentInformation().getPosition()
+                        caseManager != null ? caseManager.getEmploymentInformation().getPosition().getDisplayPosition()
                                 : "-"
                 )
                 .caseManagerRole(response.getCaseManagerRole())
@@ -654,7 +655,7 @@ public class ClientManagementService {
                 )
                 .behavioralTherapistPosition(
                         behavioralTherapist != null
-                                ? behavioralTherapist.getEmploymentInformation().getPosition()
+                                ? behavioralTherapist.getEmploymentInformation().getPosition().getDisplayPosition()
                                 : "-"
                 )
                 .behavioralTherapistRole(response.getBehavioralTherapistRole())

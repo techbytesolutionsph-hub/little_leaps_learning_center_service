@@ -145,9 +145,12 @@ public class SecurityConfig {
                         .requestMatchers(securityPropertiesConfig.getStaffLogin())
                         .permitAll()
                         .requestMatchers(securityPropertiesConfig.getStaffPath())
-                        .hasAnyRole(UserRole.SUPER_ADMIN.name(), UserRole.CASE_MANAGER.name(),
-                                UserRole.THERAPIST.name(), UserRole.SECRETARY.name(),
-                                UserRole.ACCOUNTING.name(), UserRole.HR.name(), UserRole.EMPLOYEE.name())
+                        .hasAnyRole(UserRole.CHIEF_OPERATING_OFFICER.name(), UserRole.SUPER_ADMIN.name(),
+                                UserRole.BEHAVIORAL_THERAPIST.name(), UserRole.SECRETARY.name(),
+                                UserRole.ACCOUNTING_OFFICER.name(), UserRole.HUMAN_RESOURCE_MANAGER.name(),
+                                UserRole.IT_ADMINISTRATOR.name(), UserRole.MAINTENANCE_STAFF.name(),
+                                UserRole.PSYCHOLOGIST.name(), UserRole.SPEECH_LANGUAGE_PATHOLOGIST.name(),
+                                UserRole.OCCUPATIONAL_THERAPIST.name(), UserRole.CASE_MANAGER.name())
                         .anyRequest()
                         .authenticated()
                 )

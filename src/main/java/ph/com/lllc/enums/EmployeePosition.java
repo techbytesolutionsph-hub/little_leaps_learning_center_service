@@ -1,18 +1,25 @@
 package ph.com.lllc.enums;
 
-public enum EmployeePosition {
-    SUPER_ADMIN,
-    IT_ADMINISTRATOR,
-    CHIEF_OPERATING_OFFICER,
-    HUMAN_RESOURCE_MANAGER,
-    CASE_MANAGER,
-    SENIOR_BEHAVIORAL_THERAPIST,
-    BEHAVIORAL_THERAPIST,
-    SECRETARY,
-    ACCOUNTING_OFFICER,
-    MAINTENANCE_STAFF,
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-    PSYCHOLOGIST,
-    SPEECH_LANGUAGE_PATHOLOGIST,
-    OCCUPATIONAL_THERAPIST
+@Getter
+@AllArgsConstructor
+public enum EmployeePosition {
+    SUPER_ADMIN("Super Admin"),
+    IT_ADMINISTRATOR("IT Administrator"),
+    CHIEF_OPERATING_OFFICER("Chief Operating Officer"),
+    HUMAN_RESOURCE_MANAGER("Human Resource Manager"),
+    CASE_MANAGER("Case Manager"),
+    SENIOR_BEHAVIORAL_THERAPIST("Senior Behavioral Therapist"),
+    BEHAVIORAL_THERAPIST("Behavioral Therapist"),
+    SECRETARY("Secretary"),
+    ACCOUNTING_OFFICER("Accounting Officer"),
+    MAINTENANCE_STAFF("Maintenance Staff"),
+
+    PSYCHOLOGIST("Psychologist"),
+    SPEECH_LANGUAGE_PATHOLOGIST("Speech-Language Pathologist"),
+    OCCUPATIONAL_THERAPIST("Occupational Therapist");
+
+    private final String displayPosition;
 }

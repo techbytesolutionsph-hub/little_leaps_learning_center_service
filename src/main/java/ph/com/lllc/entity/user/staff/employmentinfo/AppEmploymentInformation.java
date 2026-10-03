@@ -30,8 +30,9 @@ public class AppEmploymentInformation {
     @Column(name = "employee_id")
     private String employeeId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "position")
-    private String position;
+    private EmployeePosition position;
 
     @Column(name = "date_hired")
     private LocalDate dateHired;

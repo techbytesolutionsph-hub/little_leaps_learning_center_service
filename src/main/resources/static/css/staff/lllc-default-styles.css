@@ -9640,39 +9640,6 @@ body.sidebar-toggled footer.sticky-footer{
     }
 }
 
-#upgradingProgramTable td,
-#upgradingProgramTable th,
-#neurodevAssessmentTable td,
-#neurodevAssessmentTable th,
-#initialAssessmentTable td,
-#initialAssessmentTable th,
-#regularAssessmentTable td,
-#regularAssessmentTable th,
-#userTable td,
-#userTable th,
-#employeeTable td,
-#employeeTable th,
-#clientTable td,
-#clientTable th {
-    color: #858796;
-    font-family: "Nunito", sans-serif;
-    font-size: 11px;
-}
-
-.ordersTable th,
-.ordersTable td {
-    font-size: 11px;
-    color: #858796;
-    font-family: "Nunito", sans-serif;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.ordersTable tbody tr:hover {
-    background-color: #f8f9fc;
-}
-
 .kpi-circle-badge {
     display: inline-flex;
     align-items: center;
@@ -10028,6 +9995,7 @@ body.sidebar-toggled footer.sticky-footer{
     color: #6da4c5;
     font-size: 12px;
     line-height: 1.5;
+    font-weight: 600;
 }
 
 /* RECENT REPORTS */

@@ -34,20 +34,22 @@ public class PortalUserDetails implements UserDetails {
         this.staffFirstName = (staff != null)
                 ? staff.getFirstName()
                 : user.getUserRole().stream().anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN)
-                ? "Super Admin" : "Staff";
+                ? "System Administrator" : "Staff";
 
         this.staffFullName = (staff != null)
                 ? staff.getFirstName() + " " + staff.getLastName()
                 : user.getUserRole().stream().anyMatch(role -> role.getUserRole() == UserRole.SUPER_ADMIN)
-                ? "Super Admin" : "Staff";
+                ? "System Administrator" : "Staff";
 
         this.employeeId = (staff != null)
                 ? staff.getEmployeeId()
                 : null;
 
         this.position = (staff != null)
-                ? staff.getEmploymentInformation().getPosition()
-                : null;
+                ? staff.getEmploymentInformation().getPosition().getDisplayPosition()
+                : (user.getUserRole().get(0).getUserRole() == UserRole.SUPER_ADMIN
+                ? "Super Admin"
+                : "Unassigned");
 
         this.profileImageUrl = this.resolveProfileImage(staff);
     }
