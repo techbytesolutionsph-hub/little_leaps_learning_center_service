@@ -88,7 +88,7 @@ public class EmployeeResponse {
     public static class EmploymentInformationResponse {
         private Long id;
         private String employeeId;
-        private String position;
+        private EmployeePosition position;
         private LocalDate dateHired;
         private LocalDate regularStartDate;
         private String address;

@@ -10,7 +10,7 @@ $(document).ready(function () {
     initializeDatePicker("#employee-salary-effective-date", "Select effective date");
 
     /* Initialized Image Upload */
-    initializeImageUpload();
+    initializeClientPhotoUpload();
 
     $("#search-credentials-btn").click(function () {
         let username = $("#employee-cred-username").val();
@@ -98,11 +98,38 @@ $(document).ready(function () {
 
                 let value = $.trim(field.val());
 
+                /* Required field validation */
                 if (!value) {
+
                     console.log("Invalid Field:", field.attr("id"));
 
                     isValid = false;
                     field.addClass("is-invalid");
+
+                    /* Email empty */
+                    if (field.attr("type") === "email") {
+                        field.next(".invalid-feedback")
+                            .text("Please enter your email.");
+                    }
+
+                    if (!firstInvalidField) {
+                        firstInvalidField = field;
+                        firstInvalidTab = field.closest(".tab-pane");
+                    }
+
+                    return true;
+                }
+
+                /* Email format validation */
+                if (field.attr("type") === "email" && !field[0].validity.valid) {
+
+                    console.log("Invalid Email:", field.attr("id"));
+
+                    isValid = false;
+                    field.addClass("is-invalid");
+
+                    field.next(".invalid-feedback")
+                        .text("Please enter a valid email address.");
 
                     if (!firstInvalidField) {
                         firstInvalidField = field;
@@ -114,15 +141,17 @@ $(document).ready(function () {
         if (!isValid) {
 
             /* Open the tab containing the first invalid field */
-            if (firstInvalidTab.length) {
+            if (firstInvalidTab && firstInvalidTab.length) {
                 let tabId = "#" + firstInvalidTab.attr("id");
                 $('.nav-link[data-bs-target="' + tabId + '"]').tab("show");
             }
 
             /* Focus the first invalid field */
-            setTimeout(function () {
-                firstInvalidField.trigger("focus");
-            }, 300);
+            if (firstInvalidField && firstInvalidField.length) {
+                setTimeout(function () {
+                    firstInvalidField.trigger("focus");
+                }, 300);
+            }
 
             showErrorPopup(
                 "Required Field",
@@ -134,7 +163,7 @@ $(document).ready(function () {
 
         const employeePayload = getEmployeeFormData();
         console.log(employeePayload);
-        // createEmployee(employeePayload);
+        createEmployee(employeePayload);
     });
 
     /* Remove invalid state when user types/selects */
@@ -152,7 +181,7 @@ $(document).ready(function () {
         }
     );
 
-    $('#back-btn').on('click', function (e) {
+    $('#back-client-btn').on('click', function (e) {
         e.preventDefault();
 
         const url = $(this).data('url');
@@ -219,7 +248,7 @@ function createEmployee(employeeRequest) {
                 "Success",
                 response.returnMessage,
                 () => {
-                    window.location.href = "/app/portal/hr-management/employee-registry";
+                    window.location.href = "/app/portal/hr-management/employee-information";
                 }
             );
         },
@@ -249,16 +278,20 @@ function getEmployeeFormData() {
             firstName: $('#employee-firstname').val(),
             middleName: $('#employee-middlename').val(),
             lastName: $('#employee-lastname').val(),
+            suffix: $('#employee-suffix').val(),
             age: Number($('#employee-age').val()) || 0,
             birthDate: $('#employee-birth-date').val(),
             gender: $('#employee-gender').val(),
             email: $('#employee-email').val(),
             phoneNumber: $('#employee-phone-no').val(),
-            maritalStatus: $('#employee-marital-status').val()
+            maritalStatus: $('#employee-marital-status').val(),
+            nationality: $('#employee-nationality').val()
         },
 
         address: {
+            blockLot: $('#employee-blk-lot').val(),
             street: $('#employee-street').val(),
+            subdivision: $('#employee-subdivision').val(),
             barangay: $('#employee-brgy option:selected').text().trim(),
             city: $('#employee-city option:selected').text().trim(),
             province: $('#employee-province option:selected').text().trim(),
@@ -269,12 +302,8 @@ function getEmployeeFormData() {
         contactInformation: {
             contactNumber: $('#employee-contact-no-home').val(),
             workEmail: $('#employee-email-work').val(),
-            homeEmail: $('#employee-email-home').val()
-        },
-
-        emergencyContact: {
-            name: $('#employee-emergency-contact-name').val(),
-            contactNumber: $('#employee-emergency-contact-no').val(),
+            emergencyContactName: $('#employee-emergency-contact-name').val(),
+            emergencyContactNumber: $('#employee-emergency-contact-no').val(),
             relationship: $('#employee-emergency-contact-relationship').val()
         },
 
@@ -287,8 +316,7 @@ function getEmployeeFormData() {
             employmentStatus: $('#employee-employment-status').val(),
             employmentType: $('#employee-employment-type').val(),
             branch: $('#employee-assign-branch').val(),
-            immediateSupervisor: $('#employee-immediate-supervisor').val(),
-            employeeType: $('#employee-type').val()
+            immediateSupervisor: $('#employee-immediate-supervisor').val()
         },
 
         benefits: {
@@ -332,7 +360,7 @@ function getEmployeeFormData() {
             status: $('#employee-cred-status').val()
         },
 
-        profileImageUrl: $('.image-preview').attr('src')
+        profileImageUrl: $("#clientPhotoPreview").attr("src") || ""
     };
 }
 

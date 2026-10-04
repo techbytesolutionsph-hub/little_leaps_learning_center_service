@@ -18,7 +18,6 @@ public class EmployeeRequest {
     private PersonalInformationDTO personalInformation;
     private AddressDTO address;
     private ContactInformationDTO contactInformation;
-    private EmergencyContactDTO emergencyContact;
     private EmploymentInformationDTO employmentInformation;
     private BenefitsDTO benefits;
     private PayrollInformationDTO payrollInformation;
@@ -32,18 +31,22 @@ public class EmployeeRequest {
         private String firstName;
         private String middleName;
         private String lastName;
+        private String suffix;
         private Integer age;
         private String birthDate;
         private Gender gender;
         private String email;
         private String phoneNumber;
         private MaritalStatus maritalStatus;
+        private Nationality nationality;
     }
 
 
     @Data
     public static class AddressDTO {
+        private String blockLot;
         private String street;
+        private String subdivision;
         private String barangay;
         private String city;
         private String province;
@@ -56,28 +59,19 @@ public class EmployeeRequest {
     public static class ContactInformationDTO {
         private String contactNumber;
         private String workEmail;
-        private String homeEmail;
-    }
-
-
-    @Data
-    public static class EmergencyContactDTO {
-        private String name;
-        private String contactNumber;
+        private String emergencyContactName;
+        private String emergencyContactNumber;
         private String relationship;
     }
-
 
     @Data
     public static class EmploymentInformationDTO {
         private EmployeePosition position;
         private String employeeIdNumber;
         private LocalDate dateHired;
-        private LocalDate regularDateStart;
         private String companyAddress;
         private EmploymentStatus employmentStatus;
         private EmploymentType employmentType;
-        private StaffType employeeType;
         private String branch;
         private String immediateSupervisor;
     }

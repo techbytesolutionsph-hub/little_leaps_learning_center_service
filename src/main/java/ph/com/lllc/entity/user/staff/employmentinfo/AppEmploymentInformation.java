@@ -43,15 +43,6 @@ public class AppEmploymentInformation {
     @Column(name = "address")
     private String address;
 
-    /**
-     * Example:
-     * EMPLOYEE
-     * TRAINEE
-     */
-    @Enumerated(EnumType.STRING)
-    @Column(name = "staff_type")
-    private StaffType staffType;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "employment_type")
     private EmploymentType employmentType;

@@ -436,9 +436,9 @@ public class PortalViewController {
     }
 
     /* HUMAN RESOURCES INFORMATION SYSTEM - START */
-    @GetMapping(value = "/hr-management/employee-registry")
+    @GetMapping(value = "/hr-management/employee-information")
     public String employeeManagementPage(Model model) {
-        this.setupPage(model, "management", "Employee Registry");
+        this.setupPage(model, "management", "Employee Information");
 
         List<EmployeeResponse> employees = portalFrontService.getEmployees();
         model.addAttribute("employees", employees);
@@ -446,17 +446,17 @@ public class PortalViewController {
         DashboardMetricsResponse kpi = portalFrontService.employeeRegistryKPIs();
         model.addAttribute("kpi", kpi);
 
-        return "staff/management/registry/index";
+        return "staff/hris/employee-information/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-registry/add-employee")
+    @GetMapping(value = "/hr-management/employee-information/add-employee")
     public String addEmployeePage(Model model) {
         this.setupPage(model, "management", "Add Employee");
 
-        return "staff/management/registry/add-employee/index";
+        return "staff/hris/employee-information/add-employee/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-registry/view-employee")
+    @GetMapping(value = "/hr-management/employee-information/view-employee")
     public String viewEmployeePage(Model model, @RequestParam("id") String employeeId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "management", "Employee Details");
@@ -464,10 +464,10 @@ public class PortalViewController {
         AppEmployeeProfile employee = portalFrontService.getAppEmployeeProfile(uuid, employeeId);
         model.addAttribute("employee", employee);
 
-        return "staff/management/registry/view-employee/index";
+        return "staff/hris/employee-information/view-employee/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-registry/edit-employee")
+    @GetMapping(value = "/hr-management/employee-information/edit-employee")
     public String editEmployeePage(Model model, @RequestParam("id") String employeeId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "management", "Edit Employee");
@@ -475,7 +475,7 @@ public class PortalViewController {
         AppEmployeeProfile employee = portalFrontService.getAppEmployeeProfile(uuid, employeeId);
         model.addAttribute("employee", employee);
 
-        return "staff/management/registry/edit-employee/index";
+        return "staff/hris/employee-information/edit-employee/index";
     }
 
     /* HUMAN RESOURCES INFORMATION SYSTEM - END */

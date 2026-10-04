@@ -70,10 +70,12 @@ public class EmploymentRegistryService {
         employee.setFirstName(personal.getFirstName());
         employee.setMiddleName(personal.getMiddleName());
         employee.setLastName(personal.getLastName());
+        employee.setSuffix(personal.getSuffix());
         employee.setDateOfBirth(LocalDate.parse(personal.getBirthDate()));
         employee.setAge(BigInteger.valueOf(personal.getAge()));
         employee.setGender(personal.getGender());
         employee.setMaritalStatus(personal.getMaritalStatus());
+        employee.setNationality(personal.getNationality());
         employee.setEmail(personal.getEmail());
         employee.setPhoneNumber(personal.getPhoneNumber());
         employee.setProfileImageUrl(request.getProfileImageUrl());
@@ -91,23 +93,12 @@ public class EmploymentRegistryService {
 
         contactInfo.setContactNumber(contact.getContactNumber());
         contactInfo.setWorkEmail(contact.getWorkEmail());
-        contactInfo.setHomeEmail(contact.getHomeEmail());
+        contactInfo.setEmergencyContactName(contact.getEmergencyContactName());
+        contactInfo.setContactNumber(contact.getEmergencyContactNumber());
+        contactInfo.setRelationship(contact.getRelationship());
 
         contactInfo.setAppEmployeeProfile(employee);
         employee.setContactInformation(contactInfo);
-
-        /*
-         * Emergency Contact
-         */
-        EmployeeRequest.EmergencyContactDTO emergency = request.getEmergencyContact();
-        AppEmployeeEmergencyContact emergencyContact = new AppEmployeeEmergencyContact();
-
-        emergencyContact.setName(emergency.getName());
-        emergencyContact.setContactNumber(emergency.getContactNumber());
-        emergencyContact.setRelationship(emergency.getRelationship());
-
-        emergencyContact.setAppEmployeeProfile(employee);
-        employee.setEmergencyContact(emergencyContact);
 
         /*
          * Address
@@ -115,7 +106,9 @@ public class EmploymentRegistryService {
         EmployeeRequest.AddressDTO addressDTO = request.getAddress();
         AppEmployeeAddress address = new AppEmployeeAddress();
 
+        address.setBlockLot(addressDTO.getBlockLot());
         address.setStreet(addressDTO.getStreet());
+        address.setSubdivision(addressDTO.getSubdivision());
         address.setBarangay(addressDTO.getBarangay());
         address.setCity(addressDTO.getCity());
         address.setProvince(addressDTO.getProvince());
@@ -134,12 +127,10 @@ public class EmploymentRegistryService {
 
         employment.setPosition(employmentDTO.getPosition());
         employment.setDateHired(employmentDTO.getDateHired());
-        employment.setRegularStartDate(employmentDTO.getRegularDateStart());
         employment.setEmployeeId(employmentDTO.getEmployeeIdNumber());
         employment.setAddress(employmentDTO.getCompanyAddress());
         employment.setBranchAssign(employmentDTO.getBranch());
         employment.setEmploymentType(employmentDTO.getEmploymentType());
-        employment.setStaffType(employmentDTO.getEmployeeType());
         employment.setEmploymentStatus(employmentDTO.getEmploymentStatus());
         employment.setImmediateSupervisor(employmentDTO.getImmediateSupervisor());
 
@@ -171,9 +162,17 @@ public class EmploymentRegistryService {
                 benefitsDTO.getHmoProvider() != null && !benefitsDTO.getHmoProvider().isBlank()
                 && benefits.getHmoCardNumber() != null && !benefits.getHmoCardNumber().isBlank()
         );
-        benefits.setSssActive(Boolean.TRUE);
-        benefits.setPagIbigActive(Boolean.TRUE);
-        benefits.setPhilHealthActive(Boolean.TRUE);
+        benefits.setSssActive(
+                benefitsDTO.getSssNumber() != null && !benefitsDTO.getSssNumber().isBlank()
+        );
+
+        benefits.setPagIbigActive(
+                benefitsDTO.getPagibigNumber() != null && !benefitsDTO.getPagibigNumber().isBlank()
+        );
+
+        benefits.setPhilHealthActive(
+                benefitsDTO.getPhilhealthNumber() != null && !benefitsDTO.getPhilhealthNumber().isBlank()
+        );
 
         benefits.setAppEmployeeProfile(employee);
         employee.setEmployeeBenefits(benefits);
@@ -194,7 +193,7 @@ public class EmploymentRegistryService {
         payroll.setPayrollCycle(payrollDTO.getPayrollCycle());
         payroll.setEffectiveDate(payrollDTO.getEffectiveDate());
 
-        payroll.setIsTaxable(Boolean.TRUE);
+        payroll.setIsTaxable(Boolean.TRUE);//To do: check if taxable or not
         payroll.setHolidayPayEligible(Boolean.TRUE);
         payroll.setOvertimeEligible(Boolean.TRUE);
         payroll.setThirteenthMonthEligible(Boolean.TRUE);
@@ -255,10 +254,12 @@ public class EmploymentRegistryService {
         employee.setFirstName(personal.getFirstName());
         employee.setMiddleName(personal.getMiddleName());
         employee.setLastName(personal.getLastName());
+        employee.setSuffix(personal.getSuffix());
         employee.setDateOfBirth(LocalDate.parse(personal.getBirthDate()));
         employee.setAge(BigInteger.valueOf(personal.getAge()));
         employee.setGender(personal.getGender());
         employee.setMaritalStatus(personal.getMaritalStatus());
+        employee.setNationality(personal.getNationality());
         employee.setEmail(personal.getEmail());
         employee.setPhoneNumber(personal.getPhoneNumber());
         employee.setProfileImageUrl(request.getProfileImageUrl());
@@ -271,17 +272,9 @@ public class EmploymentRegistryService {
 
         contactInfo.setContactNumber(contact.getContactNumber());
         contactInfo.setWorkEmail(contact.getWorkEmail());
-        contactInfo.setHomeEmail(contact.getHomeEmail());
-
-        /*
-         * Emergency Contact
-         */
-        EmployeeRequest.EmergencyContactDTO emergency = request.getEmergencyContact();
-        AppEmployeeEmergencyContact emergencyContact = employee.getEmergencyContact();
-
-        emergencyContact.setName(emergency.getName());
-        emergencyContact.setContactNumber(emergency.getContactNumber());
-        emergencyContact.setRelationship(emergency.getRelationship());
+        contactInfo.setEmergencyContactName(contact.getEmergencyContactName());
+        contactInfo.setContactNumber(contact.getEmergencyContactNumber());
+        contactInfo.setRelationship(contact.getRelationship());
 
         /*
          * Address
@@ -289,7 +282,9 @@ public class EmploymentRegistryService {
         EmployeeRequest.AddressDTO addressDTO = request.getAddress();
         AppEmployeeAddress address = employee.getAddress().get(0);
 
+        address.setBlockLot(addressDTO.getBlockLot());
         address.setStreet(addressDTO.getStreet());
+        address.setSubdivision(addressDTO.getSubdivision());
         address.setBarangay(addressDTO.getBarangay());
         address.setCity(addressDTO.getCity());
         address.setProvince(addressDTO.getProvince());
@@ -304,12 +299,10 @@ public class EmploymentRegistryService {
 
         employment.setPosition(employmentDTO.getPosition());
         employment.setDateHired(employmentDTO.getDateHired());
-        employment.setRegularStartDate(employmentDTO.getRegularDateStart());
         employment.setEmployeeId(employmentDTO.getEmployeeIdNumber());
         employment.setAddress(employmentDTO.getCompanyAddress());
         employment.setBranchAssign(employmentDTO.getBranch());
         employment.setEmploymentType(employmentDTO.getEmploymentType());
-        employment.setStaffType(employmentDTO.getEmployeeType());
         employment.setEmploymentStatus(employmentDTO.getEmploymentStatus());
         employment.setImmediateSupervisor(employmentDTO.getImmediateSupervisor());
 

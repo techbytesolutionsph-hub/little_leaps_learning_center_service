@@ -26,8 +26,14 @@ public class AppEmployeeContactInformation {
     @Column(name = "work_email")
     private String workEmail;
 
-    @Column(name = "home_email")
-    private String homeEmail;
+    @Column(name = "emergency_contact_name")
+    private String emergencyContactName;
+
+    @Column(name = "emergency_contact_number")
+    private String emergencyContactNumber;
+
+    @Column(name = "relationship")
+    private String relationship;
 
     @JsonBackReference
     @OneToOne(fetch = FetchType.LAZY)

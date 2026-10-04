@@ -21,8 +21,14 @@ public class AppEmployeeAddress {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "block_lot")
+    private String blockLot;
+
     @Column(name = "street")
     private String street;
+
+    @Column(name = "subdivision")
+    private String subdivision;
 
     @Column(name = "barangay")
     private String barangay;

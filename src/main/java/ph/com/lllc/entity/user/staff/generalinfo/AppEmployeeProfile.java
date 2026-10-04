@@ -17,6 +17,7 @@ import ph.com.lllc.entity.user.staff.payrollinfo.AppPayrollInformation;
 import ph.com.lllc.entity.user.staff.timesheet.AppWeeklyTimesheet;
 import ph.com.lllc.enums.Gender;
 import ph.com.lllc.enums.MaritalStatus;
+import ph.com.lllc.enums.Nationality;
 import ph.com.lllc.util.LocalDateUtils;
 
 import java.io.Serializable;
@@ -50,6 +51,9 @@ public class AppEmployeeProfile implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "suffix")
+    private String suffix;
+
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
@@ -59,6 +63,10 @@ public class AppEmployeeProfile implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "marital_status")
     private MaritalStatus maritalStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "nationality")
+    private Nationality nationality;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
@@ -104,10 +112,6 @@ public class AppEmployeeProfile implements Serializable {
     @JsonManagedReference
     @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
     private AppEmployeeContactInformation contactInformation;
-
-    @JsonManagedReference
-    @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
-    private AppEmployeeEmergencyContact emergencyContact;
 
     @JsonManagedReference
     @OneToOne(mappedBy = "appEmployeeProfile", cascade = CascadeType.ALL, orphanRemoval = true)
