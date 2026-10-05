@@ -9,547 +9,676 @@
     <div th:fragment="staff-edit-employee(employee)">
         <!-- Edit Employee - START -->
         <form id="edit-employee-form" autocomplete="off" class="needs-validation">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold">
-                        <i class="fa-solid fa-user-pen mr-2"></i> Edit Employee
-                    </h6>
-                    <button type="button"
-                            class="btn-glossy-teal-header d-flex justify-content-center align-items-center"
-                            id="back-btn"
-                            data-url="/app/portal/hr-management/employee-registry">
-                        <i class="bi bi-arrow-return-left mr-2"></i> Back
+            <div class="client-form-layout">
+                <div class="client-form-main">
+                    <!-- Personal Information -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-person-vcard me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Personal Information</h3>
+                                <p>Enter the employee's basic personal details and contact information.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-firstname" class="form-label text-sm fw-bold text-gray-700">First name<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-firstname" th:value="${employee.firstName}" placeholder="Enter first name" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a firstname.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-middlename" class="form-label text-sm fw-bold text-gray-700">Middle name<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-middlename" th:value="${employee.middleName}" placeholder="Enter middle name" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a middle name.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-lastname" class="form-label text-sm fw-bold text-gray-700">Last name<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-lastname" th:value="${employee.lastName}" placeholder="Enter last name" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a lastname.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-suffix" class="form-label text-sm fw-bold text-gray-700">Suffix (Ex. Jr.)</label>
+                                    <input type="text" class="form-control text-sm" id="employee-suffix" th:value="${employee.suffix}" placeholder="Enter suffix">
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-1 mb-2">
+                                    <label for="employee-age" class="form-label text-sm fw-bold text-gray-700">Age<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-age" th:value="${employee.age}" placeholder="Enter age" min="0" required>
+                                    <div class="invalid-feedback">
+                                        Please enter the employee's age.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mb-2">
+                                    <label for="employee-birth-date" class="text-sm fw-bold text-gray-700">Birthdate<span class="required">*</span></label>
+                                    <div class="date-input-wrapper">
+                                        <input type="text" id="employee-birth-date" th:value="${employee.dateOfBirth}" class="form-control" placeholder="Select birthdate" required>
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                        <div class="invalid-feedback">
+                                            Please select a birthdate.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
+                                    <select class="form-control text-sm variation-discount-type" id="employee-gender" th:field="${employee.gender}" required>
+                                        <option value="" selected disabled>Select a gender</option>
+                                        <option value="MALE">Male</option>
+                                        <option value="FEMALE">Female</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a gender.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-email" class="form-label text-sm fw-bold text-gray-700">Email<span class="required">*</span></label>
+                                    <input type="email" class="form-control text-sm" id="employee-email" th:value="${employee.email}" placeholder="Enter personal email" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid email.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-phone-no" class="form-label text-sm fw-bold text-gray-700">Phone No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-phone-no" th:value="${employee.phoneNumber}" placeholder="Enter phone number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a phone number.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-marital-status" class="form-label text-sm fw-bold text-gray-800">Marital Status<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-marital-status" th:field="${employee.maritalStatus}" required>
+                                        <option value="" selected disabled>Select marital status</option>
+                                        <option value="SINGLE">Single</option>
+                                        <option value="MARRIED">Married</option>
+                                        <option value="WIDOWED">Widowed</option>
+                                        <option value="DIVORCED">Divorced</option>
+                                        <option value="SEPARATED">Separated</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a marital status.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-nationality" class="form-label text-sm fw-bold text-gray-700">Nationality<span class="required">*</span></label>
+                                    <select class="form-select text-sm" id="employee-nationality" th:field="${employee.maritalStatus}" required>
+                                        <option value="" selected disabled>Select nationality</option>
+                                        <option value="FILIPINO">Filipino</option>
+                                        <option value="AMERICAN">American</option>
+                                        <option value="BRITISH">British</option>
+                                        <option value="CANADIAN">Canadian</option>
+                                        <option value="CHINESE">Chinese</option>
+                                        <option value="JAPANESE">Japanese</option>
+                                        <option value="KOREAN">Korean</option>
+                                        <option value="OTHER">Other</option>
+                                    </select>
+
+                                    <div class="invalid-feedback">
+                                        Please select a nationality.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Employee Address -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-geo-alt me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Employee Address</h3>
+                                <p>Provide the employee's current residential address and other relevant address details.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-blk-lot" class="form-label text-sm fw-bold text-gray-700">House/Lot/Block No.</label>
+                                    <input type="text" class="form-control text-sm" id="employee-blk-lot" th:value="${employee.address.?[permanentResidence][0].blockLot}" placeholder="Enter street">
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-street" class="form-label text-sm fw-bold text-gray-700">Street<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-street" th:value="${employee.address.?[permanentResidence][0].street}" placeholder="Enter street" required>
+                                    <div class="invalid-feedback">
+                                        Please enter street.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-subdivision" class="form-label text-sm fw-bold text-gray-700">Subdivision/Village</label>
+                                    <input type="text" class="form-control text-sm" id="employee-subdivision" th:value="${employee.address.?[permanentResidence][0].subdivision}"  placeholder="Enter street">
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-brgy" class="form-label text-sm fw-bold text-gray-700">Barangay<span class="required">*</span></label>
+                                    <select class="form-select text-sm" id="employee-brgy" disabled required>
+                                        <option value="" selected disabled>Select Barangay</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select barangay.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-city" class="form-label text-sm fw-bold text-gray-700">City/Municipality<span class="required">*</span></label>
+                                    <select class="form-select text-sm" id="employee-city" disabled required>
+                                        <option value="" selected disabled>Select City/Municipality</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select city/municipality.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-province" class="form-label text-sm fw-bold text-gray-700">Province<span class="required">*</span></label>
+                                    <select class="form-select text-sm" id="employee-province" disabled required>
+                                        <option value="" selected disabled>Select Province</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select province.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-country" class="form-label text-sm fw-bold text-gray-700">Country<span class="required">*</span></label>
+                                    <select class="form-select text-sm" id="employee-country" required>
+                                        <option value="" selected disabled>Select Country</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select country.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-postal-code" class="form-label text-sm fw-bold text-gray-700">Postal code<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-postal-code"  th:value="${employee.address.?[permanentResidence][0].zipNumber}" placeholder="Enter postal code" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a postal code.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Contact Information -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi-person-lines-fill me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Contact Information</h3>
+                                <p>Provide the employee's contact details and emergency contact information.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-contact-no-home" class="form-label text-sm fw-bold text-gray-700">Work Contact Number<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-contact-no-home" th:value="${employee.contactInformation.contactNumber}" placeholder="Enter work contact number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter work contact number.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-email-work" class="form-label text-sm fw-bold text-gray-700">Work Email<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-email-work" th:value="${employee.contactInformation.workEmail}" placeholder="Enter work email" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a valid work email.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row px-2">
+                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                    <label for="employee-emergency-contact-name" class="form-label text-sm fw-bold text-gray-700">Emergency Contact Name<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-name"  th:value="${employee.contactInformation.emergencyContactName}" placeholder="Enter contact full name" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a contact name.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                    <label for="employee-emergency-contact-no" class="form-label text-sm fw-bold text-gray-700">Emergency Contact No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-no" th:value="${employee.contactInformation.emergencyContactNumber}" placeholder="Enter contact number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter a contact no.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                    <label for="employee-emergency-contact-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="employee-emergency-contact-relationship" th:field="${employee.contactInformation.relationship}"  required>
+                                        <option value="" selected disabled>Select relationship</option>
+                                        <option value="Spouse">Spouse</option>
+                                        <option value="Father">Father</option>
+                                        <option value="Mother">Mother</option>
+                                        <option value="Son">Son</option>
+                                        <option value="Daughter">Daughter</option>
+                                        <option value="Brother">Brother</option>
+                                        <option value="Sister">Sister</option>
+                                        <option value="Grandfather">Grandfather</option>
+                                        <option value="Grandmother">Grandmother</option>
+                                        <option value="Uncle">Uncle</option>
+                                        <option value="Aunt">Aunt</option>
+                                        <option value="Cousin">Cousin</option>
+                                        <option value="Legal Guardian">Legal Guardian</option>
+                                        <option value="Partner">Partner</option>
+                                        <option value="Friend">Friend</option>
+                                        <option value="Neighbor">Neighbor</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select contact relationship.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Employment Information -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-briefcase-fill me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Employment Information</h3>
+                                <p>Provide the employee's employment details, position, department, and work assignment information.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-position" class="form-label text-sm fw-bold text-gray-800">Position<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="employee-position" th:field="${employee.employmentInformation.position}" required>
+                                        <option value="" selected disabled>Select a position</option>
+                                        <option value="CHIEF_OPERATING_OFFICER">Chief Operating Officer</option>
+                                        <option value="IT_ADMINISTRATOR">IT Administrator</option>
+                                        <option value="HUMAN_RESOURCE_MANAGER">Human Resource Manager</option>
+                                        <option value="SECRETARY">Secretary</option>
+                                        <option value="ACCOUNTING_OFFICER">Accounting Officer</option>
+                                        <option value="BEHAVIORAL_THERAPIST">Behavioral Therapist</option>
+                                        <option value="CASE_MANAGER">Case Manager</option>
+                                        <option value="MAINTENANCE_STAFF">Maintenance Staff</option>
+                                        <option value="PSYCHOLOGIST">Psychologist</option>
+                                        <option value="SPEECH_LANGUAGE_PATHOLOGIST">Speech-Language Pathologist</option>
+                                        <option value="OCCUPATIONAL_THERAPIST">Occupational Therapist</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select work position.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-id-number" class="form-label text-sm fw-bold text-gray-700">
+                                        ID Number <small class="text-muted fw-normal">(Generated after Date Hired is selected)</small><span class="required">*</span>
+                                    </label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-sm" id="employee-id-number" th:value="${employee.employmentInformation.employeeId}" placeholder="Click Generate" readonly required>
+                                        <button class="btn btn-outline-primary" type="button" id="generate-id-number-btn" disabled>
+                                            <i class="bi bi-arrow-repeat"></i>
+                                        </button>
+                                        <div class="invalid-feedback">
+                                            Please click generate ID button.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-2">
+                                    <label for="employee-date-hired" class="text-sm fw-bold text-gray-700">Date Hired<span class="required">*</span></label>
+                                    <div class="date-input-wrapper">
+                                        <input type="text" id="employee-date-hired" th:value="${employee.employmentInformation.dateHired}" class="form-control" placeholder="Select date hired" required>
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                        <div class="invalid-feedback">
+                                            Please select date hired.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-1 mb-2">
+                                    <label for="employee-immediate-supervisor" class="form-label text-sm fw-bold text-gray-700">Immediate Supervisor<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-immediate-supervisor" th:value="${employee.employmentInformation.immediateSupervisor}" placeholder="Enter immediate supervisor" required>
+                                    <div class="invalid-feedback">
+                                        Please enter immediate supervisor.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-employment-status" class="form-label text-sm fw-bold text-gray-800"> Employment Status<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-employment-status" th:field="${employee.employmentInformation.employmentStatus}" required>
+                                        <option value="" selected disabled>Select employment status</option>
+                                        <option value="ACTIVE">Active</option>
+                                        <option value="ON_LEAVE">On Leave</option>
+                                        <option value="SUSPENDED">Suspended</option>
+                                        <option value="RESIGNED">Resigned</option>
+                                        <option value="TERMINATED">Terminated</option>
+                                        <option value="RETIRED">Retired</option>
+                                        <option value="DECEASED">Deceased</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select employment status.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-employment-type" class="form-label text-sm fw-bold text-gray-800"> Employment Type<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-employment-type" th:field="${employee.employmentInformation.employmentType}" required>
+                                        <option value="" selected disabled> Select employment type</option>
+                                        <option value="REGULAR">Regular</option>
+                                        <option value="PROBATIONARY">Probationary</option>
+                                        <option value="CONTRACTUAL">Contractual</option>
+                                        <option value="CASUAL">Casual</option>
+                                        <option value="PART_TIME">Part-Time</option>
+                                        <option value="PROJECT_BASED">Project-Based</option>
+                                        <option value="APPRENTICE">Apprentice</option>
+                                        <option value="INTERN">Intern</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select employment type.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-company-address" class="form-label text-sm fw-bold text-gray-800"> Company Address<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-company-address" th:field="${employee.employmentInformation.address}" required>
+                                        <option value="" selected disabled>Select an address</option>
+                                        <option value="Brights Place Bldg Calicanto San Juan Batangas">Brights Place Bldg Calicanto San Juan Batangas</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select company address.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-assign-branch" class="form-label text-sm fw-bold text-gray-800">Assign Branch<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-assign-branch" th:field="${employee.employmentInformation.branchAssign}" required>
+                                        <option value="" selected disabled>Select assign branch</option>
+                                        <option value="San Juan Batangas">San Juan Batangas</option>
+                                        <option value="Catanauan Quezon">Catanauan Quezon</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select assign branch.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Employee Benefits -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-shield-check me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Employee Benefits</h3>
+                                <p>Provide the employee's applicable benefits, allowances, and government-mandated contributions.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <!-- Mandatory Benefits -->
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-sss-number" class="form-label text-sm fw-bold text-gray-700">SSS No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-sss-number" th:value="${employee.employeeBenefits.sssNumber}" placeholder="Enter SSS Number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter SSS No.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-pagibig-no" class="form-label text-sm fw-bold text-gray-700">Pagibig No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-pagibig-no" th:value="${employee.employeeBenefits.pagIbigNumber}" placeholder="Enter Pagibig number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter Pagibig No.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-philhealth-no" class="form-label text-sm fw-bold text-gray-700">Philhealth No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-philhealth-no" th:value="${employee.employeeBenefits.philHealthNumber}" placeholder="Enter Philhealth Number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter Philhealth No.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-tin-no" class="form-label text-sm fw-bold text-gray-700">TIN No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-tin-no"  th:value="${employee.employeeBenefits.tinNumber}" placeholder="Enter TIN number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter TIN No.
+                                    </div>
+                                </div>
+
+                                <div class="divider"></div>
+
+                                <!-- Leaves -->
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-sick-leave" class="form-label text-sm fw-bold text-gray-700">Sick Leave Credits<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-sick-leave"  th:value="${employee.employeeBenefits.sickLeave}" min="0" placeholder="Enter sick leave credits" required>
+                                    <div class="invalid-feedback">
+                                        Please enter sick leave credits.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-vacation-leave" class="form-label text-sm fw-bold text-gray-700">Vacation Leave Credits<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-vacation-leave" th:value="${employee.employeeBenefits.vacationLeave}" min="0" placeholder="Enter vacation leave credits" required>
+                                    <div class="invalid-feedback">
+                                        Please enter vacation leave credits.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-paternity-leave" class="form-label text-sm fw-bold text-gray-700">Paternity Leave Credits<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-paternity-leave" th:value="${employee.employeeBenefits.paternityLeave}" min="0" placeholder="Enter paternity leave credits" required>
+                                    <div class="invalid-feedback">
+                                        Please enter paternity leave credits.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-maternity-leave" class="form-label text-sm fw-bold text-gray-700">Maternity Leave<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-maternity-leave" th:value="${employee.employeeBenefits.maternityLeave}" min="0" placeholder="Enter maternity leave credits" required>
+                                    <div class="invalid-feedback">
+                                        Please enter maternity leave credits.
+                                    </div>
+                                </div>
+
+                                <div class="divider"></div>
+
+                                <!-- HMO-->
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-hmo-provider" class="form-label text-sm fw-bold text-gray-700">HMO Provider</label>
+                                    <input type="text" class="form-control text-sm" id="employee-hmo-provider" th:value="${employee.employeeBenefits.hmoProvider}" placeholder="Enter HMO Provider" required>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-hmo-no" class="form-label text-sm fw-bold text-gray-700">HMO No.</label>
+                                    <input type="text" class="form-control text-sm" id="employee-hmo-no" th:value="${employee.employeeBenefits.hmoCardNumber}" placeholder="Enter HMO number" required>
+                                </div>
+
+                                <div class="divider"></div>
+
+                                <!-- Allowances-->
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-allowance" class="form-label text-sm fw-bold text-gray-700">Allowance</label>
+                                    <input type="number" class="form-control text-sm" id="employee-allowance" th:value="${employee.employeeBenefits.allowance}" placeholder="Enter allowance" min="0" value="0" required>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-rice-allowance" class="form-label text-sm fw-bold text-gray-700">Rice Allowance</label>
+                                    <input type="number" class="form-control text-sm" id="employee-rice-allowance" th:value="${employee.employeeBenefits.riceAllowance}" placeholder="Enter rice allowance" min="0" value="0" required>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-transportation-allowance" class="form-label text-sm fw-bold text-gray-700">Transportation Allowance</label>
+                                    <input type="number" class="form-control text-sm" id="employee-transportation-allowance" th:value="${employee.employeeBenefits.transportationAllowance}" placeholder="Enter transportation allowance" min="0" value="0" required>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-communication-allowance" class="form-label text-sm fw-bold text-gray-700">Communication Allowance</label>
+                                    <input type="number" class="form-control text-sm" id="employee-communication-allowance" th:value="${employee.employeeBenefits.communicationAllowance}" placeholder="Enter communication allowance" min="0" value="0" required>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Payroll Information -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-cash-coin me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Payroll Information</h3>
+                                <p>Provide the employee's salary, payment details, deductions, and other payroll-related information.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-salary-type" class="form-label text-sm fw-bold text-gray-700">Salary Type<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-salary-type" th:field="${employee.payrollInformation.salaryType}" required>
+                                        <option value="" selected disabled>Select salary type</option>
+                                        <option value="MONTHLY">Monthly</option>
+                                        <option value="DAILY">Daily</option>
+                                        <option value="HOURLY">Hourly</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select salary type.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-basic-salary" class="form-label text-sm fw-bold text-gray-700">Basic Salary<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-basic-salary"  th:value="${employee.payrollInformation.basicSalary}" placeholder="Enter basic salary" min="0" required>
+                                    <div class="invalid-feedback">
+                                        Please enter basic salary.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-salary-effective-date" class="text-sm fw-bold text-gray-700">Salary Effective Date<span class="required">*</span></label>
+                                    <div class="date-input-wrapper">
+                                        <input type="text" id="employee-salary-effective-date" th:value="${employee.payrollInformation.effectiveDate}" class="form-control" placeholder="Select salary effective date" required>
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                        <div class="invalid-feedback">
+                                            Please select salary effective date.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-payroll-cycle" class="form-label text-sm fw-bold text-gray-700">Payroll Cycle<span class="required">*</span></label>
+                                    <select class="form-control text-sm" id="employee-payroll-cycle" th:field="${employee.payrollInformation.payrollCycle}" required>
+                                        <option value="" selected disabled>Select payroll cycle</option>
+                                        <option value="WEEKLY">Weekly</option>
+                                        <option value="BI_WEEKLY">Bi-Weekly</option>
+                                        <option value="SEMI_MONTHLY">Semi-Monthly</option>
+                                        <option value="MONTHLY">Monthly</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select payroll cycle.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+
+                            <div class="row px-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-bank-name" class="form-label text-sm fw-bold text-gray-700">Bank name<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-bank-name" th:value="${employee.payrollInformation.bankName}" placeholder="Enter bank name" required>
+                                    <div class="invalid-feedback">
+                                        Please enter bank name.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-bank-account-no" class="form-label text-sm fw-bold text-gray-700">Bank Account No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-bank-account-no" th:value="${employee.payrollInformation.bankAccountNumber}" placeholder="Enter bank account number" required>
+                                    <div class="invalid-feedback">
+                                        Please enter bank account number.
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="employee-bank-branch-no" class="form-label text-sm fw-bold text-gray-700">Bank Branch<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="employee-bank-branch-no" th:value="${employee.payrollInformation.bankBranch}" placeholder="Enter bank branch" required>
+                                    <div class="invalid-feedback">
+                                        Please enter bank branch.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="client-form-side">
+                    <section class="client-photo-card mb-4">
+                        <div class="client-photo-header">
+                            <h3>Employee Photo</h3>
+                            <p>Upload a employee profile photo.</p>
+                        </div>
+
+                        <div class="client-photo-body">
+                            <div id="photoDropZone" class="photo-drop-zone">
+                                <div id="photoPlaceholder"
+                                     class="photo-placeholder"
+                                     th:style="${employee.profileImageUrl != null ? 'display:none;' : 'display:flex;'}">
+                                    <div class="photo-icon">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+
+                                    <div class="photo-upload-text">
+                                        Click to upload or drag and drop
+                                    </div>
+
+                                    <div class="photo-format">
+                                        JPG, PNG (Max. 1MB)
+                                    </div>
+                                </div>
+
+                                <img id="clientPhotoPreview"
+                                     class="client-photo-preview"
+                                     th:src="${employee.profileImageUrl}"
+                                     alt="Client photo preview"
+                                     th:style="${employee.profileImageUrl != null ? 'display:block;' : 'display:none;'}">
+                                <input type="file" id="clientPhoto" name="profileImage" accept="image/jpeg,image/png,.jpg,.jpeg,.png" hidden>
+                            </div>
+
+                            <button type="button" id="choosePhotoBtn" class="choose-photo-btn"
+                                    th:style="${employee.profileImageUrl != null ? 'display:none;' : 'display:flex;'}">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                Choose File
+                            </button>
+
+                            <button type="button" id="removePhotoBtn" class="remove-photo-btn"
+                                    th:style="${employee.profileImageUrl != null ? 'display:flex;' : 'display:none;'}">
+                                <i class="fa-solid fa-trash-can"></i>
+                                Remove photo
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="client-section-footer mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btn-back fw-semibold"
+                            id="back-client-btn"
+                            data-url="/app/portal/hr-management/employee-information">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        Back
                     </button>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <!-- Left Side (Image Upload) -->
-                        <div class="col-lg-4 mb-3">
-                            <div class="card shadow mt-lg-1 mb-lg-1">
-                                <div class="card-body-white">
-                                    <div class="row px-2">
-                                        <div class="col-12 col-md-12 mt-2 mb-2">
-                                            <div class="color-upload-wrapper mt-2 mb-2">
-                                                <div class="image-preview-container">
-                                                    <img class="image-preview"
-                                                         th:src="${employee.profileImageUrl != null ? employee.profileImageUrl : '/img/lordicon/user-circle-avatar.svg'}"
-                                                         width="60"
-                                                         height="60"
-                                                         alt="Preview">
-                                                </div>
-                                            </div>
 
-                                            <label class="custom-file-upload">
-                                                <i class="bi bi-upload mr-2"></i>Upload Image
-                                                <input type="file" class="image-upload hidden-upload" accept="image/*">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right Side (Information) -->
-                        <div class="col-lg-8 mb-3">
-                            <ul class="nav nav-tabs employee-tabs" id="employeeTabs" role="tablist">
-                                <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#personal-information" type="button">
-                                        <i class="bi bi-person-vcard me-2"></i>
-                                        Personal Info
-                                    </button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#employee-address" type="button">
-                                        <i class="bi bi-geo-alt me-2"></i>
-                                        Address
-                                    </button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#contact-information" type="button">
-                                        <i class="bi-person-lines-fill me-2"></i>
-                                        Contact Info
-                                    </button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#emergency-contact" type="button">
-                                        <i class="bi bi-heart-pulse-fill me-2"></i>
-                                        Emergency Contact
-                                    </button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#employment-information" type="button">
-                                        <i class="bi bi-briefcase-fill me-2"></i>
-                                        Employment Info
-                                    </button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#employment-benefits" type="button">
-                                        <i class="bi bi-shield-check me-2"></i>
-                                        Benefits
-                                    </button>
-                                </li>
-
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#payroll-information" type="button">
-                                        <i class="bi bi-cash-coin me-2"></i>
-                                        Payroll Info
-                                    </button>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="personal-information">
-                                    <!-- Personal Information Card -->
-                                    <div class="card shadow mb-lg-1">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-firstname" class="form-label text-sm fw-bold text-gray-700">First name</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-firstname" placeholder="Enter first name" th:value="${employee.firstName}" disabled required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-middlename" class="form-label text-sm fw-bold text-gray-700">Middle name</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-middlename" placeholder="Enter middle name" th:value="${employee.middleName}" disabled required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-lastname" class="form-label text-sm fw-bold text-gray-700">Last name</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-lastname" placeholder="Enter last name" th:value="${employee.lastName}" disabled required>
-                                                </div>
-                                            </div>
-
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-age" class="form-label text-sm fw-bold text-gray-700">Age</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-age" placeholder="Enter age" min="0" th:value="${employee.age}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-birth-date" class="text-sm fw-bold text-gray-700">Birthdate</label>
-                                                    <div class="date-input-wrapper">
-                                                        <input type="text" id="employee-birth-date" class="form-control" placeholder="Select birthdate" th:value="${employee.dateOfBirth}" required>
-                                                        <i class="bi bi-calendar-event calendar-icon"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
-                                                    <select class="form-control text-sm variation-discount-type" id="employee-gender" required>
-                                                        <option value="" selected disabled>Select a gender</option>
-                                                        <option value="MALE" th:selected="${employee.gender.name() == 'MALE'}">Male</option>
-                                                        <option value="FEMALE" th:selected="${employee.gender.name() == 'FEMALE'}">Female</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-email" placeholder="Enter email" th:value="${employee.email}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-phone-no" class="form-label text-sm fw-bold text-gray-700">Phone No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-phone-no" placeholder="Enter phone number" th:value="${employee.phoneNumber}" required>
-                                                </div>
-
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-marital-status" class="form-label text-sm fw-bold text-gray-800">Marital Status</label>
-                                                    <select class="form-control text-sm" id="employee-marital-status" required>
-                                                        <option value="" selected disabled>Select marital status</option>
-                                                        <option value="SINGLE" th:selected="${employee.maritalStatus.name() == 'SINGLE'}">Single</option>
-                                                        <option value="MARRIED" th:selected="${employee.maritalStatus.name() == 'MARRIED'}">Married</option>
-                                                        <option value="WIDOWED" th:selected="${employee.maritalStatus.name() == 'WIDOWED'}">Widowed</option>
-                                                        <option value="DIVORCED" th:selected="${employee.maritalStatus.name() == 'DIVORCED'}">Divorced</option>
-                                                        <option value="SEPARATED" th:selected="${employee.maritalStatus.name() == 'SEPARATED'}">Separated</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="employee-address">
-                                    <!-- Address Card -->
-                                    <div class="card shadow mb-3">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-12 mt-2 mb-2">
-                                                    <label for="employee-street" class="form-label text-sm fw-bold text-gray-700">Street</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-street" placeholder="Enter street" th:value="${employee.address[0].street}" required>
-                                                </div>
-                                            </div>
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-brgy" class="form-label text-sm fw-bold text-gray-700">Barangay</label>
-                                                    <select class="form-select text-sm" id="employee-brgy" disabled required>
-                                                        <option value="" selected disabled>Select Barangay</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-city" class="form-label text-sm fw-bold text-gray-700">City/Municipality</label>
-                                                    <select class="form-select text-sm" id="employee-city" disabled required>
-                                                        <option value="" selected disabled>Select City/Municipality</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-province" class="form-label text-sm fw-bold text-gray-700">Province</label>
-                                                    <select class="form-select text-sm" id="employee-province" disabled required>
-                                                        <option value="" selected disabled>Select Province</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-country" class="form-label text-sm fw-bold text-gray-700">Country</label>
-                                                    <select class="form-select text-sm" id="employee-country" required>
-                                                        <option value="" selected disabled>Select Country</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-postal-code" class="form-label text-sm fw-bold text-gray-700">Postal code</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-postal-code" placeholder="Enter postal code" th:value="${employee.address[0].zipNumber}" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="contact-information">
-                                    <!-- Contact Information -->
-                                    <div class="card shadow mb-lg-1">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-contact-no-home" class="form-label text-sm fw-bold text-gray-700">Contact No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-contact-no-home" placeholder="Enter contact number" th:value="${employee.contactInformation.contactNumber}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-email-work" class="form-label text-sm fw-bold text-gray-700">Email - Work</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-email-work" placeholder="Enter email" th:value="${employee.contactInformation.workEmail}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-email-home" class="form-label text-sm fw-bold text-gray-700">Email - Primary (Home)</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-email-home" placeholder="Enter email" th:value="${employee.contactInformation.homeEmail}" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="emergency-contact">
-                                    <!-- Emergency Contact -->
-                                    <div class="card shadow mb-lg-1">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-emergency-contact-name" class="form-label text-sm fw-bold text-gray-700">Emergency Contact Name</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-name" placeholder="Enter full name" th:value="${employee.emergencyContact.name}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-emergency-contact-no" class="form-label text-sm fw-bold text-gray-700">Contact No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-no" placeholder="Enter contact number" th:value="${employee.emergencyContact.contactNumber}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-emergency-contact-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship</label>
-                                                    <select class="form-control text-sm"
-                                                            id="employee-emergency-contact-relationship"
-                                                            th:field="*{employee.emergencyContact.relationship}"
-                                                            required>
-                                                        <option value="" selected disabled>Select relationship</option>
-                                                        <option th:value="'Spouse'">Spouse</option>
-                                                        <option th:value="'Father'">Father</option>
-                                                        <option th:value="'Mother'">Mother</option>
-                                                        <option th:value="'Son'">Son</option>
-                                                        <option th:value="'Daughter'">Daughter</option>
-                                                        <option th:value="'Brother'">Brother</option>
-                                                        <option th:value="'Sister'">Sister</option>
-                                                        <option th:value="'Grandfather'">Grandfather</option>
-                                                        <option th:value="'Grandmother'">Grandmother</option>
-                                                        <option th:value="'Uncle'">Uncle</option>
-                                                        <option th:value="'Aunt'">Aunt</option>
-                                                        <option th:value="'Cousin'">Cousin</option>
-                                                        <option th:value="'Legal Guardian'">Legal Guardian</option>
-                                                        <option th:value="'Partner'">Partner</option>
-                                                        <option th:value="'Friend'">Friend</option>
-                                                        <option th:value="'Neighbor'">Neighbor</option>
-                                                        <option th:value="'Other'">Other</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="employment-information">
-                                    <div class="card shadow mb-lg-1">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-position" class="form-label text-sm fw-bold text-gray-800">Position</label>
-                                                    <select class="form-control text-sm variation-discount-type" id="employee-position" th:field="*{employee.employmentInformation.position}" required>
-                                                        <option value="" selected disabled>Select a position</option>
-                                                        <option value="SUPER_ADMIN" th:selected="${employee.employmentInformation.position.name() == 'SUPER_ADMIN'}">Super Admin</option>
-                                                        <option value="IT_ADMINISTRATOR" th:selected="${employee.employmentInformation.position.name() == 'IT_ADMINISTRATOR'}">IT Administrator</option>
-                                                        <option value="CHIEF_OPERATING_OFFICER" th:selected="${employee.employmentInformation.position.name() == 'CHIEF_OPERATING_OFFICER'}">Chief Operating Officer</option>
-                                                        <option value="HUMAN_RESOURCE_MANAGER" th:selected="${employee.employmentInformation.position.name() == 'HUMAN_RESOURCE_MANAGER'}">Human Resource Manager</option>
-                                                        <option value="CASE_MANAGER" th:selected="${employee.employmentInformation.position.name() == 'CASE_MANAGER'}">Case Manager</option>
-                                                        <option value="BEHAVIORAL_THERAPIST" th:selected="${employee.employmentInformation.position.name() == 'BEHAVIORAL_THERAPIST'}">Behavioral Therapist</option>
-                                                        <option value="SECRETARY" th:selected="${employee.employmentInformation.position.name() == 'SECRETARY'}">Secretary</option>
-                                                        <option value="ACCOUNTING_OFFICER" th:selected="${employee.employmentInformation.position.name() == 'ACCOUNTING_OFFICER'}">Accounting Officer</option>
-                                                        <option value="MAINTENANCE_STAFF" th:selected="${employee.employmentInformation.position.name() == 'MAINTENANCE_STAFF'}">Maintenance Staff</option>
-                                                        <option value="PSYCHOLOGIST" th:selected="${employee.employmentInformation.position.name() == 'PSYCHOLOGIST'}">Psychologist</option>
-                                                        <option value="SPEECH_LANGUAGE_PATHOLOGIST" th:selected="${employee.employmentInformation.position.name() == 'SPEECH_LANGUAGE_PATHOLOGIST'}">Speech-Language Pathologist</option>
-                                                        <option value="OCCUPATIONAL_THERAPIST" th:selected="${employee.employmentInformation.position.name() == 'OCCUPATIONAL_THERAPIST'}">Occupational Therapist</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-id-number" class="form-label text-sm fw-bold text-gray-700">
-                                                        ID Number <small class="text-muted fw-normal">(Generated after Date Hired is selected)</small>
-                                                    </label>
-
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control text-sm" id="employee-id-number" placeholder="Click Generate" th:value="${employee.employeeId}" readonly required>
-                                                        <button class="btn btn-outline-primary" type="button" id="generate-id-number-btn" disabled>
-                                                            <i class="bi bi-arrow-repeat"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-date-hired" class="text-sm fw-bold text-gray-700">Date Hired</label>
-                                                    <div class="date-input-wrapper">
-                                                        <input type="text" id="employee-date-hired" class="form-control" placeholder="Select date hired" th:value="${employee.employmentInformation.dateHired}" required>
-                                                        <i class="bi bi-calendar-event calendar-icon"></i>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-regular-date-start" class="text-sm fw-bold text-gray-700">Regular Date Start</label>
-                                                    <div class="date-input-wrapper">
-                                                        <input type="text" id="employee-regular-date-start" class="form-control" placeholder="Select regular date start" th:value="${employee.employmentInformation.regularStartDate}" required>
-                                                        <i class="bi bi-calendar-event calendar-icon"></i>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 col-md-12 mt-2 mb-2">
-                                                    <label for="employee-company-address" class="form-label text-sm fw-bold text-gray-800"> Company Address </label>
-                                                    <select class="form-control text-sm" id="employee-company-address" th:field="*{employee.employmentInformation.address}" required>
-                                                        <option value="" selected disabled>Select an address</option>
-                                                        <option value="Brights Place Bldg Calicanto San Juan Batangas">Brights Place Bldg Calicanto San Juan Batangas</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-employment-status" class="form-label text-sm fw-bold text-gray-800"> Employment Status </label>
-                                                    <select class="form-control text-sm" id="employee-employment-status" th:field="*{employee.employmentInformation.employmentStatus}" required>
-                                                        <option value="" selected disabled>Select employment status</option>
-                                                        <option value="ACTIVE">Active</option>
-                                                        <option value="ON_LEAVE">On Leave</option>
-                                                        <option value="SUSPENDED">Suspended</option>
-                                                        <option value="RESIGNED">Resigned</option>
-                                                        <option value="TERMINATED">Terminated</option>
-                                                        <option value="RETIRED">Retired</option>
-                                                        <option value="DECEASED">Deceased</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-employment-type" class="form-label text-sm fw-bold text-gray-800"> Employment Type </label>
-                                                    <select class="form-control text-sm" id="employee-employment-type" th:field="*{employee.employmentInformation.employmentType}" required>
-                                                        <option value="" selected disabled> Select employment type</option>
-                                                        <option value="REGULAR">Regular</option>
-                                                        <option value="PROBATIONARY">Probationary</option>
-                                                        <option value="CONTRACTUAL">Contractual</option>
-                                                        <option value="CASUAL">Casual</option>
-                                                        <option value="PART_TIME">Part-Time</option>
-                                                        <option value="PROJECT_BASED">Project-Based</option>
-                                                        <option value="APPRENTICE">Apprentice</option>
-                                                        <option value="INTERN">Intern</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-type" class="form-label text-sm fw-bold text-gray-800">Employee Type</label>
-                                                    <select class="form-control text-sm variation-discount-type" id="employee-type" required>
-                                                        <option value="" selected disabled>Select an employee type</option>
-                                                        <option value="EMPLOYEE" th:selected="${employee.employmentInformation.staffType.name() == 'EMPLOYEE'}">Employee</option>
-                                                        <option value="TRAINEE" th:selected="${employee.employmentInformation.staffType.name() == 'TRAINEE'}">Trainee</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-assign-branch" class="form-label text-sm fw-bold text-gray-800"> Assign Branch </label>
-                                                    <select class="form-control text-sm" id="employee-assign-branch" th:field="*{employee.employmentInformation.branchAssign}" required>
-                                                        <option value="" selected disabled>Select assign branch</option>
-                                                        <option value="San Juan Batangas">San Juan Batangas</option>
-                                                        <option value="Catanauan Quezon">Catanauan Quezon</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-immediate-supervisor" class="form-label text-sm fw-bold text-gray-700">Immediate Supervisor</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-immediate-supervisor" placeholder="Enter immediate supervisor" th:value="${employee.employmentInformation.immediateSupervisor}" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="employment-benefits">
-                                    <div class="card shadow mb-lg-1">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <!-- Mandatory Benefits -->
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-sss-number" class="form-label text-sm fw-bold text-gray-700">SSS No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-sss-number" placeholder="Enter SSS Number" th:value="${employee.employeeBenefits.sssNumber}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-pagibig-no" class="form-label text-sm fw-bold text-gray-700">Pagibig No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-pagibig-no" placeholder="Enter Pagibig number" th:value="${employee.employeeBenefits.pagIbigNumber}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-philhealth-no" class="form-label text-sm fw-bold text-gray-700">Philhealth No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-philhealth-no" placeholder="Enter Philhealth Number" th:value="${employee.employeeBenefits.philHealthNumber}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-tin-no" class="form-label text-sm fw-bold text-gray-700">TIN No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-tin-no" placeholder="Enter TIN number" th:value="${employee.employeeBenefits.tinNumber}" required>
-                                                </div>
-
-                                                <!-- Leaves -->
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-sick-leave" class="form-label text-sm fw-bold text-gray-700">Sick Leave</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-sick-leave" min="0" placeholder="Enter sick leave" th:value="${employee.employeeBenefits.sickLeave}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-vacation-leave" class="form-label text-sm fw-bold text-gray-700">Vacation Leave</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-vacation-leave" min="0" placeholder="Enter vacation leave" th:value="${employee.employeeBenefits.vacationLeave}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-paternity-leave" class="form-label text-sm fw-bold text-gray-700">Paternity Leave</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-paternity-leave" min="0" placeholder="Enter paternity leave"  th:value="${employee.employeeBenefits.paternityLeave}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-maternity-leave" class="form-label text-sm fw-bold text-gray-700">Maternity Leave</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-maternity-leave" min="0" placeholder="Enter maternity leave" th:value="${employee.employeeBenefits.maternityLeave}" required>
-                                                </div>
-
-                                                <!-- HMO-->
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-hmo-provider" class="form-label text-sm fw-bold text-gray-700">HMO Provider</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-hmo-provider" placeholder="Enter HMO Provider" th:value="${employee.employeeBenefits.hmoProvider}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-hmo-no" class="form-label text-sm fw-bold text-gray-700">HMO No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-hmo-no" placeholder="Enter HMO number"  th:value="${employee.employeeBenefits.hmoCardNumber}" required>
-                                                </div>
-
-                                                <!-- Allowances-->
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-allowance" class="form-label text-sm fw-bold text-gray-700">Allowance</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-allowance" placeholder="Enter allowance" min="0" value="0" th:value="${employee.employeeBenefits.allowance}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-rice-allowance" class="form-label text-sm fw-bold text-gray-700">Rice Allowance</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-rice-allowance" placeholder="Enter rice allowance" min="0" value="0" th:value="${employee.employeeBenefits.riceAllowance}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-transportation-allowance" class="form-label text-sm fw-bold text-gray-700">Transportation Allowance</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-transportation-allowance" placeholder="Enter transportation allowance" min="0" value="0" th:value="${employee.employeeBenefits.transportationAllowance}" required>
-                                                </div>
-                                                <div class="col-12 col-md-6 mt-2 mb-2">
-                                                    <label for="employee-communication-allowance" class="form-label text-sm fw-bold text-gray-700">Communication Allowance</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-communication-allowance" placeholder="Enter communication allowance" min="0" value="0" th:value="${employee.employeeBenefits.communicationAllowance}" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane fade" id="payroll-information">
-                                    <div class="card shadow mb-lg-1">
-                                        <div class="card-body-white mt-lg-1 mb-lg-1">
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-basic-salary" class="form-label text-sm fw-bold text-gray-700">Basic Salary</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-basic-salary" placeholder="Enter basic salary" min="0" value="0" th:value="${employee.payrollInformation.basicSalary}" required>
-                                                </div>
-
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-daily-rate" class="form-label text-sm fw-bold text-gray-700">Daily Rate</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-daily-rate" placeholder="Enter daily rate" value="0" min="0" th:value="${employee.payrollInformation.dailyRate}" required>
-                                                </div>
-
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-hourly-rate" class="form-label text-sm fw-bold text-gray-700">Hourly Rate</label>
-                                                    <input type="number" class="form-control text-sm" id="employee-hourly-rate" placeholder="Enter hourly rate" value="0" min="0" th:value="${employee.payrollInformation.hourlyRate}" required>
-                                                </div>
-                                            </div>
-                                            <div class="row px-2">
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-salary-type" class="form-label text-sm fw-bold text-gray-700">Salary Type</label>
-                                                    <select class="form-select text-sm" id="employee-salary-type" th:field="*{employee.payrollInformation.salaryType}" required>
-                                                        <option value="" selected disabled>Select salary type</option>
-                                                        <option value="MONTHLY">Monthly</option>
-                                                        <option value="DAILY">Daily</option>
-                                                        <option value="HOURLY">Hourly</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-payroll-cycle" class="form-label text-sm fw-bold text-gray-700">Payroll Cycle</label>
-                                                    <select class="form-select text-sm" id="employee-payroll-cycle" th:field="*{employee.payrollInformation.payrollCycle}" required>
-                                                        <option value="" selected disabled>Select payroll cycle</option>
-                                                        <option value="WEEKLY">Weekly</option>
-                                                        <option value="BI_WEEKLY">Bi-Weekly</option>
-                                                        <option value="SEMI_MONTHLY">Semi-Monthly</option>
-                                                        <option value="MONTHLY">Monthly</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-salary-effective-date" class="text-sm fw-bold text-gray-700">Salary Effective Date</label>
-                                                    <div class="date-input-wrapper">
-                                                        <input type="text" id="employee-salary-effective-date" class="form-control" placeholder="Select salary effective date" th:value="${employee.payrollInformation.effectiveDate}" required>
-                                                        <i class="bi bi-calendar-event calendar-icon"></i>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-bank-name" class="form-label text-sm fw-bold text-gray-700">Bank name</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-bank-name" placeholder="Enter bank name" th:value="${employee.payrollInformation.bankName}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-bank-account-no" class="form-label text-sm fw-bold text-gray-700">Bank Account No.</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-bank-account-no" placeholder="Enter bank account number" th:value="${employee.payrollInformation.bankAccountNumber}" required>
-                                                </div>
-                                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                                    <label for="employee-bank-branch-no" class="form-label text-sm fw-bold text-gray-700">Bank Branch</label>
-                                                    <input type="text" class="form-control text-sm" id="employee-bank-branch-no" placeholder="Enter bank branch" th:value="${employee.payrollInformation.bankBranch}" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-secondary fw-semibold" id="update-employee-btn">
-                            <i class="fa-solid fa-user-check mr-2"></i>
-                            Update Employee
-                        </button>
-                    </div>
+                    <button type="button" class="btn btn-submit fw-semibold" id="add-employee-btn">
+                        <i class="fa-solid fa-user-plus mr-2"></i>
+                        Update Employee
+                    </button>
                 </div>
             </div>
         </form>
-        <!-- Add Employee - END -->
+        <!-- Edit Employee - END -->
     </div>
 </html>

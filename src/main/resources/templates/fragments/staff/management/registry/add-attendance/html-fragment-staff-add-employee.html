@@ -458,6 +458,8 @@
                                     </div>
                                 </div>
 
+                                <div class="divider"></div>
+
                                 <!-- Leaves -->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-sick-leave" class="form-label text-sm fw-bold text-gray-700">Sick Leave Credits<span class="required">*</span></label>
@@ -488,6 +490,8 @@
                                     </div>
                                 </div>
 
+                                <div class="divider"></div>
+
                                 <!-- HMO-->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-hmo-provider" class="form-label text-sm fw-bold text-gray-700">HMO Provider</label>
@@ -497,6 +501,8 @@
                                     <label for="employee-hmo-no" class="form-label text-sm fw-bold text-gray-700">HMO No.</label>
                                     <input type="text" class="form-control text-sm" id="employee-hmo-no" placeholder="Enter HMO number" required>
                                 </div>
+
+                                <div class="divider"></div>
 
                                 <!-- Allowances-->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
@@ -532,32 +538,7 @@
                         </div>
                         <div class="client-section-body">
                             <div class="row px-2">
-                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                    <label for="employee-basic-salary" class="form-label text-sm fw-bold text-gray-700">Basic Salary<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-basic-salary" placeholder="Enter basic salary" min="0" required>
-                                    <div class="invalid-feedback">
-                                        Please enter basic salary.
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                    <label for="employee-daily-rate" class="form-label text-sm fw-bold text-gray-700">Daily Rate<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-daily-rate" placeholder="Enter daily rate" min="0" required>
-                                    <div class="invalid-feedback">
-                                        Please enter daily rate.
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                    <label for="employee-hourly-rate" class="form-label text-sm fw-bold text-gray-700">Hourly Rate<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-hourly-rate" placeholder="Enter hourly rate" min="0" required>
-                                    <div class="invalid-feedback">
-                                        Please enter hourly rate.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row px-2">
-                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-salary-type" class="form-label text-sm fw-bold text-gray-700">Salary Type<span class="required">*</span></label>
                                     <select class="form-control text-sm" id="employee-salary-type" required>
                                         <option value="" selected disabled>Select salary type</option>
@@ -570,7 +551,26 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-basic-salary" class="form-label text-sm fw-bold text-gray-700">Basic Salary<span class="required">*</span></label>
+                                    <input type="number" class="form-control text-sm" id="employee-basic-salary" placeholder="Enter basic salary" min="0" required>
+                                    <div class="invalid-feedback">
+                                        Please enter basic salary.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-salary-effective-date" class="text-sm fw-bold text-gray-700">Salary Effective Date<span class="required">*</span></label>
+                                    <div class="date-input-wrapper">
+                                        <input type="text" id="employee-salary-effective-date" class="form-control" placeholder="Select salary effective date" required>
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                        <div class="invalid-feedback">
+                                            Please select salary effective date.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-payroll-cycle" class="form-label text-sm fw-bold text-gray-700">Payroll Cycle<span class="required">*</span></label>
                                     <select class="form-control text-sm" id="employee-payroll-cycle" required>
                                         <option value="" selected disabled>Select payroll cycle</option>
@@ -583,33 +583,27 @@
                                         Please select payroll cycle.
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-12 col-md-4 mt-2 mb-2">
-                                    <label for="employee-salary-effective-date" class="text-sm fw-bold text-gray-700">Salary Effective Date<span class="required">*</span></label>
-                                    <div class="date-input-wrapper">
-                                        <input type="text" id="employee-salary-effective-date" class="form-control" placeholder="Select salary effective date" required>
-                                        <i class="bi bi-calendar-event calendar-icon"></i>
-                                        <div class="invalid-feedback">
-                                            Please select salary effective date.
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="divider"></div>
 
-                                <div class="col-12 col-md-4 mt-2 mb-2">
+                            <div class="row px-2">
+
+                                <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-bank-name" class="form-label text-sm fw-bold text-gray-700">Bank name<span class="required">*</span></label>
                                     <input type="text" class="form-control text-sm" id="employee-bank-name" placeholder="Enter bank name" required>
                                     <div class="invalid-feedback">
                                         Please enter bank name.
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-bank-account-no" class="form-label text-sm fw-bold text-gray-700">Bank Account No.<span class="required">*</span></label>
                                     <input type="text" class="form-control text-sm" id="employee-bank-account-no" placeholder="Enter bank account number" required>
                                     <div class="invalid-feedback">
                                         Please enter bank account number.
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4 mt-2 mb-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-bank-branch-no" class="form-label text-sm fw-bold text-gray-700">Bank Branch<span class="required">*</span></label>
                                     <input type="text" class="form-control text-sm" id="employee-bank-branch-no" placeholder="Enter bank branch" required>
                                     <div class="invalid-feedback">

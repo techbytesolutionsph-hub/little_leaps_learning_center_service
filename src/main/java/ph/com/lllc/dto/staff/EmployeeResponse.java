@@ -20,12 +20,14 @@ public class EmployeeResponse {
     private String firstName;
     private String middleName;
     private String lastName;
+    private String suffix;
     private LocalDate dateOfBirth;
     private BigInteger age;
+    private MaritalStatus maritalStatus;
     private Gender gender;
     private String email;
     private String phoneNumber;
-    private StaffType staffType;
+    private Nationality nationality;
     private String profileImageUrl;
     private Boolean profileCompleted;
     private Boolean emailVerified;
@@ -67,7 +69,9 @@ public class EmployeeResponse {
         private Long id;
         private String contactNumber;
         private String workEmail;
-        private String homeEmail;
+        private String emergencyContactName;
+        private String emergencyContactNumber;
+        private String relationship;
     }
 
     @Getter

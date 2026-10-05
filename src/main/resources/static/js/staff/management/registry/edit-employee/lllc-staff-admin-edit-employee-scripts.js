@@ -10,7 +10,31 @@ $(document).ready(function () {
     initializeDatePicker("#employee-salary-effective-date", "Select effective date");
 
     /* Initialized Image Upload */
-    initializeImageUpload();
+    initializeClientPhotoUpload();
+
+    $("#search-credentials-btn").click(function () {
+        let username = $("#employee-cred-username").val();
+
+        if (!username) {
+            showErrorPopup("Required Field", "Please enter username");
+            return;
+        }
+
+        getUserByUsername(username);
+    });
+
+    $("#generate-id-number-btn").click(function () {
+        let dateHired = $("#employee-date-hired").val();
+
+        if (!dateHired) {
+            showErrorPopup("Required Field", "Please select Date Hired first.");
+            return;
+        }
+
+        let mmdd = dateHired.substring(5, 7) + dateHired.substring(8, 10);
+
+        getRunningSequence(mmdd);
+    });
 
     $(document).on("change", "#employee-gender", function () {
 
@@ -21,34 +45,34 @@ $(document).ready(function () {
 
         if (gender === "MALE") {
 
-            /* Disable Maternity Leave */
+            // Disable Maternity Leave
             maternity.val(0)
                 .prop("disabled", true)
                 .removeClass("is-invalid");
 
-            /* Enable Paternity Leave */
+            // Enable Paternity Leave
             paternity.prop("disabled", false);
 
         } else if (gender === "FEMALE") {
 
-            /* Disable Paternity Leave */
+            // Disable Paternity Leave
             paternity.val(0)
                 .prop("disabled", true)
                 .removeClass("is-invalid");
 
-            /* Enable Maternity Leave */
+            // Enable Maternity Leave
             maternity.prop("disabled", false);
 
         } else {
 
-            /* Enable both if no gender selected */
+            // Enable both if no gender selected
             maternity.prop("disabled", false);
             paternity.prop("disabled", false);
         }
 
     });
 
-    $("#update-employee-btn").on("click", function (e) {
+    $("#add-employee-btn").on("click", function (e) {
 
         e.preventDefault();
 
@@ -57,11 +81,11 @@ $(document).ready(function () {
         let firstInvalidField = null;
 
         /* Remove previous validation styles */
-        $("#edit-employee-form .form-control, #edit-employee-form .form-select")
+        $("#add-employee-form .form-control, #add-employee-form .form-select")
             .removeClass("is-invalid");
 
         /* Validate all required fields except HMO fields */
-        $("#edit-employee-form [required]")
+        $("#add-employee-form [required]")
             .not("#employee-hmo-provider, #employee-hmo-no")
             .each(function () {
 
@@ -74,11 +98,38 @@ $(document).ready(function () {
 
                 let value = $.trim(field.val());
 
+                /* Required field validation */
                 if (!value) {
+
                     console.log("Invalid Field:", field.attr("id"));
 
                     isValid = false;
                     field.addClass("is-invalid");
+
+                    /* Email empty */
+                    if (field.attr("type") === "email") {
+                        field.next(".invalid-feedback")
+                            .text("Please enter your email.");
+                    }
+
+                    if (!firstInvalidField) {
+                        firstInvalidField = field;
+                        firstInvalidTab = field.closest(".tab-pane");
+                    }
+
+                    return true;
+                }
+
+                /* Email format validation */
+                if (field.attr("type") === "email" && !field[0].validity.valid) {
+
+                    console.log("Invalid Email:", field.attr("id"));
+
+                    isValid = false;
+                    field.addClass("is-invalid");
+
+                    field.next(".invalid-feedback")
+                        .text("Please enter a valid email address.");
 
                     if (!firstInvalidField) {
                         firstInvalidField = field;
@@ -90,15 +141,17 @@ $(document).ready(function () {
         if (!isValid) {
 
             /* Open the tab containing the first invalid field */
-            if (firstInvalidTab.length) {
+            if (firstInvalidTab && firstInvalidTab.length) {
                 let tabId = "#" + firstInvalidTab.attr("id");
                 $('.nav-link[data-bs-target="' + tabId + '"]').tab("show");
             }
 
             /* Focus the first invalid field */
-            setTimeout(function () {
-                firstInvalidField.trigger("focus");
-            }, 300);
+            if (firstInvalidField && firstInvalidField.length) {
+                setTimeout(function () {
+                    firstInvalidField.trigger("focus");
+                }, 300);
+            }
 
             showErrorPopup(
                 "Required Field",
@@ -109,36 +162,25 @@ $(document).ready(function () {
         }
 
         const employeePayload = getEmployeeFormData();
-        console.log(employeePayload);
-
         updateEmployee(employeePayload);
     });
 
-
-    /* Remove validation style while typing/selecting */
-    $("#edit-employee-form").on(
-        "input change",
-        ".form-control, .form-select",
-        function () {
-            $(this).removeClass("is-invalid");
-        }
-    );
-
-
     /* Remove invalid state when user types/selects */
-    $("#edit-employee-form").on(
+    function clearInvalidState($field) {
+        if ($field.val() && $field.val().trim() !== "") {
+            $field.removeClass("is-invalid");
+        }
+    }
+
+    $("#add-employee-form").on(
         "input change",
         ".form-control, .form-select",
         function () {
-
-            if ($(this).val()) {
-                $(this).removeClass("is-invalid");
-            }
-
+            clearInvalidState($(this));
         }
     );
 
-    $('#back-btn').on('click', function (e) {
+    $('#back-client-btn').on('click', function (e) {
         e.preventDefault();
 
         const url = $(this).data('url');
@@ -154,6 +196,44 @@ $(document).ready(function () {
     });
 });
 
+function getUserByUsername(username) {
+    $.ajax({
+        url: "/api/v1/account/admin/get-user/" + username,
+        type: "GET",
+        success: function(response) {
+            console.log("User details:", response);
+
+            $("#employee-cred-password").val(response.lastPassword);
+            $("#employee-cred-email").val(response.email);
+            $("#employee-cred-status").val(formatStatus(response.status));
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching user:", xhr.responseText);
+            showInfoPopup("Info", "User not found.");
+        }
+    });
+}
+
+function getRunningSequence(dateHired) {
+    $.ajax({
+        url: "/api/v1/account/admin/get-running-sequence/" + dateHired,
+        type: "GET",
+        success: function(response) {
+            console.log("Running Sequence:", response);
+            $("#employee-id-number").val(response);
+        },
+        error: function(xhr) {
+            let message = "Error getting running sequence";
+
+            if (xhr.responseJSON && xhr.responseJSON.message) {
+                message = xhr.responseJSON.message;
+            }
+
+            showErrorPopup("Error", message);
+        }
+    });
+}
+
 function updateEmployee(employeeRequest) {
 
     $.ajax({
@@ -167,7 +247,7 @@ function updateEmployee(employeeRequest) {
                 "Success",
                 response.returnMessage,
                 () => {
-                    window.location.href = "/app/portal/hr-management/employee-registry";
+                    window.location.href = "/app/portal/hr-management/employee-information";
                 }
             );
         },
@@ -183,23 +263,37 @@ function updateEmployee(employeeRequest) {
     });
 }
 
+function formatStatus(role) {
+    return role
+        .toLowerCase()
+        .replace(/_/g, " ")
+        .replace(/\b\w/g, char => char.toUpperCase());
+}
+
 function getEmployeeFormData() {
+
+    const monthlySalary = Number($('#employee-basic-salary').val()) || 0;
+    const emr = calculateSalaryRates(monthlySalary);
 
     return {
         personalInformation: {
             firstName: $('#employee-firstname').val(),
             middleName: $('#employee-middlename').val(),
             lastName: $('#employee-lastname').val(),
+            suffix: $('#employee-suffix').val(),
             age: Number($('#employee-age').val()) || 0,
             birthDate: $('#employee-birth-date').val(),
             gender: $('#employee-gender').val(),
             email: $('#employee-email').val(),
             phoneNumber: $('#employee-phone-no').val(),
-            maritalStatus: $('#employee-marital-status').val()
+            maritalStatus: $('#employee-marital-status').val(),
+            nationality: $('#employee-nationality').val()
         },
 
         address: {
+            blockLot: $('#employee-blk-lot').val(),
             street: $('#employee-street').val(),
+            subdivision: $('#employee-subdivision').val(),
             barangay: $('#employee-brgy option:selected').text().trim(),
             city: $('#employee-city option:selected').text().trim(),
             province: $('#employee-province option:selected').text().trim(),
@@ -210,12 +304,8 @@ function getEmployeeFormData() {
         contactInformation: {
             contactNumber: $('#employee-contact-no-home').val(),
             workEmail: $('#employee-email-work').val(),
-            homeEmail: $('#employee-email-home').val()
-        },
-
-        emergencyContact: {
-            name: $('#employee-emergency-contact-name').val(),
-            contactNumber: $('#employee-emergency-contact-no').val(),
+            emergencyContactName: $('#employee-emergency-contact-name').val(),
+            emergencyContactNumber: $('#employee-emergency-contact-no').val(),
             relationship: $('#employee-emergency-contact-relationship').val()
         },
 
@@ -228,8 +318,7 @@ function getEmployeeFormData() {
             employmentStatus: $('#employee-employment-status').val(),
             employmentType: $('#employee-employment-type').val(),
             branch: $('#employee-assign-branch').val(),
-            immediateSupervisor: $('#employee-immediate-supervisor').val(),
-            employeeType: $('#employee-type').val()
+            immediateSupervisor: $('#employee-immediate-supervisor').val()
         },
 
         benefits: {
@@ -253,9 +342,9 @@ function getEmployeeFormData() {
         },
 
         payrollInformation: {
-            basicSalary: Number($('#employee-basic-salary').val()) || 0,
-            dailyRate: Number($('#employee-daily-rate').val()) || 0,
-            hourlyRate: Number($('#employee-hourly-rate').val()) || 0,
+            basicSalary: emr.monthly,
+            dailyRate: emr.daily,
+            hourlyRate: emr.hourly,
 
             salaryType: $('#employee-salary-type').val(),
             payrollCycle: $('#employee-payroll-cycle').val(),
@@ -273,7 +362,28 @@ function getEmployeeFormData() {
             status: $('#employee-cred-status').val()
         },
 
-        profileImageUrl: $('.image-preview').attr('src')
+        profileImageUrl: $("#clientPhotoPreview").attr("src") || ""
+    };
+}
+
+function calculateSalaryRates(monthlySalary) {
+    const monthly = Number(monthlySalary);
+
+    if (!Number.isFinite(monthly) || monthly < 0) {
+        throw new Error("Invalid monthly salary.");
+    }
+
+    const round = value => Math.round(value * 100) / 100;
+
+    const daily = (monthly * 12) / 365;
+    const hourly = daily / 8;
+
+    return {
+        monthly: round(monthly),
+        semiMonthly: round(monthly / 2),
+        weekly: round((monthly * 12) / 52),
+        daily: round(daily),
+        hourly: round(hourly)
     };
 }
 
@@ -306,6 +416,7 @@ function initEmployeeAddressLocationAutoFill() {
     const NCR_CODE = "130000000";
     let isNCR = false;
 
+
     countries
         .filter(c => c.trim() !== "")
         .forEach(c =>
@@ -332,12 +443,7 @@ function initEmployeeAddressLocationAutoFill() {
         )
 
     ).done(() => {
-
-        if (existingEmployeeAddress.province) {
-            loadExistingAddress();
-        } else {
-            detectLocation();
-        }
+        detectLocation();
     });
 
 
@@ -399,20 +505,25 @@ function initEmployeeAddressLocationAutoFill() {
         $city.prop('disabled',false);
     });
 
-    $city.on('change',function(){
+    $city.on('change', function () {
         reset($barangay);
 
+        const selectedCityCode = this.value;
+
         barangays
-            .filter(b => b.cityCode === this.value)
-            .forEach(b=>{
+            .filter(b =>
+                b.municipalityCode === selectedCityCode ||
+                b.cityCode === selectedCityCode
+            )
+            .forEach(b => {
                 $barangay.append(
                     `<option value="${b.code}">
-                        ${b.name}
-                     </option>`
+                    ${b.name}
+                </option>`
                 );
             });
 
-        $barangay.prop('disabled',false);
+        $barangay.prop('disabled', false);
     });
 
     function detectLocation(){
@@ -474,55 +585,5 @@ function initEmployeeAddressLocationAutoFill() {
 
         $element
             .prop('disabled', disable);
-    }
-
-    function loadExistingAddress() {
-
-        $country
-            .val(existingEmployeeAddress.country)
-            .trigger("change");
-
-        setTimeout(() => {
-            const province = provinces.find(p =>
-                p.name.toLowerCase() ===
-                existingEmployeeAddress.province.toLowerCase()
-            );
-
-            if (!province)
-                return;
-
-            $province
-                .val(province.code)
-                .trigger("change");
-
-            setTimeout(() => {
-                const city = cities.find(c =>
-                    c.provinceCode === province.code &&
-                    c.name.toLowerCase() ===
-                    existingEmployeeAddress.city.toLowerCase()
-                );
-
-                if (!city)
-                    return;
-
-                $city
-                    .val(city.code)
-                    .trigger("change");
-
-                setTimeout(() => {
-                    const barangay = barangays.find(b =>
-                        b.cityCode === city.code &&
-                        b.name.toLowerCase() ===
-                        existingEmployeeAddress.barangay.toLowerCase()
-                    );
-
-                    if (!barangay)
-                        return;
-
-                    $barangay.val(barangay.code);
-
-                }, 200);
-            }, 200);
-        }, 200);
     }
 }

@@ -94,7 +94,7 @@ public class EmploymentRegistryService {
         contactInfo.setContactNumber(contact.getContactNumber());
         contactInfo.setWorkEmail(contact.getWorkEmail());
         contactInfo.setEmergencyContactName(contact.getEmergencyContactName());
-        contactInfo.setContactNumber(contact.getEmergencyContactNumber());
+        contactInfo.setEmergencyContactNumber(contact.getEmergencyContactNumber());
         contactInfo.setRelationship(contact.getRelationship());
 
         contactInfo.setAppEmployeeProfile(employee);

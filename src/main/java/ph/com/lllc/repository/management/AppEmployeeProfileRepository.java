@@ -18,4 +18,5 @@ public interface AppEmployeeProfileRepository extends JpaRepository<AppEmployeeP
     List<AppEmployeeProfile> findByEmploymentInformation_PositionIn(List<EmployeePosition> positions);
     Double findByEmploymentInformation_Position_AndEmployeeId(EmployeePosition position, String employeeId);
     long countByEmploymentInformation_EmploymentStatus(EmploymentStatus employmentStatus);
+    AppEmployeeProfile findByEmploymentInformation_Position(EmployeePosition position);
 }

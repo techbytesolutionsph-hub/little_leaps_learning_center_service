@@ -11,69 +11,7 @@
         <title>Add Staff - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/management/registry/add-employee/lllc-staff-admin-add-employee-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/admin/add-user/lllc-staff-admin-add-user-styles.css}" rel="stylesheet" type="text/css">
-        <style>
-            .section-icon {
-                width: 35px;
-                height: 35px;
-                flex: 0 0 30px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
-                background: var(--client-primary);
-                color: white;
-                font-weight: 700;
-            }
-
-            .section-icon i {
-                display: block;
-                font-size: 20px;
-                margin-left: 8px;
-                line-height: 1;
-            }
-
-            .date-input-wrapper {
-                position: relative;
-            }
-
-            .date-input-wrapper .calendar-icon {
-                position: absolute;
-                right: 12px;
-                top: 50%;
-                transform: translateY(-50%);
-                pointer-events: none;
-                z-index: 2;
-            }
-
-            .date-input-wrapper .form-control.is-invalid {
-                padding-right: 40px;
-            }
-
-            .date-input-wrapper .form-control.is-invalid + .calendar-icon {
-                color: #dc3545;
-                position: absolute;
-                right: 12px !important;
-                top: 33% !important;
-                transform: translateY(-50%) !important;
-                font-size: 12px !important;
-                pointer-events: none;
-            }
-
-            @media (max-width: 767.98px) {
-                .client-form-layout {
-                    display: flex;
-                    flex-direction: column;
-                }
-
-                .client-form-side {
-                    order: -1;
-                    width: 100%;
-                    max-width: 100%;
-                }
-            }
-        </style>
+        <link th:href="@{/css/components/default-add-view-edit-module.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">

@@ -273,6 +273,9 @@ function formatStatus(role) {
 
 function getEmployeeFormData() {
 
+    const monthlySalary = Number($('#employee-basic-salary').val()) || 0;
+    const emr = calculateSalaryRates(monthlySalary);
+
     return {
         personalInformation: {
             firstName: $('#employee-firstname').val(),
@@ -340,9 +343,9 @@ function getEmployeeFormData() {
         },
 
         payrollInformation: {
-            basicSalary: Number($('#employee-basic-salary').val()) || 0,
-            dailyRate: Number($('#employee-daily-rate').val()) || 0,
-            hourlyRate: Number($('#employee-hourly-rate').val()) || 0,
+            basicSalary: emr.monthly,
+            dailyRate: emr.daily,
+            hourlyRate: emr.hourly,
 
             salaryType: $('#employee-salary-type').val(),
             payrollCycle: $('#employee-payroll-cycle').val(),
@@ -361,6 +364,27 @@ function getEmployeeFormData() {
         },
 
         profileImageUrl: $("#clientPhotoPreview").attr("src") || ""
+    };
+}
+
+function calculateSalaryRates(monthlySalary) {
+    const monthly = Number(monthlySalary);
+
+    if (!Number.isFinite(monthly) || monthly < 0) {
+        throw new Error("Invalid monthly salary.");
+    }
+
+    const round = value => Math.round(value * 100) / 100;
+
+    const daily = (monthly * 12) / 365;
+    const hourly = daily / 8;
+
+    return {
+        monthly: round(monthly),
+        semiMonthly: round(monthly / 2),
+        weekly: round((monthly * 12) / 52),
+        daily: round(daily),
+        hourly: round(hourly)
     };
 }
 

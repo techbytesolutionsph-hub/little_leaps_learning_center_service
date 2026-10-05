@@ -8,6 +8,7 @@ import ph.com.lllc.dto.staff.management.LeaveRequest;
 import ph.com.lllc.entity.user.staff.benefits.AppEmployeeBenefits;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.entity.user.staff.leave.AppLeaveRequest;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.enums.LeaveRequestStatus;
 import ph.com.lllc.enums.LeaveType;
 import ph.com.lllc.exception.ServiceException;
@@ -31,10 +32,11 @@ public class LeaveRequestService {
     public CommonResponse saveLeaveRequest(String uuid, LeaveRequest request) throws ServiceException {
 
         AppEmployeeProfile employee = this.findEmployeeByEmployeeId(uuid, request.getEmployeeId());
+        AppEmployeeProfile hrManager = appEmployeeProfileRepository.findByEmploymentInformation_Position(EmployeePosition.HUMAN_RESOURCE_MANAGER);
 
         AppLeaveRequest leaveRequest = new AppLeaveRequest();
         leaveRequest.setEmployee(employee);
-        leaveRequest.setHrApprover(employee);//To Do: Implement HR approver
+        leaveRequest.setHrApprover(hrManager);
         leaveRequest.setLeaveType(request.getLeaveType());
         leaveRequest.setAbsenceDuration(request.getAbsenceDuration());
         leaveRequest.setAvailableBalance(this.getAvailableLeaveBalance(employee, request.getLeaveType()));
