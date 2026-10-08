@@ -1,0 +1,794 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
+        <title>Add Employee Onboarding - Little Leaps Learning Center</title>
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
+        <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/components/default-add-view-edit-module.css}" rel="stylesheet" type="text/css">
+        <style>
+            /* =========================================================
+   ADD EMPLOYEE ONBOARDING
+   ========================================================= */
+
+            .onboarding-card {
+                background: #ffffff;
+                border-radius: 12px;
+                border: 1px solid #e5e9ef;
+                padding: 22px;
+                box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+            }
+
+            .onboarding-card-header {
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: 22px;
+            }
+
+            .onboarding-card-header h4 {
+                margin: 0 0 4px;
+                color: #009ca6;
+                font-size: 16px;
+                font-weight: 700;
+            }
+
+            .onboarding-card-header p {
+                margin: 0;
+                color: var(--client-muted);
+                font-size: 12px;
+            }
+
+            .card-section-icon {
+                width: 35px;
+                height: 35px;
+                min-width: 35px;
+                flex: 0 0 35px;
+                display: flex;
+                margin-right: 14px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                background: var(--client-primary);
+                color: white;
+                font-size: 14px;
+                font-weight: 700;
+            }
+
+
+            /* Form */
+            .onboarding-card label {
+                font-size: 13px;
+                font-weight: 600;
+                color: #536273;
+                margin-bottom: 7px;
+            }
+
+            .required {
+                color: #e74c3c;
+            }
+
+            .onboarding-card .form-control {
+                min-height: 42px;
+                border: 1px solid #d9e0e7;
+                border-radius: 7px;
+                font-size: 13px;
+                color: #495057;
+            }
+
+            .onboarding-card textarea.form-control {
+                min-height: 70px;
+            }
+
+            .onboarding-card .form-control:focus {
+                border-color: #009ca6;
+                box-shadow: 0 0 0 0.15rem rgba(0, 156, 166, 0.12);
+            }
+
+
+            /* =========================================================
+               PROGRESS
+               ========================================================= */
+
+            .onboarding-progress {
+                display: flex;
+                align-items: center;
+                padding: 5px 10px;
+            }
+
+            .progress-step {
+                display: flex;
+                align-items: center;
+                white-space: nowrap;
+            }
+
+            .step-number {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                border: 2px solid #b9c8d2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 13px;
+                font-weight: 700;
+                color: #7c8a9a;
+                background: #ffffff;
+            }
+
+            .progress-step.active .step-number {
+                background: #009ca6;
+                border-color: #009ca6;
+                color: #ffffff;
+            }
+
+            .step-label {
+                margin-left: 9px;
+                color: #758494;
+                font-size: 13px;
+                font-weight: 600;
+            }
+
+            .progress-step.active .step-label {
+                color: #009ca6;
+            }
+
+            .progress-line {
+                height: 2px;
+                background: #dfe6eb;
+                flex: 1;
+                margin: 0 18px;
+            }
+
+
+            /* =========================================================
+               REQUIRED DOCUMENTS
+               ========================================================= */
+
+            .required-documents-card {
+                padding: 18px;
+            }
+
+            .document-upload-item {
+                display: flex;
+                align-items: center;
+                border: 1px solid #e4e9ee;
+                border-radius: 9px;
+                padding: 10px;
+                margin-bottom: 9px;
+                background: #ffffff;
+                transition: all 0.2s ease;
+            }
+
+            .document-upload-item:hover {
+                border-color: #009ca6;
+                box-shadow: 0 2px 8px rgba(0, 156, 166, 0.08);
+            }
+
+            .document-icon {
+                width: 40px;
+                height: 40px;
+                min-width: 40px;
+                border-radius: 7px;
+                background: #eaf8f8;
+                color: #009ca6;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-right: 10px;
+                font-size: 17px;
+            }
+
+            .uploaded-file {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                margin-top: 6px;
+                padding: 5px 7px;
+                background: #eefafa;
+                border-radius: 5px;
+                color: #009ca6;
+                font-size: 10px;
+                max-width: 100%;
+            }
+
+            .uploaded-file i {
+                flex-shrink: 0;
+            }
+
+            .uploaded-file-name {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                color: #536273;
+                flex: 1;
+            }
+
+            .remove-file {
+                border: 0;
+                background: transparent;
+                color: #e74c3c;
+                padding: 0;
+                cursor: pointer;
+                font-size: 11px;
+            }
+
+            .remove-file:hover {
+                color: #c0392b;
+            }
+
+            .document-upload-item.uploaded {
+                border-color: #009ca6;
+                background: #fbffff;
+            }
+
+            .document-upload-item.uploaded .document-icon {
+                background: #eaf8f8;
+                color: #009ca6;
+            }
+
+            .document-upload-item.uploaded .required-badge {
+                background: #e5f8ed;
+                color: #27ae60;
+            }
+
+            .upload-button.uploaded {
+                border-color: #27ae60;
+                color: #27ae60 !important;
+            }
+
+            .upload-button.uploaded:hover {
+                background: #27ae60;
+                color: #ffffff !important;
+            }
+
+            .document-details {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .document-details strong {
+                display: block;
+                color: #008d98;
+                font-size: 13px;
+                font-weight: 700;
+                margin-bottom: 2px;
+            }
+
+            .document-details strong span {
+                color: #e74c3c;
+            }
+
+            .document-details small {
+                display: block;
+                color: #8a98a7;
+                font-size: 10px;
+                line-height: 1.3;
+            }
+
+            .document-status {
+                margin-top: 4px;
+            }
+
+            .required-badge {
+                display: inline-block;
+                background: #ffe5e3;
+                color: #e74c3c;
+                border-radius: 10px;
+                padding: 2px 8px;
+                font-size: 9px;
+                font-weight: 700;
+            }
+
+
+            /* =========================================================
+               UPLOAD BUTTON
+               ========================================================= */
+
+            .upload-button {
+                flex-shrink: 0;
+                cursor: pointer;
+                border: 1px solid #00a4ad;
+                border-radius: 6px;
+                padding: 6px 10px !important;
+                color: #009ca6 !important;
+                background: #ffffff;
+                font-size: 11px !important;
+                font-weight: 700 !important;
+                margin: 0 !important;
+                transition: all 0.2s ease;
+            }
+
+            .upload-button:hover {
+                background: #009ca6;
+                color: #ffffff !important;
+            }
+
+            .upload-button i {
+                margin-right: 4px;
+            }
+
+
+            /* =========================================================
+               VALIDATION
+               ========================================================= */
+
+            .document-validation-message {
+                margin-top: 12px;
+                padding: 10px 12px;
+                border-radius: 6px;
+                background: #fff0ef;
+                color: #d6453d;
+                font-size: 12px;
+            }
+
+            .document-validation-message i {
+                margin-right: 5px;
+            }
+
+
+            /* =========================================================
+               ACTIONS
+               ========================================================= */
+
+            .onboarding-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 8px;
+                border-top: 1px solid #edf0f2;
+                margin-top: 15px;
+                padding-top: 15px;
+            }
+
+            .onboarding-actions .btn {
+                border-radius: 7px;
+                padding: 9px 16px;
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .onboarding-actions .btn-primary {
+                background: #009ca6;
+                border-color: #009ca6;
+            }
+
+            .onboarding-actions .btn-primary:hover {
+                background: #008b94;
+                border-color: #008b94;
+            }
+
+
+            /* =========================================================
+               RESPONSIVE
+               ========================================================= */
+
+            @media (max-width: 991px) {
+
+                .onboarding-progress {
+                    overflow-x: auto;
+                    padding-bottom: 15px;
+                }
+
+                .progress-line {
+                    min-width: 40px;
+                    margin: 0 10px;
+                }
+
+                .step-label {
+                    font-size: 11px;
+                }
+
+            }
+
+            @media (max-width: 575px) {
+
+                .onboarding-card {
+                    padding: 15px;
+                }
+
+                .document-upload-item {
+                    align-items: flex-start;
+                }
+
+                .upload-button {
+                    padding: 5px 7px !important;
+                }
+
+                .upload-button {
+                    font-size: 0 !important;
+                }
+
+                .upload-button i {
+                    margin: 0;
+                    font-size: 13px;
+                }
+
+            }
+        </style>
+    </head>
+    <body class="container-fluid p-0" id="page-top">
+        <div id="wrapper">
+            <!-- Sidebar - Start -->
+            <th:block th:insert="~{fragments/staff/common/html-fragment-staff-sidebar :: staff-common-sidebar(${nav})}"></th:block>
+            <!-- Sidebar - End -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+
+                    <!-- Main Navigation Bar - Start -->
+                    <th:block th:insert="~{fragments/staff/common/html-fragment-staff-main-navbar :: staff-common-main-navbar}"></th:block>
+                    <!-- Main Navigation Bar - End -->
+
+                    <div class="container-fluid">
+
+                        <!-- Page Heading and Breadcrumbs - Start -->
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <!-- Page Heading and Breadcrumbs - End -->
+
+                        <!-- Add Employee Onboarding - Start -->
+                        <form id="employeeOnboardingForm"
+                              th:action="@{/app/portal/hr-management/employee-onboarding/save}"
+                              method="post"
+                              enctype="multipart/form-data">
+
+                            <div class="row">
+                                <div class="col-lg-7">
+                                    <div class="onboarding-card mb-4">
+                                        <div class="onboarding-card-header">
+                                            <div class="card-section-icon">
+                                                <i class="fa-solid fa-user"></i>
+                                            </div>
+                                            <div>
+                                                <h4>Personal Information</h4>
+                                                <p>Enter the employee's personal information.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="fullName">Full Name <span class="required">*</span></label>
+                                                <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Juan Dela Cruz" required>
+                                            </div>
+
+                                            <!-- Email -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="email">Email Address <span class="required">*</span></label>
+                                                <input type="email" id="email" name="email" class="form-control" placeholder="juan.delacruz@lllc.com" required>
+                                            </div>
+
+                                            <!-- Birth Date -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="dateOfBirth">Date of Birth <span class="required">*</span></label>
+                                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-control" required>
+                                            </div>
+
+                                            <!-- Gender -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="gender">Gender <span class="required">*</span></label>
+                                                <select id="gender" name="gender" class="form-control" required>
+                                                    <option value="">Select Gender</option>
+                                                    <option value="MALE">Male</option>
+                                                    <option value="FEMALE">Female</option>
+                                                    <option value="OTHER">Other</option>
+                                                </select>
+                                            </div>
+
+                                            <!-- Phone -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                                                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="+63 912 345 6789" required>
+                                            </div>
+
+                                            <!-- Address -->
+                                            <div class="col-md-6 mb-3">
+                                                <label for="address">Address <span class="required">*</span></label>
+                                                <textarea id="address" name="address" class="form-control" rows="2" placeholder="House No., Street, Barangay, City/Province" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- EMPLOYMENT INFORMATION -->
+                                    <div class="onboarding-card mb-4">
+                                        <div class="onboarding-card-header">
+                                            <div class="card-section-icon">
+                                                <i class="fa-solid fa-briefcase"></i>
+                                            </div>
+                                            <div>
+                                                <h4>Employment Information</h4>
+                                                <p>Enter the employee's employment details.</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="position">Position <span class="required">*</span></label>
+                                                <select id="position" name="position" class="form-control" required>
+                                                    <option value="">Select Position</option>
+                                                    <option value="TEACHER">Teacher</option>
+                                                    <option value="BEHAVIORAL_THERAPIST">Behavioral Therapist</option>
+                                                    <option value="CASE_MANAGER">Case Manager</option>
+                                                    <option value="ADMINISTRATIVE_STAFF">Administrative Staff</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="department">Department <span class="required">*</span></label>
+                                                <select id="department" name="department" class="form-control" required>
+                                                    <option value="">Select Department</option>
+                                                    <option value="ACADEMIC">Academic</option>
+                                                    <option value="BEHAVIORAL_THERAPY">Behavioral Therapy</option>
+                                                    <option value="ADMINISTRATION">Administration</option>
+                                                    <option value="HR">Human Resources</option>
+                                                    <option value="IT">IT - Development</option>
+                                                    <option value="FINANCE">Finance & Billing</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="employmentType">Employment Type <span class="required">*</span></label>
+                                                <select id="employmentType" name="employmentType" class="form-control" required>
+                                                    <option value="">Select Employment Type</option>
+                                                    <option value="REGULAR">Regular</option>
+                                                    <option value="PROBATIONARY">Probationary</option>
+                                                    <option value="CONTRACTUAL">Contractual</option>
+                                                    <option value="PART_TIME">Part-Time</option>
+                                                    <option value="PROJECT_BASED">Project-Based</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="startDate">Start Date <span class="required">*</span></label>
+                                                <input type="date" id="startDate" name="startDate" class="form-control" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5">
+
+                                    <!-- REQUIRED DOCUMENTS -->
+                                    <div class="onboarding-card required-documents-card">
+                                        <div class="onboarding-card-header">
+                                            <div class="card-section-icon">
+                                                <i class="fa-solid fa-file-lines"></i>
+                                            </div>
+                                            <div>
+                                                <h4>Required Documents</h4>
+                                                <p>Upload all mandatory documents.</p>
+                                                <p>Supported formats: PDF, JPG, PNG.</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- Government ID -->
+                                        <div class="document-upload-item">
+                                            <div class="document-icon">
+                                                <i class="fa-regular fa-id-card"></i>
+                                            </div>
+                                            <div class="document-details">
+                                                <strong>Government ID<span>*</span></strong>
+                                                <small>Valid government-issued ID</small>
+
+                                                <!-- Uploaded file -->
+                                                <div class="uploaded-file" style="display: none;">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                    <span class="uploaded-file-name"></span>
+                                                    <button type="button" class="remove-file" title="Remove file">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="document-status">
+                                                    <span class="required-badge">
+                                                        Required
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label class="upload-button">
+                                                <i class="fa-solid fa-upload"></i>
+                                                <span class="upload-text">Upload</span>
+                                                <input type="file" name="governmentId" accept=".pdf,.jpg,.jpeg,.png" required hidden>
+                                            </label>
+                                        </div>
+
+
+                                        <!-- Birth Certificate -->
+                                        <div class="document-upload-item">
+                                            <div class="document-icon">
+                                                <i class="fa-regular fa-id-card"></i>
+                                            </div>
+                                            <div class="document-details">
+                                                <strong>Birth Certificate<span>*</span></strong>
+                                                <small>PSA-issued birth certificate</small>
+
+                                                <!-- Uploaded file -->
+                                                <div class="uploaded-file" style="display: none;">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                    <span class="uploaded-file-name"></span>
+                                                    <button type="button" class="remove-file" title="Remove file">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="document-status">
+                                                    <span class="required-badge">
+                                                        Required
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label class="upload-button">
+                                                <i class="fa-solid fa-upload"></i>
+                                                <span class="upload-text">Upload</span>
+                                                <input type="file" name="governmentId" accept=".pdf,.jpg,.jpeg,.png" required hidden>
+                                            </label>
+                                        </div>
+
+                                        <!-- SSS -->
+                                        <div class="document-upload-item">
+                                            <div class="document-icon">
+                                                <i class="fa-regular fa-id-card"></i>
+                                            </div>
+                                            <div class="document-details">
+                                                <strong>SSS Number<span>*</span></strong>
+                                                <small>SSS ID, E1 form or SSS Number</small>
+
+                                                <!-- Uploaded file -->
+                                                <div class="uploaded-file" style="display: none;">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                    <span class="uploaded-file-name"></span>
+                                                    <button type="button" class="remove-file" title="Remove file">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="document-status">
+                                                    <span class="required-badge">
+                                                        Required
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label class="upload-button">
+                                                <i class="fa-solid fa-upload"></i>
+                                                <span class="upload-text">Upload</span>
+                                                <input type="file" name="governmentId" accept=".pdf,.jpg,.jpeg,.png" required hidden>
+                                            </label>
+                                        </div>
+
+                                        <!-- PhilHealth -->
+                                        <div class="document-upload-item">
+                                            <div class="document-icon">
+                                                <i class="fa-regular fa-id-card"></i>
+                                            </div>
+                                            <div class="document-details">
+                                                <strong>PhilHealth Member Data<span>*</span></strong>
+                                                <small>PhilHealth ID or Member Data Record</small>
+
+                                                <!-- Uploaded file -->
+                                                <div class="uploaded-file" style="display: none;">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                    <span class="uploaded-file-name"></span>
+                                                    <button type="button" class="remove-file" title="Remove file">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="document-status">
+                                                    <span class="required-badge">
+                                                        Required
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label class="upload-button">
+                                                <i class="fa-solid fa-upload"></i>
+                                                <span class="upload-text">Upload</span>
+                                                <input type="file" name="governmentId" accept=".pdf,.jpg,.jpeg,.png" required hidden>
+                                            </label>
+                                        </div>
+
+                                        <!-- Pag-IBIG -->
+                                        <div class="document-upload-item">
+                                            <div class="document-icon">
+                                                <i class="fa-regular fa-id-card"></i>
+                                            </div>
+                                            <div class="document-details">
+                                                <strong>Pag-IBIG Membership<span>*</span></strong>
+                                                <small>Pag-IBIG ID or Membership Record</small>
+
+                                                <!-- Uploaded file -->
+                                                <div class="uploaded-file" style="display: none;">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                    <span class="uploaded-file-name"></span>
+                                                    <button type="button" class="remove-file" title="Remove file">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="document-status">
+                                                    <span class="required-badge">
+                                                        Required
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label class="upload-button">
+                                                <i class="fa-solid fa-upload"></i>
+                                                <span class="upload-text">Upload</span>
+                                                <input type="file" name="governmentId" accept=".pdf,.jpg,.jpeg,.png" required hidden>
+                                            </label>
+                                        </div>
+
+                                        <!-- NBI -->
+                                        <div class="document-upload-item">
+                                            <div class="document-icon">
+                                                <i class="fa-regular fa-id-card"></i>
+                                            </div>
+                                            <div class="document-details">
+                                                <strong>NBI Clearance<span>*</span></strong>
+                                                <small>National Bureau of Investigation Clearance</small>
+
+                                                <!-- Uploaded file -->
+                                                <div class="uploaded-file" style="display: none;">
+                                                    <i class="fa-solid fa-file-lines"></i>
+                                                    <span class="uploaded-file-name"></span>
+                                                    <button type="button" class="remove-file" title="Remove file">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </button>
+                                                </div>
+
+                                                <div class="document-status">
+                                                    <span class="required-badge">
+                                                        Required
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <label class="upload-button">
+                                                <i class="fa-solid fa-upload"></i>
+                                                <span class="upload-text">Upload</span>
+                                                <input type="file" name="governmentId" accept=".pdf,.jpg,.jpeg,.png" required hidden>
+                                            </label>
+                                        </div>
+
+                                        <!-- Validation Message -->
+                                        <div id="documentValidationMessage" class="document-validation-message" style="display:none;">
+                                            <i class="fa-solid fa-circle-exclamation"></i>
+                                            Please upload all required documents before continuing.
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="onboarding-actions">
+                                            <button type="button" class="btn btn-outline-secondary">
+                                                Cancel
+                                            </button>
+
+                                            <button type="submit" class="btn btn-primary">
+                                                Save Employee
+                                                <i class="fa-solid fa-arrow-right ml-2"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Add Employee Onboarding - End -->
+                    </div>
+                </div>
+
+                <!-- Footer - Start -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-footer :: staff-common-footer}"></th:block>
+                <!-- Footer - End -->
+            </div>
+        </div>
+
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
+        <script th:src="@{/js/staff/management/registry/add-employee/lllc-staff-admin-add-employee-scripts.js}" type="text/javascript"></script>
+    </body>
+</html>

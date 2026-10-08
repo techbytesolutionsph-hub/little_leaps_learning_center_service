@@ -142,7 +142,7 @@
                     </div>
                     <div>
                         <h2>Employee Records</h2>
-                        <p>View, manage, and review client records.</p>
+                        <p>View, manage, and review employee records.</p>
                     </div>
                 </div>
 
@@ -161,7 +161,7 @@
                         <i class="fa-solid fa-filter mr-2"></i> Filter
                     </a>
 
-                    <a th:href="@{/app/portal/hr-management/employee-information/add-employee}"
+                    <a th:href="@{/app/portal/hr-management/employee-management/add-employee}"
                        class="btn-glossy-teal mb-2 mb-md-0"
                        id="add-employee-btn"
                        style="text-decoration: none">
@@ -260,11 +260,11 @@
                                 </td>
                                 <td data-label="Actions" >
                                     <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
-                                        <a th:href="@{|/app/portal/hr-management/employee-information/view-employee?id=${employee.employeeId}|}"
+                                        <a th:href="@{|/app/portal/hr-management/employee-management/view-employee?id=${employee.employeeId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-eye mr-1"></i> View
                                         </a>
-                                        <a th:href="@{|/app/portal/hr-management/employee-information/edit-employee?id=${employee.employeeId}|}"
+                                        <a th:href="@{|/app/portal/hr-management/employee-management/edit-employee?id=${employee.employeeId}|}"
                                            class="btn-glossy-teal action-btn d-flex align-items-center">
                                             <i class="bi bi-pen mr-1"></i> Edit
                                         </a>

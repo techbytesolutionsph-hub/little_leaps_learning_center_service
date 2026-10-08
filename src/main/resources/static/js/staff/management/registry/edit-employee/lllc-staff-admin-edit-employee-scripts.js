@@ -247,7 +247,7 @@ function updateEmployee(employeeRequest) {
                 "Success",
                 response.returnMessage,
                 () => {
-                    window.location.href = "/app/portal/hr-management/employee-information";
+                    window.location.href = "/app/portal/hr-management/employee-management";
                 }
             );
         },

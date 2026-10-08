@@ -6,9 +6,9 @@
 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <div th:fragment="staff-edit-employee(employee)">
-        <!-- Edit Employee - START -->
-        <form id="edit-employee-form" autocomplete="off" class="needs-validation">
+    <div th:fragment="staff-add-employee">
+        <!-- Add Employee - START -->
+        <form id="add-employee-form" autocomplete="off" class="needs-validation">
             <div class="client-form-layout">
                 <div class="client-form-main">
                     <!-- Personal Information -->
@@ -26,34 +26,34 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-firstname" class="form-label text-sm fw-bold text-gray-700">First name<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-firstname" th:value="${employee.firstName}" placeholder="Enter first name" required>
+                                    <input type="text" class="form-control text-sm" id="employee-firstname" placeholder="Enter first name" required>
                                     <div class="invalid-feedback">
                                         Please enter a firstname.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-middlename" class="form-label text-sm fw-bold text-gray-700">Middle name<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-middlename" th:value="${employee.middleName}" placeholder="Enter middle name" required>
+                                    <input type="text" class="form-control text-sm" id="employee-middlename" placeholder="Enter middle name" required>
                                     <div class="invalid-feedback">
                                         Please enter a middle name.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-lastname" class="form-label text-sm fw-bold text-gray-700">Last name<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-lastname" th:value="${employee.lastName}" placeholder="Enter last name" required>
+                                    <input type="text" class="form-control text-sm" id="employee-lastname" placeholder="Enter last name" required>
                                     <div class="invalid-feedback">
                                         Please enter a lastname.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-suffix" class="form-label text-sm fw-bold text-gray-700">Suffix (Ex. Jr.)</label>
-                                    <input type="text" class="form-control text-sm" id="employee-suffix" th:value="${employee.suffix}" placeholder="Enter suffix">
+                                    <input type="text" class="form-control text-sm" id="employee-suffix" placeholder="Enter suffix">
                                 </div>
                             </div>
                             <div class="row px-2">
                                 <div class="col-12 col-md-6 mt-1 mb-2">
                                     <label for="employee-age" class="form-label text-sm fw-bold text-gray-700">Age<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-age" th:value="${employee.age}" placeholder="Enter age" min="0" required>
+                                    <input type="number" class="form-control text-sm" id="employee-age" placeholder="Enter age" min="0" required>
                                     <div class="invalid-feedback">
                                         Please enter the employee's age.
                                     </div>
@@ -61,7 +61,7 @@
                                 <div class="col-12 col-md-6 mb-2">
                                     <label for="employee-birth-date" class="text-sm fw-bold text-gray-700">Birthdate<span class="required">*</span></label>
                                     <div class="date-input-wrapper">
-                                        <input type="text" id="employee-birth-date" th:value="${employee.dateOfBirth}" class="form-control" placeholder="Select birthdate" required>
+                                        <input type="text" id="employee-birth-date" class="form-control" placeholder="Select birthdate" required>
                                         <i class="bi bi-calendar-event calendar-icon"></i>
                                         <div class="invalid-feedback">
                                             Please select a birthdate.
@@ -70,7 +70,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-gender" class="form-label text-sm fw-bold text-gray-800">Gender</label>
-                                    <select class="form-control text-sm variation-discount-type" id="employee-gender" th:field="${employee.gender}" required>
+                                    <select class="form-control text-sm variation-discount-type" id="employee-gender" required>
                                         <option value="" selected disabled>Select a gender</option>
                                         <option value="MALE">Male</option>
                                         <option value="FEMALE">Female</option>
@@ -81,21 +81,21 @@
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-email" class="form-label text-sm fw-bold text-gray-700">Email<span class="required">*</span></label>
-                                    <input type="email" class="form-control text-sm" id="employee-email" th:value="${employee.email}" placeholder="Enter personal email" required>
+                                    <input type="email" class="form-control text-sm" id="employee-email" placeholder="Enter personal email" required>
                                     <div class="invalid-feedback">
                                         Please enter a valid email.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-phone-no" class="form-label text-sm fw-bold text-gray-700">Phone No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-phone-no" th:value="${employee.phoneNumber}" placeholder="Enter phone number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-phone-no" placeholder="Enter phone number" required>
                                     <div class="invalid-feedback">
                                         Please enter a phone number.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-marital-status" class="form-label text-sm fw-bold text-gray-800">Marital Status<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-marital-status" th:field="${employee.maritalStatus}" required>
+                                    <select class="form-control text-sm" id="employee-marital-status" required>
                                         <option value="" selected disabled>Select marital status</option>
                                         <option value="SINGLE">Single</option>
                                         <option value="MARRIED">Married</option>
@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-nationality" class="form-label text-sm fw-bold text-gray-700">Nationality<span class="required">*</span></label>
-                                    <select class="form-select text-sm" id="employee-nationality" th:field="${employee.maritalStatus}" required>
+                                    <select class="form-select text-sm" id="employee-nationality" required>
                                         <option value="" selected disabled>Select nationality</option>
                                         <option value="FILIPINO">Filipino</option>
                                         <option value="AMERICAN">American</option>
@@ -144,13 +144,13 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-blk-lot" class="form-label text-sm fw-bold text-gray-700">House/Lot/Block No.</label>
-                                    <input type="text" class="form-control text-sm" id="employee-blk-lot" th:value="${employee.address.?[permanentResidence][0].blockLot}" placeholder="Enter street">
+                                    <input type="text" class="form-control text-sm" id="employee-blk-lot" placeholder="Enter street">
                                 </div>
                             </div>
                             <div class="row px-2">
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-street" class="form-label text-sm fw-bold text-gray-700">Street<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-street" th:value="${employee.address.?[permanentResidence][0].street}" placeholder="Enter street" required>
+                                    <input type="text" class="form-control text-sm" id="employee-street" placeholder="Enter street" required>
                                     <div class="invalid-feedback">
                                         Please enter street.
                                     </div>
@@ -159,7 +159,7 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-subdivision" class="form-label text-sm fw-bold text-gray-700">Subdivision/Village</label>
-                                    <input type="text" class="form-control text-sm" id="employee-subdivision" th:value="${employee.address.?[permanentResidence][0].subdivision}"  placeholder="Enter street">
+                                    <input type="text" class="form-control text-sm" id="employee-subdivision" placeholder="Enter street">
                                 </div>
                             </div>
                             <div class="row px-2">
@@ -203,7 +203,7 @@
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-postal-code" class="form-label text-sm fw-bold text-gray-700">Postal code<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-postal-code"  th:value="${employee.address.?[permanentResidence][0].zipNumber}" placeholder="Enter postal code" required>
+                                    <input type="text" class="form-control text-sm" id="employee-postal-code" placeholder="Enter postal code" required>
                                     <div class="invalid-feedback">
                                         Please enter a postal code.
                                     </div>
@@ -227,14 +227,14 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-contact-no-home" class="form-label text-sm fw-bold text-gray-700">Work Contact Number<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-contact-no-home" th:value="${employee.contactInformation.contactNumber}" placeholder="Enter work contact number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-contact-no-home" placeholder="Enter work contact number" required>
                                     <div class="invalid-feedback">
                                         Please enter work contact number.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-email-work" class="form-label text-sm fw-bold text-gray-700">Work Email<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-email-work" th:value="${employee.contactInformation.workEmail}" placeholder="Enter work email" required>
+                                    <input type="text" class="form-control text-sm" id="employee-email-work" placeholder="Enter work email" required>
                                     <div class="invalid-feedback">
                                         Please enter a valid work email.
                                     </div>
@@ -243,21 +243,21 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-4 mt-2 mb-2">
                                     <label for="employee-emergency-contact-name" class="form-label text-sm fw-bold text-gray-700">Emergency Contact Name<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-name"  th:value="${employee.contactInformation.emergencyContactName}" placeholder="Enter contact full name" required>
+                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-name" placeholder="Enter contact full name" required>
                                     <div class="invalid-feedback">
                                         Please enter a contact name.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 mt-2 mb-2">
                                     <label for="employee-emergency-contact-no" class="form-label text-sm fw-bold text-gray-700">Emergency Contact No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-no" th:value="${employee.contactInformation.emergencyContactNumber}" placeholder="Enter contact number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-emergency-contact-no" placeholder="Enter contact number" required>
                                     <div class="invalid-feedback">
                                         Please enter a contact no.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 mt-2 mb-2">
                                     <label for="employee-emergency-contact-relationship" class="form-label text-sm fw-bold text-gray-800">Relationship<span class="required">*</span></label>
-                                    <select class="form-control text-sm variation-discount-type" id="employee-emergency-contact-relationship" th:field="${employee.contactInformation.relationship}"  required>
+                                    <select class="form-control text-sm variation-discount-type" id="employee-emergency-contact-relationship" required>
                                         <option value="" selected disabled>Select relationship</option>
                                         <option value="Spouse">Spouse</option>
                                         <option value="Father">Father</option>
@@ -300,7 +300,7 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-position" class="form-label text-sm fw-bold text-gray-800">Position<span class="required">*</span></label>
-                                    <select class="form-control text-sm variation-discount-type" id="employee-position" th:field="${employee.employmentInformation.position}" required>
+                                    <select class="form-control text-sm variation-discount-type" id="employee-position" required>
                                         <option value="" selected disabled>Select a position</option>
                                         <option value="CHIEF_OPERATING_OFFICER">Chief Operating Officer</option>
                                         <option value="IT_ADMINISTRATOR">IT Administrator</option>
@@ -325,8 +325,8 @@
                                     </label>
 
                                     <div class="input-group">
-                                        <input type="text" class="form-control text-sm" id="employee-id-number" th:value="${employee.employmentInformation.employeeId}" placeholder="Click Generate" readonly required>
-                                        <button class="btn btn-outline-primary" type="button" id="generate-id-number-btn" disabled>
+                                        <input type="text" class="form-control text-sm" id="employee-id-number" placeholder="Click Generate" readonly required>
+                                        <button class="btn btn-outline-primary" type="button" id="generate-id-number-btn">
                                             <i class="bi bi-arrow-repeat"></i>
                                         </button>
                                         <div class="invalid-feedback">
@@ -338,7 +338,7 @@
                                 <div class="col-12 col-md-6 mb-2">
                                     <label for="employee-date-hired" class="text-sm fw-bold text-gray-700">Date Hired<span class="required">*</span></label>
                                     <div class="date-input-wrapper">
-                                        <input type="text" id="employee-date-hired" th:value="${employee.employmentInformation.dateHired}" class="form-control" placeholder="Select date hired" required>
+                                        <input type="text" id="employee-date-hired" class="form-control" placeholder="Select date hired" required>
                                         <i class="bi bi-calendar-event calendar-icon"></i>
                                         <div class="invalid-feedback">
                                             Please select date hired.
@@ -348,7 +348,7 @@
 
                                 <div class="col-12 col-md-6 mt-1 mb-2">
                                     <label for="employee-immediate-supervisor" class="form-label text-sm fw-bold text-gray-700">Immediate Supervisor<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-immediate-supervisor" th:value="${employee.employmentInformation.immediateSupervisor}" placeholder="Enter immediate supervisor" required>
+                                    <input type="text" class="form-control text-sm" id="employee-immediate-supervisor" placeholder="Enter immediate supervisor" required>
                                     <div class="invalid-feedback">
                                         Please enter immediate supervisor.
                                     </div>
@@ -356,7 +356,7 @@
 
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-employment-status" class="form-label text-sm fw-bold text-gray-800"> Employment Status<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-employment-status" th:field="${employee.employmentInformation.employmentStatus}" required>
+                                    <select class="form-control text-sm" id="employee-employment-status" required>
                                         <option value="" selected disabled>Select employment status</option>
                                         <option value="ACTIVE">Active</option>
                                         <option value="ON_LEAVE">On Leave</option>
@@ -373,7 +373,7 @@
 
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-employment-type" class="form-label text-sm fw-bold text-gray-800"> Employment Type<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-employment-type" th:field="${employee.employmentInformation.employmentType}" required>
+                                    <select class="form-control text-sm" id="employee-employment-type" required>
                                         <option value="" selected disabled> Select employment type</option>
                                         <option value="REGULAR">Regular</option>
                                         <option value="PROBATIONARY">Probationary</option>
@@ -391,7 +391,7 @@
 
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-company-address" class="form-label text-sm fw-bold text-gray-800"> Company Address<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-company-address" th:field="${employee.employmentInformation.address}" required>
+                                    <select class="form-control text-sm" id="employee-company-address" required>
                                         <option value="" selected disabled>Select an address</option>
                                         <option value="Brights Place Bldg Calicanto San Juan Batangas">Brights Place Bldg Calicanto San Juan Batangas</option>
                                     </select>
@@ -402,7 +402,7 @@
 
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-assign-branch" class="form-label text-sm fw-bold text-gray-800">Assign Branch<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-assign-branch" th:field="${employee.employmentInformation.branchAssign}" required>
+                                    <select class="form-control text-sm" id="employee-assign-branch" required>
                                         <option value="" selected disabled>Select assign branch</option>
                                         <option value="San Juan Batangas">San Juan Batangas</option>
                                         <option value="Catanauan Quezon">Catanauan Quezon</option>
@@ -431,28 +431,28 @@
                                 <!-- Mandatory Benefits -->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-sss-number" class="form-label text-sm fw-bold text-gray-700">SSS No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-sss-number" th:value="${employee.employeeBenefits.sssNumber}" placeholder="Enter SSS Number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-sss-number" placeholder="Enter SSS Number" required>
                                     <div class="invalid-feedback">
                                         Please enter SSS No.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-pagibig-no" class="form-label text-sm fw-bold text-gray-700">Pagibig No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-pagibig-no" th:value="${employee.employeeBenefits.pagIbigNumber}" placeholder="Enter Pagibig number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-pagibig-no" placeholder="Enter Pagibig number" required>
                                     <div class="invalid-feedback">
                                         Please enter Pagibig No.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-philhealth-no" class="form-label text-sm fw-bold text-gray-700">Philhealth No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-philhealth-no" th:value="${employee.employeeBenefits.philHealthNumber}" placeholder="Enter Philhealth Number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-philhealth-no" placeholder="Enter Philhealth Number" required>
                                     <div class="invalid-feedback">
                                         Please enter Philhealth No.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-tin-no" class="form-label text-sm fw-bold text-gray-700">TIN No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-tin-no"  th:value="${employee.employeeBenefits.tinNumber}" placeholder="Enter TIN number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-tin-no" placeholder="Enter TIN number" required>
                                     <div class="invalid-feedback">
                                         Please enter TIN No.
                                     </div>
@@ -463,28 +463,28 @@
                                 <!-- Leaves -->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-sick-leave" class="form-label text-sm fw-bold text-gray-700">Sick Leave Credits<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-sick-leave"  th:value="${employee.employeeBenefits.sickLeave}" min="0" placeholder="Enter sick leave credits" required>
+                                    <input type="number" class="form-control text-sm" id="employee-sick-leave" min="0" placeholder="Enter sick leave credits" required>
                                     <div class="invalid-feedback">
                                         Please enter sick leave credits.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-vacation-leave" class="form-label text-sm fw-bold text-gray-700">Vacation Leave Credits<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-vacation-leave" th:value="${employee.employeeBenefits.vacationLeave}" min="0" placeholder="Enter vacation leave credits" required>
+                                    <input type="number" class="form-control text-sm" id="employee-vacation-leave" min="0" placeholder="Enter vacation leave credits" required>
                                     <div class="invalid-feedback">
                                         Please enter vacation leave credits.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-paternity-leave" class="form-label text-sm fw-bold text-gray-700">Paternity Leave Credits<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-paternity-leave" th:value="${employee.employeeBenefits.paternityLeave}" min="0" placeholder="Enter paternity leave credits" required>
+                                    <input type="number" class="form-control text-sm" id="employee-paternity-leave" min="0" placeholder="Enter paternity leave credits" required>
                                     <div class="invalid-feedback">
                                         Please enter paternity leave credits.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-maternity-leave" class="form-label text-sm fw-bold text-gray-700">Maternity Leave<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-maternity-leave" th:value="${employee.employeeBenefits.maternityLeave}" min="0" placeholder="Enter maternity leave credits" required>
+                                    <input type="number" class="form-control text-sm" id="employee-maternity-leave" min="0" placeholder="Enter maternity leave credits" required>
                                     <div class="invalid-feedback">
                                         Please enter maternity leave credits.
                                     </div>
@@ -495,11 +495,11 @@
                                 <!-- HMO-->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-hmo-provider" class="form-label text-sm fw-bold text-gray-700">HMO Provider</label>
-                                    <input type="text" class="form-control text-sm" id="employee-hmo-provider" th:value="${employee.employeeBenefits.hmoProvider}" placeholder="Enter HMO Provider" required>
+                                    <input type="text" class="form-control text-sm" id="employee-hmo-provider" placeholder="Enter HMO Provider" required>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-hmo-no" class="form-label text-sm fw-bold text-gray-700">HMO No.</label>
-                                    <input type="text" class="form-control text-sm" id="employee-hmo-no" th:value="${employee.employeeBenefits.hmoCardNumber}" placeholder="Enter HMO number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-hmo-no" placeholder="Enter HMO number" required>
                                 </div>
 
                                 <div class="divider"></div>
@@ -507,19 +507,19 @@
                                 <!-- Allowances-->
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-allowance" class="form-label text-sm fw-bold text-gray-700">Allowance</label>
-                                    <input type="number" class="form-control text-sm" id="employee-allowance" th:value="${employee.employeeBenefits.allowance}" placeholder="Enter allowance" min="0" value="0" required>
+                                    <input type="number" class="form-control text-sm" id="employee-allowance" placeholder="Enter allowance" min="0" value="0" required>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-rice-allowance" class="form-label text-sm fw-bold text-gray-700">Rice Allowance</label>
-                                    <input type="number" class="form-control text-sm" id="employee-rice-allowance" th:value="${employee.employeeBenefits.riceAllowance}" placeholder="Enter rice allowance" min="0" value="0" required>
+                                    <input type="number" class="form-control text-sm" id="employee-rice-allowance" placeholder="Enter rice allowance" min="0" value="0" required>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-transportation-allowance" class="form-label text-sm fw-bold text-gray-700">Transportation Allowance</label>
-                                    <input type="number" class="form-control text-sm" id="employee-transportation-allowance" th:value="${employee.employeeBenefits.transportationAllowance}" placeholder="Enter transportation allowance" min="0" value="0" required>
+                                    <input type="number" class="form-control text-sm" id="employee-transportation-allowance" placeholder="Enter transportation allowance" min="0" value="0" required>
                                 </div>
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-communication-allowance" class="form-label text-sm fw-bold text-gray-700">Communication Allowance</label>
-                                    <input type="number" class="form-control text-sm" id="employee-communication-allowance" th:value="${employee.employeeBenefits.communicationAllowance}" placeholder="Enter communication allowance" min="0" value="0" required>
+                                    <input type="number" class="form-control text-sm" id="employee-communication-allowance" placeholder="Enter communication allowance" min="0" value="0" required>
                                 </div>
                             </div>
                         </div>
@@ -540,7 +540,7 @@
                             <div class="row px-2">
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-salary-type" class="form-label text-sm fw-bold text-gray-700">Salary Type<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-salary-type" th:field="${employee.payrollInformation.salaryType}" required>
+                                    <select class="form-control text-sm" id="employee-salary-type" required>
                                         <option value="" selected disabled>Select salary type</option>
                                         <option value="MONTHLY">Monthly</option>
                                         <option value="DAILY">Daily</option>
@@ -553,7 +553,7 @@
 
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-basic-salary" class="form-label text-sm fw-bold text-gray-700">Basic Salary<span class="required">*</span></label>
-                                    <input type="number" class="form-control text-sm" id="employee-basic-salary"  th:value="${employee.payrollInformation.basicSalary}" placeholder="Enter basic salary" min="0" required>
+                                    <input type="number" class="form-control text-sm" id="employee-basic-salary" placeholder="Enter basic salary" min="0" required>
                                     <div class="invalid-feedback">
                                         Please enter basic salary.
                                     </div>
@@ -562,7 +562,7 @@
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-salary-effective-date" class="text-sm fw-bold text-gray-700">Salary Effective Date<span class="required">*</span></label>
                                     <div class="date-input-wrapper">
-                                        <input type="text" id="employee-salary-effective-date" th:value="${employee.payrollInformation.effectiveDate}" class="form-control" placeholder="Select salary effective date" required>
+                                        <input type="text" id="employee-salary-effective-date" class="form-control" placeholder="Select salary effective date" required>
                                         <i class="bi bi-calendar-event calendar-icon"></i>
                                         <div class="invalid-feedback">
                                             Please select salary effective date.
@@ -572,7 +572,7 @@
 
                                 <div class="col-12 col-md-6 mt-2 mb-2">
                                     <label for="employee-payroll-cycle" class="form-label text-sm fw-bold text-gray-700">Payroll Cycle<span class="required">*</span></label>
-                                    <select class="form-control text-sm" id="employee-payroll-cycle" th:field="${employee.payrollInformation.payrollCycle}" required>
+                                    <select class="form-control text-sm" id="employee-payroll-cycle" required>
                                         <option value="" selected disabled>Select payroll cycle</option>
                                         <option value="WEEKLY">Weekly</option>
                                         <option value="BI_WEEKLY">Bi-Weekly</option>
@@ -588,26 +588,71 @@
                             <div class="divider"></div>
 
                             <div class="row px-2">
+
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-bank-name" class="form-label text-sm fw-bold text-gray-700">Bank name<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-bank-name" th:value="${employee.payrollInformation.bankName}" placeholder="Enter bank name" required>
+                                    <input type="text" class="form-control text-sm" id="employee-bank-name" placeholder="Enter bank name" required>
                                     <div class="invalid-feedback">
                                         Please enter bank name.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-bank-account-no" class="form-label text-sm fw-bold text-gray-700">Bank Account No.<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-bank-account-no" th:value="${employee.payrollInformation.bankAccountNumber}" placeholder="Enter bank account number" required>
+                                    <input type="text" class="form-control text-sm" id="employee-bank-account-no" placeholder="Enter bank account number" required>
                                     <div class="invalid-feedback">
                                         Please enter bank account number.
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 mt-2 mb-2">
                                     <label for="employee-bank-branch-no" class="form-label text-sm fw-bold text-gray-700">Bank Branch<span class="required">*</span></label>
-                                    <input type="text" class="form-control text-sm" id="employee-bank-branch-no" th:value="${employee.payrollInformation.bankBranch}" placeholder="Enter bank branch" required>
+                                    <input type="text" class="form-control text-sm" id="employee-bank-branch-no" placeholder="Enter bank branch" required>
                                     <div class="invalid-feedback">
                                         Please enter bank branch.
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Account Access -->
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-person-lock me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Account Access</h3>
+                                <p>Link the employee's account credentials.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-cred-username" class="form-label text-sm fw-bold text-gray-700">
+                                        Username <small class="text-muted fw-normal">(Retrieved after employee account search)</small>
+                                        <span class="required">*</span></label>
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-sm" id="employee-cred-username" placeholder="Enter username then click search" required>
+                                        <button class="btn btn-outline-primary" type="button" id="search-credentials-btn">
+                                            <i class="bi bi-search"></i>
+                                        </button>
+                                        <div class="invalid-feedback">
+                                            Please click username serach button.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-cred-password" class="form-label text-sm fw-bold text-gray-700">Password</label>
+                                    <input type="password" class="form-control text-sm" id="employee-cred-password" placeholder="Retrieved password" disabled required>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-cred-email" class="form-label text-sm fw-bold text-gray-700">Email</label>
+                                    <input type="text" class="form-control text-sm" id="employee-cred-email" placeholder="Retrieved email" disabled required>
+                                </div>
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="employee-cred-status" class="form-label text-sm fw-bold text-gray-700">Status</label>
+                                    <input type="text" class="form-control text-sm" id="employee-cred-status" placeholder="Retrieved status" disabled required>
                                 </div>
                             </div>
                         </div>
@@ -623,9 +668,7 @@
 
                         <div class="client-photo-body">
                             <div id="photoDropZone" class="photo-drop-zone">
-                                <div id="photoPlaceholder"
-                                     class="photo-placeholder"
-                                     th:style="${employee.profileImageUrl != null ? 'display:none;' : 'display:flex;'}">
+                                <div id="photoPlaceholder" class="photo-placeholder">
                                     <div class="photo-icon">
                                         <i class="fa-solid fa-user"></i>
                                     </div>
@@ -639,22 +682,16 @@
                                     </div>
                                 </div>
 
-                                <img id="clientPhotoPreview"
-                                     class="client-photo-preview"
-                                     th:src="${employee.profileImageUrl}"
-                                     alt="Client photo preview"
-                                     th:style="${employee.profileImageUrl != null ? 'display:block;' : 'display:none;'}">
+                                <img id="clientPhotoPreview" class="client-photo-preview" alt="Client photo preview">
                                 <input type="file" id="clientPhoto" name="profileImage" accept="image/jpeg,image/png,.jpg,.jpeg,.png" hidden>
                             </div>
 
-                            <button type="button" id="choosePhotoBtn" class="choose-photo-btn"
-                                    th:style="${employee.profileImageUrl != null ? 'display:none;' : 'display:flex;'}">
+                            <button type="button" id="choosePhotoBtn" class="choose-photo-btn">
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                 Choose File
                             </button>
 
-                            <button type="button" id="removePhotoBtn" class="remove-photo-btn"
-                                    th:style="${employee.profileImageUrl != null ? 'display:flex;' : 'display:none;'}">
+                            <button type="button" id="removePhotoBtn" class="remove-photo-btn">
                                 <i class="fa-solid fa-trash-can"></i>
                                 Remove photo
                             </button>
@@ -667,18 +704,18 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <button type="button" class="btn btn-back fw-semibold"
                             id="back-client-btn"
-                            data-url="/app/portal/hr-management/employee-information">
+                            data-url="/app/portal/hr-management/employee-management">
                         <i class="fa-solid fa-arrow-left mr-2"></i>
                         Back
                     </button>
 
                     <button type="button" class="btn btn-submit fw-semibold" id="add-employee-btn">
                         <i class="fa-solid fa-user-plus mr-2"></i>
-                        Update Employee
+                        Add Employee
                     </button>
                 </div>
             </div>
         </form>
-        <!-- Edit Employee - END -->
+        <!-- Add Employee - END -->
     </div>
 </html>

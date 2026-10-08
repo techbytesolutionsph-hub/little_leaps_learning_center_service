@@ -436,9 +436,16 @@ public class PortalViewController {
     }
 
     /* HUMAN RESOURCES INFORMATION SYSTEM - START */
-    @GetMapping(value = "/hr-management/employee-information")
+    @GetMapping(value = "/hr-management")
+    public String hrDashboardPage(Model model) {
+        this.setupPage(model, "management", "HR Dashboard");
+
+        return "staff/hris/hr-dashboard/index";
+    }
+
+    @GetMapping(value = "/hr-management/employee-management")
     public String employeeManagementPage(Model model) {
-        this.setupPage(model, "management", "Employee Information");
+        this.setupPage(model, "management", "Employee Management");
 
         List<EmployeeResponse> employees = portalFrontService.getEmployees();
         model.addAttribute("employees", employees);
@@ -446,17 +453,17 @@ public class PortalViewController {
         DashboardMetricsResponse kpi = portalFrontService.employeeRegistryKPIs();
         model.addAttribute("kpi", kpi);
 
-        return "staff/hris/employee-information/index";
+        return "staff/hris/management/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-information/add-employee")
+    @GetMapping(value = "/hr-management/employee-management/add-employee")
     public String addEmployeePage(Model model) {
         this.setupPage(model, "management", "Add Employee");
 
-        return "staff/hris/employee-information/add-employee/index";
+        return "staff/hris/management/add-employee/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-information/view-employee")
+    @GetMapping(value = "/hr-management/employee-management/view-employee")
     public String viewEmployeePage(Model model, @RequestParam("id") String employeeId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "management", "Employee Details");
@@ -464,10 +471,10 @@ public class PortalViewController {
         AppEmployeeProfile employee = portalFrontService.getAppEmployeeProfile(uuid, employeeId);
         model.addAttribute("employee", employee);
 
-        return "staff/hris/employee-information/view-employee/index";
+        return "staff/hris/management/view-employee/index";
     }
 
-    @GetMapping(value = "/hr-management/employee-information/edit-employee")
+    @GetMapping(value = "/hr-management/employee-management/edit-employee")
     public String editEmployeePage(Model model, @RequestParam("id") String employeeId) throws ServiceException {
         String uuid = generateUUIDService.generateUUID();
         this.setupPage(model, "management", "Edit Employee");
@@ -475,10 +482,60 @@ public class PortalViewController {
         AppEmployeeProfile employee = portalFrontService.getAppEmployeeProfile(uuid, employeeId);
         model.addAttribute("employee", employee);
 
-        return "staff/hris/employee-information/edit-employee/index";
+        return "staff/hris/management/edit-employee/index";
     }
 
+    @GetMapping(value = "/hr-management/employee-attendance")
+    public String employeeAttendancePage(Model model) {
+        this.setupPage(model, "management", "Employee Attendance");
+
+        return "staff/hris/attendance/index";
+    }
+
+    @GetMapping(value = "/hr-management/employee-leave")
+    public String employeeLeavePage(Model model) {
+        this.setupPage(model, "management", "Employee Leave");
+
+        return "staff/hris/leave/index";
+    }
+
+    @GetMapping(value = "/hr-management/employee-payroll")
+    public String employeePayrollPage(Model model) {
+        this.setupPage(model, "management", "Employee Payroll");
+
+        return "staff/hris/payroll/index";
+    }
     /* HUMAN RESOURCES INFORMATION SYSTEM - END */
+
+    /* HUMAN RESOURCES RECRUITMENT - START */
+    @GetMapping(value = "/hr-recruitment")
+    public String recruitmentPage(Model model) {
+        this.setupPage(model, "recruitment", "Recruitment Dashboard");
+
+        return "staff/hris/recruitment-dashboard/index";
+    }
+
+    @GetMapping(value = "/hr-recruitment/applicant-interview")
+    public String applicantInterviewPage(Model model) {
+        this.setupPage(model, "recruitment", "Applicant Interview");
+
+        return "staff/hris/interview/index";
+    }
+
+    @GetMapping(value = "/hr-recruitment/employee-onboarding")
+    public String employeeOnboardingPage(Model model) {
+        this.setupPage(model, "management", "Employee Onboarding");
+
+        return "staff/hris/onboarding/index";
+    }
+
+    @GetMapping(value = "/hr-recruitment/employee-onboarding/add-employee-onboarding")
+    public String addEmployeeOnboardingPage(Model model) {
+        this.setupPage(model, "recruitment", "Add Employee Onboarding");
+
+        return "staff/hris/onboarding/add-onboarding/index";
+    }
+    /* HUMAN RESOURCES RECRUITMENT - END */
 
     @GetMapping(value = "/admin/user-account")
     public String administrationPage(Model model) {

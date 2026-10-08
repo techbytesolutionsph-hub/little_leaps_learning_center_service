@@ -8,10 +8,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
-        <title>View Employee - Little Leaps Learning Center</title>
+        <title>View Employee Onboarding - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
-        <link th:href="@{/css/staff/management/registry/view-employee/lllc-staff-admin-view-employee-styles.css}" rel="stylesheet" type="text/css">
         <link th:href="@{/css/components/default-add-view-edit-module.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
@@ -33,10 +32,9 @@
                         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
                         <!-- Page Heading and Breadcrumbs - End -->
 
-                        <!-- View Employee - Start -->
-                        <th:block th:insert="~{fragments/staff/management/registry/view-employee/html-fragment-staff-view-employee :: staff-view-employee(${employee})}"></th:block>
-                        <!-- View Employee - End -->
+                        <!-- View Employee Onboarding - Start -->
 
+                        <!-- View Employee Onboarding - End -->
                     </div>
                 </div>
 
@@ -47,5 +45,6 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
+        <script th:src="@{/js/staff/management/registry/add-employee/lllc-staff-admin-add-employee-scripts.js}" type="text/javascript"></script>
     </body>
 </html>
