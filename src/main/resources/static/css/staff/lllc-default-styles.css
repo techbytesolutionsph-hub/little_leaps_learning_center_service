@@ -9881,25 +9881,106 @@ body.sidebar-toggled footer.sticky-footer{
     );
 }
 
-/* ACTIVE */
+/* ACTIVE - Baby Teal */
 .badge-active {
-    background: linear-gradient(to bottom, #00b9c0, rgb(0,151,157));
+    background: linear-gradient(to bottom, #b2f0ed, #8adbd7);
+    color: #155e59;
 }
 
-/* INACTIVE */
+/* INACTIVE - Baby Gray */
 .badge-inactive {
-    background: linear-gradient(to bottom, #a7afb7, #7d8791);
+    background: linear-gradient(to bottom, #edf0f3, #dce2e8);
+    color: #59636e;
 }
 
-/* SUSPENDED */
+/* SUSPENDED - Baby Yellow */
 .badge-suspended {
-    background: linear-gradient(to bottom, #ffd760, #f0ad00);
-    color: #2d2d2d;
+    background: linear-gradient(to bottom, #fff2bf, #ffe08a);
+    color: #795b00;
 }
 
-/* DISABLED */
+/* DISABLED - Baby Red */
 .badge-disabled {
-    background: linear-gradient(to bottom, #ff7070, #d63b3b);
+    background: linear-gradient(to bottom, #ffd6d6, #ffb8b8);
+    color: #982c2c;
+}
+
+/* APPLIED - Baby Teal */
+.badge-applied {
+    background: linear-gradient(to bottom, #c7f4f1, #a5e7e2);
+    color: #176b66;
+}
+
+/* SCREENING - Baby Blue */
+.badge-screening {
+    background: linear-gradient(to bottom, #dbeafe, #bfdbfe);
+    color: #1e40af;
+}
+
+/* INTERVIEW - Baby Purple */
+.badge-interview {
+    background: linear-gradient(to bottom, #ede4ff, #d9c8ff);
+    color: #5b3695;
+}
+
+/* FOR REQUIREMENTS - Baby Orange */
+.badge-for-requirements {
+    background: linear-gradient(to bottom, #ffead5, #ffd4ad);
+    color: #8a4512;
+}
+
+/* REQUIREMENTS COMPLETED - Baby Cyan */
+.badge-requirements-completed {
+    background: linear-gradient(to bottom, #d5f7ff, #b5edfa);
+    color: #155e75;
+}
+
+/* HIRED - Baby Green */
+.badge-hired {
+    background: linear-gradient(to bottom, #d9fbe4, #b8efca);
+    color: #166534;
+}
+
+/* REJECTED - Baby Red */
+.badge-rejected {
+    background: linear-gradient(to bottom, #ffe0e0, #ffc5c5);
+    color: #991b1b;
+}
+
+/* WITHDRAWN - Baby Gray */
+.badge-withdrawn {
+    background: linear-gradient(to bottom, #eef0f4, #d9dee7);
+    color: #4b5563;
+}
+
+/* SCHEDULED - Baby Teal */
+.badge-scheduled {
+    background: linear-gradient(to bottom, #c7f4f1, #a5e7e2);
+    color: #176b66;
+}
+
+/* RESCHEDULED - Soft Lavender */
+.badge-rescheduled {
+    background: linear-gradient(to bottom, #e6d9ff, #d2bfff);
+    color: #60409a;
+}
+
+/* PENDING - Soft Yellow */
+.badge-pending {
+    background: linear-gradient(to bottom, #fff3c4, #ffe69a);
+    color: #856404;
+}
+
+/* COMPLETED - Soft Green */
+.badge-completed {
+    background: linear-gradient(to bottom, #d4edda, #b8e6c1);
+    color: #216e39;
+}
+
+/* CANCELLED - Soft Red */
+.badge-cancelled {
+    background: linear-gradient(to bottom, #ffd6d6, #ffb8b8);
+    color: #a12626;
 }
 
 /* Send Funds button */
@@ -10049,16 +10130,32 @@ body.sidebar-toggled footer.sticky-footer{
     overflow-x: hidden !important;
 }
 
-.actions-buttons {
+/* Allow tooltips to overflow the card */
+.default-card.css-default-card {
     overflow: visible !important;
 }
 
-.action-btn[data-tooltip] {
+/* DataTable containers */
+.default-card.css-default-card .dataTables_wrapper,
+.default-card.css-default-card .dataTables_scroll,
+.default-card.css-default-card .dataTables_scrollBody,
+.default-card.css-default-card .table-responsive {
+    overflow: visible !important;
+}
+
+/* Action buttons */
+.default-card.css-default-card .actions-buttons {
     position: relative;
+    overflow: visible !important;
     z-index: 9999;
 }
 
-.action-btn[data-tooltip]::after {
+.default-card.css-default-card .action-btn[data-tooltip] {
+    position: relative;
+}
+
+/* Tooltip */
+.default-card.css-default-card .action-btn[data-tooltip]::after {
     content: attr(data-tooltip);
     position: absolute;
     bottom: calc(100% + 9px);
@@ -10066,11 +10163,11 @@ body.sidebar-toggled footer.sticky-footer{
     transform: translateX(-50%) translateY(4px);
     background: #00979D;
     color: #fff;
-    padding: 6px 10px;
+    padding: 7px 10px;
     border-radius: 7px;
     font-size: 12px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.2;
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
@@ -10079,7 +10176,14 @@ body.sidebar-toggled footer.sticky-footer{
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.action-btn[data-tooltip]::before {
+.default-card.css-default-card .action-btn[data-tooltip]:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Tooltip arrow */
+.default-card.css-default-card .action-btn[data-tooltip]::before {
     content: "";
     position: absolute;
     bottom: calc(100% + 5px);
@@ -10091,16 +10195,127 @@ body.sidebar-toggled footer.sticky-footer{
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    z-index: 999998;
 }
 
-.action-btn[data-tooltip]:hover::after {
+.default-card.css-default-card .action-btn[data-tooltip]:hover::before {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
 }
 
-.action-btn[data-tooltip]:hover::before {
-    opacity: 1;
-    visibility: visible;
+/* ==========================================
+   Common Flatpickr Calendar & Time Picker
+   Little Leaps Learning Center
+   ========================================== */
+
+/* Calendar popup */
+.flatpickr-calendar {
+    width: 280px;
+    font-size: 11px;
+    border: 1px solid #e5eeee;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+/* Calendar header */
+.flatpickr-months {
+    padding: 6px 0;
+    background-color: #e8f8f8;
+}
+
+.flatpickr-months .flatpickr-month {
+    height: 34px;
+}
+
+.flatpickr-current-month {
+    padding-top: 8px;
+    font-size: 12px;
+    color: #00999f;
+}
+
+.flatpickr-weekdays {
+    height: 28px;
+    background-color: #f5fafa;
+}
+
+span.flatpickr-weekday {
+    font-size: 10px;
+    font-weight: 600;
+    color: #475467;
+    background-color: #f5fafa;
+}
+
+/* Calendar days */
+.flatpickr-days,
+.dayContainer {
+    width: 280px;
+    min-width: 280px;
+    max-width: 280px;
+}
+
+.flatpickr-day {
+    max-width: 36px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 11px;
+    border-radius: 8px;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: #00999f;
+    border-color: #00999f;
+}
+
+.flatpickr-day.today {
+    border-color: #00999f;
+}
+
+/* Calendar navigation */
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    padding: 8px;
+    fill: #00999f;
+}
+
+/* Time picker */
+.flatpickr-time {
+    height: 38px;
+    max-height: 38px;
+    border-top: 1px solid #e5eeee;
+}
+
+.flatpickr-time input,
+.flatpickr-time .flatpickr-am-pm,
+.flatpickr-time .flatpickr-time-separator {
+    height: 36px;
+    line-height: 36px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.flatpickr-time input:hover,
+.flatpickr-time .flatpickr-am-pm:hover {
+    background-color: #e8f8f8;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .flatpickr-calendar {
+        width: 260px;
+    }
+
+    .flatpickr-days,
+    .dayContainer {
+        width: 260px;
+        min-width: 260px;
+        max-width: 260px;
+    }
+
+    .flatpickr-day {
+        max-width: 33px;
+        height: 30px;
+        line-height: 30px;
+    }
 }

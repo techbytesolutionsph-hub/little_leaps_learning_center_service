@@ -1,3 +1,18 @@
+.dataTables_wrapper div.dataTables_length select,
+.dataTables_wrapper div.dataTables_filter input {
+    width: auto;
+    height: 33px;
+    border: 1px solid #d5dce5;
+    border-radius: 7px;
+    padding: 0 12px;
+    outline: none;
+    color: #465266;
+    background: #fff !important;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+
 .table.table-bordered th {
     color: #858796;
     font-family: "Nunito", sans-serif;

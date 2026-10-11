@@ -1,0 +1,164 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-hris-add-interview(candidates, employees)">
+        <!-- Add Schedule Interview - START -->
+        <form id="add-interview-form" novalidate>
+            <div class="client-form-layout-full">
+                <div class="client-form-main">
+                    <section class="client-section-card mb-2">
+                        <div class="client-section-header">
+                            <div class="section-icon">
+                                <i class="bi bi-person-vcard me-2"></i>
+                            </div>
+                            <div class="section-header-content">
+                                <h3>Schedule Interview</h3>
+                                <p>Set up an interview and coordinate the next steps in the hiring process.</p>
+                            </div>
+                        </div>
+                        <div class="client-section-body-full">
+                            <div class="row px-2">
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="interview-applicant" class="form-label text-sm fw-bold text-gray-800">Interviewer<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="interview-applicant" required>
+                                        <option value="" selected disabled>Select Applicant</option>
+                                        <option th:each="candidate : ${candidates}"
+                                            th:value="${candidate.id}"
+                                            th:text="${candidate.firstName
+                                            + (candidate.middleName != null && !candidate.middleName.isEmpty()
+                                                ? ' ' + candidate.middleName : '')
+                                            + ' ' + candidate.lastName
+                                            + (candidate.suffix != null && !candidate.suffix.isEmpty()
+                                                ? ' ' + candidate.suffix : '')}">
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select an applicant.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="interview-interviewer" class="form-label text-sm fw-bold text-gray-800">Interviewer<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="interview-interviewer" required>
+                                        <option value="" selected disabled>Select interviewer</option>
+                                        <option th:each="employee : ${employees}"
+                                            th:value="${employee.employeeId}"
+                                            th:text="${employee.firstName
+                                            + (employee.middleName != null && !employee.middleName.isEmpty()
+                                                ? ' ' + employee.middleName : '')
+                                            + ' ' + employee.lastName
+                                            + (employee.suffix != null && !employee.suffix.isEmpty()
+                                                ? ' ' + employee.suffix : '')}">
+                                        </option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select an interviewer.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="interview-schedule-status" class="form-label text-sm fw-bold text-gray-800">Schedule Status<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="interview-schedule-status" required>
+                                        <option value="" selected disabled>Select schedule status</option>
+                                        <option value="SCHEDULED">Scheduled</option>
+                                        <option value="RESCHEDULED">Reschedule</option>
+                                        <option value="PENDING">Pending</option>
+                                        <option value="COMPLETED">Completed</option>
+                                        <option value="CANCELLED">Cancelled</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a schedule status.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="interview-method" class="form-label text-sm fw-bold text-gray-800">Interviewer Method<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="interview-method" required>
+                                        <option value="" selected disabled>Select method</option>
+                                        <option value="PHONE">Phone</option>
+                                        <option value="VIDEO">Video</option>
+                                        <option value="ONSITE">Onsite</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a method.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                    <label for="interview-stage" class="form-label text-sm fw-bold text-gray-800">Interviewer Stage<span class="required">*</span></label>
+                                    <select class="form-control text-sm variation-discount-type" id="interview-stage" required>
+                                        <option value="" selected disabled>Select stage</option>
+                                        <option value="PHONE_SCREEN">Phone Screen</option>
+                                        <option value="HR_INTERVIEW">HR Interview</option>
+                                        <option value="TECHNICAL_INTERVIEW">Technical Interview</option>
+                                        <option value="FINAL_INTERVIEW">Final Interview</option>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please select a stage.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-2">
+                                    <label for="interview-interview-date" class="text-sm fw-bold text-gray-700">Interview Date<span class="required">*</span></label>
+                                    <div class="date-input-wrapper">
+                                        <input type="text" id="interview-interview-date" class="form-control" placeholder="Select interview date" required>
+                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                        <div class="invalid-feedback">
+                                            Please select interview date.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 mb-2">
+                                    <label for="interview-interview-time" class="text-sm fw-bold text-gray-700">Interview Time<span class="required">*</span></label>
+                                    <div class="date-input-wrapper">
+                                        <input type="text" id="interview-interview-time" class="form-control" placeholder="Select interview time" required>
+                                        <i class="bi bi-clock-fill calendar-icon"></i>
+                                        <div class="invalid-feedback">
+                                            Please select interview date.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 mt-2 mb-2" id="meetingLinkContainer" style="display: none;">
+                                    <label for="interview-meeting-link" class="form-label text-sm fw-bold text-gray-700">Meeting Link<span class="required">*</span></label>
+                                    <input type="text" class="form-control text-sm" id="interview-meeting-link" placeholder="https://..." required>
+                                    <div class="invalid-feedback">
+                                        Please enter a meeting link.
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                    <label for="interview-notes" class="form-label text-sm fw-bold text-gray-700">Notes</label>
+                                    <textarea class="form-control text-sm" id="interview-notes" name="notes" rows="3" placeholder="Enter interview notes or additional instructions..."></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="client-section-footer mb-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <button type="button" class="btn btn-back fw-semibold"
+                            id="back-client-btn"
+                            data-url="/app/portal/hr-recruitment/applicant-interview">
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                        Back
+                    </button>
+
+                    <button type="button" class="btn btn-submit fw-semibold" id="add-schedule-interview-btn">
+                        <i class="fa-solid fa-user-plus mr-2"></i>
+                        Add Interview
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Add Schedule Interview - END -->
+    </div>
+</html>

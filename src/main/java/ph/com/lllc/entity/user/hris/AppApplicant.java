@@ -3,10 +3,15 @@ package ph.com.lllc.entity.user.hris;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import ph.com.lllc.enums.EmployeePosition;
 import ph.com.lllc.enums.hris.ApplicantStatus;
+import ph.com.lllc.util.LocalDateUtils;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,13 +44,47 @@ public class AppApplicant implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "date_of_application")
-    private LocalDate dateOfApplication;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "applied_job", nullable = false)
+    private EmployeePosition appliedJob;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "experience")
+    private BigInteger experience;
+
+    @Column(name = "applied_date")
+    private LocalDate appliedDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
-    private ApplicantStatus status;
+    @Column(name = "applied_stage", nullable = false)
+    private ApplicantStatus appliedStage;
 
+    @Column(name = "resume_link")
+    private String resumeLink;
+
+    @Column(name = "notes", columnDefinition = "TEXT")
+    private String notes;
+
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "last_modification_date")
+    private LocalDateTime lastModificationDate;
+
+    @Column(name = "last_modified_by")
+    private String lastModifiedBy;
+
+    /* Applicant Interviews */
+    @JsonManagedReference
+    @OneToMany(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AppApplicantInterview> interviews;
+
+    /* Applicant Onboarding */
     @JsonManagedReference
     @OneToOne(mappedBy = "applicant", cascade = CascadeType.ALL, orphanRemoval = true)
     private AppApplicantOnboarding onboarding;
@@ -56,5 +95,17 @@ public class AppApplicant implements Serializable {
         if (onboarding != null && onboarding.getApplicant() != this) {
             onboarding.setApplicant(this);
         }
+    }
+
+    @PrePersist
+    private void prePersist() {
+        creationDate = LocalDateUtils.getLocalDateTime();
+        createdBy = "SYSTEM";
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        lastModificationDate = LocalDateUtils.getLocalDateTime();
+        lastModifiedBy = "SYSTEM";
     }
 }

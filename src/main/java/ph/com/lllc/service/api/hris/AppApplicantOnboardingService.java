@@ -58,7 +58,7 @@ public class AppApplicantOnboardingService {
             onboarding.addRequirement(applicantRequirement);
         }
 
-        applicant.setStatus(ApplicantStatus.FOR_REQUIREMENTS);
+        applicant.setAppliedStage(ApplicantStatus.FOR_REQUIREMENTS);
 
         return onboardingRepository.save(onboarding);
     }
@@ -122,7 +122,7 @@ public class AppApplicantOnboardingService {
 
         if (hasRejectedRequirement) {
             onboarding.setStatus(OnboardingStatus.IN_PROGRESS);
-            onboarding.getApplicant().setStatus(ApplicantStatus.FOR_REQUIREMENTS);
+            onboarding.getApplicant().setAppliedStage(ApplicantStatus.FOR_REQUIREMENTS);
             return;
         }
 
@@ -133,11 +133,11 @@ public class AppApplicantOnboardingService {
         if (allRequiredCompleted) {
             onboarding.setStatus(OnboardingStatus.COMPLETED);
             onboarding.setCompletedDate(LocalDateUtils.getLocalDate());
-            onboarding.getApplicant().setStatus(ApplicantStatus.REQUIREMENTS_COMPLETED);
+            onboarding.getApplicant().setAppliedStage(ApplicantStatus.REQUIREMENTS_COMPLETED);
 
         } else {
             onboarding.setStatus(OnboardingStatus.IN_PROGRESS);
-            onboarding.getApplicant().setStatus(ApplicantStatus.FOR_REQUIREMENTS);
+            onboarding.getApplicant().setAppliedStage(ApplicantStatus.FOR_REQUIREMENTS);
         }
     }
 

@@ -18,4 +18,9 @@ public class DashboardMetricsResponse {
     private DashboardCardResponse totalScheduledTherapySessions;
     private DashboardCardResponse totalScheduledUpgradingPrograms;
     private DashboardCardResponse totalScheduledNeurodevAssessments;
+
+    private DashboardCardResponse totalCandidates;
+    private DashboardCardResponse totalInInterviews;
+    private DashboardCardResponse totalOffered;
+    private DashboardCardResponse totalHiredThisQuarter;
 }

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.dto.staff.clients.*;
-import ph.com.lllc.entity.user.client.progressreport.ProgressReport;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.util.logging.LoggingService;

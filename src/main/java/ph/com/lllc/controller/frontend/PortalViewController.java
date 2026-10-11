@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ph.com.lllc.dto.admin.AppUserResponse;
+import ph.com.lllc.dto.hris.ApplicantResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.EmployeePosition;
+import ph.com.lllc.enums.hris.ApplicantStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.front.PortalFrontService;
 import ph.com.lllc.service.security.staff.PortalUserDetails;
@@ -515,11 +517,54 @@ public class PortalViewController {
         return "staff/hris/recruitment-dashboard/index";
     }
 
+    @GetMapping(value = "/hr-recruitment/candidates")
+    public String candidatePage(Model model) {
+        this.setupPage(model, "recruitment", "Candidates");
+
+        List<ApplicantResponse> applicants = portalFrontService.getAllApplicants();
+        model.addAttribute("applicants", applicants);
+
+        DashboardMetricsResponse kpi = portalFrontService.candidateKPIs();
+        model.addAttribute("kpi", kpi);
+
+        return "staff/hris/candidates/index";
+    }
+
+    @GetMapping(value = "/hr-recruitment/candidates/add-candidate")
+    public String addCandidatePage(Model model) {
+        this.setupPage(model, "recruitment", "Add Candidate");
+
+        return "staff/hris/candidates/add-candidate/index";
+    }
+
+
     @GetMapping(value = "/hr-recruitment/applicant-interview")
     public String applicantInterviewPage(Model model) {
         this.setupPage(model, "recruitment", "Applicant Interview");
 
+        List<ApplicantResponse> interviews = portalFrontService.findByAppliedStage(ApplicantStatus.INTERVIEW);
+        model.addAttribute("interviews", interviews);
+
+        List<ApplicantResponse> candidates = portalFrontService.getAllApplicants();
+        model.addAttribute("candidates", candidates);
+
+        List<EmployeeResponse> employees = portalFrontService.getEmployees();
+        model.addAttribute("employees", employees);
+
         return "staff/hris/interview/index";
+    }
+
+    @GetMapping(value = "/hr-recruitment/applicant-interview/add-schedule-interview")
+    public String addScheduleInterviewPage(Model model) {
+        this.setupPage(model, "recruitment", "Add Schedule Interview");
+
+        List<ApplicantResponse> candidates = portalFrontService.getAllAppliedAndScheduledApplicants();
+        model.addAttribute("candidates", candidates);
+
+        List<EmployeeResponse> employees = portalFrontService.getEmployees();
+        model.addAttribute("employees", employees);
+
+        return "staff/hris/interview/add-interview/index";
     }
 
     @GetMapping(value = "/hr-recruitment/employee-onboarding")

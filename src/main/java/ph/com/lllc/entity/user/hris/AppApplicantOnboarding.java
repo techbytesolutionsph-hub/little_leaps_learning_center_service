@@ -50,7 +50,7 @@ public class AppApplicantOnboarding implements Serializable {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "onboarding", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AppApplicantRequirement> requirements = new ArrayList<>();
+    private List<AppApplicantRequirement> requirements;
 
     public void addRequirement(AppApplicantRequirement requirement) {
         requirements.add(requirement);

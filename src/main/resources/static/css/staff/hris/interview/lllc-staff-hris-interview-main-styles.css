@@ -1,0 +1,445 @@
+[id^="viewScheduleInterviewModal-"] .modal-dialog {
+    width: calc(100% - 2.2rem);
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* Tablets */
+
+@media (max-width: 768px) {
+    [id^="viewScheduleInterviewModal-"] .modal-dialog {
+        max-width: 600px;
+    }
+}
+/* Mobile */
+
+@media (max-width: 576px) {
+    [id^="viewScheduleInterviewModal-"] .modal-dialog {
+        width: calc(100% - 1rem);
+        max-width: none;
+        margin: 0.5rem auto;
+    }
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-content {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    background-color: #ffffff;
+}
+/* Modal Header */
+
+[id^="viewScheduleInterviewModal-"] .modal-header {
+    background-color: #ffffff;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-title {
+    color: #00999f;
+    font-size: 14px;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-title i {
+    color: #00999f;
+    font-size: 20px;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-header p {
+    line-height: 1.5;
+    font-size: 11px;
+}
+/* Section Heading */
+
+[id^="viewScheduleInterviewModal-"] .modal-body h6 {
+    color: #263238;
+    font-size: 1rem;
+    padding-bottom: 0.65rem;
+    border-bottom: 1px solid #e9eeee;
+}
+/* Schedule Interview Header */
+
+[id^="viewScheduleInterviewModal-"] .modal-header .d-flex {
+    display: flex;
+    align-items: center !important;
+    gap: 12px !important;
+}
+/* Calendar Icon Container */
+
+[id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e8f8f8;
+    border: 1px solid #d0eeee;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+/* Calendar Icon */
+
+[id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon i {
+    color: #00999f;
+    font-size: 20px;
+}
+/* Modal Title */
+
+[id^="viewScheduleInterviewModal-"] .modal-header .modal-title {
+    color: #00999f;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 0;
+}
+/* Subtitle */
+
+[id^="viewScheduleInterviewModal-"] .modal-header p {
+    color: #667085;
+    font-size: 11px;
+    line-height: 1.5;
+    margin-top: 4px !important;
+    margin-bottom: 0;
+}
+/* Footer */
+
+[id^="viewScheduleInterviewModal-"] .modal-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #edf0f0;
+}
+/* Cancel Button */
+
+[id^="viewScheduleInterviewModal-"] .modal-footer .btn-light {
+    color: #475467;
+    background-color: #ffffff;
+    border-color: #d0d5dd !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-footer .btn-light:hover {
+    background-color: #f5fafa;
+    border-color: #00999f !important;
+}
+/* Schedule Interview Button */
+
+[id^="viewScheduleInterviewModal-"] .modal-footer button[type="submit"] {
+    background-color: #00999f;
+    border: 1px solid #00999f;
+    font-size: 12px;
+    font-weight: 600;
+    min-height: 35px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-footer button[type="button"] {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-footer button[type="submit"]:hover {
+    background-color: #007f84 !important;
+    border-color: #007f84;
+    box-shadow: 0 4px 10px rgba(0, 153, 159, 0.2);
+    transform: translateY(-1px);
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-footer button[type="submit"]:active {
+    transform: translateY(0);
+}
+/* Close Button */
+
+[id^="viewScheduleInterviewModal-"] .btn-close {
+    box-shadow: none;
+}
+
+[id^="viewScheduleInterviewModal-"] .btn-close:focus-visible {
+    outline: 2px solid #00999f;
+    outline-offset: 5px;
+}
+
+[id^="viewScheduleInterviewModal-"] .btn-close {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #f0fafa;
+    opacity: 1;
+    transition: transform 0.4s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+[id^="viewScheduleInterviewModal-"] .btn-close:hover {
+    transform: rotate(180deg);
+    background-color: #00999f;
+    box-shadow: 0 3px 10px rgba(0, 153, 159, 0.25);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 3 L13 13 M13 3 L3 13'/%3E%3C/svg%3E");
+}
+
+[id^="viewScheduleInterviewModal-"] .btn-close:active {
+    transform: rotate(360deg) scale(0.9);
+}
+
+[id^="viewScheduleInterviewModal-"] .btn-close:focus-visible {
+    outline: 2px solid #00999f;
+    outline-offset: 3px;
+    box-shadow: none;
+}
+/* Responsive Layout */
+
+@media (max-width: 576px) {
+    [id^="viewScheduleInterviewModal-"] .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-header,
+    [id^="viewScheduleInterviewModal-"] .modal-body,
+    [id^="viewScheduleInterviewModal-"] .modal-footer {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-title {
+        font-size: 1.1rem;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        border-radius: 10px;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon i {
+        font-size: 17px;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-header .modal-title {
+        font-size: 13px;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-footer {
+        gap: 0.5rem;
+    }
+
+    [id^="viewScheduleInterviewModal-"] .modal-footer .btn {
+        flex: 1;
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+}
+
+.interview-info-icon,
+.meeting-link-icon {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #d7f5f2;
+    color: #087f80;
+    font-size: 1.2rem;
+}
+/* Detail cards */
+
+.interview-detail-card {
+    background: #fff;
+    border: 1px solid #e9eeee;
+    border-radius: 16px;
+    padding: 10px;
+}
+
+.interview-card-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-body h6 {
+    color: #263238;
+    font-size: 14px;
+    padding-bottom: 0.35rem;
+}
+
+[id^="viewScheduleInterviewModal-"] .modal-body p {
+    color: #263238;
+    font-size: 11px !important;
+    padding-bottom: 0.35rem;
+}
+
+.interview-card-header .section-title-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e7f8f6;
+    color: #008f8f;
+    border-radius: 12px;
+    font-size: 1.15rem;
+}
+/* Applicant profile */
+
+.applicant-profile {
+    background: #f7fbfb;
+    border: 1px solid #edf3f3;
+}
+
+.applicant-profile h5 {
+    font-size: 14px !important;
+}
+
+.applicant-profile .text-muted {
+    font-size: 10px !important;
+    font-weight: 700;
+}
+
+.applicant-avatar {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c7f4f1, #a5e7e2);
+    color: #176b66;
+    font-size: 1.8rem;
+}
+
+.applicant-avatar i {
+    font-size: 18px;
+}
+
+.application-stage-badge {
+    background: #e7f1ff;
+    color: #285da8;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+/* Detail fields */
+
+.detail-item {
+    height: 100%;
+    padding: 12px 14px;
+    background: #fafcfc;
+    border: 1px solid #eff3f3;
+    border-radius: 10px;
+}
+
+.detail-label {
+    color: #7b8989;
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.detail-value {
+    color: #273b3b;
+    font-size: 12px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.text-xxsmall {
+    font-size: 11px;
+}
+/* Interview date and time */
+
+.interview-info-tile {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f5fbfa;
+    border: 1px solid #e3f1ef;
+    border-radius: 12px;
+}
+
+.interview-method-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #e7f5ff;
+    color: #24618c;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.interview-method-badge span {
+    font-size: 12px;
+    font-weight: 700;
+}
+/* Meeting link */
+
+.meeting-link-panel {
+    padding: 10px;
+    background: #f8fbff;
+    border: 1px solid #e4edf9;
+    border-radius: 12px;
+}
+
+.meeting-link-icon {
+    background: #e4edff;
+    color: #345fbd;
+}
+/* Buttons */
+
+.btn-teal {
+    background: #00999f;
+    border: 1px solid #00999f;
+    color: #fff;
+}
+
+.btn-teal:hover {
+    background: #007f84;
+    border-color: #007f84;
+    color: #fff;
+}
+/* Responsive layout */
+
+@media (max-width: 576px) {
+    .interview-detail-card {
+        padding: 15px;
+    }
+
+    .applicant-profile {
+        flex-wrap: wrap;
+    }
+
+    .application-stage-badge {
+        margin-left: 71px;
+    }
+
+    .interview-info-tile {
+        padding: 12px;
+    }
+}
+
+#scheduledInterviewTable,
+#scheduledInterviewTable tbody,
+#scheduledInterviewTable tr,
+#scheduledInterviewTable td,
+#scheduledInterviewTable .actions-buttons,
+#scheduledInterviewTable .action-btn,
+.reports-table-wrapper,
+.table-responsive {
+    z-index: auto !important;
+}
+
+#scheduledInterviewTable .actions-buttons,
+#scheduledInterviewTable .action-btn {
+    transform: none !important;
+    filter: none !important;
+}
+
+.view-schedule-interview-modal {
+    z-index: 1055 !important;
+}

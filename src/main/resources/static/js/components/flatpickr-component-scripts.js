@@ -1,6 +1,7 @@
 function initializeDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -24,6 +25,7 @@ function initializeDatePicker(id, placeholder) {
 function initializeTimePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: true,
+        disableMobile: true,
         noCalendar: true,
         time_24hr: false,
         dateFormat: "h:i K",
@@ -49,6 +51,7 @@ function initializeTimePicker(id, placeholder) {
 function initializeMaxTodayDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -73,6 +76,7 @@ function initializeMaxTodayDatePicker(id, placeholder) {
 function initializeDatePicker2(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -96,6 +100,7 @@ function initializeDatePicker2(id, placeholder) {
 function initializeTimePicker2(id, placeholder) {
     flatpickr(id, {
         enableTime: true,
+        disableMobile: true,
         noCalendar: true,
         dateFormat: "H:i",
         altInput: true,
@@ -121,20 +126,18 @@ function initializeTimePicker2(id, placeholder) {
 function initializeMaxTodayDatePicker2(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
-        maxDate: "today",
+        minDate: "today",
         altInputClass: "form-control assessment-form-control",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
         },
         onChange: function (selectedDates, dateStr, instance) {
             if (dateStr) {
-                // Remove validation from original input
                 $(instance.input).removeClass("is-invalid");
-
-                // Remove validation from visible Flatpickr input
                 $(instance.altInput).removeClass("is-invalid");
             }
         },
@@ -145,6 +148,7 @@ function initializeMaxTodayDatePicker2(id, placeholder) {
 function initializeMinTodayDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -169,6 +173,7 @@ function initializeMinTodayDatePicker(id, placeholder) {
 function initializePastDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -193,6 +198,7 @@ function initializePastDatePicker(id, placeholder) {
 function initializeFutureDatePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -218,6 +224,7 @@ function initializeDateRangePicker(id, placeholder, minDate = null, maxDate = nu
     flatpickr(id, {
         mode: "range",
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",
@@ -250,6 +257,7 @@ function initializeMonthYearPicker(id, placeholder) {
             })
         ],
         altInput: true,
+        disableMobile: true,
         altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
@@ -277,6 +285,7 @@ function initializeYearPicker(id, placeholder) {
             })
         ],
         altInput: true,
+        disableMobile: true,
         altInputClass: "form-control text-sm required-field",
         onReady: function (selectedDates, dateStr, instance) {
             instance.altInput.setAttribute("placeholder", placeholder);
@@ -297,6 +306,7 @@ function initializeYearPicker(id, placeholder) {
 function initializeDateTimePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: true,
+        disableMobile: true,
         dateFormat: "Y-m-d H:i",
         altInput: true,
         altFormat: "Y-m-d h:i K",
@@ -321,6 +331,7 @@ function initializeDateTimePicker(id, placeholder) {
 function initializeTimePicker(id, placeholder) {
     flatpickr(id, {
         enableTime: true,
+        disableMobile: true,
         noCalendar: true,
         dateFormat: "H:i",
         altInput: true,
@@ -347,6 +358,7 @@ function initializeMultipleDatePicker(id, placeholder) {
     flatpickr(id, {
         mode: "multiple",
         enableTime: false,
+        disableMobile: true,
         altInput: true,
         altFormat: "Y-m-d",
         dateFormat: "Y-m-d",

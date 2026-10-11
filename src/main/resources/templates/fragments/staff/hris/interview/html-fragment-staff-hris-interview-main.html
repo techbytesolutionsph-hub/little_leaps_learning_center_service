@@ -1,0 +1,464 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <div th:fragment="staff-hris-interview-main(interviews, candidates, employees)">
+        <!-- Applicant Interview Main - START -->
+        <div class="row">
+            <!-- Total Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/total-employees-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    This Week
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    0
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        + 0 vs last week
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Currently Active Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/applicant-interview-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Today
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    0
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        0 interviews remaining
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total On Leave Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/calendar-completed-icon.svg" width="45" height="45" alt="On Leave">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Completed
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    0
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Across all candidates
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Resigned Employees count -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow h-100 py-1">
+                    <div class="card-body-white" style="background-color: white !important;">
+                        <div class="row no-gutters align-items-center">
+                            <!-- Icon -->
+                            <div class="col-auto mr-3">
+                                <div class="p-2 bg-teal-soft border rounded d-flex align-items-center justify-content-center">
+                                    <img class="lordicon-bounce" src="/img/lordicon/calendar-reschedule-icon.svg" width="45" height="45" alt="Total Employees">
+                                </div>
+                            </div>
+
+                            <!-- Text -->
+                            <div class="col">
+                                <div class="kpi-header text-xs font-weight-bolder mb-2">
+                                    Rescheduled
+                                </div>
+                                <div class="kpi-count h5 mb-0 text-gray-700">
+                                    0
+                                </div>
+                                <div class="text-xs text-muted mt-2">
+                                    <span class="kpi-circle-badge">
+                                        Need new time slot
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="default-card css-default-card">
+            <div class="css-default-card-header mb-2">
+                <div class="section-title">
+                    <div class="section-title-icon">
+                        <i class="fa-solid fa-user-clock"></i>
+                    </div>
+                    <div>
+                        <h2>Scheduled Interviews</h2>
+                        <p>Manage scheduled interviews and track upcoming appointments.</p>
+                    </div>
+                </div>
+
+                <a th:href="@{/app/portal/hr-recruitment/applicant-interview/add-schedule-interview}"
+                   class="btn-glossy-teal mb-2 mb-md-0"
+                   id="add-schedule-interview-btn"
+                   style="text-decoration: none">
+                    <i class="bi bi-calendar-plus mr-2"></i> Schedule Interview
+                </a>
+            </div>
+            <div class="reports-table-wrapper">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="scheduledInterviewTable">
+                        <thead>
+                            <tr>
+                                <th>Candidate</th>
+                                <th>Applied Job</th>
+                                <th>Interviewer</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <th:block th:each="applicant : ${interviews}">
+                                <tr th:each="scheduledInterview : ${applicant.interviews}">
+
+                                    <td data-label="Candidate" style="font-weight: 700"
+                                        th:text="${applicant.firstName
+                                        + (applicant.middleName != null and !applicant.middleName.isEmpty() ? ' ' + applicant.middleName : '')
+                                        + ' ' + applicant.lastName
+                                        + (applicant.suffix != null and !applicant.suffix.isEmpty() ? ' ' + applicant.suffix : '')}">
+                                        Candidate Name
+                                    </td>
+                                    <td data-label="Applied Job"
+                                        th:text="${applicant.appliedJob.displayPosition}">
+                                    </td>
+                                    <td data-label="Interviewer"
+                                        th:text="${scheduledInterview.interviewer != null
+                                                            ? scheduledInterview.interviewer.firstName + ' ' + scheduledInterview.interviewer.lastName
+                                                            : 'Not assigned'}">
+                                    </td>
+                                    <td data-label="Date &amp; Time"
+                                        th:text="${#temporals.format(scheduledInterview.interviewDate, 'MMM d, yyyy')
+                                        + ' ' + #temporals.format(scheduledInterview.interviewTime, 'h:mm a')}">
+                                    </td>
+                                    <td data-label="Status">
+                                        <span class="status-badge badge"
+                                              th:classappend="${' badge-' + #strings.toLowerCase(#strings.replace(scheduledInterview.scheduleStatus.name(), '_', '-'))}"
+                                              th:text="${#strings.capitalize(#strings.toLowerCase(scheduledInterview.scheduleStatus.name()))}">
+                                        </span>
+                                    </td>
+                                    <td data-label="Actions">
+                                        <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
+                                            <a class="btn-glossy-teal action-btn d-flex align-items-center"
+                                               data-tooltip="View Schedule Interview"
+                                               data-bs-toggle="modal"
+                                               th:attr="data-bs-target='#viewScheduleInterviewModal-' + ${scheduledInterview.id}">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- View Schedule Interview Modal -->
+        <th:block th:each="applicant : ${interviews}">
+            <th:block th:each="scheduledInterview : ${applicant.interviews}">
+                <div class="modal fade view-schedule-interview-modal" th:id="'viewScheduleInterviewModal-' + ${scheduledInterview.id}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content border-0 rounded-4 shadow">
+                            <!-- Header -->
+                            <div class="modal-header border-0 px-4 pt-4 pb-2">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="section-title-icon flex-shrink-0">
+                                        <i class="bi bi-calendar-event"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="modal-title fw-bold text-teal">
+                                            View Schedule Interview
+                                        </h5>
+                                        <p class="text-muted text-xxsmall mb-0 mt-1">
+                                            Review applicant details and interview arrangements
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="modal-body px-4 pt-3 pb-4">
+                                <!-- Applicant Information -->
+                                <div class="interview-detail-card mb-2">
+                                    <div class="interview-card-header">
+                                        <div class="section-title-icon">
+                                            <i class="bi bi-person-vcard"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-1">Applicant Information</h6>
+                                            <p class="text-muted text-xxsmall mb-0">
+                                                Personal and application details
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="applicant-profile d-flex align-items-center gap-2 p-3 rounded-3 mb-1">
+                                        <div class="applicant-avatar">
+                                            <i class="bi bi-person-fill"></i>
+                                        </div>
+
+                                        <div class="flex-grow-1 min-width-0">
+                                            <h5 class="fw-bold text-dark mb-1"
+                                                th:text="${applicant.firstName + (applicant.middleName != null and !applicant.middleName.isEmpty() ? ' ' + applicant.middleName : '')
+                                                + ' ' + applicant.lastName + (applicant.suffix != null and !applicant.suffix.isEmpty() ? ' ' + applicant.suffix : '')}">
+                                                Applicant Name
+                                            </h5>
+
+                                            <div class="text-muted text-xxsmall">
+                                                <i class="bi bi-briefcase me-1"></i>
+                                                <span th:text="${applicant.appliedJob.displayPosition}">
+                                                    Applied Job
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <span class="application-stage-badge"
+                                              th:text="${#strings.toUpperCase(#strings.replace(scheduledInterview.interviewStage.name(), '_', ' '))}">
+                                            INTERVIEW STAGE
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Interview Details -->
+                                <div class="interview-detail-card mb-2">
+                                    <div class="interview-card-header">
+                                        <div class="section-title-icon">
+                                            <i class="bi bi-calendar-event"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-1">Interview Details</h6>
+                                            <p class="text-muted text-xxsmall mb-0">
+                                                Date, time, method, and interview stage
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <!-- Interview Date -->
+                                        <div class="col-md-6">
+                                            <div class="interview-info-tile">
+                                                <div class="interview-info-icon">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="detail-label">Interview Date</div>
+                                                    <div class="detail-value" th:text="${#temporals.format(scheduledInterview.interviewDate, 'MMMM d, yyyy')}">
+                                                        October 12, 2026
+                                                    </div>
+                                                    <small class="text-muted" th:text="${#temporals.format(scheduledInterview.interviewDate, 'EEEE')}">
+                                                        Monday
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Interview Time -->
+                                        <div class="col-md-6">
+                                            <div class="interview-info-tile">
+                                                <div class="interview-info-icon">
+                                                    <i class="bi bi-clock"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="detail-label">Interview Time</div>
+                                                    <div class="detail-value" th:text="${#temporals.format(scheduledInterview.interviewTime, 'h:mm a')}">
+                                                        9:00 AM
+                                                    </div>
+                                                    <small class="text-muted">
+                                                        Philippine Time
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Interview Method -->
+                                        <div class="col-md-6">
+                                            <div class="detail-item">
+                                                <div class="detail-label">
+                                                    <i class="bi bi-telephone-forward me-1"></i>
+                                                    Interview Method
+                                                </div>
+
+                                                <div class="detail-value">
+                                                    <span class="interview-method-badge">
+                                                        <i th:class="${scheduledInterview.interviewMethod.name() == 'VIDEO' ? 'bi bi-camera-video me-1'
+                                                            : scheduledInterview.interviewMethod.name() == 'PHONE' ? 'bi bi-telephone me-1' : 'bi bi-people me-1'}"></i>
+
+                                                        <span th:text="${#strings.capitalize(#strings.toLowerCase(#strings.replace(scheduledInterview.interviewMethod.name(), '_', ' '))) + ' Interview'}">
+                                                            Phone Interview
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Interview Stage -->
+                                        <div class="col-md-6">
+                                            <div class="detail-item">
+                                                <div class="detail-label">
+                                                    <i class="bi bi-diagram-3 me-1"></i>
+                                                    Interview Stage
+                                                </div>
+
+                                                <div class="detail-value" th:text="${#strings.capitalize(#strings.toLowerCase(
+                                                 #strings.replace(scheduledInterview.interviewStage.name(), '_', ' ')))}">
+                                                    Phone Screen
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Interviewer -->
+                                        <div class="col-md-6">
+                                            <div class="detail-item">
+                                                <div class="detail-label">
+                                                    <i class="bi bi-person-badge me-1"></i>
+                                                    Interviewer
+                                                </div>
+
+                                                <div class="detail-value" th:text="${scheduledInterview.interviewer != null
+                                                     ? scheduledInterview.interviewer.firstName + ' ' + scheduledInterview.interviewer.lastName : 'Not assigned'}">
+                                                    Interviewer Name
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Schedule Status -->
+                                        <div class="col-md-6">
+                                            <div class="detail-item">
+                                                <div class="detail-label">
+                                                    <i class="bi bi-calendar-check me-1"></i>
+                                                    Schedule Status
+                                                </div>
+
+                                                <div class="detail-value">
+                                                    <span class="status-badge badge" th:classappend="${' badge-' +
+                                                              #strings.toLowerCase(#strings.replace(scheduledInterview.scheduleStatus.name(), '_', '-'))}"
+                                                          th:text="${#strings.capitalize(#strings.toLowerCase(scheduledInterview.scheduleStatus.name()))}">
+                                                        Scheduled
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="detail-item">
+                                                <div class="detail-label">
+                                                    <i class="bi bi-journal-text me-1"></i>
+                                                    Interview Notes
+                                                </div>
+
+                                                <div class="detail-value">
+                                                    <i class="bi bi-chat-left-text me-2"></i>
+
+                                                    <span th:text="${scheduledInterview.notes != null
+                                                        and !scheduledInterview.notes.isEmpty()
+                                                        ? scheduledInterview.notes
+                                                        : 'No notes available.'}">
+                                                        Interview notes
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Meeting Link: Video Interviews Only -->
+                                    <div class="meeting-link-panel mt-3"
+                                         th:if="${scheduledInterview.interviewMethod.name() == 'VIDEO'
+                                         and scheduledInterview.meetingLink != null
+                                         and !scheduledInterview.meetingLink.isEmpty()}">
+
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div class="meeting-link-icon">
+                                                <i class="bi bi-camera-video"></i>
+                                            </div>
+
+                                            <div class="flex-grow-1 min-width-0">
+                                                <div class="fw-bold mb-1" style="font-size: 14px">
+                                                    Interview Meeting Link
+                                                </div>
+
+                                                <div class="text-muted text-xxsmall mb-3">
+                                                    Open the meeting link when needed.
+                                                </div>
+
+                                                <a th:href="${scheduledInterview.meetingLink}"
+                                                   target="_blank"
+                                                   rel="noopener noreferrer"
+                                                   class="btn btn-teal fw-bold text-sm rounded-3 px-3">
+                                                    <i class="bi bi-box-arrow-up-right me-2"></i>
+                                                    Open Meeting Link
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </th:block>
+        <!-- Applicant Interview Main - END -->
+    </div>
+</html>

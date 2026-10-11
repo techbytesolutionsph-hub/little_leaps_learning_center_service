@@ -3,18 +3,22 @@ package ph.com.lllc.service.api.front;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ph.com.lllc.dto.admin.AppUserResponse;
+import ph.com.lllc.dto.hris.ApplicantResponse;
 import ph.com.lllc.dto.response.DashboardCardResponse;
 import ph.com.lllc.dto.response.DashboardMetricsResponse;
 import ph.com.lllc.dto.staff.EmployeeResponse;
 import ph.com.lllc.dto.staff.clients.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.EmployeePosition;
+import ph.com.lllc.enums.hris.ApplicantStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.admin.UserAccountService;
 import ph.com.lllc.service.api.clients.AssessmentScheduleService;
 import ph.com.lllc.service.api.clients.ClientManagementService;
+import ph.com.lllc.service.api.hris.RecruitmentService;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +30,7 @@ public class PortalFrontService {
     private final ClientManagementService clientManagementService;
     private final AssessmentScheduleService assessmentScheduleService;
     private final EmploymentRegistryService employmentRegistryService;
+    private final RecruitmentService recruitmentService;
 
     public List<AppUserResponse> getAllUsers(){
         return userAccountService.getAllUsers();
@@ -204,5 +209,64 @@ public class PortalFrontService {
 
     public List<ClientDetailsResponse> getClientDetails(String employeeId) throws ServiceException {
         return clientManagementService.getClientDetails(employeeId);
+    }
+
+    public List<ApplicantResponse> getAllApplicants() {
+        return recruitmentService.getAllApplicants();
+    }
+
+    public List<ApplicantResponse> getAllAppliedAndScheduledApplicants() {
+        return recruitmentService.getAllAppliedAndScheduledApplicants();
+    }
+
+    public List<ApplicantResponse> findByAppliedStage(ApplicantStatus stage) {
+        return recruitmentService.findByAppliedStage(stage);
+    }
+
+    public DashboardMetricsResponse candidateKPIs() {
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.withDayOfMonth(1);
+        LocalDate endDate = today.withDayOfMonth(today.lengthOfMonth());
+
+        int quarter = (LocalDate.now().getMonthValue() - 1) / 3 + 1;
+        int currentQuarter = (today.getMonthValue() - 1) / 3;
+        LocalDate startQuarterDate = LocalDate.of(today.getYear(), currentQuarter * 3 + 1, 1);
+        LocalDate endQuarterDate = startDate.plusMonths(3).minusDays(1);
+
+
+        long candidates = recruitmentService.getAllApplicants().size();
+        long totalCandidatesCount = recruitmentService.countByAppliedDateBetween(startDate, endDate);
+        DashboardCardResponse totalCandidates = DashboardCardResponse.builder()
+                .value(String.valueOf(candidates))
+                .message("+ " + totalCandidatesCount + " this month")
+                .build();
+
+        long inInterview = recruitmentService.countAllByApplicantStatus(ApplicantStatus.INTERVIEW);
+        long totalInInterviewCount = recruitmentService.countByApplicantStatusAndAppliedDateBetween(ApplicantStatus.INTERVIEW, startDate, endDate);
+        DashboardCardResponse totalInInterviews = DashboardCardResponse.builder()
+                .value(String.valueOf(inInterview))
+                .message(totalInInterviewCount + " scheduled this month")
+                .build();
+
+        long offered = recruitmentService.countAllByApplicantStatus(ApplicantStatus.OFFERED);
+        long totalOfferedCount = recruitmentService.countByApplicantStatusAndAppliedDateBetween(ApplicantStatus.OFFERED, startDate, endDate);
+        DashboardCardResponse totalOffered = DashboardCardResponse.builder()
+                .value(String.valueOf(offered))
+                .message(totalOfferedCount + " offered this month")
+                .build();
+
+        long hired = recruitmentService.countAllByApplicantStatus(ApplicantStatus.HIRED);
+        long totalHiredCount = recruitmentService.countByApplicantStatusAndAppliedDateBetween(ApplicantStatus.HIRED, startQuarterDate, endQuarterDate);
+        DashboardCardResponse totalHired = DashboardCardResponse.builder()
+                .value(String.valueOf(hired))
+                .message("+ " + totalHiredCount + " vs Q" + quarter)
+                .build();
+
+        return DashboardMetricsResponse.builder()
+                .totalCandidates(totalCandidates)
+                .totalInInterviews(totalInInterviews)
+                .totalOffered(totalOffered)
+                .totalHiredThisQuarter(totalHired)
+                .build();
     }
 }

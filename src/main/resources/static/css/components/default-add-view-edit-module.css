@@ -339,8 +339,8 @@
     color: #dc4c4c;
 }
 
-.form-control,
-.form-select {
+.form-control:not(textarea):not(.dataTables_wrapper *),
+.form-select:not(.dataTables_wrapper *) {
     width: 100%;
     height: 40px;
     border: 1px solid #d5dce5;
@@ -351,6 +351,12 @@
     background: #fff !important;
     font-size: 13px;
     transition: 0.2s;
+}
+
+/* Preserve red validation borders */
+.form-control.is-invalid:not(textarea),
+.form-select.is-invalid {
+    border-color: #dc3545 !important;
 }
 
 .form-control:focus,

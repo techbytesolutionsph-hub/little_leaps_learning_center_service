@@ -11,6 +11,8 @@
         <title>Applicant Interview - Little Leaps Learning Center</title>
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
         <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/hris/interview/lllc-staff-hris-interview-main-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/components/default-add-view-edit-module.css}" rel="stylesheet" type="text/css">
     </head>
     <body class="container-fluid p-0" id="page-top">
         <div id="wrapper">
@@ -32,7 +34,8 @@
                         <!-- Page Heading and Breadcrumbs - End -->
 
                         <!-- Applicant Interview Main - Start -->
-<!--                        <th:block th:insert="~{fragments/staff/management/registry/html-fragment-staff-employee-registry :: staff-employee-registry(${kpi}, ${employees})}"></th:block>-->
+                        <th:block th:insert="~{fragments/staff/hris/interview/html-fragment-staff-hris-interview-main
+                                :: staff-hris-interview-main(${interviews}, ${candidates}, ${employees})}"></th:block>
                         <!-- Applicant Interview Main - End -->
                     </div>
                 </div>
@@ -44,6 +47,5 @@
         </div>
 
         <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
-<!--        <script th:src="@{/js/staff/dashboard/lllc-staff-dashboard-scripts.js}" type="text/javascript"></script>-->
     </body>
 </html>
