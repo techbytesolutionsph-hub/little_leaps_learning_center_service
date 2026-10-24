@@ -1,4 +1,4 @@
-[id^="viewScheduleInterviewModal-"] .modal-dialog {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-dialog {
     width: calc(100% - 2.2rem);
     max-width: 680px;
     margin-left: auto;
@@ -7,21 +7,21 @@
 /* Tablets */
 
 @media (max-width: 768px) {
-    [id^="viewScheduleInterviewModal-"] .modal-dialog {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-dialog {
         max-width: 600px;
     }
 }
 /* Mobile */
 
 @media (max-width: 576px) {
-    [id^="viewScheduleInterviewModal-"] .modal-dialog {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-dialog {
         width: calc(100% - 1rem);
         max-width: none;
         margin: 0.5rem auto;
     }
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-content {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-content {
     border: none;
     border-radius: 1rem;
     overflow: hidden;
@@ -29,27 +29,27 @@
 }
 /* Modal Header */
 
-[id^="viewScheduleInterviewModal-"] .modal-header {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header {
     background-color: #ffffff;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-title {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-title {
     color: #00999f;
     font-size: 14px;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-title i {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-title i {
     color: #00999f;
     font-size: 20px;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-header p {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header p {
     line-height: 1.5;
     font-size: 11px;
 }
 /* Section Heading */
 
-[id^="viewScheduleInterviewModal-"] .modal-body h6 {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-body h6 {
     color: #263238;
     font-size: 1rem;
     padding-bottom: 0.65rem;
@@ -57,14 +57,14 @@
 }
 /* Schedule Interview Header */
 
-[id^="viewScheduleInterviewModal-"] .modal-header .d-flex {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .d-flex {
     display: flex;
     align-items: center !important;
     gap: 12px !important;
 }
 /* Calendar Icon Container */
 
-[id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .section-title-icon {
     width: 42px;
     height: 42px;
     min-width: 42px;
@@ -78,13 +78,13 @@
 }
 /* Calendar Icon */
 
-[id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon i {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .section-title-icon i {
     color: #00999f;
     font-size: 20px;
 }
 /* Modal Title */
 
-[id^="viewScheduleInterviewModal-"] .modal-header .modal-title {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .modal-title {
     color: #00999f;
     font-size: 14px;
     font-weight: 700;
@@ -93,7 +93,7 @@
 }
 /* Subtitle */
 
-[id^="viewScheduleInterviewModal-"] .modal-header p {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header p {
     color: #667085;
     font-size: 11px;
     line-height: 1.5;
@@ -102,26 +102,26 @@
 }
 /* Footer */
 
-[id^="viewScheduleInterviewModal-"] .modal-footer {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer {
     background-color: #ffffff;
     border-top: 1px solid #edf0f0;
 }
 /* Cancel Button */
 
-[id^="viewScheduleInterviewModal-"] .modal-footer .btn-light {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer .btn-light {
     color: #475467;
     background-color: #ffffff;
     border-color: #d0d5dd !important;
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-footer .btn-light:hover {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer .btn-light:hover {
     background-color: #f5fafa;
     border-color: #00999f !important;
 }
 /* Schedule Interview Button */
 
-[id^="viewScheduleInterviewModal-"] .modal-footer button[type="submit"] {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer button[type="submit"] {
     background-color: #00999f;
     border: 1px solid #00999f;
     font-size: 12px;
@@ -130,33 +130,33 @@
     transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-footer button[type="button"] {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer button[type="button"] {
     font-size: 12px;
     font-weight: 600;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-footer button[type="submit"]:hover {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer button[type="submit"]:hover {
     background-color: #007f84 !important;
     border-color: #007f84;
     box-shadow: 0 4px 10px rgba(0, 153, 159, 0.2);
     transform: translateY(-1px);
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-footer button[type="submit"]:active {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer button[type="submit"]:active {
     transform: translateY(0);
 }
 /* Close Button */
 
-[id^="viewScheduleInterviewModal-"] .btn-close {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .btn-close {
     box-shadow: none;
 }
 
-[id^="viewScheduleInterviewModal-"] .btn-close:focus-visible {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .btn-close:focus-visible {
     outline: 2px solid #00999f;
     outline-offset: 5px;
 }
 
-[id^="viewScheduleInterviewModal-"] .btn-close {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .btn-close {
     width: 25px;
     height: 25px;
     font-size: 12px;
@@ -168,18 +168,18 @@
     transition: transform 0.4s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-[id^="viewScheduleInterviewModal-"] .btn-close:hover {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .btn-close:hover {
     transform: rotate(180deg);
     background-color: #00999f;
     box-shadow: 0 3px 10px rgba(0, 153, 159, 0.25);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M3 3 L13 13 M13 3 L3 13'/%3E%3C/svg%3E");
 }
 
-[id^="viewScheduleInterviewModal-"] .btn-close:active {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .btn-close:active {
     transform: rotate(360deg) scale(0.9);
 }
 
-[id^="viewScheduleInterviewModal-"] .btn-close:focus-visible {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .btn-close:focus-visible {
     outline: 2px solid #00999f;
     outline-offset: 3px;
     box-shadow: none;
@@ -187,41 +187,41 @@
 /* Responsive Layout */
 
 @media (max-width: 576px) {
-    [id^="viewScheduleInterviewModal-"] .modal-dialog {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-dialog {
         margin: 0.5rem;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-header,
-    [id^="viewScheduleInterviewModal-"] .modal-body,
-    [id^="viewScheduleInterviewModal-"] .modal-footer {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header,
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-body,
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer {
         padding-left: 1rem !important;
         padding-right: 1rem !important;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-title {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-title {
         font-size: 1.1rem;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .section-title-icon {
         width: 36px;
         height: 36px;
         min-width: 36px;
         border-radius: 10px;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-header .section-title-icon i {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .section-title-icon i {
         font-size: 17px;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-header .modal-title {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-header .modal-title {
         font-size: 13px;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-footer {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer {
         gap: 0.5rem;
     }
 
-    [id^="viewScheduleInterviewModal-"] .modal-footer .btn {
+    :is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-footer .btn {
         flex: 1;
         padding-left: 0.75rem !important;
         padding-right: 0.75rem !important;
@@ -257,13 +257,13 @@
     margin-bottom: 10px;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-body h6 {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-body h6 {
     color: #263238;
     font-size: 14px;
     padding-bottom: 0.35rem;
 }
 
-[id^="viewScheduleInterviewModal-"] .modal-body p {
+:is([id^="viewScheduleInterviewModal-"], [id^="rescheduleInterviewModal-"]) .modal-body p {
     color: #263238;
     font-size: 11px !important;
     padding-bottom: 0.35rem;
@@ -442,4 +442,164 @@
 
 .view-schedule-interview-modal {
     z-index: 1055 !important;
+}
+
+.action-btn {
+    position: relative;
+}
+
+.action-btn::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(0, 151, 157) !important;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Tooltip tail */
+.action-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(0, 151, 157) transparent transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Show tooltip and tail on hover */
+.action-btn:hover::after,
+.action-btn:hover::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Interview Method Badge */
+.interview-method-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 4px 10px 4px 4px;
+    border: 1px solid transparent;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.3;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.interview-method-badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Circular icon */
+.interview-method-badge i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    font-size: 11px;
+}
+
+/* Video - Blue */
+.interview-method-badge.method-video {
+    color: #1456b8;
+    background: #e8f1ff;
+    border-color: #c9ddff;
+}
+
+.interview-method-badge.method-video i {
+    color: #fff;
+    background: #3785ed;
+}
+
+/* Phone - Green */
+.interview-method-badge.method-phone {
+    color: #08744e;
+    background: #e1f8ed;
+    border-color: #b9efd6;
+}
+
+.interview-method-badge.method-phone i {
+    color: #fff;
+    background: #16a574;
+}
+
+/* Onsite - Purple */
+.interview-method-badge.method-onsite {
+    color: #5926b5;
+    background: #f0e9ff;
+    border-color: #d9c7ff;
+}
+
+.interview-method-badge.method-onsite i {
+    color: #fff;
+    background: #8250df;
+}
+
+/* Missing method */
+.interview-method-badge.method-unknown {
+    color: #64748b;
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+}
+
+.interview-method-badge.method-unknown i {
+    color: #fff;
+    background: #94a3b8;
+}
+
+/* Interview Result Badge */
+.interview-result-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Passed - Baby Green */
+.interview-result-badge.bg-success {
+    background-color: #d1fae5 !important;
+    color: #166534 !important;
+    border: 1px solid #a7f3d0;
+}
+
+/* Failed - Baby Red */
+.interview-result-badge.bg-danger {
+    background-color: #fee2e2 !important;
+    color: #991b1b !important;
+    border: 1px solid #fecaca;
+}
+
+.action-btn:disabled,
+.action-btn.disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+    box-shadow: none !important;
+    transform: none !important;
 }

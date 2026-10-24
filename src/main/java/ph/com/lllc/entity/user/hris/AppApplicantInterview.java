@@ -9,6 +9,7 @@ import lombok.Setter;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.hris.InterviewMethod;
+import ph.com.lllc.enums.hris.InterviewResult;
 import ph.com.lllc.enums.hris.InterviewStage;
 
 import java.time.LocalDate;
@@ -39,6 +40,10 @@ public class AppApplicantInterview {
     @Enumerated(EnumType.STRING)
     @Column(name = "interview_stage", nullable = false)
     private InterviewStage interviewStage;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "interview_result")
+    private InterviewResult interviewResult;
 
     @Column(name = "interview_date")
     private LocalDate interviewDate;

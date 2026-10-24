@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum InterviewStage {
-    PHONE_SCREEN("Phone Screen"),
+    PHONE_SCREEN("Initial Interview"),
     HR_INTERVIEW("HR Interview"),
     TECHNICAL_INTERVIEW("Technical Interview"),
     FINAL_INTERVIEW("Final Interview");

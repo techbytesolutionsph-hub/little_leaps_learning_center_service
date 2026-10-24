@@ -543,12 +543,15 @@ public class PortalViewController {
         this.setupPage(model, "recruitment", "Applicant Interview");
 
         List<ApplicantResponse> interviews = portalFrontService.findByAppliedStage(ApplicantStatus.INTERVIEW);
+        loggingService.info("", this.getClass().getName(), "", "interviews : " + interviews);
         model.addAttribute("interviews", interviews);
 
         List<ApplicantResponse> candidates = portalFrontService.getAllApplicants();
+        loggingService.info("", this.getClass().getName(), "", "candidates : " + candidates);
         model.addAttribute("candidates", candidates);
 
         List<EmployeeResponse> employees = portalFrontService.getEmployees();
+        loggingService.info("", this.getClass().getName(), "", "employees : " + employees);
         model.addAttribute("employees", employees);
 
         return "staff/hris/interview/index";

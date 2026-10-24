@@ -6,11 +6,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ph.com.lllc.dto.hris.ApplicantInterviewRequest;
+import ph.com.lllc.dto.hris.InterviewNotesRequest;
+import ph.com.lllc.dto.hris.InterviewResultRequest;
+import ph.com.lllc.dto.hris.RescheduleInterviewRequest;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.service.api.hris.ApplicantInterviewService;
@@ -33,5 +33,32 @@ public class ApplicantInterviewController {
         String uuid = generateUUIDService.generateUUID();
         loggingService.info(uuid, this.getClass().getName(), "", "ApplicantInterviewRequest : " + request.toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(applicantInterviewService.createApplicantInterview(uuid, request));
+    }
+
+    @Operation(summary = "Update Interview Notes")
+    @PutMapping("/update-interview-notes")
+    public ResponseEntity<Void> updateInterviewNotes(@Valid @RequestBody InterviewNotesRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "InterviewNotesRequest : " + request.toString());
+        applicantInterviewService.updateInterviewNotes(uuid, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Update Interview Result")
+    @PutMapping("/update-interview-result")
+    public ResponseEntity<Void> updateInterviewResult(@Valid @RequestBody InterviewResultRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "InterviewResultRequest : " + request.toString());
+        applicantInterviewService.updateInterviewResult(uuid, request);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Reschedule Interview")
+    @PutMapping("/reschedule-interview")
+    public ResponseEntity<Void> rescheduleInterview(@Valid @RequestBody RescheduleInterviewRequest request) throws ServiceException {
+        String uuid = generateUUIDService.generateUUID();
+        loggingService.info(uuid, this.getClass().getName(), "", "RescheduleInterviewRequest : " + request.toString());
+        applicantInterviewService.rescheduleInterview(uuid, request);
+        return ResponseEntity.noContent().build();
     }
 }

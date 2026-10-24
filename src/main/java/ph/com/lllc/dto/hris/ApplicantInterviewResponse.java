@@ -5,6 +5,7 @@ import lombok.*;
 import ph.com.lllc.entity.user.staff.generalinfo.AppEmployeeProfile;
 import ph.com.lllc.enums.ScheduleStatus;
 import ph.com.lllc.enums.hris.InterviewMethod;
+import ph.com.lllc.enums.hris.InterviewResult;
 import ph.com.lllc.enums.hris.InterviewStage;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class ApplicantInterviewResponse {
     private AppEmployeeProfile interviewer;
     private InterviewMethod interviewMethod;
     private InterviewStage interviewStage;
+    private InterviewResult interviewResult;
     private LocalDate interviewDate;
     private LocalTime interviewTime;
     private ScheduleStatus scheduleStatus;

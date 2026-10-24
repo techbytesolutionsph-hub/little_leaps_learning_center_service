@@ -1,14 +1,17 @@
 package ph.com.lllc.service.api.hris;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ph.com.lllc.dto.hris.ApplicantInterviewResponse;
 import ph.com.lllc.dto.hris.ApplicantRequest;
 import ph.com.lllc.dto.hris.ApplicantResponse;
 import ph.com.lllc.dto.response.CommonResponse;
 import ph.com.lllc.entity.user.hris.AppApplicant;
+import ph.com.lllc.entity.user.hris.AppApplicantInterview;
 import ph.com.lllc.enums.hris.ApplicantStatus;
 import ph.com.lllc.exception.ServiceException;
 import ph.com.lllc.repository.hris.AppApplicantRepository;
@@ -17,9 +20,8 @@ import ph.com.lllc.util.LocalDateUtils;
 import ph.com.lllc.util.ObjectUtils;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +52,9 @@ public class RecruitmentService {
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public List<ApplicantResponse> getAllApplicants() {
-        List<AppApplicant> applicants = appApplicantRepository.findAll();
+        List<AppApplicant> applicants = appApplicantRepository.findAll(
+                Sort.by(Sort.Order.desc("appliedDate").nullsLast())
+        );
         return ObjectUtils.copyListAs(applicants, ApplicantResponse.class);
     }
 
@@ -61,12 +65,50 @@ public class RecruitmentService {
         return ObjectUtils.copyListAs(applicants, ApplicantResponse.class);
     }
 
+
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public List<ApplicantResponse> findByAppliedStage(ApplicantStatus stage) {
-        List<AppApplicant> applicants = appApplicantRepository.findByAppliedStage(stage);
 
-        return ObjectUtils.copyListAs(applicants, ApplicantResponse.class);
+        List<AppApplicant> applicants = appApplicantRepository.findByAppliedStage(stage);
+        List<ApplicantResponse> responses = new ArrayList<>(ObjectUtils.copyListAs(applicants, ApplicantResponse.class));
+
+        // Latest interview date and time first.
+        Comparator<AppApplicantInterview> newestInterviewFirst =
+                Comparator.comparing(
+                        AppApplicantInterview::getInterviewDate,
+                        Comparator.nullsLast(Comparator.reverseOrder())
+                ).thenComparing(
+                        AppApplicantInterview::getInterviewTime,
+                        Comparator.nullsLast(Comparator.reverseOrder())
+                );
+
+        for (int i = 0; i < applicants.size(); i++) {
+
+            AppApplicant entity = applicants.get(i);
+            ApplicantResponse response = responses.get(i);
+
+            List<ApplicantInterviewResponse> sortedInterviews =
+                    entity.getInterviews() == null ? new ArrayList<>()
+                            : entity.getInterviews()
+                            .stream()
+                            .sorted(newestInterviewFirst)
+                            .map(interview ->
+                                    ObjectUtils.copyAs(interview, ApplicantInterviewResponse.class)
+                            )
+                            .collect(Collectors.toCollection(ArrayList::new));
+
+            response.setInterviews(sortedInterviews);
+            ApplicantInterviewResponse latestInterview = sortedInterviews.stream()
+                            .filter(interview -> interview.getInterviewResult() == null)
+                            .findFirst()
+                            .orElse(null);
+
+            response.setLatestInterview(latestInterview);
+        }
+
+        return responses;
     }
+
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public AppApplicant getApplicant(Long applicantId) throws ServiceException {

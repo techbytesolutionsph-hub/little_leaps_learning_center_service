@@ -161,52 +161,60 @@
                                 <th>Candidate</th>
                                 <th>Applied Job</th>
                                 <th>Interviewer</th>
-                                <th>Date & Time</th>
+                                <th>Date &amp; Time</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <th:block th:each="applicant : ${interviews}">
-                                <tr th:each="scheduledInterview : ${applicant.interviews}">
+                            <tr th:each="applicant : ${interviews}">
+                                <td data-label="Candidate" style="font-weight: 700"
+                                    th:text="${applicant.firstName + (applicant.middleName != null and !applicant.middleName.isEmpty() ? ' ' + applicant.middleName : '')
+                                    + ' ' + applicant.lastName + (applicant.suffix != null and !applicant.suffix.isEmpty() ? ' ' + applicant.suffix : '')}">
+                                    Candidate Name
+                                </td>
+                                <td data-label="Applied Job" th:text="${applicant.appliedJob.displayPosition}">
+                                    Applied Job
+                                </td>
+                                <td data-label="Interviewer" th:text="${applicant.latestInterview != null
+                                    and applicant.latestInterview.interviewer != null ? applicant.latestInterview.interviewer.firstName
+                                      + ' ' + applicant.latestInterview.interviewer.lastName : 'Not assigned'}">
+                                    Interviewer
+                                </td>
+                                <td data-label="Date &amp; Time" th:text="${applicant.latestInterview != null
+                                    ? #temporals.format(applicant.latestInterview.interviewDate, 'MMM d, yyyy')
+                                      + ' ' + #temporals.format(applicant.latestInterview.interviewTime, 'h:mm a') : 'Not scheduled'}">
+                                    Date &amp; Time
+                                </td>
+                                <td data-label="Status">
+                                    <span class="status-badge badge"
+                                          th:if="${applicant.latestInterview != null}"
+                                          th:classappend="${' badge-' + #strings.toLowerCase(#strings.replace(applicant.latestInterview.scheduleStatus.name(), '_', '-'))}"
+                                          th:text="${#strings.capitalize(#strings.toLowerCase(applicant.latestInterview.scheduleStatus.name()))}">
+                                    </span>
+                                    <span th:unless="${applicant.latestInterview != null}">
+                                        Not scheduled
+                                    </span>
+                                </td>
 
-                                    <td data-label="Candidate" style="font-weight: 700"
-                                        th:text="${applicant.firstName
-                                        + (applicant.middleName != null and !applicant.middleName.isEmpty() ? ' ' + applicant.middleName : '')
-                                        + ' ' + applicant.lastName
-                                        + (applicant.suffix != null and !applicant.suffix.isEmpty() ? ' ' + applicant.suffix : '')}">
-                                        Candidate Name
-                                    </td>
-                                    <td data-label="Applied Job"
-                                        th:text="${applicant.appliedJob.displayPosition}">
-                                    </td>
-                                    <td data-label="Interviewer"
-                                        th:text="${scheduledInterview.interviewer != null
-                                                            ? scheduledInterview.interviewer.firstName + ' ' + scheduledInterview.interviewer.lastName
-                                                            : 'Not assigned'}">
-                                    </td>
-                                    <td data-label="Date &amp; Time"
-                                        th:text="${#temporals.format(scheduledInterview.interviewDate, 'MMM d, yyyy')
-                                        + ' ' + #temporals.format(scheduledInterview.interviewTime, 'h:mm a')}">
-                                    </td>
-                                    <td data-label="Status">
-                                        <span class="status-badge badge"
-                                              th:classappend="${' badge-' + #strings.toLowerCase(#strings.replace(scheduledInterview.scheduleStatus.name(), '_', '-'))}"
-                                              th:text="${#strings.capitalize(#strings.toLowerCase(scheduledInterview.scheduleStatus.name()))}">
-                                        </span>
-                                    </td>
-                                    <td data-label="Actions">
-                                        <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1">
-                                            <a class="btn-glossy-teal action-btn d-flex align-items-center"
-                                               data-tooltip="View Schedule Interview"
-                                               data-bs-toggle="modal"
-                                               th:attr="data-bs-target='#viewScheduleInterviewModal-' + ${scheduledInterview.id}">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </th:block>
+                                <td data-label="Actions">
+                                    <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1"
+                                         th:if="${applicant.latestInterview != null}">
+                                        <a class="btn-glossy-teal action-btn d-flex align-items-center"
+                                           data-tooltip="View Schedule Interview"
+                                           data-bs-toggle="modal"
+                                           th:attr="data-bs-target='#viewScheduleInterviewModal-' + ${applicant.latestInterview.id}">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a class="btn-glossy-teal action-btn d-flex align-items-center"
+                                           data-tooltip="Reschedule Interview"
+                                           data-bs-toggle="modal"
+                                           th:attr="data-bs-target='#rescheduleInterviewModal-' + ${applicant.latestInterview.id}">
+                                            <i class="bi bi-calendar-event"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -401,25 +409,64 @@
                                             </div>
                                         </div>
 
+                                        <!-- Interview Notes -->
                                         <div class="col-md-12">
                                             <div class="detail-item">
                                                 <div class="detail-label">
-                                                    <i class="bi bi-journal-text me-1"></i>
-                                                    Interview Notes
+                                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                                        <strong>
+                                                            <i class="bi bi-chat-left-text me-2"></i>
+                                                            Interview Notes
+                                                        </strong>
+
+                                                        <button type="button"
+                                                                class="btn-glossy-teal d-flex align-items-center editNotesBtn">
+                                                            <i class="bi bi-pencil-square mr-1"></i> Edit
+                                                        </button>
+                                                    </div>
                                                 </div>
 
                                                 <div class="detail-value">
-                                                    <i class="bi bi-chat-left-text me-2"></i>
+                                                    <!-- Hidden IDs -->
+                                                    <input type="hidden" class="applicantId"
+                                                           th:value="${applicant.id}">
 
-                                                    <span th:text="${scheduledInterview.notes != null
-                                                        and !scheduledInterview.notes.isEmpty()
-                                                        ? scheduledInterview.notes
-                                                        : 'No notes available.'}">
-                                                        Interview notes
-                                                    </span>
+                                                    <input type="hidden" class="interviewId"
+                                                           th:value="${scheduledInterview.id}">
+
+                                                    <!-- Display Mode -->
+                                                    <div class="notesDisplay">
+                                                        <span th:text="${scheduledInterview.notes != null
+                                                            and !scheduledInterview.notes.isEmpty()
+                                                            ? scheduledInterview.notes
+                                                            : 'No notes available.'}">
+                                                            Interview notes
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- Edit Mode -->
+                                                    <div class="notesEdit" style="display: none;">
+                                                        <textarea class="form-control notesTextarea"
+                                                                  rows="4"
+                                                                  placeholder="Enter interview notes..."
+                                                                  th:text="${scheduledInterview.notes}"></textarea>
+
+                                                        <div class="d-flex justify-content-end gap-2 mt-2">
+                                                            <button type="button"
+                                                                    class="btn-glossy-cancel d-flex align-items-center cancelNotesBtn">
+                                                                <i class="bi bi-x-circle-fill me-1"></i> Cancel
+                                                            </button>
+
+                                                            <button type="button"
+                                                                    class="btn-glossy-teal d-flex align-items-center saveNotesBtn">
+                                                                <i class="bi bi-save me-1"></i> Save
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
 
                                     <!-- Meeting Link: Video Interviews Only -->
@@ -453,6 +500,339 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Interview Details -->
+                                <div class="interview-detail-card mb-2">
+                                    <div class="interview-card-header">
+                                        <div class="section-title-icon">
+                                            <i class="bi bi-calendar-event"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-1">Interview Records</h6>
+                                            <p class="text-muted text-xxsmall mb-0">
+                                                View scheduled dates, times, interview methods, and stages
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row g-3">
+                                        <!-- Interview Records -->
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="interviewRecordsTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Interview Stage</th>
+                                                        <th>Interview Method</th>
+                                                        <th>Date & Time</th>
+                                                        <th>Interview Result</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="interview : ${applicant.interviews}">
+                                                        <td data-label="Interview Stage">
+                                                            <span class="interview-method-badge"
+                                                                  th:if="${interview.interviewStage != null}"
+                                                                  th:classappend="${' stage-' + #strings.toLowerCase(
+                                                                      #strings.replace(interview.interviewStage.name(), '_', '-')
+                                                                  )}">
+
+                                                                <i th:class="${interview.interviewStage.name() == 'PHONE_SCREEN' ? 'bi bi-telephone-fill'
+                                                                    : interview.interviewStage.name() == 'HR_INTERVIEW' ? 'bi bi-person-badge-fill'
+                                                                    : interview.interviewStage.name() == 'TECHNICAL_INTERVIEW' ? 'bi bi-code-slash'
+                                                                    : 'bi bi-people-fill'}">
+                                                                </i>
+
+                                                                <span th:text="${interview.interviewStage.label}">
+                                                                    Phone Screen
+                                                                </span>
+                                                            </span>
+
+                                                            <span class="interview-method-badge method-unknown"
+                                                                  th:if="${interview.interviewStage == null}">
+                                                                <i class="bi bi-question-circle"></i>
+                                                                Not specified
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Interview Method">
+                                                            <span class="interview-method-badge" th:classappend="${interview.interviewMethod != null
+                                                                      ? ' method-' + #strings.toLowerCase(interview.interviewMethod.name()) : ''}"
+                                                                          th:if="${interview.interviewMethod != null}">
+
+                                                                <i th:class="${interview.interviewMethod.name() == 'VIDEO' ? 'bi bi-camera-video-fill'
+                                                                    : interview.interviewMethod.name() == 'PHONE' ? 'bi bi-telephone-fill' : 'bi bi-people-fill'}">
+                                                                </i>
+
+                                                                <span th:text="${interview.interviewMethod.label + ' Interview'}">
+                                                                    Phone Interview
+                                                                </span>
+                                                            </span>
+
+                                                            <span class="interview-method-badge method-unknown" th:if="${interview.interviewMethod == null}">
+                                                                <i class="bi bi-question-circle"></i>
+                                                                Not specified
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Date &amp; Time">
+                                                            <span th:text="${#temporals.format(interview.interviewDate, 'MMM dd, yyyy')}"></span>
+                                                            <span th:text="${#temporals.format(interview.interviewTime, 'h:mma')}"></span>
+                                                        </td>
+                                                        <td data-label="Interview Result">
+                                                            <span th:if="${interview.interviewResult == null}"
+                                                                  class="badge interview-result-badge bg-warning text-dark">
+                                                                For Interview
+                                                            </span>
+
+                                                            <span th:if="${interview.interviewResult != null}"
+                                                                  th:text="${#strings.capitalize(#strings.toLowerCase(interview.interviewResult.name()))}"
+                                                                  th:classappend="${interview.interviewResult.name() == 'PASSED'} ? ' bg-success' : ' bg-danger'"
+                                                                  class="badge interview-result-badge">
+                                                            </span>
+                                                        </td>
+                                                        <td data-label="Actions">
+                                                            <div class="actions-buttons d-flex flex-wrap justify-content-start gap-1" th:if="${interview.id != null}">
+                                                                <!-- Passed -->
+                                                                <!-- Passed -->
+                                                                <button type="button"
+                                                                        class="btn-glossy-teal action-btn d-flex align-items-center"
+                                                                        data-tooltip="Passed"
+                                                                        th:disabled="${interview.interviewResult != null}"
+                                                                        th:onclick="|updateInterviewResult(${applicant.id}, ${interview.id}, 'PASSED')|">
+                                                                    <i class="bi bi-check-circle-fill"></i>
+                                                                </button>
+
+                                                                <!-- Failed -->
+                                                                <button type="button"
+                                                                        class="btn-glossy-teal action-btn d-flex align-items-center"
+                                                                        data-tooltip="Failed"
+                                                                        th:disabled="${interview.interviewResult != null}"
+                                                                        th:onclick="|updateInterviewResult(${applicant.id}, ${interview.id}, 'FAILED')|">
+                                                                    <i class="bi bi-x-circle-fill"></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </th:block>
+
+        <!-- Reschedule Interview Modal -->
+        <th:block th:each="applicant : ${interviews}">
+            <th:block th:each="scheduledInterview : ${applicant.interviews}">
+
+                <div class="modal fade reschedule-interview-modal"
+                     th:id="'rescheduleInterviewModal-' + ${scheduledInterview.id}"
+                     tabindex="-1" aria-hidden="true">
+
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content border-0 rounded-4 shadow">
+                            <div class="modal-header border-0 px-4 pt-4 pb-2">
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="section-title-icon flex-shrink-0">
+                                        <i class="bi bi-calendar2-week"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="modal-title fw-bold text-teal">
+                                            Reschedule Interview
+                                        </h5>
+                                        <p class="text-muted text-xxsmall mb-0 mt-1">
+                                            Update the interview date and time.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <!-- Body -->
+                            <div class="modal-body px-4 pt-3 pb-4">
+
+                                <!-- Applicant Information -->
+                                <div class="applicant-profile d-flex align-items-center gap-3 p-3 rounded-3 mb-4">
+                                    <div class="applicant-avatar">
+                                        <i class="bi bi-person-fill"></i>
+                                    </div>
+
+                                    <div class="flex-grow-1 min-width-0">
+                                        <h6 class="fw-bold text-dark mb-1"
+                                            th:text="${applicant.firstName
+                                        + (applicant.middleName != null and !applicant.middleName.isEmpty()
+                                            ? ' ' + applicant.middleName : '')
+                                        + ' ' + applicant.lastName
+                                        + (applicant.suffix != null and !applicant.suffix.isEmpty()
+                                            ? ' ' + applicant.suffix : '')}">
+                                            Applicant Name
+                                        </h6>
+
+                                        <div class="text-muted text-xxsmall"
+                                             th:text="${applicant.appliedJob.displayPosition}">
+                                            Applied Job
+                                        </div>
+
+                                        <span class="application-stage-badge mt-2 d-inline-block"
+                                              th:text="${#strings.toUpperCase(#strings.replace(applicant.latestInterview.interviewStage.name(), '_', ' '))}">
+                                            INTERVIEW STAGE
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Reschedule Form -->
+                                <form class="rescheduleInterviewForm">
+                                    <input type="hidden" name="applicantId" th:value="${applicant.id}">
+                                    <input type="hidden" name="interviewId" th:value="${applicant.latestInterview.id}">
+
+                                    <!-- Current Schedule -->
+                                    <div class="interview-detail-card mb-2">
+                                        <div class="interview-card-header">
+                                            <div class="section-title-icon">
+                                                <i class="bi bi-calendar-event"></i>
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-bold mb-1">Current Date &amp; Time Schedule</h6>
+                                                <p class="text-muted text-xxsmall mb-0">
+                                                    Review the existing interview schedule before rescheduling.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div class="row g-3">
+                                            <!-- Interview Date -->
+                                            <div class="col-md-6">
+                                                <div class="interview-info-tile">
+                                                    <div class="interview-info-icon">
+                                                        <i class="bi bi-calendar3"></i>
+                                                    </div>
+                                                    <div>
+                                                        <div class="detail-label">Interview Date</div>
+                                                        <div class="detail-value" th:text="${#temporals.format(applicant.latestInterview.interviewDate, 'MMMM d, yyyy')}">
+                                                            October 12, 2026
+                                                        </div>
+                                                        <small class="text-muted" th:text="${#temporals.format(applicant.latestInterview.interviewDate, 'EEEE')}">
+                                                            Monday
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Interview Time -->
+                                            <div class="col-md-6">
+                                                <div class="interview-info-tile">
+                                                    <div class="interview-info-icon">
+                                                        <i class="bi bi-clock"></i>
+                                                    </div>
+                                                    <div>
+                                                        <div class="detail-label">Interview Time</div>
+                                                        <div class="detail-value" th:text="${#temporals.format(scheduledInterview.interviewTime, 'h:mm a')}">
+                                                            9:00 AM
+                                                        </div>
+                                                        <small class="text-muted">
+                                                            Philippine Time
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row px-2">
+                                        <!-- New Date -->
+                                        <div class="col-12 col-md-6 mb-2">
+                                            <label class="text-sm fw-bold text-gray-700" for="interview-interview-date">New Interview Date
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="date-input-wrapper">
+                                                <input type="text" id="interview-interview-date" class="form-control" name="interviewDate"
+                                                       th:value="${applicant.latestInterview.interviewDate}" placeholder="Select interview date" required>
+                                                <i class="bi bi-calendar-event calendar-icon"></i>
+                                                <div class="invalid-feedback">
+                                                    Please select interview date.
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- New Time -->
+                                        <div class="col-12 col-md-6 mb-2">
+                                            <label class="text-sm fw-bold text-gray-700" for="interview-interview-time">New Interview Time
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="date-input-wrapper">
+                                                <input type="text" id="interview-interview-time" class="form-control" name="interviewTime"
+                                                       th:value="${applicant.latestInterview.interviewTime}" placeholder="Select interview time" required>
+                                                <i class="bi bi-clock-fill calendar-icon"></i>
+                                                <div class="invalid-feedback">
+                                                    Please select interview time.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Interview Method -->
+                                    <div class="col-12 col-md-12 mt-2 mb-2">
+                                        <label for="interview-method" class="form-label fw-bold">Interview Method
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <select class="form-control text-sm variation-discount-type" name="interviewMethod" id="interview-method" required>
+                                            <option value="VIDEO" th:selected="${applicant.latestInterview.interviewMethod != null
+                                                and applicant.latestInterview.interviewMethod.name() == 'VIDEO'}">
+                                                Video Interview
+                                            </option>
+
+                                            <option value="PHONE" th:selected="${applicant.latestInterview.interviewMethod != null
+                                                and applicant.latestInterview.interviewMethod.name() == 'PHONE'}">
+                                                Phone Interview
+                                            </option>
+
+                                            <option value="ONSITE" th:selected="${applicant.latestInterview.interviewMethod != null
+                                                and applicant.latestInterview.interviewMethod.name() == 'ONSITE'}">
+                                                Onsite Interview
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Meeting Link -->
+                                    <div class="col-12 col-md-12 mt-2 mb-2 meeting-link-container"
+                                         th:id="'meetingLinkContainer-' + ${applicant.latestInterview.id}" style="display: none;">
+
+                                        <label class="form-label text-sm fw-bold text-gray-700"
+                                               th:for="'interview-meeting-link-' + ${applicant.latestInterview.id}">
+                                            Meeting Link
+                                            <span class="required">*</span>
+                                        </label>
+
+                                        <input type="text"
+                                               class="form-control text-sm"
+                                               id="interview-meeting-link"
+                                               name="meetingLink"
+                                               th:value="${applicant.latestInterview != null ? applicant.latestInterview.meetingLink : ''}"
+                                               placeholder="https://...">
+
+                                        <div class="invalid-feedback">
+                                            Please enter a meeting link.
+                                        </div>
+                                    </div>
+
+                                    <!-- Footer Buttons -->
+                                    <div class="d-flex justify-content-end gap-2 mt-4">
+                                        <button type="button" class="btn-glossy-cancel d-flex align-items-center" data-bs-dismiss="modal">
+                                            <i class="bi bi-x-circle me-1"></i>
+                                            Cancel
+                                        </button>
+
+                                        <button type="submit" class="btn-glossy-teal d-flex align-items-center">
+                                            <i class="bi bi-calendar-check me-1"></i>
+                                            Update Schedule
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

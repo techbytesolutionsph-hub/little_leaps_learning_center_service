@@ -38,4 +38,5 @@ public class ApplicantResponse {
     private String lastModifiedBy;
 
     private List<ApplicantInterviewResponse> interviews;
+    private ApplicantInterviewResponse latestInterview;
 }

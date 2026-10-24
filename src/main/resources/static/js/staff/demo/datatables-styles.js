@@ -121,6 +121,21 @@ $(document).ready(function() {
     }
   });
 
+  $('#interviewRecordsTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[2, 'desc']],
+    columnDefs: [
+      { targets: 4, orderable: false }
+    ],
+    language: {
+      emptyTable: "No interview records found"
+    }
+  });
+
   $('#onboardingTable').DataTable({
     pageLength: 5,
     lengthMenu: [
