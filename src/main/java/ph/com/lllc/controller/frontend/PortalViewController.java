@@ -537,6 +537,17 @@ public class PortalViewController {
         return "staff/hris/candidates/add-candidate/index";
     }
 
+    @GetMapping(value = "/hr-recruitment/candidates/edit-candidate")
+    public String editCandidatePage(Model model, @RequestParam("id") Long applicantId) throws ServiceException {
+        this.setupPage(model, "recruitment", "Edit Candidate");
+
+        ApplicantResponse applicant = portalFrontService.getApplicant(applicantId);
+        loggingService.info("", this.getClass().getName(), "", "applicant : " + applicant);
+        model.addAttribute("applicant", applicant);
+
+        return "staff/hris/candidates/edit-candidate/index";
+    }
+
 
     @GetMapping(value = "/hr-recruitment/applicant-interview")
     public String applicantInterviewPage(Model model) {

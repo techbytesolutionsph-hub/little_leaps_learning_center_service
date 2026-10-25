@@ -109,6 +109,37 @@ public class RecruitmentService {
         return responses;
     }
 
+    @Transactional
+    public CommonResponse updateApplicant(String uuid, ApplicantRequest request) throws ServiceException {
+
+        AppApplicant applicant = this.getApplicant(request.getId());
+
+        applicant.setFirstName(request.getFirstName());
+        applicant.setMiddleName(request.getMiddleName());
+        applicant.setLastName(request.getLastName());
+        applicant.setSuffix(request.getSuffix());
+        applicant.setEmail(request.getEmail());
+        applicant.setPhoneNumber(request.getPhoneNumber());
+        applicant.setAppliedJob(request.getAppliedJob());
+        applicant.setLocation(request.getLocation());
+        applicant.setAppliedDate(request.getAppliedDate());
+        applicant.setExperience(request.getExperience());
+        applicant.setNotes(request.getNotes());
+        applicant.setResumeFilename(request.getResumeFilename());
+        applicant.setResumeLink(request.getResumeLink());
+
+        AppApplicant updateApplicant = appApplicantRepository.save(applicant);
+        loggingService.info(uuid, this.getClass().getName(), "", "Candidate updated successfully!");
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("client", updateApplicant);
+
+        return CommonResponse.builder()
+                .returnCode(HttpStatus.CREATED.value())
+                .returnMessage("Candidate updated successfully!")
+                .responseBody(responseBody)
+                .build();
+    }
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public AppApplicant getApplicant(Long applicantId) throws ServiceException {

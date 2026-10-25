@@ -31,6 +31,7 @@ public class ApplicantResponse {
     private LocalDate appliedDate;
     private ApplicantStatus appliedStage;
     private String resumeLink;
+    private String resumeFilename;
     private String notes;
     private LocalDateTime creationDate;
     private String createdBy;

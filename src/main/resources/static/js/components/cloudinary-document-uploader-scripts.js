@@ -99,6 +99,7 @@ function initializeDocumentUpload() {
      * =====================================================
      */
     $removeFileBtn.on('click', function (event) {
+        console.log("Click Remove File!")
         event.preventDefault();
         event.stopPropagation();
         removeDocument();
@@ -293,32 +294,42 @@ function initializeDocumentUpload() {
      * =====================================================
      */
     function removeDocument() {
+        const resumeUrl = $('#selectedFileName a').attr('href');
+        console.log("resumeUrl : " + resumeUrl);
 
-        const publicId = uploadRequest.public_id;
+        const publicId = uploadRequest?.public_id
+            || (resumeUrl
+                ? resumeUrl.split('/upload/')[1]
+                    ?.replace(/^v\d+\//, '')
+                    .replace(/\.[^/.]+$/, '')
+                : null);
+
+        console.log("public id : " + publicId);
+
+        if (!publicId) {
+            console.error('Unable to extract Cloudinary Public ID.');
+            return;
+        }
 
         deleteDocumentFromCloudinary(publicId)
-            .then(function (data) {
-                if (data) {
-                    console.log('Cloudinary delete response:', data);
+            .then(function (deleted) {
+                if (deleted) {
+                    $fileInput.val('');
+                    $selectedFileName.empty();
+                    $selectedFileSize.text('');
+                    $selectedFileContainer.hide();
+                    $placeholder.show();
+                    $chooseFileBtn.show();
+                    $removeFileBtn.hide();
+                    $dropZone.removeClass('drag-over');
+                    uploadRequest = null;
+                } else {
+                    console.error('Cloudinary deletion failed.');
                 }
             })
             .catch(function (error) {
                 console.error('Cloudinary delete error:', error);
             });
-
-        $fileInput.val('');
-        $selectedFileName.text('');
-        $selectedFileSize.text('');
-
-        $selectedFileContainer.hide();
-
-        $placeholder.show();
-        $chooseFileBtn.show();
-
-        $removeFileBtn.hide();
-        $dropZone.removeClass('drag-over');
-
-        uploadRequest = null;
     }
 
     /**

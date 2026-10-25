@@ -32,6 +32,7 @@ $(document).ready(function () {
             appliedDate: $("#candidate-applied-date").val() || null,
             appliedStage: "APPLIED",
             resumeLink: uploadRequest.secure_url ?? null,
+            resumeFilename: uploadRequest.original_filename ?? null,
             notes: $("#candidate-notes").val().trim()
         };
     }

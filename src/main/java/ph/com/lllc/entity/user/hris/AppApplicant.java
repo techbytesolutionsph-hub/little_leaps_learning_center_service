@@ -64,6 +64,9 @@ public class AppApplicant implements Serializable {
     @Column(name = "resume_link")
     private String resumeLink;
 
+    @Column(name = "resume_filename")
+    private String resumeFilename;
+
     @Column(name = "notes", columnDefinition = "TEXT")
     private String notes;
 

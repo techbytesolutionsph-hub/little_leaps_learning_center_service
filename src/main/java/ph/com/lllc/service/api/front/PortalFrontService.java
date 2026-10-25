@@ -17,6 +17,7 @@ import ph.com.lllc.service.api.clients.AssessmentScheduleService;
 import ph.com.lllc.service.api.clients.ClientManagementService;
 import ph.com.lllc.service.api.hris.RecruitmentService;
 import ph.com.lllc.service.api.management.EmploymentRegistryService;
+import ph.com.lllc.util.ObjectUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -213,6 +214,10 @@ public class PortalFrontService {
 
     public List<ApplicantResponse> getAllApplicants() {
         return recruitmentService.getAllApplicants();
+    }
+
+    public ApplicantResponse getApplicant(Long applicantId) throws ServiceException {
+        return ObjectUtils.copyAs(recruitmentService.getApplicant(applicantId), ApplicantResponse.class);
     }
 
     public List<ApplicantResponse> getAllAppliedAndScheduledApplicants() {

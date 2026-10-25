@@ -125,6 +125,13 @@ public class ApplicantRequest {
     private String resumeLink;
 
     @Schema(
+            description = "Resume Filename",
+            example = "OFFICIAL_RESUME_HEERO_YUY.pdf"
+    )
+    private String resumeFilename;
+
+
+    @Schema(
             description = "Additional notes about the applicant",
             example = "Available for an interview next week."
     )

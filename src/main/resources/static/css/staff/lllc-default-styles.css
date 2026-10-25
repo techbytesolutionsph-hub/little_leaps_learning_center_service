@@ -9861,8 +9861,23 @@ body.sidebar-toggled footer.sticky-footer{
     padding-top: 10px;
 }
 
+/* Keep table action buttons below the modal overlay */
+.actions-buttons {
+    position: static !important;
+    z-index: auto !important;
+}
+
 .actions-buttons a {
     text-decoration: none;
+}
+
+/* Keep the Bootstrap modal and backdrop above the page */
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+.modal {
+    z-index: 1055 !important;
 }
 
 /* ===========================
