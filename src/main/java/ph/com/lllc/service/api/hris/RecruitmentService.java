@@ -98,10 +98,20 @@ public class RecruitmentService {
                             .collect(Collectors.toCollection(ArrayList::new));
 
             response.setInterviews(sortedInterviews);
+
             ApplicantInterviewResponse latestInterview = sortedInterviews.stream()
-                            .filter(interview -> interview.getInterviewResult() == null)
-                            .findFirst()
-                            .orElse(null);
+                    .filter(interview -> interview.getInterviewResult() == null)
+                    .findFirst()
+                    .orElseGet(() -> sortedInterviews.stream()
+                            .filter(interview -> interview.getInterviewResult() != null)
+                            .max(Comparator.comparing(
+                                    ApplicantInterviewResponse::getInterviewDate,
+                                    Comparator.nullsFirst(Comparator.naturalOrder())
+                            ).thenComparing(
+                                    ApplicantInterviewResponse::getInterviewTime,
+                                    Comparator.nullsFirst(Comparator.naturalOrder())
+                            ))
+                            .orElse(null));
 
             response.setLatestInterview(latestInterview);
         }

@@ -10369,3 +10369,23 @@ span.flatpickr-weekday {
         line-height: 30px;
     }
 }
+
+.icon-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0;
+    color: #6c757d;
+}
+
+.icon-empty-state i {
+    font-size: 25px;
+    color: #00979D;
+}
+
+.icon-empty-state div {
+    font-size: 10px;
+    font-weight: 500;
+}

@@ -8,7 +8,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No client registration records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No client registration records found</div>
+            </div>
+        `
     }
   });
 
@@ -20,7 +25,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No user registration records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No user registration records found</div>
+            </div>
+        `
     }
   });
 
@@ -32,7 +42,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No employee registration records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No employee registration records found</div>
+            </div>
+        `
     }
   });
 
@@ -44,7 +59,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No initial assessment records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No initial assessment records found</div>
+            </div>
+        `
     }
   });
 
@@ -56,7 +76,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No therapy session records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No therapy session records found</div>
+            </div>
+        `
     }
   });
 
@@ -68,7 +93,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No upgrading program records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No upgrading program records found</div>
+            </div>
+        `
     }
   });
 
@@ -80,7 +110,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No Neurodevelopmental assessment records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No Neurodevelopmental assessment records found</div>
+            </div>
+        `
     }
   });
 
@@ -92,7 +127,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No candidate/applicant records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No candidate/applicant records found</div>
+            </div>
+        `
     }
   });
 
@@ -105,7 +145,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No pending interview records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No pending interview records found</div>
+            </div>
+        `
     }
   });
 
@@ -117,7 +162,12 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No scheduled interview records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No scheduled interview records found</div>
+            </div>
+        `
     }
   });
 
@@ -132,7 +182,12 @@ $(document).ready(function() {
       { targets: 4, orderable: false }
     ],
     language: {
-      emptyTable: "No interview records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No interview records found</div>
+            </div>
+        `
     }
   });
 
@@ -144,7 +199,29 @@ $(document).ready(function() {
     ],
     order: [[0, 'desc']],
     language: {
-      emptyTable: "No onboarding records found"
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No onboarding records found</div>
+            </div>
+        `
+    }
+  });
+
+  $('#jobOfferTable').DataTable({
+    pageLength: 5,
+    lengthMenu: [
+      [5, 10, 25, 50, 100],
+      [5, 10, 25, 50, 100]
+    ],
+    order: [[0, 'desc']],
+    language: {
+      emptyTable: `
+            <div class="icon-empty-state">
+                <i class="fa-solid fa-file-circle-exclamation"></i>
+                <div>No job offer records found</div>
+            </div>
+        `
     }
   });
 

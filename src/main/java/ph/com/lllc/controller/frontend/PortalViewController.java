@@ -581,6 +581,13 @@ public class PortalViewController {
         return "staff/hris/interview/add-interview/index";
     }
 
+    @GetMapping(value = "/hr-recruitment/offer-management")
+    public String offerManagementPage(Model model) {
+        this.setupPage(model, "management", "Offer Management");
+
+        return "staff/hris/offer/index";
+    }
+
     @GetMapping(value = "/hr-recruitment/employee-onboarding")
     public String employeeOnboardingPage(Model model) {
         this.setupPage(model, "management", "Employee Onboarding");
