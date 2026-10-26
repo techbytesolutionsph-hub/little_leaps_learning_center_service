@@ -65,6 +65,12 @@ public class RecruitmentService {
         return ObjectUtils.copyListAs(applicants, ApplicantResponse.class);
     }
 
+    @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+    public List<ApplicantResponse> getAllJobOfferedApplicants() {
+        List<AppApplicant> applicants = appApplicantRepository.findByAppliedStageIn(List.of(ApplicantStatus.OFFERED));
+        return ObjectUtils.copyListAs(applicants, ApplicantResponse.class);
+    }
+
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
     public List<ApplicantResponse> findByAppliedStage(ApplicantStatus stage) {

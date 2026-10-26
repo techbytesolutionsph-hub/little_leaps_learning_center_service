@@ -583,9 +583,22 @@ public class PortalViewController {
 
     @GetMapping(value = "/hr-recruitment/offer-management")
     public String offerManagementPage(Model model) {
-        this.setupPage(model, "management", "Offer Management");
+        this.setupPage(model, "recruitment", "Offer Management");
 
         return "staff/hris/offer/index";
+    }
+
+    @GetMapping(value = "/hr-recruitment/offer-management/add-job-offer")
+    public String addJobOfferPage(Model model) {
+        this.setupPage(model, "recruitment", "Add Job Offer");
+
+        List<ApplicantResponse> candidates = portalFrontService.getAllJobOfferedApplicants();
+        model.addAttribute("candidates", candidates);
+
+        List<EmployeeResponse> employees = portalFrontService.getEmployees();
+        model.addAttribute("employees", employees);
+
+        return "staff/hris/offer/add-offer/index";
     }
 
     @GetMapping(value = "/hr-recruitment/employee-onboarding")

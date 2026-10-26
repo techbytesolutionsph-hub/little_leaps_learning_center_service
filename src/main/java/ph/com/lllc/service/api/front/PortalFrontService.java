@@ -224,6 +224,10 @@ public class PortalFrontService {
         return recruitmentService.getAllAppliedAndScheduledApplicants();
     }
 
+    public List<ApplicantResponse> getAllJobOfferedApplicants() {
+        return recruitmentService.getAllJobOfferedApplicants();
+    }
+
     public List<ApplicantResponse> findByAppliedStage(ApplicantStatus stage) {
         return recruitmentService.findByAppliedStage(stage);
     }

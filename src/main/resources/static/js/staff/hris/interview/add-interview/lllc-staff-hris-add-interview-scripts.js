@@ -27,7 +27,7 @@ $(document).ready(function () {
         e.preventDefault();
         showConfirmPopup(
             "Leave this page?",
-            "Your unsaved candidate data will be lost.",
+            "Your unsaved schedule interview data will be lost.",
             () => window.location.href = $(this).data("url")
         );
     });

@@ -66,7 +66,7 @@ public class ApplicantInterviewService {
                 .build();
     }
 
-    private AppApplicant findAppApplicantById(String uuid, Long id) throws ServiceException {
+    public AppApplicant findAppApplicantById(String uuid, Long id) throws ServiceException {
         return appApplicantRepository.findById(id).orElseThrow(() -> {
             loggingService.error(uuid, getClass().getName(), "Applicant not found with ID: " + id, HttpStatus.NOT_FOUND.value());
             return new ServiceException(HttpStatus.NOT_FOUND.value(), "Applicant not found with ID: " + id);

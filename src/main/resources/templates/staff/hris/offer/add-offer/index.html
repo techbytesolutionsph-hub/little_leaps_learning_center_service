@@ -1,0 +1,448 @@
+<!--
+   Template Name: Little Leaps Learning Center Website
+   Version: 1.0.0
+   Author: Glenn Mark Anduiza
+   Email: glenmark.ghl@gmail.com
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{fragments/common/html-fragment-default-meta :: meta}"></th:block>
+        <title>Add Job Offer - Little Leaps Learning Center</title>
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-css :: staff-common-css}"></th:block>
+        <link th:href="@{/css/staff/lllc-default-styles.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/components/default-add-view-edit-module.css}" rel="stylesheet" type="text/css">
+        <link th:href="@{/css/staff/hris/candidates/add-candidate/lllc-staff-hris-add-candidate-styles.css}" rel="stylesheet" type="text/css">
+    </head>
+    <body class="container-fluid p-0" id="page-top">
+        <div id="wrapper">
+            <!-- Sidebar - Start -->
+            <th:block th:insert="~{fragments/staff/common/html-fragment-staff-sidebar :: staff-common-sidebar(${nav})}"></th:block>
+            <!-- Sidebar - End -->
+
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+
+                    <!-- Main Navigation Bar - Start -->
+                    <th:block th:insert="~{fragments/staff/common/html-fragment-staff-main-navbar :: staff-common-main-navbar}"></th:block>
+                    <!-- Main Navigation Bar - End -->
+
+                    <div class="container-fluid">
+
+                        <!-- Page Heading and Breadcrumbs - Start -->
+                        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-breadcrumbs-no-greetings :: staff-breadcrumb-section(${pageTitle}, ${breadcrumbs})}"></th:block>
+                        <!-- Page Heading and Breadcrumbs - End -->
+
+                        <!-- Add Schedule Interview - Start -->
+<!--                        <th:block th:insert="~{fragments/staff/hris/interview/add-interview/html-fragment-hris-add-interview :: staff-hris-add-interview(${candidates}, ${employees})}"></th:block>-->
+                        <!-- Add Schedule Interview - End -->
+                        <form id="add-job-offer-form" novalidate>
+                            <div class="client-form-layout">
+                                <div class="client-form-main">
+                                    <section class="client-section-card mb-2">
+                                        <div class="client-section-header">
+                                            <div class="section-icon">
+                                                <i class="bi bi-file-earmark-text me-2"></i>
+                                            </div>
+                                            <div class="section-header-content">
+                                                <h3>Schedule Job Offer</h3>
+                                                <p>Schedule a call to discuss the job offer and coordinate the next steps in the hiring process.</p>
+                                            </div>
+                                        </div>
+                                        <div class="client-section-body">
+                                            <div class="row px-2">
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-applicant" class="form-label text-sm fw-bold text-gray-800">Applicant<span class="required">*</span></label>
+                                                    <select class="form-control text-sm variation-discount-type"
+                                                            id="job-offer-applicant" required>
+                                                        <option value="" selected disabled>Select Applicant</option>
+
+                                                        <option th:each="candidate : ${candidates}"
+                                                                th:value="${candidate.id}"
+                                                                th:attr="data-applied-job=${candidate.appliedJob},
+                                                                     data-location=${candidate.location}"
+                                                                                                                th:text="${candidate.firstName
+                                                                + (candidate.middleName != null && !candidate.middleName.isEmpty()
+                                                                    ? ' ' + candidate.middleName : '')
+                                                                + ' ' + candidate.lastName
+                                                                + (candidate.suffix != null && !candidate.suffix.isEmpty()
+                                                                    ? ' ' + candidate.suffix : '')}">
+                                                        </option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Please select an applicant.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-applied-job" class="form-label text-sm fw-bold text-gray-700">Applied Job<span class="required">*</span></label>
+                                                    <select class="form-control text-sm" id="job-offer-applied-job" required>
+                                                        <option value="" selected disabled>Select applied job</option>
+                                                        <option value="CASE_MANAGER">Case Manager</option>
+                                                        <option value="BEHAVIORAL_THERAPIST">Behavioral Therapist</option>
+                                                        <option value="SECRETARY">Secretary</option>
+                                                        <option value="ACCOUNTING_OFFICER">Accounting Officer</option>
+                                                        <option value="MAINTENANCE_STAFF">Maintenance Staff</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Please select an applied job.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-employment-type" class="form-label text-sm fw-bold text-gray-800">Employment Type<span class="required">*</span></label>
+                                                    <select class="form-control text-sm variation-discount-type" id="job-offer-employment-type" required>
+                                                        <option value="" selected disabled>Select employment type</option>
+                                                        <option value="REGULAR">Regular</option>
+                                                        <option value="PROBATIONARY">Probationary</option>
+                                                        <option value="CONTRACTUAL">Contractual</option>
+                                                        <option value="CASUAL">Casual</option>
+                                                        <option value="PART_TIME">Part-Time</option>
+                                                        <option value="PROJECT_BASED">Project-Based</option>
+                                                        <option value="APPRENTICE">Apprentice</option>
+                                                        <option value="INTERN">Intern</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Please select an employment type.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-proposed-salary" class="form-label text-sm fw-bold text-gray-700">Proposed Monthly Salary (₱)<span class="required">*</span></label>
+                                                    <input type="number" class="form-control text-sm" id="job-offer-proposed-salary" min="0" placeholder="0" required>
+                                                    <div class="invalid-feedback">
+                                                        Please enter a proposed salary.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-hiring-manager" class="form-label text-sm fw-bold text-gray-800">Hiring Manager<span class="required">*</span></label>
+                                                    <select class="form-control text-sm variation-discount-type" id="job-offer-hiring-manager" required>
+                                                        <option value="" selected disabled>Select hiring manager</option>
+                                                        <option th:each="employee : ${employees}"
+                                                                th:value="${employee.employeeId}"
+                                                                th:text="${employee.firstName
+                                                                + (employee.middleName != null && !employee.middleName.isEmpty()
+                                                                    ? ' ' + employee.middleName : '')
+                                                                + ' ' + employee.lastName
+                                                                + (employee.suffix != null && !employee.suffix.isEmpty()
+                                                                    ? ' ' + employee.suffix : '')}">
+                                                        </option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Please select hiring manager.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-salary-period" class="form-label text-sm fw-bold text-gray-700">Salary Period<span class="required">*</span></label>
+                                                    <select class="form-control text-sm" id="job-offer-salary-period" required>
+                                                        <option value="" selected disabled>Select salary period</option>
+                                                        <option value="MONTHLY">Monthly</option>
+                                                        <option value="DAILY">Daily</option>
+                                                        <option value="HOURLY">Hourly</option>
+                                                    </select>
+                                                    <div class="invalid-feedback">
+                                                        Please select a salary period.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-proposed-start-date" class="text-sm fw-bold text-gray-700">Proposed Start Date<span class="required">*</span></label>
+                                                    <div class="date-input-wrapper">
+                                                        <input type="text" id="job-offer-proposed-start-date" class="form-control" placeholder="Select start date" required>
+                                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                                        <div class="invalid-feedback">
+                                                            Please select proposed start date.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 mt-2 mb-2">
+                                                    <label for="job-offer-expiration-date" class="text-sm fw-bold text-gray-700">Offer Expiration Date<span class="required">*</span></label>
+                                                    <div class="date-input-wrapper">
+                                                        <input type="text" id="job-offer-expiration-date" class="form-control" placeholder="Select expiration date" required>
+                                                        <i class="bi bi-calendar-event calendar-icon"></i>
+                                                        <div class="invalid-feedback">
+                                                            Please select offer expiration date.
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                                    <label for="job-offer-work-location" class="form-label text-sm fw-bold text-gray-700">Work Location<span class="required">*</span></label>
+                                                    <input type="text" class="form-control text-sm" id="job-offer-work-location" placeholder="e.g. Catanauan Quezon" required>
+                                                    <div class="invalid-feedback">
+                                                        Please enter a work location.
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-12 mt-2 mb-2">
+                                                    <label for="interview-notes" class="form-label text-sm fw-bold text-gray-700">Additional Terms / Notes</label>
+                                                    <textarea class="form-control text-sm" id="interview-notes" name="notes" rows="3" placeholder="Benefits, probationary period, working hours or other terms..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+
+                                <div class="client-form-side">
+                                    <section class="client-photo-card mb-4">
+                                        <div class="client-photo-header">
+                                            <h3>Job Offer Letter</h3>
+                                            <p>Upload the job offer letter for the candidate to review and accept.</p>
+                                        </div>
+
+                                        <div class="upload-progress-card">
+                                            <div class="upload-content">
+                                                <div class="file-upload-column">
+                                                    <div id="fileDropZone" class="file-drop-zone">
+                                                        <input type="file" id="progressReportFile" class="file-input" accept=".pdf,.doc,.docx">
+                                                        <div id="uploadPlaceholder" class="upload-placeholder">
+                                                            <div class="upload-cloud-icon">
+                                                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                                            </div>
+
+                                                            <div class="upload-main-text">
+                                                                Drag and drop your file here
+                                                            </div>
+
+                                                            <div class="upload-or">or</div>
+
+                                                            <button type="button" id="chooseFileBtn" class="choose-file-btn">
+                                                                Choose File
+                                                            </button>
+
+                                                            <div class="upload-info">
+                                                                Accepted format: PDF
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Selected File -->
+                                                        <div id="selectedFileContainer" class="selected-file-container" style="display: none;">
+                                                            <div class="selected-file-icon">
+                                                                <i class="fa-regular fa-file-lines"></i>
+                                                            </div>
+
+                                                            <div class="selected-file-details">
+                                                                <div id="selectedFileName" class="selected-file-name"> </div>
+                                                                <div id="selectedFileSize" class="selected-file-size"></div>
+                                                            </div>
+
+                                                            <button type="button" id="removeFileBtn" class="remove-file-btn" title="Remove file">
+                                                                <i class="fa-solid fa-xmark"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+
+                            <div class="client-section-footer mb-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button type="button" class="btn btn-back fw-semibold"
+                                            id="back-client-btn"
+                                            data-url="/app/portal/hr-recruitment/applicant-interview">
+                                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                                        Back
+                                    </button>
+
+                                    <button type="button" class="btn btn-submit fw-semibold" id="add-job-offer-btn">
+                                        <i class="fa-solid fa-file-circle-plus mr-2"></i>
+                                        Add Job Offer
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Footer - Start -->
+                <th:block th:insert="~{fragments/staff/common/html-fragment-staff-footer :: staff-common-footer}"></th:block>
+                <!-- Footer - End -->
+            </div>
+        </div>
+
+        <th:block th:insert="~{fragments/staff/common/html-fragment-staff-common-js :: staff-common-js}"></th:block>
+<!--        <script th:src="@{/js/staff/hris/interview/add-interview/lllc-staff-hris-add-interview-scripts.js}" type="text/javascript"></script>-->
+        <script>
+            $(document).ready(function () {
+                initializeDatePicker("#job-offer-proposed-start-date", "yyyy-mm-dd");
+                initializeDatePicker("#job-offer-expiration-date", "yyyy-mm-dd");
+
+                initializeDocumentUpload();
+
+                $("#job-offer-applicant").on("change", function () {
+                    const selectedOption = $(this).find("option:selected");
+
+                    const appliedJob = selectedOption.attr("data-applied-job") || "";
+                    const location = selectedOption.attr("data-location") || "";
+
+                    $("#job-offer-applied-job").val(appliedJob);
+                    $("#job-offer-work-location").val(location);
+                });
+
+                function validateForm() {
+                    const form = $("#add-job-offer-form")[0];
+                    let valid = form.checkValidity();
+
+                    const proposedStartDate = $("#job-offer-proposed-start-date")[0];
+                    const expirationDate = $("#job-offer-expiration-date")[0];
+
+                    // Validate proposed start date
+                    const psDate = proposedStartDate.value.trim();
+                    const psMatch = psDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+                    let validStartDate = false;
+
+                    if (psMatch) {
+                        const [, yyyy, mm, dd] = psMatch;
+                        const parsedDate = new Date(+yyyy, +mm - 1, +dd);
+
+                        validStartDate = parsedDate.getFullYear() === +yyyy
+                            && parsedDate.getMonth() === +mm - 1
+                            && parsedDate.getDate() === +dd;
+                    }
+
+                    proposedStartDate.setCustomValidity(!psDate ? "Required" : validStartDate
+                        ? ""
+                        : "Please select a valid proposed start date."
+                    );
+
+                    $(proposedStartDate).next(".form-control")
+                        .toggleClass("is-invalid", !validStartDate);
+
+                    if (!validStartDate) {
+                        valid = false;
+                    }
+
+                    // Validate expiration date (optional)
+                    const expDate = expirationDate.value.trim();
+                    const expMatch = expDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+                    let validExpirationDate = false;
+
+                    if (expMatch) {
+                        const [, yyyy, mm, dd] = expMatch;
+                        const parsedDate = new Date(+yyyy, +mm - 1, +dd);
+
+                        validExpirationDate = parsedDate.getFullYear() === +yyyy
+                            && parsedDate.getMonth() === +mm - 1
+                            && parsedDate.getDate() === +dd;
+                    }
+
+                    expirationDate.setCustomValidity(!expDate ? "" : validExpirationDate
+                        ? ""
+                        : "Please select a valid expiration date."
+                    );
+
+                    $(expirationDate).next(".form-control")
+                        .toggleClass("is-invalid", !validExpirationDate);
+
+                    if (!validExpirationDate) {
+                        valid = false;
+                    }
+
+                    // Expiration date must not be earlier than proposed start date
+                    if (validStartDate && validExpirationDate && psDate && expDate && expDate < psDate) {
+                        expirationDate.setCustomValidity(
+                            "Expiration date must not be earlier than the proposed start date."
+                        );
+
+                        $(expirationDate).addClass("is-invalid");
+                        valid = false;
+                    }
+
+                    form.classList.add("was-validated");
+
+                    if (!valid) {
+                        form.reportValidity();
+                        return false;
+                    }
+
+                    return true;
+                }
+
+                $("#add-job-offer-btn").on("click", function () {
+
+                    if (!validateForm()) {
+                        return;
+                    }
+
+                    const request = buildApplicantOfferRequest();
+
+                    console.log(request);
+                });
+
+                $("#back-client-btn").on("click", function (e) {
+                    e.preventDefault();
+
+                    showConfirmPopup(
+                        "Leave this page?",
+                        "Your unsaved job offer data will be lost.",
+                        () => window.location.href = $(this).data("url")
+                    );
+                });
+
+                function buildApplicantOfferRequest() {
+                    return {
+                        applicantId: $("#job-offer-applicant").val(),
+                        hiringManagerId: $("#job-offer-hiring-manager").val(),
+                        positionTitle: $("#job-offer-applied-job").val(),
+                        employmentType: $("#job-offer-employment-type").val(),
+                        proposedSalary: $("#job-offer-proposed-salary").val(),
+                        salaryPeriod: $("#job-offer-salary-period").val(),
+                        workLocation: $("#job-offer-work-location").val(),
+                        proposedStartDate: $("#job-offer-proposed-start-date").val(),
+                        expirationDate: $("#job-offer-expiration-date").val(),
+                        offerNotes: $("#interview-notes").val().trim(),
+
+                        offerFileName: uploadRequest.original_filename ?? null,
+                        offerLetterUrl: uploadRequest.secure_url ?? null,
+                        offerLetterPublicId: uploadRequest.secure_url
+                            ? uploadRequest.secure_url
+                                .split("/")
+                                .pop()
+                                .replace(/\.[^/.]+$/, "")
+                            : null
+                    };
+                }
+
+                function createJobOffer(request) {
+
+                    $.ajax({
+                        url: "/api/v1/offer/create-job-offer",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(request),
+
+                        success: function (response) {
+                            console.log("Applicant job offer created successfully.", response);
+                            showSuccessThenRedirectPopup(
+                                "Success",
+                                response.returnMessage,
+                                () => {
+                                    window.location.href = "/app/portal/hr-recruitment/offer-management";
+                                }
+                            );
+                        },
+
+                        error: function (xhr) {
+                            console.error("Failed to create job offer.", xhr.responseJSON);
+                            let message = "Unable to create job offer.";
+
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                message = xhr.responseJSON.message;
+                            }
+
+                            showErrorPopup("Error", message);
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

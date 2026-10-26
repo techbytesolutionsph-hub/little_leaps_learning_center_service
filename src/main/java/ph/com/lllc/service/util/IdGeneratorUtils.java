@@ -14,6 +14,8 @@ public class IdGeneratorUtils {
     private static final String ASSESSMENT_ID_PREFIX = "ASCH";
     private static final String UPGRADING_PROGRAM_ID_PREFIX = "UPCH";
     private static final String PROGRESS_ID_PREFIX = "PR";
+    private static final String JOB_ORDER_ID_PREFIX = "JO";
+
 
     private IdGeneratorUtils() {
     }
@@ -138,6 +140,24 @@ public class IdGeneratorUtils {
         return String.format(
                 "%s-%06d",
                 PROGRESS_ID_PREFIX,
+                runningCode
+        );
+    }
+
+    /**
+     * =========================================================
+     * JOB ORDER ID FORMAT
+     * =========================================================
+     * JO-2026-0001
+     * JO-2026-0002
+     * JO-2026-0003
+     */
+    public String generateJobOrderId(String dateOffered, long runningCode) {
+
+        return String.format(
+                "%s-%s-%04d",
+                COMPANY_PREFIX,
+                dateOffered,
                 runningCode
         );
     }

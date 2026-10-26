@@ -32,6 +32,10 @@ CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.payroll_id_seq
     START WITH 1
     INCREMENT BY 1;
 
+CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.job_order_id_seq
+    START WITH 1
+    INCREMENT BY 1;
+
 -- Remove GRANT statements or only execute manually if needed
 
 -- INSERT INTO lllc_app_role_mapping(role, permission_code, description)
@@ -44,6 +48,9 @@ CREATE SEQUENCE IF NOT EXISTS little_leap_learning_center_db.payroll_id_seq
 --
 --     ('SUPER_ADMIN', 'FULL_ACCESS', 'Full system access with permission to manage all modules'),
 --     ('SUPER_ADMIN', 'VIEW_SYSTEM_ADMINISTRATION', 'View System Administration Sidebar'),
+
+--     ('IT_ADMINISTRATOR', 'FULL_ACCESS', 'Full system access with permission to manage all modules'),
+--     ('IT_ADMINISTRATOR', 'VIEW_SYSTEM_ADMINISTRATION', 'View System Administration Sidebar'),
 --
 -- -- =====================================================
 -- -- CASE_MANAGER
